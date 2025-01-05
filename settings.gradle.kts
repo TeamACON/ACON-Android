@@ -20,5 +20,14 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "Acon"
-include(":app")
- 
+
+include(
+    ":app"
+)
+
+include(
+    ":feature:home"
+)
+include(
+    ":core:common"
+)
