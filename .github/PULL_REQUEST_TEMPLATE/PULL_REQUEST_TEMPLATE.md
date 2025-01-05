@@ -1,5 +1,5 @@
 ## *🧨 Issue*
-- closed #23 
+- closed #
 
 ## *💻 Work Description*
 - 
