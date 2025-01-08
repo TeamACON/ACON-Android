@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.acon.acon"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.acon.acon"

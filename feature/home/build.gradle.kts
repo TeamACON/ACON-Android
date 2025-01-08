@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.acon.feature.home"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         minSdk = 28
