@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.acon.acon"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.acon.acon"
@@ -66,4 +66,9 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    implementation(project(":feature:home"))
+    implementation(project(":core:common"))
+    implementation(project(":domain"))
+    implementation(project(":data"))
 }
