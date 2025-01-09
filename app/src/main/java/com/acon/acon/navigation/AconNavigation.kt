@@ -4,9 +4,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import com.acon.acon.navigation.tree.areaVerificationTree
-import com.acon.acon.navigation.tree.onboardingNavigationTree
-import com.acon.acon.navigation.tree.signInNavigationTree
+import com.acon.acon.navigation.nested.areaVerificationNavigation
+import com.acon.acon.navigation.nested.onboardingNavigationNavigation
+import com.acon.acon.navigation.nested.signInNavigationNavigation
+import com.acon.acon.navigation.route.SignInRoute
 
 @Composable
 fun AconNavigation(
@@ -16,14 +17,14 @@ fun AconNavigation(
 
     NavHost(
         navController = navController,
-        startDestination = Routes.SignInRoute.SignIn,
+        startDestination = SignInRoute.SignIn,
         modifier = modifier,
     ) {
 
-        signInNavigationTree(navController)
+        signInNavigationNavigation(navController)
 
-        areaVerificationTree(navController)
+        areaVerificationNavigation(navController)
 
-        onboardingNavigationTree(navController)
+        onboardingNavigationNavigation(navController)
     }
 }

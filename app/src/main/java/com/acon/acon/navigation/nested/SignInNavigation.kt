@@ -1,22 +1,22 @@
-package com.acon.acon.navigation.tree
+package com.acon.acon.navigation.nested
 
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
-import com.acon.acon.navigation.Routes
+import com.acon.acon.navigation.route.SignInRoute
 
-internal fun NavGraphBuilder.signInNavigationTree(
+internal fun NavGraphBuilder.signInNavigationNavigation(
     navController: NavHostController
 ) {
 
-    navigation<Routes.SignInRoute>(
-        startDestination = Routes.SignInRoute.SignIn
+    navigation<SignInRoute>(
+        startDestination = SignInRoute.SignIn
     ) {
-        composable<Routes.SignInRoute.SignIn> {
+        composable<SignInRoute.SignIn> {
 //            SignInScreen(
 //                onSignInSuccess = {
-//                    navController.navigate(Routes.AreaVerificationRoute)
+//                    navController.navigate(AreaVerificationRoute)
 //                }
 //            )
         }
