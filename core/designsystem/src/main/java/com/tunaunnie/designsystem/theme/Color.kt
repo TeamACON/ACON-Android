@@ -60,3 +60,6 @@ val Gray03 = Color(0xFF989898)
 val Gray04 = Color(0xFF656565)
 val Gray05 = Color(0xFF323232)
 val Black = Color(0xFF000000)
+
+//Beige
+val Beige = Color(0xFFFFFCEF)
