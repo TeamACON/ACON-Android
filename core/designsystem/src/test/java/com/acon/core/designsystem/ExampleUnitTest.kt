@@ -1,4 +1,4 @@
-package com.tunaunnie.designsystem
+package com.acon.core.designsystem
 
 import org.junit.Test
 

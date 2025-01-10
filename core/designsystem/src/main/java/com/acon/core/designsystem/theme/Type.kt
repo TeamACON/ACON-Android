@@ -1,6 +1,5 @@
-package com.tunaunnie.designsystem.theme
+package com.acon.core.designsystem.theme
 
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.text.TextStyle
@@ -9,7 +8,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
-import com.tunaunnie.designsystem.R
+import com.acon.core.designsystem.R
 
 private val Pretendard = FontFamily(
     Font(resId = R.font.pretendard_black),
@@ -182,7 +181,7 @@ data class AconTypography(
     val cap1_11_reg: TextStyle,
 )
 
-val LocalAconTypography = staticCompositionLocalOf {
+internal val LocalAconTypography = staticCompositionLocalOf {
     AconTypography(
         head1_32_sb = TextStyle.Default,
         head2_28_sb = TextStyle.Default,

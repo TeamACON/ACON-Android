@@ -1,6 +1,5 @@
-package com.tunaunnie.designsystem.theme
+package com.acon.core.designsystem.theme
 
-import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
@@ -52,11 +51,12 @@ fun AconTheme(
     }
 
     val aconTypography = Typography
+    val aconColor = AconColors
 
-    CompositionLocalProvider(LocalAconTypography provides aconTypography) {
+    CompositionLocalProvider(LocalAconTypography provides aconTypography, LocalAconColor provides aconColor) {
         MaterialTheme(
             colorScheme = colorScheme,
-            typography = androidx.compose.material3.Typography(), // 기본 Typography
+            typography = androidx.compose.material3.Typography(),
             content = content
         )
     }
@@ -64,6 +64,7 @@ fun AconTheme(
 
 object AconTheme {
     val typography: AconTypography
-    @Composable
-    get() = LocalAconTypography.current
+        @Composable get() = LocalAconTypography.current
+    val color: AconColor
+        @Composable get() = LocalAconColor.current
 }
