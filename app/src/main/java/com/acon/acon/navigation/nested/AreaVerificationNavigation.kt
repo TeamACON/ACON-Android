@@ -14,7 +14,7 @@ internal fun NavGraphBuilder.areaVerificationNavigation(
         startDestination = AreaVerificationRoute.RequireAreaVerification
     ) {
         composable<AreaVerificationRoute.RequireAreaVerification> {
-//            RequireAreaVerificationScreen(
+//            RequireAreaVerificationScreenContainer(
 //                onNewAreaClick = {
 //                    navController.navigate(AreaVerificationRoute.CheckInMap)
 //                }, onExistAreaClick = {
@@ -25,10 +25,10 @@ internal fun NavGraphBuilder.areaVerificationNavigation(
 //            )
         }
         composable<AreaVerificationRoute.CheckInMap> {
-//            CheckInMapScreen(...)
+//            CheckInMapScreenContainer(...)
         }
         composable<AreaVerificationRoute.Complete> {
-//            CompleteScreen(
+//            CompleteScreenContainer(
 //                onFinish = {
 //                    navController.navigate(OnboardingRoute)
 //                }

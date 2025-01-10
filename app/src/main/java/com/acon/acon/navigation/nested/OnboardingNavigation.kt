@@ -14,13 +14,13 @@ internal fun NavGraphBuilder.onboardingNavigationNavigation(
         startDestination = OnboardingRoute.ChooseUnlikeFoods
     ) {
         composable<OnboardingRoute.ChooseUnlikeFoods> {
-            // ChooseUnlikeFoodsScreen()
+            // ChooseUnlikeFoodsScreenContainer()
         }
         composable<OnboardingRoute.ChoosePreferFoods> {
-            // ChoosePreferFoodsScreen()
+            // ChoosePreferFoodsScreenContainer()
         }
         composable<OnboardingRoute.ChoosePlace> {
-            // ChoosePlaceScreen()
+            // ChoosePlaceScreenContainer()
         }
     }
 }
