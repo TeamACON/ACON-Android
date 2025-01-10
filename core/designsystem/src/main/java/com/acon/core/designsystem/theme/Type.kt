@@ -21,7 +21,7 @@ private val Pretendard = FontFamily(
     Font(resId = R.font.pretendard_thin, weight = FontWeight.Thin),
 )
 
-val Typography = AconTypography(
+internal val Typography = AconTypography(
     //headline
     head1_32_sb = TextStyle(
         fontFamily = Pretendard,

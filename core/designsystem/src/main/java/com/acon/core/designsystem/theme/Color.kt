@@ -14,7 +14,7 @@ val Pink40 = Color(0xFF7D5260)
 
 
 
-val AconColors = AconColor(
+internal val AconColors = AconColor(
 
     //Orange
     Orange = Color(0xFFFF5402),
