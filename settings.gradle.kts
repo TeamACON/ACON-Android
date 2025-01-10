@@ -34,3 +34,5 @@ include(
 include(":data")
 
 include(":domain")
+include(":designsystem")
+include(":core:designsystem")
