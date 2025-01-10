@@ -2,9 +2,15 @@ package com.tunaunnie.designsystem.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import com.tunaunnie.designsystem.R
+
+private val Pretendard = FontFamily(
+    Font(resId = R.font.pretendard_black, weight = FontWeight.Bold),
+)
 
 // Set of Material typography styles to start with
 val Typography = Typography(
