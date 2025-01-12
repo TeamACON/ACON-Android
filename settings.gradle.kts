@@ -27,10 +27,7 @@ include(
     ":feature:home"
 )
 
-include(
-    ":core:common"
-)
-
 include(":data")
 include(":domain")
 include(":core:designsystem")
+include(":core:common")
