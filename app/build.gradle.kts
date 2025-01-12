@@ -74,6 +74,7 @@ dependencies {
 
     implementation(project(":feature:home"))
     implementation(project(":core:common"))
+    implementation(project(":core:designsystem"))
     implementation(project(":domain"))
     implementation(project(":data"))
 }
