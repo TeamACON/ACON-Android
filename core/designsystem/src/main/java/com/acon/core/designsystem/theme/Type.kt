@@ -182,24 +182,5 @@ data class AconTypography(
 )
 
 internal val LocalAconTypography = staticCompositionLocalOf {
-    AconTypography(
-        head1_32_sb = TextStyle.Default,
-        head2_28_sb = TextStyle.Default,
-        head3_26_sb = TextStyle.Default,
-        head4_24_sb = TextStyle.Default,
-        head5_22_sb = TextStyle.Default,
-        head6_20_sb = TextStyle.Default,
-        head7_18_sb = TextStyle.Default,
-        head8_16_sb = TextStyle.Default,
-        title1_24_b = TextStyle.Default,
-        title2_20_b = TextStyle.Default,
-        title3_18_b = TextStyle.Default,
-        subtitle1_16_med = TextStyle.Default,
-        subtitle2_14_med = TextStyle.Default,
-        body1_15_reg = TextStyle.Default,
-        body2_14_reg = TextStyle.Default,
-        body3_13_reg = TextStyle.Default,
-        body4_12_reg = TextStyle.Default,
-        cap1_11_reg = TextStyle.Default
-    )
+    Typography
 }
