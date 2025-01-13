@@ -19,6 +19,7 @@ uiTextAndroid = "1.6.6"
 material3AndroidVersion = "1.3.1"
 navigationCompose = "2.8.2"
 kotlinxSerializationJson = "1.7.3"
+navigationRuntimeKtx = "2.8.5"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -46,6 +47,7 @@ androidx-ui-text-android = { group = "androidx.compose.ui", name = "ui-text-andr
 material3-android = { group = "androidx.compose.material3", name = "material3-android", version.ref = "material3AndroidVersion" }
 
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
+androidx-navigation-runtime-ktx = { group = "androidx.navigation", name = "navigation-runtime-ktx", version.ref = "navigationRuntimeKtx" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

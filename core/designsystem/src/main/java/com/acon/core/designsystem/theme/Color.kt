@@ -2,6 +2,7 @@ package com.acon.core.designsystem.theme
 
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 
 val Purple80 = Color(0xFFD0BCFF)
@@ -12,109 +13,89 @@ val Purple40 = Color(0xFF6650a4)
 val PurpleGrey40 = Color(0xFF625b71)
 val Pink40 = Color(0xFF7D5260)
 
-
-
 internal val AconColors = AconColor(
 
-    //Orange
-    Orange = Color(0xFFFF5402),
-    Orange900 = Color(0xFF770B00),
-    Orange800 = Color(0xFF9A0C00),
-    Orange700 = Color(0xFFBB1A00),
-    Orange600 = Color(0xFFD83100),
-    Orange500 = Color(0xFFF24B00),
-    Orange400 = Color(0xFFFF6928),
-    Orange300 = Color(0xFFFF8950),
-    Orange200 = Color(0xFFFFAA7C),
-    Orange100 = Color(0xFFFFCCAD),
-    Orange50 = Color(0xFFFFEEE3),
+    //Main
+    Main_org0_deep = Color(0xFFF24B00),
+    Main_org0 = Color(0xFFFF5402),
+    Main_org1 = Color(0xFFFF6928),
+    Main_org2 = Color(0xFFFF8950),
+    Main_org3 = Color(0xFFFFAA7C),
+    Main_org4 = Color(0xFFFFCCAD),
+    Main_org5 = Color(0xFFFFEEE3),
+    Main_org50 = Color(0x80FF6928),
+    Main_org35 = Color(0x59FF8950),
 
-    //Brown
-    Brown = Color(0xFF723400),
-    Brown900 = Color(0xFF592E0F),
-    Brown800 = Color(0xFF743D14),
-    Brown700 = Color(0xFF8E4E1E),
-    Brown600 = Color(0xFFA7602D),
-    Brown500 = Color(0xFFBE7542),
-    Brown400 = Color(0xFFD28B5B),
-    Brown300 = Color(0xFFE2A278),
-    Brown200 = Color(0xFFF0BC9B),
-    Brown100 = Color(0xFFF9D6C1),
-    Brown50 = Color(0xFFFEF1EA),
-
-    //Green
-    Green = Color(0xFF3DA13F),
-    Green900 = Color(0xFF004407),
-    Green800 = Color(0xFF00590A),
-    Green700 = Color(0xFF006F13),
-    Green600 = Color(0xFF168424),
-    Green500 = Color(0xFF37993A),
-    Green400 = Color(0xFF57AE54),
-    Green300 = Color(0xFF7AC174),
-    Green200 = Color(0xFF9FD498),
-    Green100 = Color(0xFFC5E6BF),
-    Green50 = Color(0xFFEBF7E9),
-
-    //Gray
+    //Gray Scale
     White = Color(0xFFFFFFFF),
-    Gray01 = Color(0xFFEDEDED),
-    Gray02 = Color(0xFFCBCBCB),
-    Gray03 = Color(0xFF989898),
-    Gray04 = Color(0xFF656565),
-    Gray05 = Color(0xFF323232),
+    Gray0 = Color(0xFFEDEDED),
+    Gray1 = Color(0xFFCBCBCB),
+    Gray2 = Color(0xFF989898),
+    Gray3 = Color(0xFF656565),
+    Gray4 = Color(0xFF323232),
+    Gray5 = Color(0xFFEDEDED),
+    Gray6 = Color(0xFFCBCBCB),
+    Gray7 = Color(0xFF989898),
+    Gray8 = Color(0xFF656565),
+    Gray9 = Color(0xFF323232),
     Black = Color(0xFF000000),
+    Dim_b_60 = Color(0x99000000),
+    Gla_b_30 = Color(0x4D000000),
+    Gla_w_20 = Color(0x33FFFFFF),
+    Gla_w_10 = Color(0x1AFFFFFF),
 
-    //Beige
-    Beige = Color(0xFFFFFCEF)
+    Dim_gra_1 = Brush.horizontalGradient(
+        colors = listOf(Color(0x0D000000), Color(0x00000000), Color(0x0D000000))
+    ),
+    Dim_gra_2 = Brush.horizontalGradient(
+        colors = listOf(Color(0x0D111111), Color(0x00111111), Color(0x14111111))
+    ),
+
+    //Error Case
+    Error_red1 = Color(0xFFFF3434),
+    Error_red2 = Color(0xFFFFD9D9),
+    Error_blue1 = Color(0xFF4375FF),
+    Error_blue2 = Color(0xFFD2DEFF)
 )
 
 @Immutable
 data class AconColor(
-    val Orange: Color,
-    val Orange900: Color,
-    val Orange800: Color,
-    val Orange700: Color,
-    val Orange600: Color,
-    val Orange500: Color,
-    val Orange400: Color,
-    val Orange300: Color,
-    val Orange200: Color,
-    val Orange100: Color,
-    val Orange50: Color,
 
-    val Brown: Color,
-    val Brown900: Color,
-    val Brown800: Color,
-    val Brown700: Color,
-    val Brown600: Color,
-    val Brown500: Color,
-    val Brown400: Color,
-    val Brown300: Color,
-    val Brown200: Color,
-    val Brown100: Color,
-    val Brown50: Color,
-
-    val Green: Color,
-    val Green900: Color,
-    val Green800: Color,
-    val Green700: Color,
-    val Green600: Color,
-    val Green500: Color,
-    val Green400: Color,
-    val Green300: Color,
-    val Green200: Color,
-    val Green100: Color,
-    val Green50: Color,
+    val Main_org0_deep: Color,
+    val Main_org0: Color,
+    val Main_org1: Color,
+    val Main_org2: Color,
+    val Main_org3: Color,
+    val Main_org4: Color,
+    val Main_org5: Color,
+    val Main_org50: Color,
+    val Main_org35: Color,
 
     val White: Color,
-    val Gray01: Color,
-    val Gray02: Color,
-    val Gray03: Color,
-    val Gray04: Color,
-    val Gray05: Color,
+    val Gray0: Color,
+    val Gray1: Color,
+    val Gray2: Color,
+    val Gray3: Color,
+    val Gray4: Color,
+    val Gray5: Color,
+    val Gray6: Color,
+    val Gray7: Color,
+    val Gray8: Color,
+    val Gray9: Color,
     val Black: Color,
+    val Dim_b_60: Color,
+    val Gla_b_30: Color,
+    val Gla_w_20: Color,
+    val Gla_w_10: Color,
 
-    val Beige: Color,
+    val Dim_gra_1: Brush,
+    val Dim_gra_2: Brush,
+
+    val Error_red1: Color,
+    val Error_red2: Color,
+    val Error_blue1: Color,
+    val Error_blue2: Color,
+
 )
 
 internal val LocalAconColor = staticCompositionLocalOf {
