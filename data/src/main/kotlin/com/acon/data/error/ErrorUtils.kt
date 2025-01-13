@@ -1,5 +1,6 @@
 package com.acon.data.error
 
+import com.acon.domain.error.RootError
 import kotlin.coroutines.cancellation.CancellationException
 
 internal inline fun <R> runCatchingWith(
