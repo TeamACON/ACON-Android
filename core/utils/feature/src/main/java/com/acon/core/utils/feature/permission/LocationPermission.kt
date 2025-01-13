@@ -18,6 +18,7 @@ import kotlinx.coroutines.withContext
 /**
  * 위치 권한을 확인하고 요청하는 컴포저블
  * @param onPermissionGranted 권한이 허용되었을 때 실행할 동작
+ * TODO : 다이얼로그 컴포넌트 생성 후 수정
  */
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
