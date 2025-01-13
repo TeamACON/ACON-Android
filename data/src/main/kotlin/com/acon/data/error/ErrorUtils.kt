@@ -18,18 +18,3 @@ internal inline fun <R> runCatchingWith(
         Result.failure(e)
     }
 }
-
-internal inline fun <reified T : RootError> children(): Array<T> {
-    val childErrors = mutableListOf<T>()
-    val subclasses = T::class.sealedSubclasses
-    subclasses.forEach { subclass ->
-        val codeProperty = subclass.members.firstOrNull { it.name == "code" }
-        val codeValue = codeProperty?.call(subclass.objectInstance ?: subclass.constructors.first().call())
-
-        if (codeValue is Int && codeValue != 0) {
-            val errorInstance = subclass.constructors.first().call()
-            childErrors.add(errorInstance)
-        }
-    }
-    return childErrors.toTypedArray()
-}
