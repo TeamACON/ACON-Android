@@ -11,9 +11,9 @@ acon은 “No more research”라는 슬로건을 가진 지도앱입니다.
 <br/>
 
 ## 🟨 *****SCREENSHOT*****
-| 홈 |             신입/인턴             |              채팅홈               |              채팅방               |
+| 동네인증 |            온보딩              |              장소탐색               |              업로드               |
 |:---:|:-----------------------------------------------------------------------------:|:-----------------------------------------------------------------------------:|:-----------------------------------------------------------------------------:|
-| <img width="200" src="https://github.com/user-attachments/assets/3be9bce3-90c0-4e65-97ef-5f84f81d8b51"/> | <img width="200" src="https://github.com/user-attachments/assets/993fd1d7-8982-4521-a357-ce4130a253ad"/> | <img width="200" src="https://github.com/user-attachments/assets/d5e1ffe7-ea40-4a98-a3ec-309a74dda547"/> | <img width="200" src="https://github.com/user-attachments/assets/7dd370b2-f805-47ad-8f81-9d2be6ff5bac"/> |
+| <img width="200" src=""/> | <img width="200" src=""/> | <img width="200" src=""/> | <img width="200" src=""/> |
 
 <br/>
 
