@@ -11,21 +11,19 @@ acon은 “No more research”라는 슬로건을 가진 지도앱입니다.
 <br/>
 
 ## 🟨 *****SCREENSHOT*****
-| 동네인증 |            온보딩              |              장소탐색               |              업로드               |
-|:---:|:-----------------------------------------------------------------------------:|:-----------------------------------------------------------------------------:|:-----------------------------------------------------------------------------:|
-| <img width="200" src=""/> | <img width="200" src=""/> | <img width="200" src=""/> | <img width="200" src=""/> |
+| 로그인 |            동네인증              |              온보딩               |              장소탐색               |              업로드               |
+|:---:|:-----------------------------------------------------------------------------:|:-----------------------------------------------------------------------------:|:-----------------------------------------------------------------------------:|:-----------------------------------------------------------------------------:|
+| <img width="200" src=""/> | <img width="200" src=""/> | <img width="200" src=""/> | <img width="200" src=""/> | <img width="200" src=""/> |
 
 <br/>
 
 ## 📗 *****Convention*****
 [ 💻 Github Convention](https://stripe-shoemaker-907.notion.site/Github-Convention-d5c57b9b06d744bb99d503d335fc8e5d?pvs=4) <br>
-[ ⚠️ Naming Convention](https://stripe-shoemaker-907.notion.site/Naming-Convention-f929fcaf44684e8598df9f50e95cb192?pvs=4) <br>
+[ 🚸 Naming Convention](https://stripe-shoemaker-907.notion.site/Naming-Convention-f929fcaf44684e8598df9f50e95cb192?pvs=4) <br>
 [ 📛 Coding Detail Convention](https://stripe-shoemaker-907.notion.site/Coding-Detail-Convention-43f146988f114a5bb34c2e850e0af90f?pvs=4) <br>
 [ 🏠 Composable Convention](https://stripe-shoemaker-907.notion.site/Composable-Convention-df0dff2511764ef8a4670bd9b865b684?pvs=4) <br>
 [ 🪐 Orbit Architecture](https://stripe-shoemaker-907.notion.site/Orbit-Architecture-0c3f47033ef242be9bf9ece745f064cd?pvs=4) <br>
 [ 🍎 Issue Convention & PR Convention](https://stripe-shoemaker-907.notion.site/Orbit-Architecture-0c3f47033ef242be9bf9ece745f064cd?pvs=4) <br>
-
-<br/>
 
 ## 🔧 *****TECH STACKS*****
 
@@ -44,12 +42,12 @@ acon은 “No more research”라는 슬로건을 가진 지도앱입니다.
 
 ## 🩷 *****우리의 협업 룰*****
 > ## 🐣 그라운드 룰
-1️⃣ 불만이 생기면 서로 솔직하게 얘기하기
-2️⃣ 서로의 진행 상황에 대해 관심 갖고 지켜봐주기
-3️⃣ 질문 많이해도 친절하게 답하기
-4️⃣ 질문 전에 본인이 질문할 내용 정확히 다시 확인하기
-5️⃣ 서로에게 칭찬 많이 해주기
-6️⃣ 서로에게 상처주지 않는 둥글고 예쁜 말투 사용하기
+1️⃣ 불만이 생기면 서로 솔직하게 얘기하기 <br>
+2️⃣ 서로의 진행 상황에 대해 관심 갖고 지켜봐주기 <br>
+3️⃣ 질문 많이해도 친절하게 답하기 <br>
+4️⃣ 질문 전에 본인이 질문할 내용 정확히 다시 확인하기 <br>
+5️⃣ 서로에게 칭찬 많이 해주기 <br>
+6️⃣ 서로에게 상처주지 않는 둥글고 예쁜 말투 사용하기 <br>
 
 <br/>
 
@@ -57,8 +55,6 @@ acon은 “No more research”라는 슬로건을 가진 지도앱입니다.
 1. 6시간안에 PR 확인하기 (합숙 동안)
 2. 친절하게 알려주기
 3. 본인이 가능한 선에서 피드백 적용하되, 최대한 해보기
-
-<br/>
 
 ## 📁 *****Foldering*****
 
