@@ -1,7 +1,9 @@
 package com.acon.domain.model.spot
 
+import androidx.compose.runtime.Immutable
 import com.acon.domain.type.SpotType
 
+@Immutable
 data class Spot(
     val id: Int,
     val image: String,
