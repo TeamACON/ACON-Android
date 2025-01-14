@@ -10,7 +10,7 @@ internal fun NavGraphBuilder.signInNavigationNavigation(
     navController: NavHostController
 ) {
 
-    navigation<SignInRoute>(
+    navigation<SignInRoute.Graph>(
         startDestination = SignInRoute.SignIn
     ) {
         composable<SignInRoute.SignIn> {

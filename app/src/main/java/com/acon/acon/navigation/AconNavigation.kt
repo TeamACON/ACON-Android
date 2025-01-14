@@ -17,7 +17,7 @@ fun AconNavigation(
 
     NavHost(
         navController = navController,
-        startDestination = SignInRoute.SignIn,
+        startDestination = SignInRoute.Graph,
         modifier = modifier,
     ) {
 
