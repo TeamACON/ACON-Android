@@ -13,34 +13,40 @@ import androidx.compose.ui.unit.dp
 import com.acon.core.designsystem.theme.AconTheme
 
 @Composable
-fun AconTextSnackBar(message: String) {
+fun AconTextSnackBar(
+    message: String,
+    modifier: Modifier = Modifier,
+) {
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .wrapContentHeight()
             .padding(16.dp),
     ) {
-        AconSnackBar {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 8.dp, vertical = 4.dp),
-                contentAlignment = Alignment.CenterStart
-            ) {
-                Text(
-                    text = message,
-                    style = AconTheme.typography.body3_13_reg,
-                    color = AconTheme.color.White
-                )
+        AconSnackBar(
+            modifier = Modifier.fillMaxWidth(),
+            content = {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 8.dp, vertical = 4.dp),
+                    contentAlignment = Alignment.CenterStart
+                ) {
+                    Text(
+                        text = message,
+                        style = AconTheme.typography.body3_13_reg,
+                        color = AconTheme.color.White
+                    )
+                }
             }
-        }
+        )
     }
 }
 
 @Preview
 @Composable
 private fun PreviewAconTextSnackBar() {
-    AconTextSnackBar(message = "토스트메세지가 작성됩니다.")
+    AconTextSnackBar(message = "토스트메세지가 작성됩니다.", modifier = Modifier)
 }
 
 @Preview
