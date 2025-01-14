@@ -1,5 +1,6 @@
 package com.acon.core.designsystem.component.button
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -23,8 +24,7 @@ fun AconOutlinedLargeButton(
     borderWidth: Dp = 1.dp,
     cornerRadius: Dp = 6.dp,
     modifier: Modifier = Modifier,
-    paddingHorizontal: Dp = 16.dp,
-    paddingVertical: Dp = 14.dp,
+    contentPadding: PaddingValues = PaddingValues(horizontal = 14.dp, vertical = 14.dp),
     onClick: () -> Unit,
 ) {
     AconButton (
@@ -33,8 +33,7 @@ fun AconOutlinedLargeButton(
         borderWidth = borderWidth,
         modifier = modifier,
         cornerRadius = cornerRadius,
-        paddingHorizontal = paddingHorizontal,
-        paddingVertical = paddingVertical,
+        contentPadding = contentPadding,
         onClick = onClick,
     ) {
         Text(
@@ -61,8 +60,7 @@ internal fun PreviewAconOutlinedButton() {
             borderWidth = 1.dp,
             cornerRadius = 6.dp,
             modifier = Modifier,
-            paddingHorizontal = 16.dp,
-            paddingVertical = 14.dp,
+            contentPadding =PaddingValues(horizontal = 14.dp, vertical = 14.dp),
             onClick = {}
         )
     }

@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
@@ -23,8 +24,7 @@ fun AconButton(
     modifier: Modifier = Modifier,
     borderWidth: Dp = 0.dp,
     cornerRadius: Dp = 0.dp,
-    paddingHorizontal: Dp = 0.dp,
-    paddingVertical: Dp = 0.dp,
+    contentPadding: PaddingValues = PaddingValues(horizontal = 0.dp, vertical = 0.dp),
     onClick: () -> Unit,
     content: @Composable () -> Unit
     ) {
@@ -34,7 +34,7 @@ fun AconButton(
           .background(color = backGroundColor)
           .clickable { onClick() }
           .border(width = borderWidth, color = borderColor, shape = RoundedCornerShape(cornerRadius))
-          .padding(horizontal = paddingHorizontal, vertical = paddingVertical),
+          .padding(contentPadding),
         contentAlignment = Alignment.Center
     ) {
         content()
@@ -51,8 +51,7 @@ internal fun PreviewAcornButton() {
             modifier = Modifier,
             borderWidth = Dp.Hairline,
             cornerRadius = 4.dp,
-            paddingHorizontal = 16.dp,
-            paddingVertical = 14.dp,
+            contentPadding =PaddingValues(horizontal = 14.dp, vertical = 14.dp),
             onClick = {},
             content = {}
         )

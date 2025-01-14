@@ -1,6 +1,7 @@
 package com.acon.core.designsystem.component.button
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -37,8 +38,7 @@ fun AconGoogleLoginButton(
             .fillMaxWidth(),
         borderWidth = borderWidth,
         cornerRadius = cornerRadius,
-        paddingHorizontal = 93.dp,
-        paddingVertical = 12.dp,
+        contentPadding = PaddingValues(horizontal = 93.dp, vertical = 12.dp),
         onClick = onClick
     ) {
         Row(

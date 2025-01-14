@@ -1,5 +1,6 @@
 package com.acon.core.designsystem.component.button
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -20,16 +21,14 @@ fun AconFilledMediumButton(
     isEnabled: Boolean = true,
     cornerRadius: Dp = 4.dp,
     modifier: Modifier = Modifier,
-    paddingHorizontal: Dp = 14.dp,
-    paddingVertical: Dp = 14.dp,
+    contentPadding: PaddingValues = PaddingValues(horizontal = 14.dp, vertical = 14.dp),
     onClick: () -> Unit,
 ) {
     AconButton(
         backGroundColor = if(isEnabled) enabledBackgroundColor else disabledBackgroundColor,
         modifier = modifier,
         cornerRadius = cornerRadius,
-        paddingHorizontal = paddingHorizontal,
-        paddingVertical = paddingVertical,
+        contentPadding = contentPadding,
         onClick = onClick,
     ) {
         Text(
@@ -53,8 +52,7 @@ internal fun PreviewAconMediumButton() {
             isEnabled = true,
             cornerRadius = 4.dp,
             modifier = Modifier,
-            paddingHorizontal = 16.dp,
-            paddingVertical = 14.dp,
+            contentPadding =PaddingValues(horizontal = 14.dp, vertical = 14.dp),
             onClick = {}
         )
     }
