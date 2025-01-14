@@ -26,6 +26,7 @@ hiltCompose = "1.2.0"
 javaxInject = "1"
 uiToolingPreviewAndroid = "1.7.6"
 uiAndroid = "1.7.6"
+naverMapCompose = "1.8.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -60,6 +61,8 @@ javax-inject = { group = "javax.inject", name = "javax.inject", version.ref = "j
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 androidx-ui-tooling-preview-android = { group = "androidx.compose.ui", name = "ui-tooling-preview-android", version.ref = "uiToolingPreviewAndroid" }
 androidx-ui-android = { group = "androidx.compose.ui", name = "ui-android", version.ref = "uiAndroid" }
+
+naver-map-compose = { module = "io.github.fornewid:naver-map-compose", version.ref = "naverMapCompose" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
