@@ -6,6 +6,9 @@ import kotlinx.serialization.Serializable
 sealed interface OnboardingRoute {
 
     @Serializable
+    data object Graph : OnboardingRoute
+
+    @Serializable
     data object ChooseUnlikeFoods : OnboardingRoute
 
     @Serializable

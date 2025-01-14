@@ -10,7 +10,7 @@ internal fun NavGraphBuilder.onboardingNavigationNavigation(
     navController: NavHostController
 ) {
 
-    navigation<OnboardingRoute>(
+    navigation<OnboardingRoute.Graph>(
         startDestination = OnboardingRoute.ChooseUnlikeFoods
     ) {
         composable<OnboardingRoute.ChooseUnlikeFoods> {
