@@ -54,7 +54,7 @@ internal val AconColors = AconColor(
     //Error Case
     Error_red1 = Color(0xFFFF3434),
     Error_red2 = Color(0xFFFFD9D9),
-    Error_blue1 = Color(0xFF4375FF),
+    Success_blue1 = Color(0xFF4375FF),
     Error_blue2 = Color(0xFFD2DEFF)
 )
 
@@ -93,7 +93,7 @@ data class AconColor(
 
     val Error_red1: Color,
     val Error_red2: Color,
-    val Error_blue1: Color,
+    val Success_blue1: Color,
     val Error_blue2: Color,
 
 )
