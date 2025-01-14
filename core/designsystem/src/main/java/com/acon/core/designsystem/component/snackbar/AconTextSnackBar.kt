@@ -40,12 +40,12 @@ fun AconTextSnackBar(message: String) {
 
 @Preview
 @Composable
-fun PreviewAconTextSnackBar() {
+private fun PreviewAconTextSnackBar() {
     AconTextSnackBar(message = "토스트메세지가 작성됩니다.")
 }
 
 @Preview
 @Composable
-fun PreviewAconTextSnackBar1() {
+private fun PreviewAconTextSnackBar1() {
     AconTextSnackBar(message = "2025.01.07 마케팅 수신에 거부하셨습니다.")
 }

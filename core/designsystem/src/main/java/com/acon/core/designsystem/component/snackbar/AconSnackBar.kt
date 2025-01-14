@@ -26,7 +26,7 @@ fun AconSnackBar(content: @Composable () -> Unit) {
 
 @Preview(showBackground = true)
 @Composable
-fun AconSnackBarPreview() {
+private fun AconSnackBarPreview() {
     AconSnackBar {
         Text(
             text = "기본 스낵바 메시지입니다.",

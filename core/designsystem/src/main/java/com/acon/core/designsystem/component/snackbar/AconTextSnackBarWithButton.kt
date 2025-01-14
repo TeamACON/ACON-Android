@@ -50,7 +50,7 @@ fun AconTextSnackBarWithButton(
 
 @Preview
 @Composable
-fun PreviewAconTextSnackBarWithButton() {
+private fun PreviewAconTextSnackBarWithButton() {
     AconTheme {
         AconTextSnackBarWithButton(
             message = "메세지가 작성됩니다."
@@ -62,7 +62,7 @@ fun PreviewAconTextSnackBarWithButton() {
 
 @Preview
 @Composable
-fun PreviewAconTextSnackBarWithButton2() {
+private fun PreviewAconTextSnackBarWithButton2() {
     AconTheme {
         AconTextSnackBarWithButton(
             message = "모든 추천 리스트를 확인하셨습니다.",
