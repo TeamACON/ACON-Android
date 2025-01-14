@@ -1,6 +1,7 @@
 [versions]
 accompanistPermissions = "0.37.0"
 agp = "8.6.0"
+composeStableMarker = "1.0.5"
 kotlin = "2.0.21"
 coreKtx = "1.15.0"
 junit = "4.13.2"
@@ -31,6 +32,7 @@ orbit = "9.0.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+compose-stable-marker = { module = "com.github.skydoves:compose-stable-marker", version.ref = "composeStableMarker" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
