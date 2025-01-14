@@ -11,7 +11,6 @@ import androidx.compose.ui.unit.sp
 import com.acon.core.designsystem.R
 
 private val Pretendard = FontFamily(
-    Font(resId = R.font.pretendard_black),
     Font(resId = R.font.pretendard_bold, weight = FontWeight.W700),
     Font(resId = R.font.pretendard_extrabold, weight = FontWeight.ExtraBold),
     Font(resId = R.font.pretendard_light, weight = FontWeight.Light),

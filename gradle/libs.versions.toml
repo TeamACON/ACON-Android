@@ -8,16 +8,19 @@ junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
 lifecycleRuntimeKtx = "2.8.7"
-activityCompose = "1.9.3"
+activityCompose = "1.8.0"
 composeBom = "2024.04.01"
 appcompat = "1.7.0"
+mapSdk = "3.19.1"
 material = "1.12.0"
 jetbrainsKotlinJvm = "2.0.21"
+naverMapLocation = "21.0.2"
 navigationCompose = "2.8.2"
 kotlinxSerializationJson = "1.7.3"
 okhttp = "4.12.0"
 retrofitKotlinSerializationConverter = "1.0.0"
 retrofit = "2.11.0"
+playServicesLocation = "21.0.1"
 uiGraphicsAndroid = "1.6.6"
 foundationAndroid = "1.7.6"
 material3Android = "1.2.1"
@@ -31,6 +34,7 @@ javaxInject = "1"
 uiToolingPreviewAndroid = "1.7.6"
 uiAndroid = "1.7.6"
 orbit = "9.0.0"
+naverMapCompose = "1.8.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -50,6 +54,7 @@ androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-man
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+map-sdk = { module = "com.naver.maps:map-sdk", version.ref = "mapSdk" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 androidx-ui-graphics-android = { group = "androidx.compose.ui", name = "ui-graphics-android", version.ref = "uiGraphicsAndroid" }
 androidx-foundation-android = { group = "androidx.compose.foundation", name = "foundation-android", version.ref = "foundationAndroid" }
@@ -74,6 +79,10 @@ retrofit-kotlin-serialization-converter = { group = "com.jakewharton.retrofit", 
 
 orbit-compose = { module = "org.orbit-mvi:orbit-compose", version.ref = "orbit" }
 orbit-viewmodel = { module = "org.orbit-mvi:orbit-viewmodel", version.ref = "orbit" }
+
+naver-map-compose = { module = "io.github.fornewid:naver-map-compose", version.ref = "naverMapCompose" }
+naver-map-location = { module = "io.github.fornewid:naver-map-location", version.ref = "naverMapLocation" }
+play-services-location = { module = "com.google.android.gms:play-services-location", version.ref = "playServicesLocation" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
