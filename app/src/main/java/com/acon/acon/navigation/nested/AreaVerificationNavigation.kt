@@ -10,7 +10,7 @@ internal fun NavGraphBuilder.areaVerificationNavigation(
     navController: NavHostController
 ) {
 
-    navigation<AreaVerificationRoute>(
+    navigation<AreaVerificationRoute.Graph>(
         startDestination = AreaVerificationRoute.RequireAreaVerification
     ) {
         composable<AreaVerificationRoute.RequireAreaVerification> {

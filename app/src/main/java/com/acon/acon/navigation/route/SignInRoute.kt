@@ -6,5 +6,8 @@ import kotlinx.serialization.Serializable
 sealed interface SignInRoute {
 
     @Serializable
+    data object Graph : SignInRoute
+
+    @Serializable
     data object SignIn : SignInRoute
 }
