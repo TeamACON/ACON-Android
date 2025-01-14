@@ -5,6 +5,7 @@ import com.acon.data.dto.request.ConditionRequest
 import com.acon.data.dto.request.FilterListRequest
 import com.acon.data.dto.request.SpotListRequest
 import com.acon.data.error.runCatchingWith
+import com.acon.domain.error.spot.FetchSpotListError
 import com.acon.domain.model.spot.Condition
 import com.acon.domain.model.spot.Spot
 import com.acon.domain.repository.SpotRepository
@@ -21,7 +22,7 @@ class SpotRepositoryImpl @Inject constructor(
         walkingTime: Int,
         priceRange: Int
     ): Result<List<Spot>> {
-        return runCatchingWith {
+        return runCatchingWith(*FetchSpotListError.createErrorInstances()) {
             spotRemoteDataSource.fetchSpotList(
                 SpotListRequest(
                     latitude = latitude,
