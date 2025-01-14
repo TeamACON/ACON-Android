@@ -5,10 +5,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.acon.core.designsystem.R
 import com.acon.core.designsystem.theme.AconTheme
 
 @Composable
@@ -49,7 +51,7 @@ fun AconOutlinedLargeButton(
 internal fun PreviewAconOutlinedButton() {
     AconTheme {
         AconOutlinedLargeButton(
-            text = "button",
+            text = stringResource(R.string.login_btn_preview_content),
             textStyle = AconTheme.typography.head8_16_sb,
             textColor = AconTheme.color.Gray3,
             enabledBorderColor = AconTheme.color.Gray5,

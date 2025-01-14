@@ -11,7 +11,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -45,12 +48,12 @@ fun AconGoogleLoginButton(
            verticalAlignment = Alignment.CenterVertically
         ) {
             Image(
-                painter = painterResource(R.drawable.ic_google),
-                contentDescription = "구글 로그인 버튼"
+                imageVector = ImageVector.vectorResource(R.drawable.ic_google),
+                contentDescription = stringResource(R.string.google_login_btn_description)
             )
             Spacer(modifier = Modifier.size(4.dp))
             Text(
-                text = "Google로 계속하기",
+                text = stringResource(R.string.google_login_btn_content),
                 style = textStyle,
                 color = textColor,
                 textAlign = TextAlign.Center,
