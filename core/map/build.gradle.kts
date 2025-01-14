@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.compose.compiler)
 }
 
 android {
@@ -40,6 +41,8 @@ android {
 
 dependencies {
 
+    implementation(project(":core:utils:feature"))
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -50,4 +53,6 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 
     implementation(libs.naver.map.compose)
+    implementation(libs.play.services.location)
+    implementation(libs.naver.map.location)
 }

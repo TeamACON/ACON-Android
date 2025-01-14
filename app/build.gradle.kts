@@ -1,3 +1,6 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -5,6 +8,10 @@ plugins {
     alias(libs.plugins.hilt.android)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.compose.compiler)
+}
+
+val localProperties = Properties().apply {
+    load(project.rootProject.file("local.properties").inputStream())
 }
 
 android {
@@ -22,6 +29,8 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+        manifestPlaceholders["naverClientId"] = getPropertyKey("naver_client_id")
+        buildConfigField("String", "NAVER_CLIENT_ID", "String.valueOf(\"${localProperties["naver_client_id"]}\")")
     }
 
     buildTypes {
@@ -42,6 +51,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
@@ -53,12 +63,19 @@ android {
     }
 }
 
+fun getPropertyKey(propertyKey: String): String {
+    val nullableProperty: String? =
+        gradleLocalProperties(rootDir, providers).getProperty(propertyKey)
+    return nullableProperty ?: "null"
+}
+
 dependencies {
 
     implementation(project(":feature:home"))
     implementation(project(":core:common"))
     implementation(project(":core:designsystem"))
     implementation(project(":core:utils:feature"))
+    implementation(project(":core:map"))
     implementation(project(":domain"))
     implementation(project(":data"))
 
@@ -83,4 +100,8 @@ dependencies {
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
     implementation(libs.hilt.compose)
+
+    implementation(libs.naver.map.compose)
+    implementation(libs.play.services.location)
+    implementation(libs.naver.map.location)
 }
