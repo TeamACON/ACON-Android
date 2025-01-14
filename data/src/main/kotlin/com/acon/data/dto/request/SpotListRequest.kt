@@ -1,4 +1,4 @@
-package com.acon.data.request
+package com.acon.data.dto.request
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
