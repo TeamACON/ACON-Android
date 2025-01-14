@@ -10,4 +10,5 @@ java {
 
 dependencies {
     implementation(libs.javax.inject)
+    compileOnly(libs.compose.stable.marker)
 }
