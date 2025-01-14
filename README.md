@@ -23,7 +23,7 @@ acon은 “No more research”라는 슬로건을 가진 지도앱입니다.
 [ 📛 Coding Detail Convention](https://stripe-shoemaker-907.notion.site/Coding-Detail-Convention-43f146988f114a5bb34c2e850e0af90f?pvs=4) <br>
 [ 🏠 Composable Convention](https://stripe-shoemaker-907.notion.site/Composable-Convention-df0dff2511764ef8a4670bd9b865b684?pvs=4) <br>
 [ 🪐 Orbit Architecture](https://stripe-shoemaker-907.notion.site/Orbit-Architecture-0c3f47033ef242be9bf9ece745f064cd?pvs=4) <br>
-[ 🍎 Issue Convention & PR Convention](https://stripe-shoemaker-907.notion.site/Orbit-Architecture-0c3f47033ef242be9bf9ece745f064cd?pvs=4) <br>
+[ 🍎 Issue Convention & PR Convention](https://stripe-shoemaker-907.notion.site/Issue-Convention-PR-Convention-4f243543340145c1b567bb61a45e9a3a?pvs=4) <br>
 
 ## 🔧 *****TECH STACKS*****
 
