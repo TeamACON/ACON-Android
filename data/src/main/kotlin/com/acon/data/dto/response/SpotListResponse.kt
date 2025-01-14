@@ -6,6 +6,11 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class SpotListResponse(
+    @SerialName("spotList") val spotList: List<SpotResponse>
+)
+
+@Serializable
+data class SpotResponse(
     @SerialName("id") val id: Int,
     @SerialName("image") val image: String,
     @SerialName("matchingRate") val matchingRate: Int,
