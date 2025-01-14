@@ -28,6 +28,8 @@ ksp = "2.0.21-1.0.27"
 hilt = "2.52"
 hiltCompose = "1.2.0"
 javaxInject = "1"
+uiToolingPreviewAndroid = "1.7.6"
+uiAndroid = "1.7.6"
 orbit = "9.0.0"
 
 [libraries]
@@ -62,6 +64,8 @@ hilt-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", vers
 javax-inject = { group = "javax.inject", name = "javax.inject", version.ref = "javaxInject" }
 
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
+androidx-ui-tooling-preview-android = { group = "androidx.compose.ui", name = "ui-tooling-preview-android", version.ref = "uiToolingPreviewAndroid" }
+androidx-ui-android = { group = "androidx.compose.ui", name = "ui-android", version.ref = "uiAndroid" }
 okhttp-bom = { group = "com.squareup.okhttp3", name = "okhttp-bom", version.ref = "okhttp" }
 okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
 logging-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okhttp" }
