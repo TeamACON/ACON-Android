@@ -10,14 +10,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.acon.core.designsystem.theme.AconColors
+import com.acon.core.designsystem.theme.AconTheme
 
 @Composable
 fun AconSnackBar(content: @Composable () -> Unit) {
     Box(
         modifier = Modifier
             .clip(RoundedCornerShape(6.dp))
-            .background(color = AconColors.Gray8)
+            .background(color = AconTheme.color.Gray8)
             .padding(vertical = 12.dp, horizontal = 16.dp)
     ) {
         content()
@@ -30,7 +30,7 @@ private fun AconSnackBarPreview() {
     AconSnackBar {
         Text(
             text = "기본 스낵바 메시지입니다.",
-            color = AconColors.White
+            color = AconTheme.color.White
         )
     }
 }

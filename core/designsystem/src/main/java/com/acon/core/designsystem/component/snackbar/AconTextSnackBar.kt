@@ -10,7 +10,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.acon.core.designsystem.theme.AconColors
 import com.acon.core.designsystem.theme.AconTheme
 
 @Composable
@@ -31,7 +30,7 @@ fun AconTextSnackBar(message: String) {
                 Text(
                     text = message,
                     style = AconTheme.typography.body3_13_reg,
-                    color = AconColors.White
+                    color = AconTheme.color.White
                 )
             }
         }

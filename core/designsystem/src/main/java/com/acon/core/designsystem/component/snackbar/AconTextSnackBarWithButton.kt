@@ -12,7 +12,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.acon.core.designsystem.theme.AconColors
 import com.acon.core.designsystem.theme.AconTheme
 
 @Composable
@@ -34,14 +33,14 @@ fun AconTextSnackBarWithButton(
                 Text(
                     text = message,
                     style = AconTheme.typography.body3_13_reg,
-                    color = AconColors.White,
+                    color = AconTheme.color.White,
                     modifier = Modifier.weight(1f)
                 )
                 Spacer(modifier = Modifier.width(10.dp))
                 Text(
                     text = buttonText,
                     style = AconTheme.typography.body3_13_reg,
-                    color = AconColors.Success_blue1,
+                    color = AconTheme.color.Success_blue1,
                 )
             }
         }
