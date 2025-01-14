@@ -39,11 +39,10 @@ import com.acon.core.designsystem.theme.AconTheme
 fun AconSearchBar(
     status: SearchBarStatus,
     modifier: Modifier = Modifier,
-    text: String = "text",
+    text: String = "",
     placeholder: String = "",
     onTextChanged: (String) -> Unit = {},
     onFocusChanged: (Boolean) -> Unit = {},
-    clearText: () -> Unit = {},
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     leadingIcon: @Composable () -> Unit = {
@@ -64,7 +63,7 @@ fun AconSearchBar(
                 tint = Color.Unspecified,
                 modifier = Modifier
                     .size(20.dp)
-                    .clickable { clearText() }
+                    .clickable { onTextChanged("") }
             )
         }
     },
@@ -93,10 +92,9 @@ fun AconSearchBar(
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .height(40.dp)
-            .background(backgroundColor, shape = RoundedCornerShape(8.dp))
-            .border(1.dp, borderColor, shape = RoundedCornerShape(8.dp))
-            .padding(horizontal = 12.dp),
+            .background(color = backgroundColor, shape = RoundedCornerShape(8.dp))
+            .border(width = 1.dp, borderColor, shape = RoundedCornerShape(8.dp))
+            .padding(horizontal = 12.dp, vertical = 8.dp),
     ){
         BasicTextField(
             modifier = Modifier
@@ -152,7 +150,7 @@ sealed interface SearchBarStatus {
 
 @Preview
 @Composable
-fun AconSearchBarPreview(){
+private fun AconSearchBarPreview(){
     Column(
         modifier = Modifier.fillMaxSize(),
     ){

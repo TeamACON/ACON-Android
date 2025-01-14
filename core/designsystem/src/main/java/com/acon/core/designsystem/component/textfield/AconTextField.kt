@@ -19,6 +19,7 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -37,7 +38,7 @@ import com.acon.core.designsystem.theme.AconTheme
 fun AconTextField(
     status: TextFieldStatus,
     modifier: Modifier = Modifier,
-    text: String = "text",
+    text: String = "",
     onTextChanged: (String) -> Unit = {},
     placeholder: String = "",
     onFocusChanged: (Boolean) -> Unit = {},
@@ -77,15 +78,14 @@ fun AconTextField(
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .height(40.dp)
             .background(backgroundColor, shape = RoundedCornerShape(8.dp))
             .border(1.dp, borderColor, shape = RoundedCornerShape(8.dp))
-            .padding(horizontal = 12.dp),
+            .padding(horizontal = 12.dp, vertical = 8.dp),
         contentAlignment = Alignment.CenterStart
     ){
         BasicTextField(
-            modifier = modifier
-                .fillMaxSize()
+            modifier = Modifier
+                .fillMaxWidth()
                 .focusRequester(focusRequester = focusRequester)
                 .onFocusChanged { focusState ->
                     onFocusChanged(focusState.isFocused)
@@ -105,8 +105,6 @@ fun AconTextField(
             ),
             decorationBox = { innerTextField ->
                 Row(
-                    modifier = Modifier
-                        .fillMaxSize(),
                     horizontalArrangement = Arrangement.Start,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
@@ -145,7 +143,7 @@ fun Modifier.addFocusCleaner(focusManager: FocusManager, doOnClear: () -> Unit =
 
 @Preview
 @Composable
-fun AconTextFieldPreview(){
+private fun AconTextFieldPreview(){
 
     Column(
         modifier = Modifier.fillMaxSize(),
