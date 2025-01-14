@@ -43,7 +43,7 @@ fun AconButton(
 
 @Preview
 @Composable
-internal fun PreviewAcornButton() {
+private fun PreviewAcornButton() {
     AconTheme {
         AconButton(
             backGroundColor = AconTheme.color.Main_org1,

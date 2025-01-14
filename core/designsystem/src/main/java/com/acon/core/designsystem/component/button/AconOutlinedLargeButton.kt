@@ -48,7 +48,7 @@ fun AconOutlinedLargeButton(
 
 @Preview
 @Composable
-internal fun PreviewAconOutlinedButton() {
+private fun PreviewAconOutlinedButton() {
     AconTheme {
         AconOutlinedLargeButton(
             text = stringResource(R.string.login_btn_preview_content),

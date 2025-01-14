@@ -43,7 +43,7 @@ fun AconFilledLargeButton(
 
 @Preview
 @Composable
-internal fun PreviewAconLargeButton() {
+private fun PreviewAconLargeButton() {
     AconTheme {
         AconFilledLargeButton(
             text = stringResource(R.string.login_btn_preview_content),

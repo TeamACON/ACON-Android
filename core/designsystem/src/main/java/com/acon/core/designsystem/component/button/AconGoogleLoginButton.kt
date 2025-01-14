@@ -67,7 +67,7 @@ fun AconGoogleLoginButton(
 
 @Preview
 @Composable
-internal fun PreviewAconGoogleLoginButton() {
+private fun PreviewAconGoogleLoginButton() {
     AconTheme {
         AconGoogleLoginButton(
             modifier = Modifier,

@@ -43,7 +43,7 @@ fun AconFilledMediumButton(
 
 @Preview
 @Composable
-internal fun PreviewAconMediumButton() {
+private fun PreviewAconMediumButton() {
     AconTheme {
         AconFilledMediumButton(
             text = stringResource(R.string.login_btn_preview_content),
