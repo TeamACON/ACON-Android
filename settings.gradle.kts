@@ -25,8 +25,6 @@ rootProject.name = "Acon"
 
 include(":app")
 
-include(":feature:home")
-
 include(":data")
 include(":domain")
 include(":core:designsystem")
