@@ -25,14 +25,14 @@ import com.acon.core.designsystem.theme.AconTheme
 
 @Composable
 fun AconGoogleLoginButton(
+    onClick: () -> Unit = {},
+    modifier: Modifier = Modifier,
     backgroundColor: Color = AconTheme.color.White,
     borderColor: Color = AconTheme.color.Gray1,
-    modifier: Modifier = Modifier,
     borderWidth: Dp = 1.dp,
     cornerRadius: Dp = 6.dp,
-    textStyle: TextStyle = AconTheme.typography.subtitle2_14_med,
     textColor: Color = AconTheme.color.Black,
-    onClick: () -> Unit = {}
+    textStyle: TextStyle = AconTheme.typography.subtitle2_14_med,
 ) {
     AconButton(
         backGroundColor = backgroundColor,

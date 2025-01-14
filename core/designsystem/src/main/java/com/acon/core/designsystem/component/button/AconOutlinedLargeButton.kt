@@ -20,14 +20,14 @@ fun AconOutlinedLargeButton(
     enabledBackgroundColor: Color,
     disabledBorderColor: Color,
     disabledBackgroundColor: Color,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
     textColor: Color = AconTheme.color.White,
     textStyle: TextStyle = AconTheme.typography.head8_16_sb,
     isEnabled: Boolean = true,
     borderWidth: Dp = 1.dp,
     cornerRadius: Dp = 6.dp,
-    modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(horizontal = 14.dp, vertical = 14.dp),
-    onClick: () -> Unit,
 ) {
     AconButton (
         backGroundColor = if(isEnabled) enabledBackgroundColor else disabledBackgroundColor,

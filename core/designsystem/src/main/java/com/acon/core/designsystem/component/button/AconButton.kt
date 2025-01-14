@@ -20,13 +20,13 @@ import com.acon.core.designsystem.theme.AconTheme
 @Composable
 fun AconButton(
     backGroundColor: Color,
-    borderColor: Color = Color.Transparent,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    borderColor: Color = Color.Transparent,
     borderWidth: Dp = 0.dp,
     cornerRadius: Dp = 0.dp,
     contentPadding: PaddingValues = PaddingValues(horizontal = 0.dp, vertical = 0.dp),
-    onClick: () -> Unit,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
     ) {
     Box(
       modifier = modifier
@@ -47,13 +47,13 @@ internal fun PreviewAcornButton() {
     AconTheme {
         AconButton(
             backGroundColor = AconTheme.color.Main_org1,
-            borderColor = AconTheme.color.Main_org1,
+            onClick = {},
+            content = {},
             modifier = Modifier,
+            borderColor = AconTheme.color.Main_org1,
             borderWidth = Dp.Hairline,
             cornerRadius = 4.dp,
             contentPadding =PaddingValues(horizontal = 14.dp, vertical = 14.dp),
-            onClick = {},
-            content = {}
         )
     }
 }

@@ -19,12 +19,12 @@ fun AconFilledMediumButton(
     textStyle: TextStyle,
     enabledBackgroundColor: Color,
     disabledBackgroundColor: Color,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
     textColor: Color = AconTheme.color.White,
     isEnabled: Boolean = true,
     cornerRadius: Dp = 4.dp,
-    modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(horizontal = 14.dp, vertical = 14.dp),
-    onClick: () -> Unit,
 ) {
     AconButton(
         backGroundColor = if(isEnabled) enabledBackgroundColor else disabledBackgroundColor,

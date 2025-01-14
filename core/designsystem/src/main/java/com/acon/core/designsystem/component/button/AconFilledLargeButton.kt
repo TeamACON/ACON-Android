@@ -19,12 +19,12 @@ fun AconFilledLargeButton(
     textStyle: TextStyle,
     enabledBackgroundColor: Color,
     disabledBackgroundColor: Color,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
     textColor: Color = AconTheme.color.White,
     isEnabled: Boolean = true,
     cornerRadius: Dp = 6.dp,
-    modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(horizontal = 16.dp, vertical = 14.dp),
-    onClick: () -> Unit,
 ) {
     AconButton(
         backGroundColor = if(isEnabled) enabledBackgroundColor else disabledBackgroundColor,
