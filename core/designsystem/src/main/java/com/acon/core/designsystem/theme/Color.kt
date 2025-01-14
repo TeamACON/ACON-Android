@@ -28,16 +28,16 @@ internal val AconColors = AconColor(
 
     //Gray Scale
     White = Color(0xFFFFFFFF),
-    Gray0 = Color(0xFFEDEDED),
-    Gray1 = Color(0xFFCBCBCB),
-    Gray2 = Color(0xFF989898),
-    Gray3 = Color(0xFF656565),
-    Gray4 = Color(0xFF323232),
-    Gray5 = Color(0xFFEDEDED),
-    Gray6 = Color(0xFFCBCBCB),
-    Gray7 = Color(0xFF989898),
-    Gray8 = Color(0xFF656565),
-    Gray9 = Color(0xFF323232),
+    Gray0 = Color(0xFFF7F7FB),
+    Gray1 = Color(0xFFEFF0F4),
+    Gray2 = Color(0xFFD9DADD),
+    Gray3 = Color(0xFFC5C6CB),
+    Gray4 = Color(0xFF93959D),
+    Gray5 = Color(0xFF5E6068),
+    Gray6 = Color(0xFF37383E),
+    Gray7 = Color(0xFF323339),
+    Gray8 = Color(0xFF2B2C31),
+    Gray9 = Color(0xFF1A1B1E),
     Black = Color(0xFF000000),
     Dim_b_60 = Color(0x99000000),
     Gla_b_30 = Color(0x4D000000),
@@ -54,7 +54,7 @@ internal val AconColors = AconColor(
     //Error Case
     Error_red1 = Color(0xFFFF3434),
     Error_red2 = Color(0xFFFFD9D9),
-    Error_blue1 = Color(0xFF4375FF),
+    Success_blue1 = Color(0xFF4375FF),
     Error_blue2 = Color(0xFFD2DEFF)
 )
 
@@ -93,7 +93,7 @@ data class AconColor(
 
     val Error_red1: Color,
     val Error_red2: Color,
-    val Error_blue1: Color,
+    val Success_blue1: Color,
     val Error_blue2: Color,
 
 )

@@ -53,7 +53,10 @@ dependencies {
     implementation(libs.androidx.foundation.android)
     implementation(libs.androidx.ui.text.android)
     implementation(libs.material3.android)
+    implementation(libs.androidx.ui.tooling.preview.android)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    implementation(project(":core:common"))
 }
