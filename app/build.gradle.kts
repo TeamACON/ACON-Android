@@ -72,7 +72,7 @@ fun getPropertyKey(propertyKey: String): String {
 dependencies {
 
     implementation(project(":feature:home"))
-    implementation(project(":feature:AreaVerification"))
+    implementation(project(":feature:areaverification"))
     implementation(project(":core:common"))
     implementation(project(":core:designsystem"))
     implementation(project(":core:utils:feature"))
