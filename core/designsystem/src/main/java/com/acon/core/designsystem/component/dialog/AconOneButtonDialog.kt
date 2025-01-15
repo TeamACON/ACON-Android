@@ -28,7 +28,7 @@ fun AconOneButtonDialog(
     title: String,
     content: String,
     buttonContent: String,
-    @DrawableRes contentImage: Int,
+    @DrawableRes contentImage: Int? = null,
     onDismissRequest: () -> Unit,
     onClickConfirm: () -> Unit,
     isImageEnabled: Boolean = false,
@@ -44,7 +44,7 @@ fun AconOneButtonDialog(
                 .padding(24.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            if(isImageEnabled) {
+            if(isImageEnabled && contentImage != null) {
                 Image(
                     imageVector = ImageVector.vectorResource(contentImage),
                     contentDescription = ""
