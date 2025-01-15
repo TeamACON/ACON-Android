@@ -1,5 +1,6 @@
 package com.acon.feature.onboarding.component
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -14,8 +15,11 @@ import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.acon.core.designsystem.R
 import com.acon.core.designsystem.theme.AconTheme
 
 @Composable
@@ -26,17 +30,12 @@ fun OnboardingTopBar(
     onLeadingIconClicked: (Int) -> Unit = {},
     onTrailingIconClicked: () -> Unit = {},
     leadingIcon: @Composable () -> Unit = {
-        Box {
-            Icon(
-                imageVector = Icons.Filled.KeyboardArrowLeft,
-                contentDescription = "Back",
-                tint = AconTheme.color.White,
-                modifier = Modifier
-                    .align(Alignment.CenterStart)
-                    .size(50.dp)
-                    .padding(start = 15.dp),
-            )
-        }
+        Image (
+            imageVector = ImageVector.vectorResource(R.drawable.ic_arrow_left_24),
+            contentDescription = "Back",
+            modifier = Modifier
+                .padding(start = 15.dp),
+        )
     },
     content: @Composable () -> Unit = {},
     trailingIcon: @Composable () -> Unit = {
@@ -69,6 +68,7 @@ fun OnboardingTopBar(
                 Box(
                     modifier = Modifier
                         .clickable { onLeadingIconClicked(currentPage) }
+                        .align(Alignment.CenterStart)
                 ){
                     leadingIcon()
                 }
