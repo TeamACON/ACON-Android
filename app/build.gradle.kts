@@ -71,13 +71,13 @@ fun getPropertyKey(propertyKey: String): String {
 
 dependencies {
 
-    implementation(project(":feature:home"))
     implementation(project(":core:common"))
     implementation(project(":core:designsystem"))
     implementation(project(":core:utils:feature"))
     implementation(project(":core:map"))
     implementation(project(":domain"))
     implementation(project(":data"))
+    implementation(project(":feature:spot"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
