@@ -23,7 +23,7 @@ fun OnboardingTopBar(
     modifier: Modifier = Modifier,
     totalPages: Int,
     currentPage: Int,
-    onLeadingIconClicked: (Int) -> Unit = {},
+    onLeadingIconClicked: () -> Unit = {},
     onTrailingIconClicked: () -> Unit = {},
     leadingIcon: @Composable () -> Unit = {
         Image (
@@ -63,7 +63,7 @@ fun OnboardingTopBar(
             if ( currentPage != 0 ) {
                 Box(
                     modifier = Modifier
-                        .clickable { onLeadingIconClicked(currentPage) }
+                        .clickable { onLeadingIconClicked() }
                         .align(Alignment.CenterStart)
                 ){
                     leadingIcon()

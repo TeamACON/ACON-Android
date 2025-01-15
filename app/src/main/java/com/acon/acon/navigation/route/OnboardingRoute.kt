@@ -22,4 +22,7 @@ sealed interface OnboardingRoute {
 
     @Serializable
     data object RatePreferPlace : OnboardingRoute
+
+    @Serializable
+    data object LastLoading : OnboardingRoute
 }

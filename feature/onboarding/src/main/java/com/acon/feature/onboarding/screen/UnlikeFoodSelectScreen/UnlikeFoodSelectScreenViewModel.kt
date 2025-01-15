@@ -8,7 +8,6 @@ import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
 
-
 const val ONBOARDING_TOTAL_PAGES = 6;
 
 @HiltViewModel
@@ -56,15 +55,18 @@ class UnlikeFoodScreenViewModel @Inject constructor(
         }
     }
 
-    //SideEffect 처리해야 할 듯.
     fun onSkipClicked() = intent {
         postSideEffect(UnlikeFoodScreenSideEffect.ShowCloseDialog)
     }
 
-    //currentPage를 Int로 줘야 편한가? 걍 분기처리하면 되니깐
-    fun onBackClicked(currentPage: Int) = intent {
+    fun onBackClicked() = intent {
         postSideEffect(UnlikeFoodScreenSideEffect.NavigateToPreviousPage)
     }
+
+    fun navigateToNextPage() = intent {
+        postSideEffect(UnlikeFoodScreenSideEffect.NavigateToNextPage)
+    }
+
 
 }
 
@@ -79,4 +81,5 @@ data class UnlikeFoodScreenState(
 sealed interface UnlikeFoodScreenSideEffect {
     data object ShowCloseDialog: UnlikeFoodScreenSideEffect
     data object NavigateToPreviousPage: UnlikeFoodScreenSideEffect
+    data object NavigateToNextPage: UnlikeFoodScreenSideEffect
 }

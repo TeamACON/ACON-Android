@@ -44,7 +44,9 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 @Composable
 fun UnlikeFoodScreenContainer(
     modifier: Modifier = Modifier,
-    viewModel: UnlikeFoodScreenViewModel = hiltViewModel()
+    viewModel: UnlikeFoodScreenViewModel = hiltViewModel(),
+    navigateToNextPage: () -> Unit = {},
+    navigateToLastLoadingPage: () -> Unit = {},
 ){
     val state = viewModel.collectAsState().value
 
@@ -59,7 +61,8 @@ fun UnlikeFoodScreenContainer(
         selectedCard = state.selectedCard,
         selectedCardCount = state.selectedCard.size,
         totalPages = state.totalPages,
-        currentPage = state.currentPage
+        currentPage = state.currentPage,
+        navigateToNextPage = viewModel::navigateToNextPage,
     )
 
     val openCloseDialog = remember { mutableStateOf(false) }
@@ -70,7 +73,10 @@ fun UnlikeFoodScreenContainer(
                 openCloseDialog.value = true
             }
             UnlikeFoodScreenSideEffect.NavigateToPreviousPage -> {
-                //이전 페이지로 가는 sideEffect 구현하기
+                //이전 페이지로 가는 sideEffect 구현하기 <- 근데 이건 없어도 되는데 ?
+            }
+            UnlikeFoodScreenSideEffect.NavigateToNextPage -> {
+                navigateToNextPage()
             }
         }
     }
@@ -85,13 +91,12 @@ fun UnlikeFoodScreenContainer(
             onDismissRequest = {
                 openCloseDialog.value = false
             },
-            onClickLeft = {
+            onClickLeft = { // 그만두기 -> 마지막 로딩 페이지로 보내기 (근데 SideEffect 없이 해도 괜찮ㅇ?)
                 openCloseDialog.value = false
-                //그만두기 -> 어디로 보내야 함?
+                navigateToLastLoadingPage()
             },
-            onClickRight = {
+            onClickRight = { // 계속하기 -> 그냥 다이얼로그만 닫기
                 openCloseDialog.value = false
-                //계속하기 -> 그냥 다이얼로그만 닫기
             },
             isImageEnabled = false
         )
@@ -106,13 +111,13 @@ fun UnlikeFoodScreen(
     foodItemList: List<FoodItem>,
     onCardClicked: (String) -> Unit,
     isNothingClicked: Boolean,
-    onBackClicked: (Int) -> Unit,
+    onBackClicked: () -> Unit,
     onSkipClicked: () -> Unit,
     selectedCard : Set<String>,
     selectedCardCount: Int,
     totalPages: Int,
     currentPage: Int,
-    navigateToNextPage: (Int) -> Unit,
+    navigateToNextPage: () -> Unit,
 ){
     Column(
         modifier = modifier
@@ -124,7 +129,7 @@ fun UnlikeFoodScreen(
             totalPages = totalPages,
             currentPage = currentPage,
             onLeadingIconClicked = {
-                onBackClicked(currentPage)
+                onBackClicked()
             },
             onTrailingIconClicked = {
                 onSkipClicked()
@@ -191,7 +196,7 @@ fun UnlikeFoodScreen(
                     cornerRadius = 6.dp,
                     modifier = Modifier.fillMaxWidth(),
                     contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp),
-                    onClick = { navigateToNextPage(Int) }
+                    onClick = { navigateToNextPage() }
                 )
             }
         }
@@ -200,6 +205,7 @@ fun UnlikeFoodScreen(
 
 @Composable
 @Preview
-fun previewOnboardingScreen(){
-    UnlikeFoodScreenContainer()
+fun PreviewOnboardingScreen(){
+    UnlikeFoodScreenContainer(
+    )
 }

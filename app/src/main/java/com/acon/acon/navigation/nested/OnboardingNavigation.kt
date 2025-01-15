@@ -15,14 +15,19 @@ internal fun NavGraphBuilder.onboardingNavigationNavigation(
         startDestination = OnboardingRoute.ChooseUnlikeFoods
     ) {
         composable<OnboardingRoute.ChooseUnlikeFoods> {
-            UnlikeFoodScreenContainer()
+            UnlikeFoodScreenContainer(
+                navigateToNextPage = {
+                    navController.navigate(OnboardingRoute.RatePreferFoods)
+                },
+                navigateToLastLoadingPage = {
+                    navController.navigate(OnboardingRoute.LastLoading)
+                }
+            )
         }
+
         composable<OnboardingRoute.RatePreferFoods> {
             // PreferredFoodRateScreenContainer()
 
-//            onSignInSuccess = {
-//                    navController.navigate(OnboardingRoute)
-//                } <- NavigateToPreviousPage 이런 건 Container 안에 이렇게 넣어주면 됨
 
         }
         composable<OnboardingRoute.SelectFrequentPlace> {
@@ -33,6 +38,9 @@ internal fun NavGraphBuilder.onboardingNavigationNavigation(
         }
         composable<OnboardingRoute.RatePreferPlace> {
             // PerferredPlaceRateScreenContainer()
+        }
+        composable<OnboardingRoute.LastLoading> {
+
         }
     }
 }
