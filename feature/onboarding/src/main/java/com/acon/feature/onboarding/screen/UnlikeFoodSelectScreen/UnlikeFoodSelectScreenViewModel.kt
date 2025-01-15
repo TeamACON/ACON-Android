@@ -36,12 +36,11 @@ class UnlikeFoodScreenViewModel @Inject constructor(
             reduce {
                 state.copy(
                     isNothingClicked = !state.isNothingClicked,
-                    selectedCard = if (!state.isNothingClicked) setOf("없음") else state.selectedCard
+                    selectedCard = if (!state.isNothingClicked) setOf(text) else state.selectedCard
                 )
             }
         } else { //없음이 아닌 다른 FoodItem 누른 경우
 
-            //SelectedCardList에서 이름 추가/삭제
             val updatedSelectedCard = if (state.selectedCard.contains(text)) {
                 state.selectedCard - text
             } else {
@@ -57,17 +56,27 @@ class UnlikeFoodScreenViewModel @Inject constructor(
         }
     }
 
+    //SideEffect 처리해야 할 듯.
+    fun onSkipClicked() = intent {
+        postSideEffect(UnlikeFoodScreenSideEffect.ShowCloseDialog)
+    }
+
+    //currentPage를 Int로 줘야 편한가? 걍 분기처리하면 되니깐
+    fun onBackClicked(currentPage: Int) = intent {
+        postSideEffect(UnlikeFoodScreenSideEffect.NavigateToPreviousPage)
+    }
+
 }
 
 data class UnlikeFoodScreenState(
     val foodItems: List<FoodItem> = emptyList(),
     val isNothingClicked: Boolean = false,
     val selectedCard: Set<String> = emptySet(),
-    val showBackOnTopBar: Boolean = false,
     val totalPages: Int = ONBOARDING_TOTAL_PAGES,
     val currentPage: Int = 0,
 )
 
 sealed interface UnlikeFoodScreenSideEffect {
-    /*TODO: SideEffect 정의해두기*/
+    data object ShowCloseDialog: UnlikeFoodScreenSideEffect
+    data object NavigateToPreviousPage: UnlikeFoodScreenSideEffect
 }

@@ -52,6 +52,7 @@ dependencies {
     implementation(project(":core:base"))
     implementation(project(":core:base"))
     implementation(project(":core:utils:feature"))
+    implementation(project(":core:designsystem"))
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

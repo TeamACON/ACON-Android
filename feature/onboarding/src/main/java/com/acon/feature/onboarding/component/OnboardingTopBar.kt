@@ -1,6 +1,7 @@
 package com.acon.feature.onboarding.component
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -21,9 +22,10 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun OnboardingTopBar(
     modifier: Modifier = Modifier,
-    selectedCardCount: Int,
     totalPages: Int,
     currentPage: Int,
+    onLeadingIconClicked: (Int) -> Unit = {},
+    onTrailingIconClicked: () -> Unit = {},
     leadingIcon: @Composable () -> Unit = {
         Box {
             Icon(
@@ -39,12 +41,14 @@ fun OnboardingTopBar(
     },
     content: @Composable () -> Unit = {},
     trailingIcon: @Composable () -> Unit = {
-        SkipButton()
+        SkipButton(
+            onClickSkipButton = onTrailingIconClicked
+        )
     },
 ){
 
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .background(Color(0xFF1A1B1E))
     ){
@@ -56,18 +60,23 @@ fun OnboardingTopBar(
         )
 
         Box(
-            modifier = modifier
+            modifier = Modifier
                 .fillMaxWidth()
                 .background(Color(0xFF1A1B1E))
                 .height(56.dp),
         ){
 
-            if ( selectedCardCount >= 1 ) {
-                leadingIcon()
+            if ( currentPage != 0 ) {
+                Box(
+                    modifier = Modifier
+                        .clickable { onLeadingIconClicked(currentPage) }
+                ){
+                    leadingIcon()
+                }
             }
 
             Box(
-                modifier = modifier
+                modifier = Modifier
                     .align(Alignment.CenterEnd)
                     .padding(end = 15.dp)
             ){
@@ -76,7 +85,7 @@ fun OnboardingTopBar(
         }
 
         OnboardingProgressIndicator(
-            modifier = modifier,
+            modifier = Modifier,
             totalPages = totalPages,
             currentPage = currentPage,
         )
@@ -88,8 +97,7 @@ fun OnboardingTopBar(
 @Preview
 fun OnboardingTopBarPreivew(){
     OnboardingTopBar(
-        selectedCardCount = 1,
         totalPages = 6,
-        currentPage = 4
+        currentPage = 4,
     )
 }

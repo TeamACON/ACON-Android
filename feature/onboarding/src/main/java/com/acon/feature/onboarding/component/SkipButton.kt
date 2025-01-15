@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun SkipButton(
     modifier: Modifier = Modifier,
-    //onClickSkipButton: () -> Unit = {}
+    onClickSkipButton: () -> Unit = {}
 ){
     Text(
         text = "건너뛰기",
@@ -20,7 +20,7 @@ fun SkipButton(
         modifier = modifier
             .padding(5.dp)
             .clickable {
-                //onClickSkipButton() 이런 거 넣어주기
+                onClickSkipButton()
             }
     )
 
