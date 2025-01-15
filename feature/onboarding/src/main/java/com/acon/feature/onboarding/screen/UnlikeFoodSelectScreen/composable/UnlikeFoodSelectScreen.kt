@@ -194,12 +194,7 @@ fun UnlikeFoodScreen(
                     onClick = {}
                 )
             }
-
-
-
-
         }
-
     }
 }
 

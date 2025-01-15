@@ -16,9 +16,6 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Check
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -27,8 +24,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.acon.core.designsystem.theme.AconTheme
@@ -108,12 +107,10 @@ fun FoodCard(
                                 .clip(RoundedCornerShape(6.dp))
                                 .background(AconTheme.color.Dim_b_60)
                         )
-                        Icon(
-                            imageVector = Icons.Default.Check,
+                        Image(
+                            imageVector = ImageVector.vectorResource(com.acon.core.designsystem.R.drawable.ic_check_44),
                             contentDescription = "Clicked",
-                            tint = AconTheme.color.White,
-                            modifier = Modifier
-                                .size(44.dp)
+                            modifier = Modifier.size(44.dp)
                         )
                     }
                 }
@@ -131,12 +128,10 @@ fun FoodCard(
                         style = AconTheme.typography.subtitle2_14_med
                     )
                     if(isNothingClicked){
-                        Icon(
-                            imageVector = Icons.Default.Check,
+                        Image(
+                            imageVector = ImageVector.vectorResource(com.acon.core.designsystem.R.drawable.ic_check_44),
                             contentDescription = "Clicked",
-                            tint = AconTheme.color.White,
-                            modifier = Modifier
-                                .size(44.dp)
+                            modifier = Modifier.size(44.dp)
                         )
                     }
                 }
