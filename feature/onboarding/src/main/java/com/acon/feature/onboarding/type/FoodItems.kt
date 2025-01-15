@@ -16,3 +16,15 @@ enum class FoodItems(
     SHEEP(R.drawable.food_img_5, "양고기"),
     NONE(0, "없음")
 }
+
+enum class FoodTypeItems(
+    @DrawableRes val imageResId: Int,
+    val foodTypeName: String
+){
+    KOREAN(),
+    AMERICAN(),
+    CHINESE(),
+    JAPANESE(),
+    STREET(),
+    ASIAN(),
+}

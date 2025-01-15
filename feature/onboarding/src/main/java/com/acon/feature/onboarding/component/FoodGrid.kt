@@ -38,11 +38,11 @@ import com.acon.feature.onboarding.type.FoodItems
 fun FoodGrid(
     modifier : Modifier = Modifier,
     columnSize : Int,
+    foodItems: Array<FoodItems>,
     onCardClicked: (String) -> Unit,
-    isNothingClicked: Boolean,
+    isNothingClicked: Boolean = false,
     selectedCard: Set<String>,
 ){
-
     LazyVerticalGrid(
         modifier = modifier,
         columns = GridCells.Fixed(columnSize),
@@ -50,7 +50,7 @@ fun FoodGrid(
         horizontalArrangement = Arrangement.spacedBy(10.dp),
         verticalArrangement = Arrangement.spacedBy(15.dp),
     ){
-        items(FoodItems.entries) { food ->
+        items(foodItems) { food ->
             FoodCard(
                 imageRes = food.imageResId,
                 text = food.foodName,
@@ -153,6 +153,7 @@ fun PreviewFoodGrid() {
 
     FoodGrid(
         columnSize = 3,
+        foodItems = FoodItems.entries.toTypedArray(),
         onCardClicked = {
             if(selectedCard.value.contains(it)) selectedCard.value -= it
             else selectedCard.value += it

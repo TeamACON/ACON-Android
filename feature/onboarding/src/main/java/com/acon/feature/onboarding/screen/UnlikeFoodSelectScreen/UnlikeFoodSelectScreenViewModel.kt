@@ -19,7 +19,6 @@ class UnlikeFoodScreenViewModel @Inject constructor(
 
     fun onCardClicked(text: String) = intent {
 
-        //없음 누른 경우
         if (text == "없음") {
             reduce {
                 state.copy(
@@ -27,8 +26,7 @@ class UnlikeFoodScreenViewModel @Inject constructor(
                     selectedCard = if (!state.isNothingClicked) setOf(text) else state.selectedCard
                 )
             }
-        } else { //없음이 아닌 다른 FoodItem 누른 경우
-
+        } else {
             val updatedSelectedCard = if (state.selectedCard.contains(text)) {
                 state.selectedCard - text
             } else {
