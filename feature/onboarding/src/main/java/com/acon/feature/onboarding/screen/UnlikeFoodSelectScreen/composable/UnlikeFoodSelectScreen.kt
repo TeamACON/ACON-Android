@@ -10,24 +10,19 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.acon.core.designsystem.component.button.AconFilledLargeButton
 import com.acon.core.designsystem.component.dialog.AconTwoButtonDialog
 import com.acon.core.designsystem.theme.AconTheme
 import com.acon.feature.onboarding.component.FoodGrid
-import com.acon.feature.onboarding.component.FoodItem
 import com.acon.feature.onboarding.component.OnboardingTopBar
 import com.acon.feature.onboarding.screen.UnlikeFoodSelectScreen.UnlikeFoodScreenSideEffect
+import com.acon.feature.onboarding.screen.UnlikeFoodSelectScreen.UnlikeFoodScreenState
 import com.acon.feature.onboarding.screen.UnlikeFoodSelectScreen.UnlikeFoodScreenViewModel
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
@@ -35,9 +30,7 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 /*
 * TODO:
 *  1) 탑바 뒤로가기 아이콘 & 다음 버튼 버그 (없음 누르고 취소하면 안없어짐)
-*  3) 두번째 온보딩 화면으로 넘어가는 것까지 Route에서 연결해보기
 *  4) 다음 버튼 누를 때마다 서버로 넘겨주나? API 명세서 보고 확인해보기
-*  7) 아키텍처 따라서 깔끔하게 정리 완료하기 (ViewModel 등등)
 *  8) 마지막에 Content(Container), Screen 구분하기
 * */
 
@@ -52,36 +45,22 @@ fun UnlikeFoodScreenContainer(
 
     UnlikeFoodScreen(
         modifier = modifier,
+        screenState = state,
         columnSize = 3,
-        foodItemList = state.foodItems,
         onCardClicked = viewModel::onCardClicked,
-        isNothingClicked = state.isNothingClicked,
-        onBackClicked = viewModel::onBackClicked,
-        onSkipClicked = viewModel::onSkipClicked,
-        selectedCard = state.selectedCard,
-        selectedCardCount = state.selectedCard.size,
-        totalPages = state.totalPages,
-        currentPage = state.currentPage,
+        onSkipClicked = viewModel::showDialog,
         navigateToNextPage = viewModel::navigateToNextPage,
     )
 
-    val openCloseDialog = remember { mutableStateOf(false) }
-
     viewModel.collectSideEffect {
         when(it){
-            UnlikeFoodScreenSideEffect.ShowCloseDialog -> {
-                openCloseDialog.value = true
-            }
-            UnlikeFoodScreenSideEffect.NavigateToPreviousPage -> {
-                //이전 페이지로 가는 sideEffect 구현하기 <- 근데 이건 없어도 되는데 ?
-            }
             UnlikeFoodScreenSideEffect.NavigateToNextPage -> {
                 navigateToNextPage()
             }
         }
     }
 
-    if (openCloseDialog.value) {
+    if (state.openCloseDialog) {
         AconTwoButtonDialog(
             title = "취향분석을 그만둘까요?",
             content = "선호도 조사만이 남아있어요!\n1분 내로 빠르게 끝내실 수 있어요.",
@@ -89,34 +68,27 @@ fun UnlikeFoodScreenContainer(
             rightButtonContent = "계속하기",
             contentImage = 0,
             onDismissRequest = {
-                openCloseDialog.value = false
+                viewModel.hideDialog()
             },
-            onClickLeft = { // 그만두기 -> 마지막 로딩 페이지로 보내기 (근데 SideEffect 없이 해도 괜찮ㅇ?)
-                openCloseDialog.value = false
+            onClickLeft = { // 그만두기
                 navigateToLastLoadingPage()
             },
-            onClickRight = { // 계속하기 -> 그냥 다이얼로그만 닫기
-                openCloseDialog.value = false
+            onClickRight = { // 계속하기
+                viewModel.hideDialog()
             },
             isImageEnabled = false
         )
     }
-    
 }
 
 @Composable
 fun UnlikeFoodScreen(
     modifier: Modifier = Modifier,
+    screenState: UnlikeFoodScreenState,
     columnSize : Int,
-    foodItemList: List<FoodItem>,
     onCardClicked: (String) -> Unit,
-    isNothingClicked: Boolean,
-    onBackClicked: () -> Unit,
-    onSkipClicked: () -> Unit,
-    selectedCard : Set<String>,
-    selectedCardCount: Int,
-    totalPages: Int,
-    currentPage: Int,
+    onBackClicked: () -> Unit = {},
+    onSkipClicked: () -> Unit = {},
     navigateToNextPage: () -> Unit,
 ){
     Column(
@@ -126,8 +98,8 @@ fun UnlikeFoodScreen(
     ){
 
         OnboardingTopBar(
-            totalPages = totalPages,
-            currentPage = currentPage,
+            totalPages = screenState.totalPages,
+            currentPage = screenState.currentPage,
             onLeadingIconClicked = {
                 onBackClicked()
             },
@@ -164,19 +136,20 @@ fun UnlikeFoodScreen(
             }
 
             Box(
-                modifier = Modifier.fillMaxWidth().weight(1f),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f),
                 contentAlignment = Alignment.Center
             ){
                 FoodGrid(
                     modifier = modifier
                         .background(Color(0x00000000)),
                     columnSize = columnSize,
-                    foodItemList = foodItemList,
                     onCardClicked = { text ->
                         onCardClicked(text)
                     },
-                    isNothingClicked = isNothingClicked,
-                    selectedCard = selectedCard
+                    isNothingClicked = screenState.isNothingClicked,
+                    selectedCard = screenState.selectedCard
                 )
             }
 
@@ -192,7 +165,7 @@ fun UnlikeFoodScreen(
                     textColor = AconTheme.color.White,
                     enabledBackgroundColor = AconTheme.color.Gray5,
                     disabledBackgroundColor =  AconTheme.color.Gray8,
-                    isEnabled = (selectedCardCount >= 1),
+                    isEnabled = (screenState.selectedCard.size >= 1),
                     cornerRadius = 6.dp,
                     modifier = Modifier.fillMaxWidth(),
                     contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp),

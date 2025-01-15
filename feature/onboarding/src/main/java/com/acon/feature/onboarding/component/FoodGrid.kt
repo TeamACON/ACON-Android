@@ -31,15 +31,13 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.acon.core.designsystem.theme.AconTheme
-import com.acon.feature.onboarding.R
+import com.acon.feature.onboarding.type.FoodItems
 
-data class FoodItem(val imageRes: Int, val name: String, val isSelected: Boolean)
 
 @Composable
 fun FoodGrid(
     modifier : Modifier = Modifier,
     columnSize : Int,
-    foodItemList: List<FoodItem>,
     onCardClicked: (String) -> Unit,
     isNothingClicked: Boolean,
     selectedCard: Set<String>,
@@ -52,11 +50,11 @@ fun FoodGrid(
         horizontalArrangement = Arrangement.spacedBy(10.dp),
         verticalArrangement = Arrangement.spacedBy(15.dp),
     ){
-        items(foodItemList) { food ->
+        items(FoodItems.entries) { food ->
             FoodCard(
-                imageRes = food.imageRes,
-                text = food.name,
-                selected = (selectedCard.contains(food.name)),
+                imageRes = food.imageResId,
+                text = food.foodName,
+                selected = (selectedCard.contains(food.foodName)),
                 onCardClicked = { text ->
                     onCardClicked(text)
                 },
@@ -90,7 +88,6 @@ fun FoodCard(
             if (imageRes != 0){
                 Box(
                     modifier = Modifier
-                        //.background(color = if (selectedCard.contains(text)) Color(0x3C000000) else Color(0x00000000))
                         .alpha(alpha = if (isNothingClicked) 0.1f else 1f),
                     contentAlignment = Alignment.Center
                 ) {
@@ -152,20 +149,10 @@ fun FoodCard(
 @Composable
 fun PreviewFoodGrid() {
 
-    val foodItems = listOf(
-        FoodItem(R.drawable.food_img_1, "닭발", false),
-        FoodItem(R.drawable.food_img_2, "회/육회", false),
-        FoodItem(R.drawable.food_img_3, "곱창/대창/막창", false),
-        FoodItem(R.drawable.food_img_4, "순대/선지", false),
-        FoodItem(R.drawable.food_img_5, "양고기", false),
-        FoodItem(0, "없음", false)
-    )
-
     val selectedCard = remember { mutableStateOf(setOf<String>()) }
 
     FoodGrid(
         columnSize = 3,
-        foodItemList = foodItems,
         onCardClicked = {
             if(selectedCard.value.contains(it)) selectedCard.value -= it
             else selectedCard.value += it
