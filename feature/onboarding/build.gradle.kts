@@ -37,6 +37,11 @@ android {
 
 dependencies {
 
+    implementation(project(":domain"))
+    implementation(project(":core:common"))
+    implementation(project(":core:designsystem"))
+    implementation(project(":core:utils:feature"))
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -48,8 +53,6 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.ui.tooling.preview.android)
-    implementation(libs.androidx.foundation.layout.android)
-    implementation(project(":core:base"))
     implementation(project(":core:base"))
     implementation(project(":core:utils:feature"))
     implementation(project(":core:designsystem"))

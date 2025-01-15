@@ -70,7 +70,7 @@ fun UnlikeFoodScreen(
                         text = "01",
                         color = AconTheme.color.Gray5,
                         style = AconTheme.typography.head4_24_sb,
-                        //textAlign = TextAlign.Center,
+                        modifier = modifier.padding(vertical = 7.dp)
                     )
                     Text(
                         text = "어떤 음식을 피하고 싶으신가요?",

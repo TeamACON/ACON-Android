@@ -19,13 +19,11 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.acon.core.designsystem.component.button.AconFilledLargeButton
 import com.acon.core.designsystem.component.dialog.AconTwoButtonDialog
 import com.acon.core.designsystem.theme.AconTheme
-import com.acon.feature.onboarding.component.FoodGrid
 import com.acon.feature.onboarding.component.OnboardingTopBar
 import com.acon.feature.onboarding.component.PreferFoodTypeSelectGrid
 import com.acon.feature.onboarding.screen.PreferredFoodRateScreen.PreferredFoodRateScreenViewModel
 import com.acon.feature.onboarding.screen.PreferredFoodRateScreen.RatePreferFoodScreenSideEffect
 import com.acon.feature.onboarding.screen.PreferredFoodRateScreen.RatePreferFoodScreenState
-import com.acon.feature.onboarding.type.FoodItems
 import com.acon.feature.onboarding.type.FoodTypeItems
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
@@ -127,6 +125,7 @@ fun PreferredFoodRateScreen(
                         text = "02",
                         color = AconTheme.color.Gray5,
                         style = AconTheme.typography.head4_24_sb,
+                        modifier = modifier.padding(vertical = 7.dp)
                     )
                     Text(
                         text = "선호 음식 Top3까지 순위를 매겨주세요.",
