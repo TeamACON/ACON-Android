@@ -27,14 +27,6 @@ class AreaVerificationViewModel @Inject constructor() : ViewModel() {
         }
     }
 
-    fun onNextButtonClicked() {
-        _uiState.update { currentState ->
-            currentState.copy(
-                isButtonEnabled = false
-            )
-        }
-    }
-
     fun updateShowPermissionDialog(show: Boolean) {
         _uiState.update { it.copy(showPermissionDialog = show) }
     }
