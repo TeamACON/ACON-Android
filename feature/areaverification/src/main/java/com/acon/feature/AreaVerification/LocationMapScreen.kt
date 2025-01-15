@@ -1,4 +1,4 @@
-package com.acon.feature.AreaVerification
+package com.acon.feature.areaverification
 
 import android.location.Location
 import androidx.compose.foundation.layout.Box
@@ -58,7 +58,7 @@ fun LocationMapScreen(
                     getMapAsync { map ->
                         naverMap = map
                         map.uiSettings.apply {
-                            isZoomControlEnabled = true
+                            isZoomControlEnabled = false
                             isCompassEnabled = true
                         }
 

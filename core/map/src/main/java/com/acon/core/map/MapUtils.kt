@@ -17,8 +17,10 @@ fun ProceedWithLocation(onReady: (Location) -> Unit) {
     }
 
     CheckAndRequestLocationPermission {
-        locationProviderClient.lastLocation.addOnSuccessListener {
-            onReady(it)
+        locationProviderClient.lastLocation.addOnSuccessListener { location ->
+            location?.let {
+                onReady(it)
+            }
         }
     }
 }

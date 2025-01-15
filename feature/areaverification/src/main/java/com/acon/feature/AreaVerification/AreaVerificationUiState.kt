@@ -1,4 +1,4 @@
-package com.acon.feature.AreaVerification
+package com.acon.feature.areaverification
 
 data class AreaVerificationUiState(
     val isNewLocationSelected: Boolean = false,

@@ -1,18 +1,15 @@
 package com.acon.acon.navigation.nested
 
-import android.hardware.Camera.Area
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
-import androidx.navigation.navArgument
 import androidx.navigation.toRoute
 import com.acon.acon.navigation.route.AreaVerificationRoute
-import com.acon.feature.AreaVerification.AreaVerificationScreenContainer
-import com.acon.feature.AreaVerification.PreferenceMapScreen
+import com.acon.feature.areaverification.AreaVerificationScreenContainer
+import com.acon.feature.areaverification.PreferenceMapScreen
 
 internal fun NavGraphBuilder.areaVerificationNavigation(
     navController: NavHostController

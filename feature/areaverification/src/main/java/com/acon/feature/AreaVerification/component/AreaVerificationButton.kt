@@ -1,4 +1,4 @@
-package com.acon.feature.AreaVerification.component
+package com.acon.feature.areaverification.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues

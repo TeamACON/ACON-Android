@@ -1,4 +1,4 @@
-package com.acon.feature.AreaVerification
+package com.acon.feature.areaverification
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel

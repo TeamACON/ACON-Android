@@ -1,4 +1,4 @@
-package com.acon.feature.AreaVerification
+package com.acon.feature.areaverification
 
 import android.content.Intent
 import android.net.Uri
@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.acon.core.designsystem.component.button.AconFilledLargeButton
 import com.acon.core.designsystem.theme.AconTheme
-import com.acon.feature.AreaVerification.component.AreaVerificationButton
+import com.acon.feature.areaverification.component.AreaVerificationButton
 import android.provider.Settings
 import com.acon.core.designsystem.component.dialog.AconOneButtonDialog
 import com.acon.core.utils.feature.permission.CheckAndRequestLocationPermission
