@@ -1,4 +1,4 @@
-package com.acon.feature.signin
+package com.acon.feature.signin.screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -23,6 +23,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.acon.core.designsystem.component.button.AconGoogleLoginButton
 import com.acon.core.designsystem.theme.AconTheme
+import com.acon.feature.signin.R
 
 @Composable
 fun SignInScreen(
@@ -39,7 +40,7 @@ fun SignInScreen(
     ) {
         // 탑바 추가해야 함
         Text(
-            text = stringResource(com.acon.feature.signin.R.string.signin_logo_title),
+            text = stringResource(R.string.signin_logo_title),
             style = AconTheme.typography.subtitle2_14_med,
             textAlign = TextAlign.Center,
             color = AconTheme.color.White,
@@ -49,7 +50,7 @@ fun SignInScreen(
         Spacer(modifier = Modifier.height(8.dp))
         Image(
             imageVector = ImageVector.vectorResource(com.acon.core.designsystem.R.drawable.ic_word_logo_splash_org_78),
-            contentDescription = stringResource(com.acon.feature.signin.R.string.signin_logo_title_content_description)
+            contentDescription = stringResource(R.string.signin_logo_title_content_description)
         )
         AconGoogleLoginButton(
             modifier = Modifier
@@ -57,7 +58,7 @@ fun SignInScreen(
             onClick = onClickLoginGoogle
         )
         Text(
-            text =  stringResource(com.acon.feature.signin.R.string.signin_policy),
+            text =  stringResource(R.string.signin_policy),
             style = AconTheme.typography.cap1_11_reg,
             color = AconTheme.color.Gray3,
             textAlign = TextAlign.Center,
@@ -68,7 +69,7 @@ fun SignInScreen(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text =  stringResource(com.acon.feature.signin.R.string.signin_terms_of_service),
+                text =  stringResource(R.string.signin_terms_of_service),
                 style = AconTheme.typography.cap1_11_reg,
                 color = AconTheme.color.Gray5,
                 textAlign = TextAlign.Center,
@@ -78,7 +79,7 @@ fun SignInScreen(
             )
             Spacer(modifier = Modifier.width(16.dp))
             Text(
-                text =  stringResource(com.acon.feature.signin.R.string.signin_privacy_policy),
+                text =  stringResource(R.string.signin_privacy_policy),
                 style = AconTheme.typography.cap1_11_reg,
                 color = AconTheme.color.Gray5,
                 textAlign = TextAlign.Center,
