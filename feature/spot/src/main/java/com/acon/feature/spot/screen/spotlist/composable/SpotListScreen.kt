@@ -13,6 +13,9 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
@@ -35,12 +38,17 @@ internal fun SpotListScreen(
     onNavigateToSpotDetailScreen: (id: Int) -> Unit = {},
 ) {
     val scrollState = rememberScrollState()
+
     Surface(
         modifier = modifier,
         color = AconTheme.color.Gray9
     ) {
         when (state) {
             is SpotListUiState.Success -> {
+                val isResultEmpty by remember { derivedStateOf {
+                    state.spotList.isEmpty()
+                } }
+
                 PullToRefresh(
                     state = rememberPullToRefreshState(state.isRefreshing),
                     onRefresh = onRefresh,
@@ -64,26 +72,31 @@ internal fun SpotListScreen(
                             color = AconTheme.color.White,
                             modifier = Modifier.padding(vertical = 14.dp)
                         )
-                        Text(
-                            text = stringResource(R.string.spot_recommendation_description),
-                            style = AconTheme.typography.head7_18_sb,
-                            color = AconTheme.color.White,
-                            modifier = Modifier.padding(top = 16.dp)
-                        )
-                        Spacer(modifier = Modifier.height(12.dp))
-                        state.spotList.fastForEach { spot ->
-                            val isFirstRank =
-                                state.spotShowType == SpotShowType.BEST1 && spot === state.spotList.first()
-                            SpotItem(
-                                spot = spot,
-                                isFirstRank = isFirstRank,
-                                modifier = Modifier.clickable {
-                                    onNavigateToSpotDetailScreen(spot.id)
-                                }.weight(if (isFirstRank) 3f else 1f),
+                        if (isResultEmpty) {
+                            EmptySpotListView(modifier = Modifier.fillMaxSize())
+                        } else {
+                            Text(
+                                text = stringResource(R.string.spot_recommendation_description),
+                                style = AconTheme.typography.head7_18_sb,
+                                color = AconTheme.color.White,
+                                modifier = Modifier.padding(top = 16.dp)
                             )
-                            if (spot !== state.spotList.last())
-                                Spacer(modifier = Modifier.height(12.dp))
+                            Spacer(modifier = Modifier.height(12.dp))
+                            state.spotList.fastForEach { spot ->
+                                val isFirstRank =
+                                    state.spotShowType == SpotShowType.BEST1 && spot === state.spotList.first()
+                                SpotItem(
+                                    spot = spot,
+                                    isFirstRank = isFirstRank,
+                                    modifier = Modifier.clickable {
+                                        onNavigateToSpotDetailScreen(spot.id)
+                                    }.weight(if (isFirstRank) 3f else 1f),
+                                )
+                                if (spot !== state.spotList.last())
+                                    Spacer(modifier = Modifier.height(12.dp))
+                            }
                         }
+                        Spacer(modifier = Modifier.height(4.dp))
                     }
                 }
             }

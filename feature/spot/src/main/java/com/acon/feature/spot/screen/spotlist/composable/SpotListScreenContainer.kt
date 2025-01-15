@@ -29,7 +29,7 @@ fun SpotListScreenContainer(
             }
         }
     )
-    
+
     SpotListScreen(
         state = state,
         modifier = modifier.fillMaxSize(),

@@ -7,4 +7,5 @@
     <string name="restaurant">음식점</string>
     <string name="cafe">카페</string>
     <string name="walking_time">%s분</string>
+    <string name="alert_no_spot">앗! 일치하는 도토리 맛집이 없어요</string>
 </resources>
