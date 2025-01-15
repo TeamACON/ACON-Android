@@ -29,6 +29,8 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+        buildConfigField("String", "GOOGLE_CLIENT_ID", properties["GOOGLE_CLIENT_ID"].toString())
+
         manifestPlaceholders["naverClientId"] = getPropertyKey("naver_client_id")
         buildConfigField("String", "NAVER_CLIENT_ID", "String.valueOf(\"${localProperties["naver_client_id"]}\")")
     }
