@@ -3,6 +3,7 @@ package com.acon.data.datasource.local
 import android.content.Context
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
+import com.acon.core.common.IoDispatcher
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
@@ -10,7 +11,7 @@ import javax.inject.Inject
 
 class TokenLocalDataSource @Inject constructor(
     @ApplicationContext applicationContext: Context,
-    private val dispatchersIO: CoroutineDispatcher,
+    @IoDispatcher private val dispatchersIO: CoroutineDispatcher,
 ) {
     private var masterKey = MasterKey.Builder(applicationContext, MasterKey.DEFAULT_MASTER_KEY_ALIAS)
         .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
