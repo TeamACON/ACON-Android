@@ -18,11 +18,13 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.fastForEach
+import com.acon.core.designsystem.noRippleClickable
 import com.acon.core.designsystem.theme.AconTheme
 
 @Composable
 fun BottomBar(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onItemClick: (BottomNavType) -> Unit = {}
 ) {
 
     Row(
@@ -31,7 +33,9 @@ fun BottomBar(
         BottomNavType.entries.fastForEach {
             BottomBarItem(
                 type = it,
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f).noRippleClickable {
+                    onItemClick(it)
+                }
             )
         }
         Spacer(modifier = Modifier.height(24.dp))
@@ -49,7 +53,7 @@ private fun BottomBarItem(
     ) {
         Icon(
             modifier = Modifier.padding(top = 8.dp),
-            imageVector = ImageVector.vectorResource(type.iconRes),
+            imageVector = ImageVector.vectorResource(type.selectedIconRes),
             contentDescription = stringResource(type.titleRes),
             tint = AconTheme.color.White
         )
