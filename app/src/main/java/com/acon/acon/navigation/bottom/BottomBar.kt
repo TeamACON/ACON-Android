@@ -24,19 +24,26 @@ import com.acon.core.designsystem.theme.AconTheme
 @Composable
 fun BottomBar(
     modifier: Modifier = Modifier,
+    selectedItem: BottomNavType = BottomNavType.SPOT,
     onItemClick: (BottomNavType) -> Unit = {}
 ) {
 
-    Row(
+    Column(
         modifier = modifier
     ) {
-        BottomNavType.entries.fastForEach {
-            BottomBarItem(
-                type = it,
-                modifier = Modifier.weight(1f).noRippleClickable {
-                    onItemClick(it)
-                }
-            )
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+        ) {
+            BottomNavType.entries.fastForEach {
+                BottomBarItem(
+                    type = it,
+                    isSelected = selectedItem == it,
+                    modifier = Modifier.weight(1f).noRippleClickable {
+                        onItemClick(it)
+                    }
+                )
+            }
         }
         Spacer(modifier = Modifier.height(24.dp))
     }
@@ -45,6 +52,7 @@ fun BottomBar(
 @Composable
 private fun BottomBarItem(
     type: BottomNavType,
+    isSelected: Boolean,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -53,7 +61,8 @@ private fun BottomBarItem(
     ) {
         Icon(
             modifier = Modifier.padding(top = 8.dp),
-            imageVector = ImageVector.vectorResource(type.selectedIconRes),
+            imageVector = ImageVector.vectorResource(
+                if (isSelected) type.selectedIconRes else type.unselectedIconRes),
             contentDescription = stringResource(type.titleRes),
             tint = AconTheme.color.White
         )
