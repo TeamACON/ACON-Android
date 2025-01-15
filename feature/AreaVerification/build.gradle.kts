@@ -49,6 +49,9 @@ dependencies {
     implementation(libs.androidx.storage)
     implementation(libs.material3.android)
     implementation(libs.ui.tooling.preview.android)
+    implementation(libs.map.sdk)
+    implementation(libs.gms.play.services.location)
+    implementation(project(":core:map"))
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -56,4 +59,9 @@ dependencies {
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
     implementation(libs.hilt.compose)
+
+    // naver map
+    implementation(libs.naver.map.compose)
+    implementation(libs.play.services.location)
+    implementation(libs.naver.map.location)
 }
