@@ -10,16 +10,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -27,7 +24,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.acon.core.designsystem.component.button.AconFilledLargeButton
 import com.acon.core.designsystem.component.dialog.AconTwoButtonDialog
 import com.acon.core.designsystem.theme.AconTheme
-import com.acon.feature.onboarding.R
 import com.acon.feature.onboarding.component.FoodGrid
 import com.acon.feature.onboarding.component.FoodItem
 import com.acon.feature.onboarding.component.OnboardingTopBar
@@ -46,7 +42,6 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 *  8) 아키텍처 따라서 깔끔하게 정리 완료하기 (ViewModel 등등)
 * */
 
-
 @Composable
 fun UnlikeFoodScreenContainer(
     modifier: Modifier = Modifier,
@@ -55,8 +50,8 @@ fun UnlikeFoodScreenContainer(
     val state = viewModel.collectAsState().value
 
     UnlikeFoodScreen(
+        modifier = modifier,
         columnSize = 3,
-        totalItemsCount = 5,
         foodItemList = state.foodItems,
         onCardClicked = viewModel::onCardClicked,
         isNothingClicked = state.isNothingClicked,
@@ -102,15 +97,13 @@ fun UnlikeFoodScreenContainer(
             isImageEnabled = false
         )
     }
-
-
+    
 }
 
 @Composable
 fun UnlikeFoodScreen(
     modifier: Modifier = Modifier,
     columnSize : Int,
-    totalItemsCount : Int,
     foodItemList: List<FoodItem>,
     onCardClicked: (String) -> Unit,
     isNothingClicked: Boolean,
@@ -124,7 +117,7 @@ fun UnlikeFoodScreen(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .background(Color(0xFF1A1B1E))
+            .background(color = AconTheme.color.Gray9)
     ){
 
         OnboardingTopBar(
@@ -151,8 +144,17 @@ fun UnlikeFoodScreen(
                 Column(
                     modifier = Modifier
                 ){
-                    Text(text = "01", color = Color.Gray, fontSize = 28.sp, fontWeight = FontWeight.SemiBold)
-                    Text(text = "어떤 음식을 피하고 싶으신가요?", color = Color.White, fontSize = 20.sp, fontWeight = FontWeight.SemiBold)
+                    Text(
+                        text = "01",
+                        color = AconTheme.color.Gray5,
+                        style = AconTheme.typography.head4_24_sb,
+                        //textAlign = TextAlign.Center,
+                    )
+                    Text(
+                        text = "어떤 음식을 피하고 싶으신가요?",
+                        color = Color.White,
+                        style = AconTheme.typography.head6_20_sb,
+                    )
                 }
             }
 
@@ -164,7 +166,6 @@ fun UnlikeFoodScreen(
                     modifier = modifier
                         .background(Color(0x00000000)),
                     columnSize = columnSize,
-                    totalItemsCount = totalItemsCount,
                     foodItemList = foodItemList,
                     onCardClicked = { text ->
                         onCardClicked(text)

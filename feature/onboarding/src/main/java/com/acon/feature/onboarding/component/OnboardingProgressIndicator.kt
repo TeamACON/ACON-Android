@@ -13,6 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.acon.core.designsystem.theme.AconTheme
 
 
 @Composable
@@ -21,14 +22,13 @@ fun OnboardingProgressIndicator(
     currentPage: Int,
     totalPages: Int
 ) {
-    val scope = rememberCoroutineScope()
 
     LinearProgressIndicator(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .height(2.dp),
         progress = { currentPage / totalPages.toFloat() },
-        color = Color(0xFFFF6928)
+        color = AconTheme.color.Main_org1
     )
 }
 

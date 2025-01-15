@@ -27,12 +27,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import com.acon.core.designsystem.theme.AconTheme
 import com.acon.feature.onboarding.R
 
 data class FoodItem(val imageRes: Int, val name: String, val isSelected: Boolean)
@@ -41,16 +40,14 @@ data class FoodItem(val imageRes: Int, val name: String, val isSelected: Boolean
 fun FoodGrid(
     modifier : Modifier = Modifier,
     columnSize : Int,
-    totalItemsCount : Int,
     foodItemList: List<FoodItem>,
     onCardClicked: (String) -> Unit,
     isNothingClicked: Boolean,
     selectedCard: Set<String>,
 ){
 
-    val rowsCount = ( (totalItemsCount - 1) / columnSize ) + 1
-
     LazyVerticalGrid(
+        modifier = modifier,
         columns = GridCells.Fixed(columnSize),
         contentPadding = PaddingValues(horizontal = 10.dp),
         horizontalArrangement = Arrangement.spacedBy(10.dp),
@@ -65,7 +62,6 @@ fun FoodGrid(
                     onCardClicked(text)
                 },
                 isNothingClicked = isNothingClicked,
-                selectedCard = selectedCard
             )
         }
     }
@@ -79,7 +75,6 @@ fun FoodCard(
     selected: Boolean,
     onCardClicked: (String) -> Unit,
     isNothingClicked: Boolean,
-    selectedCard: Set<String>,
 ) {
     Column(
         modifier = modifier,
@@ -111,12 +106,12 @@ fun FoodCard(
                             modifier = Modifier
                                 .fillMaxSize()
                                 .clip(RoundedCornerShape(6.dp))
-                                .background(color = Color(0x3C000000))
+                                .background(AconTheme.color.Dim_b_60)
                         )
                         Icon(
                             imageVector = Icons.Default.Check,
                             contentDescription = "Clicked",
-                            tint = Color.LightGray,
+                            tint = AconTheme.color.White,
                             modifier = Modifier
                                 .size(44.dp)
                         )
@@ -127,19 +122,19 @@ fun FoodCard(
                     modifier = Modifier
                         .fillMaxSize()
                         .clip(RoundedCornerShape(6.dp))
-                        .background(color = if (isNothingClicked) Color(0x3C000000) else Color(0xFF323339)),
+                        .background(color = if (isNothingClicked) AconTheme.color.Dim_b_60 else AconTheme.color.Gray7),
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
                         text = text,
-                        color = Color.White,
-                        fontSize = 14.sp
+                        color = AconTheme.color.White,
+                        style = AconTheme.typography.subtitle2_14_med
                     )
                     if(isNothingClicked){
                         Icon(
                             imageVector = Icons.Default.Check,
                             contentDescription = "Clicked",
-                            tint = Color(0xFFFFFFFF),
+                            tint = AconTheme.color.White,
                             modifier = Modifier
                                 .size(44.dp)
                         )
@@ -150,10 +145,10 @@ fun FoodCard(
         val cardTextAlpha = if (isNothingClicked && imageRes != 0) 0.1f else 1f
         Spacer(modifier = Modifier.height(4.dp))
         Text(
-            modifier = modifier.alpha(cardTextAlpha),
+            modifier = Modifier.alpha(cardTextAlpha),
             text = text,
-            fontSize = 14.sp,
-            color = Color.White
+            color = AconTheme.color.White,
+            style = AconTheme.typography.subtitle2_14_med
         )
     }
 }
@@ -175,7 +170,6 @@ fun PreviewFoodGrid() {
 
     FoodGrid(
         columnSize = 3,
-        totalItemsCount = 5,
         foodItemList = foodItems,
         onCardClicked = {
             if(selectedCard.value.contains(it)) selectedCard.value -= it
