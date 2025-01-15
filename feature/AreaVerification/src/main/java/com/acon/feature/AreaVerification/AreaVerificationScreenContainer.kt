@@ -1,11 +1,7 @@
 package com.acon.feature.AreaVerification
 
-import android.Manifest
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -23,36 +19,27 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.core.app.ActivityCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.acon.core.designsystem.component.button.AconFilledLargeButton
 import com.acon.core.designsystem.theme.AconTheme
 import com.acon.feature.AreaVerification.component.AreaVerificationButton
 import android.provider.Settings
 import com.acon.core.designsystem.component.dialog.AconOneButtonDialog
+import com.acon.core.utils.feature.permission.CheckAndRequestLocationPermission
 
 @Composable
 fun AreaVerificationScreenContainer(
-    onNewAreaClick: () -> Unit,
+    onNewAreaClick: (Double, Double) -> Unit,
+    onNextScreen: (Double, Double) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: AreaVerificationViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val context = LocalContext.current
 
-    val locationPermissionLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.RequestPermission()
-    ) { isGranted ->
-        if (isGranted) {
-            onNewAreaClick()
-        } else {
-            if (ActivityCompat.checkSelfPermission(
-                    context,
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-                ) == PackageManager.PERMISSION_GRANTED
-            ) {
-                viewModel.updateShowPermissionDialog(true)
-            }
+    CheckAndRequestLocationPermission {
+        if (uiState.isLocationObtained) {
+            onNewAreaClick(uiState.latitude, uiState.longitude)
         }
     }
 
@@ -68,7 +55,11 @@ fun AreaVerificationScreenContainer(
             viewModel.updateShowPermissionDialog(false)
         },
         onNextButtonClick = {
-            locationPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+            viewModel.onNewLocationSelected()
+            onNextScreen(uiState.latitude, uiState.longitude)
+        },
+        onLocationObtained = { latitude, longitude ->
+            viewModel.updateLocation(latitude, longitude)
         },
         modifier = modifier
     )
@@ -81,6 +72,7 @@ fun AreaVerificationScreen(
     onDismissPermissionDialog: () -> Unit,
     onPermissionSettingClick: () -> Unit,
     onNextButtonClick: () -> Unit,
+    onLocationObtained: (Double, Double) -> Unit,
     modifier: Modifier = Modifier
 ) {
     if (uiState.showPermissionDialog) {
@@ -120,6 +112,7 @@ fun AreaVerificationScreen(
             )
 
             Spacer(modifier = Modifier.height(32.dp))
+
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
