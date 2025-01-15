@@ -2,32 +2,44 @@ package com.acon.feature.areaverification
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
+import org.orbitmvi.orbit.ContainerHost
+import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
 
 @HiltViewModel
-class AreaVerificationViewModel @Inject constructor() : ViewModel() {
-    private val _uiState = MutableStateFlow(AreaVerificationState())
-    val uiState: StateFlow<AreaVerificationState> = _uiState.asStateFlow()
+class AreaVerificationViewModel @Inject constructor() : ViewModel(),
+    ContainerHost<AreaVerificationState, AreaVerificationSideEffect> {
 
-    fun onNewLocationSelected() {
-        _uiState.update { it.copy(isNewLocationSelected = true) }
-    }
+    override val container = container<AreaVerificationState, AreaVerificationSideEffect>(AreaVerificationState())
 
-    fun updateLocation(latitude: Double, longitude: Double) {
-        _uiState.update {
-            it.copy(
-                latitude = latitude,
-                longitude = longitude,
-                isLocationObtained = true
-            )
+    fun onNewLocationSelected() = intent {
+        reduce {
+            state.copy(isNewLocationSelected = true)
         }
     }
 
-    fun updateShowPermissionDialog(show: Boolean) {
-        _uiState.update { it.copy(showPermissionDialog = show) }
+    fun updateShowPermissionDialog(show: Boolean) = intent {
+        reduce {
+            state.copy(showPermissionDialog = show)
+        }
+    }
+
+    fun onNextButtonClick() = intent {
+        if (state.isNewLocationSelected) {
+            postSideEffect(AreaVerificationSideEffect.NavigateToNextScreen(state.latitude, state.longitude))
+        }
+    }
+
+    fun onPermissionSettingClick(packageName: String) = intent {
+        postSideEffect(AreaVerificationSideEffect.NavigateToSettings(packageName))
+        reduce {
+            state.copy(showPermissionDialog = false)
+        }
+    }
+
+    fun checkLocationAndNavigate() = intent {
+        if (state.isLocationObtained) {
+            postSideEffect(AreaVerificationSideEffect.NavigateToNewArea(state.latitude, state.longitude))
+        }
     }
 }

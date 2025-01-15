@@ -40,6 +40,7 @@ dependencies {
     implementation(project(":core:common"))
     implementation(project(":core:designsystem"))
     implementation(project(":core:utils:feature"))
+    implementation(project(":core:map"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -51,7 +52,6 @@ dependencies {
     implementation(libs.ui.tooling.preview.android)
     implementation(libs.map.sdk)
     implementation(libs.gms.play.services.location)
-    implementation(project(":core:map"))
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -59,6 +59,9 @@ dependencies {
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
     implementation(libs.hilt.compose)
+
+    implementation(libs.orbit.compose)
+    implementation(libs.orbit.viewmodel)
 
     // naver map
     implementation(libs.naver.map.compose)

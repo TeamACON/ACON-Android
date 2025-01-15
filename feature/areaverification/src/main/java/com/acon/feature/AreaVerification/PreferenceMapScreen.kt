@@ -34,7 +34,7 @@ fun PreferenceMapScreen(
                 .fillMaxWidth()
         ) {
             LocationMapScreen(
-                onLocationObtained = { _, _ -> /* 여기서는 위치 업데이트가 필요 없을 듯*/ },
+                onLocationObtained = { _, _ -> },
                 initialLatitude = latitude,
                 initialLongitude = longitude,
                 modifier = Modifier.fillMaxSize()

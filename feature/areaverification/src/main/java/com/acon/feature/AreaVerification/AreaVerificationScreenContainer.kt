@@ -24,6 +24,7 @@ import com.acon.core.designsystem.component.button.AconFilledLargeButton
 import com.acon.core.designsystem.theme.AconTheme
 import com.acon.feature.areaverification.component.AreaVerificationButton
 import android.provider.Settings
+import androidx.compose.runtime.LaunchedEffect
 import com.acon.core.designsystem.component.dialog.AconOneButtonDialog
 import com.acon.core.utils.feature.permission.CheckAndRequestLocationPermission
 
@@ -34,48 +35,52 @@ fun AreaVerificationScreenContainer(
     modifier: Modifier = Modifier,
     viewModel: AreaVerificationViewModel = hiltViewModel(),
 ) {
-    val uiState by viewModel.uiState.collectAsState()
+    val state by viewModel.container.stateFlow.collectAsState()
     val context = LocalContext.current
 
-    CheckAndRequestLocationPermission {
-        if (uiState.isLocationObtained) {
-            onNewAreaClick(uiState.latitude, uiState.longitude)
+    LaunchedEffect(Unit) {
+        viewModel.container.sideEffectFlow.collect { effect ->
+            when (effect) {
+                is AreaVerificationSideEffect.NavigateToSettings -> {
+                    val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                        data = Uri.fromParts("package", effect.packageName, null)
+                    }
+                    context.startActivity(intent)
+                }
+                is AreaVerificationSideEffect.NavigateToNextScreen -> {
+                    onNextScreen(effect.latitude, effect.longitude)
+                }
+                is AreaVerificationSideEffect.NavigateToNewArea -> {
+                    onNewAreaClick(effect.latitude, effect.longitude)
+                }
+            }
         }
     }
 
+    CheckAndRequestLocationPermission {
+        viewModel.checkLocationAndNavigate()
+    }
+
     AreaVerificationScreen(
-        uiState = uiState,
+        state = state,
         onNewLocationSelected = { viewModel.onNewLocationSelected() },
         onDismissPermissionDialog = { viewModel.updateShowPermissionDialog(false) },
-        onPermissionSettingClick = {
-            val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
-                data = Uri.fromParts("package", context.packageName, null)
-            }
-            context.startActivity(intent)
-            viewModel.updateShowPermissionDialog(false)
-        },
-        onNextButtonClick = {
-            viewModel.onNewLocationSelected()
-            onNextScreen(uiState.latitude, uiState.longitude)
-        },
-        onLocationObtained = { latitude, longitude ->
-            viewModel.updateLocation(latitude, longitude)
-        },
+        onPermissionSettingClick = { viewModel.onPermissionSettingClick(context.packageName) },
+        onNextButtonClick = { viewModel.onNextButtonClick() },
         modifier = modifier
     )
 }
 
 @Composable
 fun AreaVerificationScreen(
-    uiState: AreaVerificationState,
+    state: AreaVerificationState,
     onNewLocationSelected: () -> Unit,
     onDismissPermissionDialog: () -> Unit,
     onPermissionSettingClick: () -> Unit,
     onNextButtonClick: () -> Unit,
-    onLocationObtained: (Double, Double) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    if (uiState.showPermissionDialog) {
+    if (state.showPermissionDialog) {
         AconOneButtonDialog(
             title = "위치 권한 필요",
             content = "정확한 위치 확인이 필요합니다.\n설정에서 '정확한 위치' 권한을 허용해주세요.",
@@ -120,7 +125,7 @@ fun AreaVerificationScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 AreaVerificationButton(
-                    selected = uiState.isNewLocationSelected,
+                    selected = state.isNewLocationSelected,
                     onClick = onNewLocationSelected,
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -135,7 +140,7 @@ fun AreaVerificationScreen(
             enabledTextColor = AconTheme.color.White,
             disabledTextColor = AconTheme.color.Gray6,
             onClick = onNextButtonClick,
-            isEnabled = uiState.isNewLocationSelected,
+            isEnabled = state.isNewLocationSelected,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 24.dp)
