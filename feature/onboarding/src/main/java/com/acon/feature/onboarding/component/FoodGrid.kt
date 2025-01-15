@@ -31,14 +31,15 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.acon.core.designsystem.theme.AconTheme
+import com.acon.feature.onboarding.type.CardItem
 import com.acon.feature.onboarding.type.FoodItems
 
 
 @Composable
-fun FoodGrid(
+fun <T : CardItem> FoodGrid(
     modifier : Modifier = Modifier,
     columnSize : Int,
-    foodItems: Array<FoodItems>,
+    foodItems: Array<T>,
     onCardClicked: (String) -> Unit,
     isNothingClicked: Boolean = false,
     selectedCard: Set<String>,
@@ -53,8 +54,8 @@ fun FoodGrid(
         items(foodItems) { food ->
             FoodCard(
                 imageRes = food.imageResId,
-                text = food.foodName,
-                selected = (selectedCard.contains(food.foodName)),
+                text = food.cardName,
+                selected = (selectedCard.contains(food.cardName)),
                 onCardClicked = { text ->
                     onCardClicked(text)
                 },
@@ -151,14 +152,30 @@ fun PreviewFoodGrid() {
 
     val selectedCard = remember { mutableStateOf(setOf<String>()) }
 
-    FoodGrid(
-        columnSize = 3,
-        foodItems = FoodItems.entries.toTypedArray(),
-        onCardClicked = {
-            if(selectedCard.value.contains(it)) selectedCard.value -= it
-            else selectedCard.value += it
-        },
-        isNothingClicked = false,
-        selectedCard = selectedCard.value
-    )
+    Column(
+
+    ){
+
+        FoodGrid(
+            columnSize = 3,
+            foodItems = FoodItems.entries.toTypedArray(),
+            onCardClicked = {
+                if(selectedCard.value.contains(it)) selectedCard.value -= it
+                else selectedCard.value += it
+            },
+            isNothingClicked = false,
+            selectedCard = selectedCard.value
+        )
+
+//        FoodGrid(
+//            columnSize = 3,
+//            foodItems = FoodTypeItems.entries.toTypedArray(),
+//            onCardClicked = {
+//                if(selectedCard.value.contains(it)) selectedCard.value -= it
+//                else selectedCard.value += it
+//            },
+//            isNothingClicked = false,
+//            selectedCard = selectedCard.value
+//        )
+    }
 }

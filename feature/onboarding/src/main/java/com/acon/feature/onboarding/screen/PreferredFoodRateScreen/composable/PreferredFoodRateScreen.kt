@@ -25,6 +25,7 @@ import com.acon.feature.onboarding.screen.PreferredFoodRateScreen.PreferredFoodR
 import com.acon.feature.onboarding.screen.PreferredFoodRateScreen.RatePreferFoodScreenSideEffect
 import com.acon.feature.onboarding.screen.PreferredFoodRateScreen.RatePreferFoodScreenState
 import com.acon.feature.onboarding.type.FoodItems
+import com.acon.feature.onboarding.type.FoodTypeItems
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
@@ -144,7 +145,7 @@ fun PreferredFoodRateScreen(
                     modifier = modifier
                         .background(Color(0x00000000)),
                     columnSize = columnSize,
-                    foodItems = FoodItems.entries.toTypedArray(), //다른 걸로 수정 필요
+                    foodItems = FoodTypeItems.entries.toTypedArray(),
                     onCardClicked = { text ->
                         onCardClicked(text)
                     },
@@ -163,7 +164,7 @@ fun PreferredFoodRateScreen(
                     textColor = AconTheme.color.White,
                     enabledBackgroundColor = AconTheme.color.Gray5,
                     disabledBackgroundColor =  AconTheme.color.Gray8,
-                    isEnabled = (screenState.selectedCard.size >= 1),
+                    isEnabled = (screenState.selectedCard.isNotEmpty()),
                     cornerRadius = 6.dp,
                     modifier = Modifier.fillMaxWidth(),
                     contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp),

@@ -3,11 +3,15 @@ package com.acon.feature.onboarding.type
 import androidx.annotation.DrawableRes
 import com.acon.feature.onboarding.R
 
+interface CardItem {
+    val imageResId: Int
+    val cardName: String
+}
+
 enum class FoodItems(
-    @DrawableRes val imageResId: Int,
-    val foodName: String,
-    //@StringRes val koreanName: Int,
-) {
+    @DrawableRes override val imageResId: Int,
+    override val cardName: String,
+) : CardItem {
 
     DAKBAL(R.drawable.food_img_1, "닭발"),
     RAW(R.drawable.food_img_2, "회/육회"),
@@ -18,13 +22,13 @@ enum class FoodItems(
 }
 
 enum class FoodTypeItems(
-    @DrawableRes val imageResId: Int,
-    val foodTypeName: String
-){
-    KOREAN(),
-    AMERICAN(),
-    CHINESE(),
-    JAPANESE(),
-    STREET(),
-    ASIAN(),
+    @DrawableRes override val imageResId: Int,
+    override val cardName: String,
+) : CardItem {
+    KOREAN(R.drawable.food_korean, "한식"),
+    AMERICAN(R.drawable.food_american, "양식"),
+    CHINESE(R.drawable.food_chinese, "중식"),
+    JAPANESE(R.drawable.food_japanese, "일식"),
+    STREET(R.drawable.food_street, "분식"),
+    ASIAN(R.drawable.food_asian, "아시안"),
 }

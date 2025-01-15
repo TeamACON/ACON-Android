@@ -6,7 +6,7 @@ import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
 
-const val ONBOARDING_TOTAL_PAGES = 6;
+const val ONBOARDING_TOTAL_PAGES = 5;
 
 @HiltViewModel
 class UnlikeFoodScreenViewModel @Inject constructor(
