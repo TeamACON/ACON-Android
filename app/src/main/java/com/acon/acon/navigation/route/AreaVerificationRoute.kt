@@ -6,13 +6,13 @@ import kotlinx.serialization.Serializable
 sealed interface AreaVerificationRoute {
 
     @Serializable
-    data object Graph: AreaVerificationRoute
+    data object Graph : AreaVerificationRoute
 
     @Serializable
     data object RequireAreaVerification : AreaVerificationRoute
 
     @Serializable
-    data object CheckInMap : AreaVerificationRoute
+    data class CheckInMap(val latitude: Double, val longitude: Double) : AreaVerificationRoute
 
     @Serializable
     data object Complete : AreaVerificationRoute
