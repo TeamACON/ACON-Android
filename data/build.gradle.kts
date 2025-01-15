@@ -56,6 +56,8 @@ dependencies {
     implementation(libs.retrofit.kotlin.serialization.converter)
     implementation(libs.kotlinx.serialization.json)
 
+    implementation (libs.bundles.googleSignIn)
+
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
 }
