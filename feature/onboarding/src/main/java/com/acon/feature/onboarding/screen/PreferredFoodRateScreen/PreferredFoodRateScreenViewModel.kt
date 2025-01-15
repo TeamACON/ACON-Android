@@ -18,7 +18,16 @@ class PreferredFoodRateScreenViewModel @Inject constructor(
         )
 
     fun onCardClicked(text: String) = intent {
+        val updatedSelectedCard = state.selectedCard.toMutableList()
 
+        if (updatedSelectedCard.contains(text)) {
+            updatedSelectedCard.remove(text)
+        } else if (updatedSelectedCard.size < 3) {
+            updatedSelectedCard.add(text)
+        }
+        reduce {
+            state.copy(selectedCard = updatedSelectedCard.toSet()) // Set으로 변환
+        }
     }
 
     fun showDialog() = intent {

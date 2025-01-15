@@ -33,14 +33,15 @@ import androidx.compose.ui.unit.dp
 import com.acon.core.designsystem.theme.AconTheme
 import com.acon.feature.onboarding.type.CardItem
 import com.acon.feature.onboarding.type.FoodItems
+import com.acon.feature.onboarding.type.FoodTypeItems
 
 @Composable
-fun <T : CardItem> FoodGrid( //이름을 HateFoodSelectGrid로 수정해야 할 듯.
+fun <T : CardItem> PreferFoodTypeSelectGrid(
     modifier : Modifier = Modifier,
     columnSize : Int,
     foodItems: Array<T>,
     onCardClicked: (String) -> Unit,
-    isNothingClicked: Boolean = false,
+    isAllClicked: Boolean = false,
     selectedCard: Set<String>,
 ){
     LazyVerticalGrid(
@@ -51,28 +52,30 @@ fun <T : CardItem> FoodGrid( //이름을 HateFoodSelectGrid로 수정해야 할 
         verticalArrangement = Arrangement.spacedBy(15.dp),
     ){
         items(foodItems) { food ->
-            FoodCard(
+            FoodTypeCard(
                 imageRes = food.imageResId,
                 text = food.cardName,
                 selected = (selectedCard.contains(food.cardName)),
                 onCardClicked = { text ->
                     onCardClicked(text)
                 },
-                isNothingClicked = isNothingClicked,
+                isAllClicked = isAllClicked,
+                selectedCard = selectedCard,
             )
         }
     }
 }
 
 @Composable
-fun FoodCard(
+fun FoodTypeCard(
     modifier: Modifier = Modifier,
     imageRes: Int,
     text: String,
     selected: Boolean,
     onCardClicked: (String) -> Unit,
-    isNothingClicked: Boolean,
-) {
+    isAllClicked: Boolean, //이게 true가 되는 순간 (3개가 선택되는 순간), unselected인 애들은 전부 alpha 처리하기
+    selectedCard: Set<String>,
+    ) {
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -81,14 +84,13 @@ fun FoodCard(
             modifier = Modifier
                 .fillMaxSize()
                 .aspectRatio(1f)
-                .clickable { onCardClicked(text) },
+                .clickable(enabled = selected || !isAllClicked) { onCardClicked(text) },
             contentAlignment = Alignment.Center
+
         ){
-            //음식 카드인 경우
-            if (imageRes != 0){
+            // 버튼 하나씩
                 Box(
-                    modifier = Modifier
-                        .alpha(alpha = if (isNothingClicked) 0.1f else 1f),
+                    modifier = Modifier.alpha(if (isAllClicked && !selected) 0.1f else 1f),
                     contentAlignment = Alignment.Center
                 ) {
                     Image(
@@ -97,44 +99,29 @@ fun FoodCard(
                         contentScale = ContentScale.Crop,
                         modifier = Modifier.clip(RoundedCornerShape(6.dp)).fillMaxSize()
                     )
-                    if (selected) {
+                    if (selected) { //top 3 이내에 선정된 경우, 체크표시 말고 등수 번호와 함께 선택된 효과
                         Box(
                             modifier = Modifier
                                 .fillMaxSize()
                                 .clip(RoundedCornerShape(6.dp))
                                 .background(AconTheme.color.Dim_b_60)
                         )
-                        Image(
-                            imageVector = ImageVector.vectorResource(com.acon.core.designsystem.R.drawable.ic_check_44),
-                            contentDescription = "Clicked",
-                            modifier = Modifier.size(44.dp)
+//                        Image(
+//                            imageVector = ImageVector.vectorResource(com.acon.core.designsystem.R.drawable.ic_check_44),
+//                            contentDescription = "Clicked",
+//                            modifier = Modifier.size(44.dp)
+//                        )
+                        Text(
+                            text = "${selectedCard.indexOf(text) + 1}",
+                            style = AconTheme.typography.head8_16_sb,
+                            color = AconTheme.color.White,
+                            modifier = Modifier.align(Alignment.Center)
                         )
                     }
                 }
-            } else { //없음 카드인 경우
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .clip(RoundedCornerShape(6.dp))
-                        .background(color = if (isNothingClicked) AconTheme.color.Dim_b_60 else AconTheme.color.Gray7),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = text,
-                        color = AconTheme.color.White,
-                        style = AconTheme.typography.subtitle2_14_med
-                    )
-                    if(isNothingClicked){
-                        Image(
-                            imageVector = ImageVector.vectorResource(com.acon.core.designsystem.R.drawable.ic_check_44),
-                            contentDescription = "Clicked",
-                            modifier = Modifier.size(44.dp)
-                        )
-                    }
-                }
-            }
+
         }
-        val cardTextAlpha = if (isNothingClicked && imageRes != 0) 0.1f else 1f
+        val cardTextAlpha = if (isAllClicked && imageRes != 0) 0.1f else 1f //수정 필요
         Spacer(modifier = Modifier.height(4.dp))
         Text(
             modifier = Modifier.alpha(cardTextAlpha),
@@ -147,7 +134,7 @@ fun FoodCard(
 
 @Preview
 @Composable
-fun PreviewFoodGrid() {
+fun PreviewFoodTypeGrid() {
 
     val selectedCard = remember { mutableStateOf(setOf<String>()) }
 
@@ -155,26 +142,15 @@ fun PreviewFoodGrid() {
 
     ){
 
-        FoodGrid(
+        PreferFoodTypeSelectGrid(
             columnSize = 3,
-            foodItems = FoodItems.entries.toTypedArray(),
+            foodItems = FoodTypeItems.entries.toTypedArray(),
             onCardClicked = {
                 if(selectedCard.value.contains(it)) selectedCard.value -= it
                 else selectedCard.value += it
             },
-            isNothingClicked = false,
+            isAllClicked = false,
             selectedCard = selectedCard.value
         )
-
-//        FoodGrid(
-//            columnSize = 3,
-//            foodItems = FoodTypeItems.entries.toTypedArray(),
-//            onCardClicked = {
-//                if(selectedCard.value.contains(it)) selectedCard.value -= it
-//                else selectedCard.value += it
-//            },
-//            isNothingClicked = false,
-//            selectedCard = selectedCard.value
-//        )
     }
 }

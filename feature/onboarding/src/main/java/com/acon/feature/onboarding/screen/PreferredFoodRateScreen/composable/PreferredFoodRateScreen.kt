@@ -21,6 +21,7 @@ import com.acon.core.designsystem.component.dialog.AconTwoButtonDialog
 import com.acon.core.designsystem.theme.AconTheme
 import com.acon.feature.onboarding.component.FoodGrid
 import com.acon.feature.onboarding.component.OnboardingTopBar
+import com.acon.feature.onboarding.component.PreferFoodTypeSelectGrid
 import com.acon.feature.onboarding.screen.PreferredFoodRateScreen.PreferredFoodRateScreenViewModel
 import com.acon.feature.onboarding.screen.PreferredFoodRateScreen.RatePreferFoodScreenSideEffect
 import com.acon.feature.onboarding.screen.PreferredFoodRateScreen.RatePreferFoodScreenState
@@ -141,7 +142,7 @@ fun PreferredFoodRateScreen(
                     .weight(1f),
                 contentAlignment = Alignment.Center
             ){
-                FoodGrid(
+                PreferFoodTypeSelectGrid(
                     modifier = modifier
                         .background(Color(0x00000000)),
                     columnSize = columnSize,
@@ -149,7 +150,8 @@ fun PreferredFoodRateScreen(
                     onCardClicked = { text ->
                         onCardClicked(text)
                     },
-                    selectedCard = screenState.selectedCard
+                    selectedCard = screenState.selectedCard,
+                    isAllClicked = screenState.selectedCard.size == 3
                 )
             }
 
