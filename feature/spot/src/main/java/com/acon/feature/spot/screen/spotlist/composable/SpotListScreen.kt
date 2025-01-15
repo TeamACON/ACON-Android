@@ -24,11 +24,14 @@ import com.acon.core.designsystem.theme.AconTheme
 import com.acon.feature.spot.R
 import com.acon.feature.spot.screen.spotlist.SpotListUiState
 import com.acon.feature.spot.type.SpotShowType
+import com.github.fengdai.compose.pulltorefresh.PullToRefresh
+import com.github.fengdai.compose.pulltorefresh.rememberPullToRefreshState
 
 @Composable
 internal fun SpotListScreen(
     state: SpotListUiState,
     modifier: Modifier = Modifier,
+    onRefresh: () -> Unit = {},
     onNavigateToSpotDetailScreen: (id: Int) -> Unit = {},
 ) {
     val scrollState = rememberScrollState()
@@ -38,42 +41,49 @@ internal fun SpotListScreen(
     ) {
         when (state) {
             is SpotListUiState.Success -> {
-                val itemInnerSpacing = when (state.spotShowType) {
-                    SpotShowType.BEST1 -> 288.dp
-                    SpotShowType.BEST2 -> 20.dp
-                }
-
-                Column(
-                    modifier = Modifier
-                        .verticalScroll(scrollState)
-                        .fillMaxSize()
-                        .padding(horizontal = 20.dp)
+                PullToRefresh(
+                    state = rememberPullToRefreshState(state.isRefreshing),
+                    onRefresh = onRefresh,
+                    dragMultiplier = .35f,
+                    refreshTriggerDistance = 100.dp,
+                    refreshingOffset = 60.dp,
+                    indicator = { state, refreshTriggerDistance, _ ->
+                        SpotListPullToRefreshIndicator(refreshTriggerDistance, state)
+                    }
                 ) {
-                    Spacer(modifier = Modifier.height(44.dp))
-                    Text(
-                        text = stringResource(R.string.spot_name),
-                        style = AconTheme.typography.title2_20_b,
-                        color = AconTheme.color.White,
-                        modifier = Modifier.padding(vertical = 14.dp)
-                    )
-                    Text(
-                        text = stringResource(R.string.spot_recommendation_description),
-                        style = AconTheme.typography.head7_18_sb,
-                        color = AconTheme.color.White,
-                        modifier = Modifier.padding(top = 16.dp)
-                    )
-                    Spacer(modifier = Modifier.height(12.dp))
-                    state.spotList.fastForEach { spot ->
-                        val isFirstRank = state.spotShowType == SpotShowType.BEST1 && spot === state.spotList.first()
-                        SpotItem(
-                            spot = spot,
-                            isFirstRank = isFirstRank,
-                            modifier = Modifier.clickable {
-                                onNavigateToSpotDetailScreen(spot.id)
-                            }.weight(if (isFirstRank) 3f else 1f),
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .verticalScroll(scrollState)
+                            .padding(horizontal = 20.dp)
+                    ) {
+                        Spacer(modifier = Modifier.height(44.dp))
+                        Text(
+                            text = stringResource(R.string.spot_name),
+                            style = AconTheme.typography.title2_20_b,
+                            color = AconTheme.color.White,
+                            modifier = Modifier.padding(vertical = 14.dp)
                         )
-                        if (spot !== state.spotList.last())
-                            Spacer(modifier = Modifier.height(12.dp))
+                        Text(
+                            text = stringResource(R.string.spot_recommendation_description),
+                            style = AconTheme.typography.head7_18_sb,
+                            color = AconTheme.color.White,
+                            modifier = Modifier.padding(top = 16.dp)
+                        )
+                        Spacer(modifier = Modifier.height(12.dp))
+                        state.spotList.fastForEach { spot ->
+                            val isFirstRank =
+                                state.spotShowType == SpotShowType.BEST1 && spot === state.spotList.first()
+                            SpotItem(
+                                spot = spot,
+                                isFirstRank = isFirstRank,
+                                modifier = Modifier.clickable {
+                                    onNavigateToSpotDetailScreen(spot.id)
+                                }.weight(if (isFirstRank) 3f else 1f),
+                            )
+                            if (spot !== state.spotList.last())
+                                Spacer(modifier = Modifier.height(12.dp))
+                        }
                     }
                 }
             }

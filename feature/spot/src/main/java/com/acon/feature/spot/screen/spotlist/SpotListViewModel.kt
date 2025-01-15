@@ -9,7 +9,8 @@ import com.acon.domain.type.SpotType
 import com.acon.feature.spot.mock.spotListMock
 import com.acon.feature.spot.type.SpotShowType
 import dagger.hilt.android.lifecycle.HiltViewModel
-import org.orbitmvi.orbit.Container
+import kotlinx.coroutines.delay
+import org.orbitmvi.orbit.annotation.OrbitExperimental
 import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
 
@@ -18,14 +19,31 @@ class SpotListViewModel @Inject constructor(
     private val spotRepository: SpotRepository
 ) : BaseContainerHost<SpotListUiState, SpotListSideEffect>() {
 
-    override val container = container<SpotListUiState, SpotListSideEffect>(SpotListUiState.Loading) {
+    override val container = container<SpotListUiState, SpotListSideEffect>(SpotListUiState.Success(
+        spotListMock, SpotShowType.BEST1, false
+    )) {
 
     }
 
+    @OptIn(OrbitExperimental::class)
+    fun refreshing() = intent {
+        runOn<SpotListUiState.Success> {
+            reduce {
+                state.copy(isRefreshing = true)
+            }
+            delay(2000)
+            reduce {
+                println(state)
+                state.copy(isRefreshing = false)
+            }
+        }
+    }
+
     // TODO : Parameters
+    @OptIn(OrbitExperimental::class)
     fun onRefresh(latitude: Double, longitude: Double) = intent {
         reduce {
-            SpotListUiState.Success(spotListMock, SpotShowType.BEST1)
+            SpotListUiState.Success(spotListMock, SpotShowType.BEST1, false)
         }
 //        spotRepository.fetchSpotList(
 //            latitude = latitude,
@@ -45,7 +63,11 @@ class SpotListViewModel @Inject constructor(
 }
 
 sealed interface SpotListUiState {
-    data class Success(val spotList: List<Spot>, val spotShowType: SpotShowType) : SpotListUiState
+    data class Success(
+        val spotList: List<Spot>,
+        val spotShowType: SpotShowType,
+        val isRefreshing: Boolean = false
+    ) : SpotListUiState
     data object Loading : SpotListUiState
     data object LoadFailed: SpotListUiState
 }
