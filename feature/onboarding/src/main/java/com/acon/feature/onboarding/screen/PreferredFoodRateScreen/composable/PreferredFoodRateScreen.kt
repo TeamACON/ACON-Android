@@ -166,7 +166,7 @@ fun PreferredFoodRateScreen(
                     textColor = AconTheme.color.White,
                     enabledBackgroundColor = AconTheme.color.Gray5,
                     disabledBackgroundColor =  AconTheme.color.Gray8,
-                    isEnabled = (screenState.selectedCard.isNotEmpty()),
+                    isEnabled = ( screenState.selectedCard.size == 3 ),
                     cornerRadius = 6.dp,
                     modifier = Modifier.fillMaxWidth(),
                     contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp),

@@ -99,29 +99,34 @@ fun FoodTypeCard(
                         contentScale = ContentScale.Crop,
                         modifier = Modifier.clip(RoundedCornerShape(6.dp)).fillMaxSize()
                     )
+
                     if (selected) { //top 3 이내에 선정된 경우, 체크표시 말고 등수 번호와 함께 선택된 효과
+                        val rateIcon = if (selectedCard.indexOf(text) == 0) com.acon.feature.onboarding.R.drawable.ic_1
+                                        else if (selectedCard.indexOf(text) == 1) com.acon.feature.onboarding.R.drawable.ic_2
+                                        else if (selectedCard.indexOf(text) == 2) com.acon.feature.onboarding.R.drawable.ic_3
+                                        else 0
                         Box(
                             modifier = Modifier
                                 .fillMaxSize()
                                 .clip(RoundedCornerShape(6.dp))
                                 .background(AconTheme.color.Dim_b_60)
                         )
-//                        Image(
-//                            imageVector = ImageVector.vectorResource(com.acon.core.designsystem.R.drawable.ic_check_44),
-//                            contentDescription = "Clicked",
-//                            modifier = Modifier.size(44.dp)
-//                        )
-                        Text(
-                            text = "${selectedCard.indexOf(text) + 1}",
-                            style = AconTheme.typography.head8_16_sb,
-                            color = AconTheme.color.White,
-                            modifier = Modifier.align(Alignment.Center)
+                        Image(
+                            imageVector = ImageVector.vectorResource(rateIcon),
+                            contentDescription = "Clicked",
+                            modifier = Modifier.size(44.dp)
                         )
+//                        Text(
+//                            text = "${selectedCard.indexOf(text) + 1}",
+//                            style = AconTheme.typography.head8_16_sb,
+//                            color = AconTheme.color.White,
+//                            modifier = Modifier.align(Alignment.Center)
+//                        )
                     }
                 }
 
         }
-        val cardTextAlpha = if (isAllClicked && imageRes != 0) 0.1f else 1f //수정 필요
+        val cardTextAlpha = if (isAllClicked && !selected) 0.1f else 1f //수정 필요
         Spacer(modifier = Modifier.height(4.dp))
         Text(
             modifier = Modifier.alpha(cardTextAlpha),
