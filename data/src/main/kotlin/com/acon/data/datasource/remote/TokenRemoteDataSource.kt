@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.credentials.CredentialManager
 import androidx.credentials.CustomCredential
 import androidx.credentials.GetCredentialRequest
+import com.acon.data.BuildConfig
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.google.android.libraries.identity.googleid.GoogleIdTokenParsingException
@@ -11,10 +12,20 @@ import dagger.hilt.android.qualifiers.ActivityContext
 import javax.inject.Inject
 
 class TokenRemoteDataSource @Inject constructor(
-    private val credentialManager: CredentialManager,
-    private val googleIdOption: GetGoogleIdOption,
     @ActivityContext private val context: Context
 ) {
+
+    private val googleIdOption: GetGoogleIdOption by lazy {
+        GetGoogleIdOption.Builder()
+            .setFilterByAuthorizedAccounts(false)
+            .setAutoSelectEnabled(false)
+            .setServerClientId(BuildConfig.GOOGLE_CLIENT_ID)
+            .build()
+    }
+
+    private val credentialManager: CredentialManager by lazy {
+        CredentialManager.create(context)
+    }
 
     suspend fun signIn(): Result<String> {
         return runCatching {
