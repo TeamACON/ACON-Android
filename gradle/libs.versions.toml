@@ -36,7 +36,6 @@ uiToolingPreviewAndroid = "1.7.6"
 uiAndroid = "1.7.6"
 orbit = "9.0.0"
 naverMapCompose = "1.8.0"
-foundationLayoutAndroid = "1.7.6"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -88,8 +87,6 @@ orbit-viewmodel = { module = "org.orbit-mvi:orbit-viewmodel", version.ref = "orb
 naver-map-compose = { module = "io.github.fornewid:naver-map-compose", version.ref = "naverMapCompose" }
 naver-map-location = { module = "io.github.fornewid:naver-map-location", version.ref = "naverMapLocation" }
 play-services-location = { module = "com.google.android.gms:play-services-location", version.ref = "playServicesLocation" }
-androidx-foundation-layout-android = { group = "androidx.compose.foundation", name = "foundation-layout-android", version.ref = "foundationLayoutAndroid" }
-
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

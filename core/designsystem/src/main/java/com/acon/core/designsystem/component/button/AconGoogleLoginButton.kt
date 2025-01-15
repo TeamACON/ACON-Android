@@ -12,7 +12,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
@@ -41,7 +40,7 @@ fun AconGoogleLoginButton(
             .fillMaxWidth(),
         borderWidth = borderWidth,
         cornerRadius = cornerRadius,
-        contentPadding = PaddingValues(horizontal = 93.dp, vertical = 12.dp),
+        contentPadding = PaddingValues(vertical = 12.dp),
         onClick = onClick
     ) {
         Row(
@@ -57,6 +56,7 @@ fun AconGoogleLoginButton(
                 style = textStyle,
                 color = textColor,
                 textAlign = TextAlign.Center,
+                maxLines = 1,
                 modifier = Modifier
                     .align(Alignment.CenterVertically)
             )
