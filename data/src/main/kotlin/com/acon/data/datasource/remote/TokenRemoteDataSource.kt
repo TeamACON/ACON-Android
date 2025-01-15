@@ -1,7 +1,6 @@
 package com.acon.data.datasource.remote
 
 import android.content.Context
-import android.util.Log
 import androidx.credentials.CredentialManager
 import androidx.credentials.CustomCredential
 import androidx.credentials.GetCredentialRequest
@@ -17,7 +16,7 @@ class TokenRemoteDataSource @Inject constructor(
     @ActivityContext private val context: Context
 ) {
 
-    suspend fun signIn(): Result<Unit> {
+    suspend fun signIn(): Result<String> {
         return runCatching {
             val request = GetCredentialRequest.Builder()
                 .addCredentialOption(googleIdOption)
@@ -34,7 +33,7 @@ class TokenRemoteDataSource @Inject constructor(
                         try {
                             val googleIdCredential = GoogleIdTokenCredential
                                 .createFrom(credential.data)
-                            Result.success(credential)
+                            googleIdCredential.idToken
                         } catch (e: GoogleIdTokenParsingException) {
                             throw e
                         }
@@ -43,7 +42,7 @@ class TokenRemoteDataSource @Inject constructor(
                     }
                 }
                 else -> {
-                    throw IllegalStateException("Unknown credential type")
+                    throw IllegalStateException("Unsupported or unknown credential type")
                 }
             }
         }
