@@ -37,9 +37,8 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 *  1) 탑바 뒤로가기 아이콘 & 다음 버튼 버그 (없음 누르고 취소하면 안없어짐)
 *  3) 두번째 온보딩 화면으로 넘어가는 것까지 Route에서 연결해보기
 *  4) 다음 버튼 누를 때마다 서버로 넘겨주나? API 명세서 보고 확인해보기
-*  6) 모든 색상, 글꼴, 아이콘 공통 값으로 바꾸기
-*  7) 마지막에 Content(Container), Screen 구분하기
-*  8) 아키텍처 따라서 깔끔하게 정리 완료하기 (ViewModel 등등)
+*  7) 아키텍처 따라서 깔끔하게 정리 완료하기 (ViewModel 등등)
+*  8) 마지막에 Content(Container), Screen 구분하기
 * */
 
 @Composable
@@ -112,7 +111,8 @@ fun UnlikeFoodScreen(
     selectedCard : Set<String>,
     selectedCardCount: Int,
     totalPages: Int,
-    currentPage: Int
+    currentPage: Int,
+    navigateToNextPage: (Int) -> Unit,
 ){
     Column(
         modifier = modifier
@@ -191,7 +191,7 @@ fun UnlikeFoodScreen(
                     cornerRadius = 6.dp,
                     modifier = Modifier.fillMaxWidth(),
                     contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp),
-                    onClick = {}
+                    onClick = { navigateToNextPage(Int) }
                 )
             }
         }
