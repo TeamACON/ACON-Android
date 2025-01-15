@@ -45,7 +45,7 @@ internal fun SpotListScreen(
                     state = rememberPullToRefreshState(state.isRefreshing),
                     onRefresh = onRefresh,
                     dragMultiplier = .35f,
-                    refreshTriggerDistance = 100.dp,
+                    refreshTriggerDistance = 60.dp,
                     refreshingOffset = 60.dp,
                     indicator = { state, refreshTriggerDistance, _ ->
                         SpotListPullToRefreshIndicator(refreshTriggerDistance, state)

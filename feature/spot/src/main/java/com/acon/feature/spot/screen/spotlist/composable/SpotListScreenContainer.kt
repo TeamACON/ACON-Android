@@ -23,14 +23,13 @@ fun SpotListScreenContainer(
     val state by viewModel.collectAsState()
 
     ProceedWithLocation {
-        viewModel.onRefresh(it.latitude, it.longitude)
+        viewModel.onLocationReady(it.latitude, it.longitude)
     }
 
     SpotListScreen(
         state = state,
         modifier = modifier.fillMaxSize(),
         onRefresh = {
-            viewModel.refreshing()
             context.onLocationReady {
                 viewModel.onRefresh(it.latitude, it.longitude)
             }
