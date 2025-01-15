@@ -10,8 +10,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AreaVerificationViewModel @Inject constructor() : ViewModel() {
-    private val _uiState = MutableStateFlow(AreaVerificationUiState())
-    val uiState: StateFlow<AreaVerificationUiState> = _uiState.asStateFlow()
+    private val _uiState = MutableStateFlow(AreaVerificationState())
+    val uiState: StateFlow<AreaVerificationState> = _uiState.asStateFlow()
 
     fun onNewLocationSelected() {
         _uiState.update { it.copy(isNewLocationSelected = true) }

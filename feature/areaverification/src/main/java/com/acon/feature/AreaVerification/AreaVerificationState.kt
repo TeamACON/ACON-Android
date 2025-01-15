@@ -1,6 +1,6 @@
 package com.acon.feature.areaverification
 
-data class AreaVerificationUiState(
+data class AreaVerificationState(
     val isNewLocationSelected: Boolean = false,
     val isButtonEnabled: Boolean = true,
     val isLocationPermissionGranted: Boolean = false,

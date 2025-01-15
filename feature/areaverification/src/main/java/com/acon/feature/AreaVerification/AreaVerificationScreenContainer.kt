@@ -67,7 +67,7 @@ fun AreaVerificationScreenContainer(
 
 @Composable
 fun AreaVerificationScreen(
-    uiState: AreaVerificationUiState,
+    uiState: AreaVerificationState,
     onNewLocationSelected: () -> Unit,
     onDismissPermissionDialog: () -> Unit,
     onPermissionSettingClick: () -> Unit,
