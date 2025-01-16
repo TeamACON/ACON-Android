@@ -40,6 +40,10 @@ internal fun NavGraphBuilder.areaVerificationNavigation(
                 longitude = route.longitude,
                 onConfirmClick = {
                     navController.navigate(AreaVerificationRoute.Complete)
+                },
+                onNavigateToNext = {
+                    //Skip to next screen
+                    navController.navigate(AreaVerificationRoute.Complete)
                 }
             )
         }
