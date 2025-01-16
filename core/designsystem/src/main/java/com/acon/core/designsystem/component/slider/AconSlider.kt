@@ -77,8 +77,8 @@ fun AconSlider(
             labels.fastForEach { label ->
                 Text(
                     text = label,
-                    style = AconTheme.typography.body3_13_reg,
-                    color = AconTheme.color.White
+                    style = AconTheme.typography.cap1_11_reg,
+                    color = AconTheme.color.Gray4
                 )
             }
         }
