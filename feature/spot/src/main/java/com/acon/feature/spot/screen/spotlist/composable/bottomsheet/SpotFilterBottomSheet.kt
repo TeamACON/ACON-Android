@@ -1,4 +1,4 @@
-package com.acon.feature.spot.screen.spotlist.composable
+package com.acon.feature.spot.screen.spotlist.composable.bottomsheet
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -132,39 +132,18 @@ fun SpotFilterBottomSheet(
 
                 when (selectedSpotType) {
                     SpotType.RESTAURANT -> {
-                        AconChipFlowRow(
-                            modifier = Modifier.padding(top = 12.dp),
-                            titles = OptionType.RestaurantFeatureOptionType.entries.map {
-                                stringResource(
-                                    it.getNameResId()
-                                )
-                            },
-                            selectedChipIndexes = selectedRestaurantFeatureIndexes.toIntArray(),
-                            onChipSelected = {
+                        RestaurantBottomSheetContent(
+                            selectedRestaurantFeatureIndexes = selectedRestaurantFeatureIndexes,
+                            selectedCompanionTypeIndexes = selectedCompanionTypeIndexes,
+                            onRestaurantFeatureChipSelected = {
                                 selectedRestaurantFeatureIndexes =
                                     if (selectedRestaurantFeatureIndexes.contains(it)) {
                                         selectedRestaurantFeatureIndexes - it
                                     } else {
                                         selectedRestaurantFeatureIndexes + it
                                     }
-                            }
-                        )
-
-                        Text(
-                            modifier = Modifier.padding(top = 32.dp),
-                            text = stringResource(R.string.people_together),
-                            style = AconTheme.typography.subtitle2_14_med,
-                            color = AconTheme.color.White,
-                        )
-                        AconChipFlowRow(
-                            modifier = Modifier.padding(top = 12.dp),
-                            titles = OptionType.CompanionTypeOptionType.entries.map {
-                                stringResource(
-                                    it.getNameResId()
-                                )
                             },
-                            selectedChipIndexes = selectedCompanionTypeIndexes.toIntArray(),
-                            onChipSelected = {
+                            onCompanionTypeChipSelected = {
                                 selectedCompanionTypeIndexes =
                                     if (selectedCompanionTypeIndexes.contains(it)) {
                                         selectedCompanionTypeIndexes - it
@@ -173,43 +152,21 @@ fun SpotFilterBottomSheet(
                                     }
                             }
                         )
-                        Spacer(modifier = Modifier.weight(1f))
                     }
 
                     SpotType.CAFE -> {
-                        AconChipFlowRow(
-                            modifier = Modifier.padding(top = 12.dp),
-                            titles = OptionType.CafeFeatureOptionType.entries.map {
-                                stringResource(
-                                    it.getNameResId()
-                                )
-                            },
-                            selectedChipIndexes = selectedCafeFeatureIndexes.toIntArray(),
-                            onChipSelected = {
+                        CafeBottomSheetContent(
+                            selectedCafeFeatureIndexes = selectedCafeFeatureIndexes,
+                            selectedVisitPurposeIndexes = selectedVisitPurposeIndexes,
+                            onCafeFeatureChipSelected = {
                                 selectedCafeFeatureIndexes =
                                     if (selectedCafeFeatureIndexes.contains(it)) {
                                         selectedCafeFeatureIndexes - it
                                     } else {
                                         selectedCafeFeatureIndexes + it
                                     }
-                            }
-                        )
-
-                        Text(
-                            modifier = Modifier.padding(top = 32.dp),
-                            text = stringResource(R.string.spot_purpose),
-                            style = AconTheme.typography.subtitle2_14_med,
-                            color = AconTheme.color.White,
-                        )
-                        AconChipFlowRow(
-                            modifier = Modifier.padding(top = 12.dp),
-                            titles = OptionType.VisitPurposeOptionType.entries.map {
-                                stringResource(
-                                    it.getNameResId()
-                                )
                             },
-                            selectedChipIndexes = selectedVisitPurposeIndexes.toIntArray(),
-                            onChipSelected = {
+                            onCompanionTypeChipSelected = {
                                 selectedVisitPurposeIndexes =
                                     if (selectedVisitPurposeIndexes.contains(it)) {
                                         selectedVisitPurposeIndexes - it
@@ -218,7 +175,6 @@ fun SpotFilterBottomSheet(
                                     }
                             }
                         )
-                        Spacer(modifier = Modifier.weight(1f))
                     }
                 }
             }
