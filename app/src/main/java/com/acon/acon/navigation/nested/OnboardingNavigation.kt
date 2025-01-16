@@ -38,14 +38,22 @@ internal fun NavGraphBuilder.onboardingNavigationNavigation(
                      navController.navigate(OnboardingRoute.LastLoading)
                  }
              )
-
-
         }
         composable<OnboardingRoute.SelectFrequentPlace> {
             // FrequentPlaceSelectScreenContainer()
         }
         composable<OnboardingRoute.SelectPreferPlace> {
-            // PreferredPlaceSelectScreenContainer()
+            PreferredPlaceSelectScreenContainer(
+                navigateToPreviousPage = {
+                    navController.navigate(OnboardingRoute.SelectFrequentPlace)
+                },
+                navigateToNextPage = {
+                    navController.navigate(OnboardingRoute.RatePreferPlace)
+                },
+                navigateToLastLoadingPage = {
+                    navController.navigate(OnboardingRoute.LastLoading)
+                }
+            )
         }
         composable<OnboardingRoute.RatePreferPlace> {
             // PerferredPlaceRateScreenContainer()
