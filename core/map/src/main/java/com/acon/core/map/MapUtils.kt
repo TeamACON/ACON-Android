@@ -1,6 +1,7 @@
 package com.acon.core.map
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.location.Location
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -17,8 +18,18 @@ fun ProceedWithLocation(onReady: (Location) -> Unit) {
     }
 
     CheckAndRequestLocationPermission {
-        locationProviderClient.lastLocation.addOnSuccessListener {
-            onReady(it)
+        locationProviderClient.lastLocation.addOnSuccessListener { location ->
+            location?.let {
+                onReady(it)
+            }
         }
+    }
+}
+
+fun Context.onLocationReady(onReady: (Location) -> Unit) {
+    val locationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+
+    locationProviderClient.lastLocation.addOnSuccessListener {
+        onReady(it)
     }
 }

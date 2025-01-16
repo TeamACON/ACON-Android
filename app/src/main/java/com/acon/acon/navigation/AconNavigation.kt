@@ -7,6 +7,8 @@ import androidx.navigation.compose.NavHost
 import com.acon.acon.navigation.nested.areaVerificationNavigation
 import com.acon.acon.navigation.nested.onboardingNavigationNavigation
 import com.acon.acon.navigation.nested.signInNavigationNavigation
+import com.acon.acon.navigation.route.AreaVerificationRoute
+import com.acon.acon.navigation.nested.spotNavigation
 import com.acon.acon.navigation.route.SignInRoute
 
 @Composable
@@ -26,5 +28,7 @@ fun AconNavigation(
         areaVerificationNavigation(navController)
 
         onboardingNavigationNavigation(navController)
+
+        spotNavigation(navController)
     }
 }
