@@ -71,7 +71,6 @@ fun getPropertyKey(propertyKey: String): String {
 
 dependencies {
 
-    implementation(project(":feature:onboarding"))
     implementation(project(":core:common"))
     implementation(project(":core:designsystem"))
     implementation(project(":core:utils:feature"))
@@ -91,6 +90,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(project(":feature:onboarding"))
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
