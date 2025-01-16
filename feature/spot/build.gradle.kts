@@ -74,4 +74,5 @@ dependencies {
 
     implementation(libs.pulltorefresh)
     implementation(libs.haze)
+    implementation(libs.haze.materials)
 }
