@@ -9,6 +9,7 @@ import com.acon.acon.navigation.nested.onboardingNavigationNavigation
 import com.acon.acon.navigation.nested.signInNavigationNavigation
 import com.acon.acon.navigation.route.AreaVerificationRoute
 import com.acon.acon.navigation.nested.spotNavigation
+import com.acon.acon.navigation.route.OnboardingRoute
 import com.acon.acon.navigation.route.SignInRoute
 
 @Composable
@@ -19,7 +20,7 @@ fun AconNavigation(
 
     NavHost(
         navController = navController,
-        startDestination = SignInRoute.Graph,
+        startDestination = OnboardingRoute.Graph,
         modifier = modifier,
     ) {
 

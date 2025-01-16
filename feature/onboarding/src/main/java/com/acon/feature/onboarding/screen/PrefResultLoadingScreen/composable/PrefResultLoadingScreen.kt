@@ -79,41 +79,34 @@ fun PrefResultLoadingScreen(
     //로딩이 다 되면 navigateToSpotListView 로 보내야 하는데 이걸 어떻게 하지?
     val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.loading_lottie))
 
-    Column(
+    Box(
         modifier = modifier
             .fillMaxSize()
-            .background(color = AconTheme.color.Gray9)
-            .padding(30.dp)
+            .background(color = AconTheme.color.Gray9),
+            //.padding(30.dp),
+        contentAlignment = Alignment.Center
     ){
         val loadingText = if (screenState.isLoading) "회원님의 취향을\n빠르게 분석하고 있어요."
                             else "분석이 완료되었어요!\n추천 맛집을 보여드릴게요."
-
-        Box(
+        Column(
             modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ){
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center,
-                modifier = Modifier.align(Alignment.Center)
-            ){
-                Text(
-                    text = loadingText,
-                    style = AconTheme.typography.head6_20_sb,
-                    color = AconTheme.color.White,
-                    textAlign = TextAlign.Center
-                )
-                LottieAnimation(
-                    composition = composition,
-                    iterations = LottieConstants.IterateForever,
-                    //progress = lottieAnimatable,
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .aspectRatio(1f)
-                        .padding(horizontal = 40.dp),
-                    contentScale = ContentScale.FillHeight,
-                )
-            }
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Text(
+                text = loadingText,
+                style = AconTheme.typography.head6_20_sb,
+                color = AconTheme.color.White,
+                textAlign = TextAlign.Center
+            )
+            LottieAnimation(
+                composition = composition,
+                iterations = LottieConstants.IterateForever,
+                modifier = Modifier
+                    .padding(vertical = 40.dp)
+                    .aspectRatio(1.5f),
+                //contentScale = ContentScale.FillWidth,
+            )
         }
     }
 }

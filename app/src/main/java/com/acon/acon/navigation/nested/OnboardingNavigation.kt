@@ -15,7 +15,7 @@ internal fun NavGraphBuilder.onboardingNavigationNavigation(
 ) {
 
     navigation<OnboardingRoute.Graph>(
-        startDestination = OnboardingRoute.ChooseUnlikeFoods
+        startDestination = OnboardingRoute.LastLoading
     ) {
         composable<OnboardingRoute.ChooseUnlikeFoods> {
             UnlikeFoodScreenContainer(
