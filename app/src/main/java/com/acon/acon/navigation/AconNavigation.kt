@@ -7,8 +7,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -39,6 +41,7 @@ fun AconNavigation(
 
     val backStackEntry by navController.currentBackStackEntryAsState()
     var selectedBottomNavItem by rememberSaveable { mutableStateOf(BottomNavType.SPOT) }
+    val currentRoute by remember { derivedStateOf { backStackEntry?.destination?.route } }
 
     Scaffold(
         modifier = modifier,
@@ -87,11 +90,19 @@ fun AconNavigation(
     }
 
     LaunchedEffect(selectedBottomNavItem) {
-        when (selectedBottomNavItem) {
-            BottomNavType.SPOT -> navController.navigate(SpotRoute.SpotList)
-            else -> {
-                // TODO
-            }
+        navController.navigate(when(selectedBottomNavItem) {
+            BottomNavType.SPOT -> SpotRoute.SpotList
+            else -> SpotRoute.SpotList // TODO : Route
+        }) {
+            popUpTo(SpotRoute.SpotList) { inclusive = false }
+            launchSingleTop = true
+        }
+    }
+
+    LaunchedEffect(currentRoute) {   // 뒤로가기에 의한 하단 탭 선택 상태 변경 처리
+        selectedBottomNavItem = when (currentRoute) {
+            SpotRoute.SpotList::class.qualifiedName -> BottomNavType.SPOT
+            else -> BottomNavType.SPOT // TODO : Route
         }
     }
 }
