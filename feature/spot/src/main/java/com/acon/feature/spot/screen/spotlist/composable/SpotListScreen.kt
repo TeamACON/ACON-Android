@@ -139,15 +139,36 @@ internal fun SpotListScreen(
                                 modifier = Modifier
                                     .clip(CircleShape)
                                     .size(48.dp)
-                                    .hazeEffect(state = hazeState, style = HazeStyle(
-                                        backgroundColor = Color.Black,
-                                        tints = listOf(HazeTint(AconTheme.color.Gla_b_30.copy(alpha = .2f))),
-                                        blurRadius = 8.dp,
-                                        noiseFactor = HazeDefaults.noiseFactor,
-                                    ))
+                                    .hazeEffect(
+                                        state = hazeState, style = HazeStyle(
+                                            backgroundColor = Color.Black,
+                                            tints = listOf(
+                                                HazeTint(
+                                                    AconTheme.color.Gla_b_30.copy(
+                                                        alpha = .2f
+                                                    )
+                                                )
+                                            ),
+                                            blurRadius = 8.dp,
+                                            noiseFactor = HazeDefaults.noiseFactor,
+                                        )
+                                    )
                                     .clickable {
-                                        if (it.enabled) it.action()
-                                    }.padding(10.dp)
+                                        if (it.enabled) {
+                                            when (it) {
+                                                FloatingButtonType.LOCATION -> {
+                                                    // TODO : 위치 버튼 클릭 시 동작
+                                                }
+                                                FloatingButtonType.MAP -> {
+                                                    // TODO : 지도 버튼 클릭 시 동작
+                                                }
+                                                FloatingButtonType.FILTER -> {
+                                                    // TODO : 필터 버튼 클릭 시 동작
+                                                }
+                                            }
+                                        }
+                                    }
+                                    .padding(10.dp)
                             )
                         }
                     }
