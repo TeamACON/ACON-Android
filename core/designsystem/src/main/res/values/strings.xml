@@ -5,4 +5,9 @@
     <string name="login_btn_preview_content">button</string>
     <string name="google_login_btn_description">구글 로그인 버튼</string>
     <string name="google_login_btn_content">Google로 계속하기</string>
+
+    <!-- Content Description -->
+    <string name="location_content_description">위치</string>
+    <string name="map_content_description">지도</string>
+    <string name="filter_content_description">필터</string>
 </resources>
