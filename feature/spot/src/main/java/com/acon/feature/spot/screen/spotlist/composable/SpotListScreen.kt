@@ -24,13 +24,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.fastForEach
+import com.acon.core.designsystem.blur.defaultHazeEffect
 import com.acon.core.designsystem.component.loading.SkeletonItem
 import com.acon.core.designsystem.theme.AconTheme
 import com.acon.feature.spot.R
@@ -39,11 +39,6 @@ import com.acon.feature.spot.type.FloatingButtonType
 import com.acon.feature.spot.type.SpotShowType
 import com.github.fengdai.compose.pulltorefresh.PullToRefresh
 import com.github.fengdai.compose.pulltorefresh.rememberPullToRefreshState
-import dev.chrisbanes.haze.HazeDefaults
-import dev.chrisbanes.haze.HazeState
-import dev.chrisbanes.haze.HazeStyle
-import dev.chrisbanes.haze.HazeTint
-import dev.chrisbanes.haze.hazeEffect
 import dev.chrisbanes.haze.hazeSource
 
 @Composable
@@ -51,10 +46,10 @@ internal fun SpotListScreen(
     state: SpotListUiState,
     modifier: Modifier = Modifier,
     onRefresh: () -> Unit = {},
+    onFilterBottomSheetShowStateChange: (Boolean) -> Unit = {},
     onNavigateToSpotDetailScreen: (id: Int) -> Unit = {},
 ) {
     val scrollState = rememberScrollState()
-    val hazeState = remember { HazeState() }
 
     Surface(
         modifier = modifier,
@@ -62,6 +57,23 @@ internal fun SpotListScreen(
     ) {
         when (state) {
             is SpotListUiState.Success -> {
+                if (state.showFilterBottomSheet) {
+                    SpotFilterBottomSheet(
+                        hazeState = state.hazeState,
+                        condition = state.currentCondition,
+                        onComplete = {
+                            // TODO : 필터 완료 시 동작
+                        },
+                        onReset = {
+                            // TODO : 필터 리셋 시 동작
+                        },
+                        onDismissRequest = {
+                            onFilterBottomSheetShowStateChange(false)
+                        },
+                        modifier = Modifier.padding(top = 50.dp).fillMaxSize()
+                    )
+                }
+
                 val isResultEmpty by remember {
                     derivedStateOf {
                         state.spotList.isEmpty()
@@ -86,7 +98,7 @@ internal fun SpotListScreen(
                                 .fillMaxSize()
                                 .verticalScroll(scrollState)
                                 .padding(horizontal = 20.dp)
-                                .hazeSource(hazeState)
+                                .hazeSource(state.hazeState)
                         ) {
                             Spacer(modifier = Modifier.height(44.dp))
                             Text(
@@ -139,20 +151,7 @@ internal fun SpotListScreen(
                                 modifier = Modifier
                                     .clip(CircleShape)
                                     .size(48.dp)
-                                    .hazeEffect(
-                                        state = hazeState, style = HazeStyle(
-                                            backgroundColor = Color.Black,
-                                            tints = listOf(
-                                                HazeTint(
-                                                    AconTheme.color.Gla_b_30.copy(
-                                                        alpha = .2f
-                                                    )
-                                                )
-                                            ),
-                                            blurRadius = 8.dp,
-                                            noiseFactor = HazeDefaults.noiseFactor,
-                                        )
-                                    )
+                                    .defaultHazeEffect(hazeState = state.hazeState, tintColor = AconTheme.color.Gla_b_30, blurRadius = 8.dp)
                                     .clickable {
                                         if (it.enabled) {
                                             when (it) {
@@ -163,7 +162,7 @@ internal fun SpotListScreen(
                                                     // TODO : 지도 버튼 클릭 시 동작
                                                 }
                                                 FloatingButtonType.FILTER -> {
-                                                    // TODO : 필터 버튼 클릭 시 동작
+                                                    onFilterBottomSheetShowStateChange(true)
                                                 }
                                             }
                                         }

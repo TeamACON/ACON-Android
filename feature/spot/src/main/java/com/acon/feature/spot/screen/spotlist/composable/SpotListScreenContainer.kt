@@ -37,6 +37,7 @@ fun SpotListScreenContainer(
             context.onLocationReady {
                 viewModel.onRefresh(it.latitude, it.longitude)
             }
-        }
+        }, onFilterBottomSheetShowStateChange = viewModel::onFilterBottomSheetStateChange,
+        onNavigateToSpotDetailScreen = onNavigateToSpotDetailScreen
     )
 }

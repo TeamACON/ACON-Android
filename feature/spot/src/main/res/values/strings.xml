@@ -31,4 +31,9 @@
 
     <string name="meeting">만남용</string>
     <string name="study">공부용</string>
+
+    <string name="filter_detail">상세 조건</string>
+    <string name="visit_spot">방문 장소</string>
+    <string name="spot_purpose">방문 목적</string>
+    <string name="people_together">함께하는 사람</string>
 </resources>
