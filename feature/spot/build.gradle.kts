@@ -73,4 +73,5 @@ dependencies {
     implementation(libs.coil.network.okhttp)
 
     implementation(libs.pulltorefresh)
+    implementation(libs.haze)
 }
