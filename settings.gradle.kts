@@ -34,8 +34,9 @@ include(
 )
 
 include(
-    ":feature:home",
-    ":feature:areaverification"
+    ":feature:areaverification",
+    ":feature:spot",
+    ":feature:signin"
 )
 
 include(":data")
