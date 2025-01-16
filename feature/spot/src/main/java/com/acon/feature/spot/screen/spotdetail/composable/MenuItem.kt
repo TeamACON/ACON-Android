@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.acon.core.designsystem.theme.AconTheme
 import com.acon.domain.model.spot.Menu
+import com.acon.feature.spot.toPrice
 
 @Composable
 fun MenuItem(
@@ -50,7 +51,7 @@ fun MenuItem(
             Spacer(modifier = Modifier.height(4.dp))
 
             Text(
-                text = menu.price.toString(),
+                text = menu.price.toPrice(),
                 style = AconTheme.typography.subtitle1_16_med,
                 maxLines = 1,
                 color = AconTheme.color.White
