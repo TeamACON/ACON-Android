@@ -19,7 +19,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.acon.core.designsystem.component.button.AconFilledLargeButton
 import com.acon.core.designsystem.component.dialog.AconTwoButtonDialog
 import com.acon.core.designsystem.theme.AconTheme
-import com.acon.feature.onboarding.component.FreqPlaceSelectCard
+import com.acon.feature.onboarding.component.FreqPlaceSelectGrid
 import com.acon.feature.onboarding.component.OnboardingTopBar
 import com.acon.feature.onboarding.screen.PreferredPlaceSelectScreen.PreferredPlaceSelectScreenSideEffect
 import com.acon.feature.onboarding.screen.PreferredPlaceSelectScreen.PreferredPlaceSelectScreenState
@@ -33,7 +33,7 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 * */
 
 @Composable
-fun FrequentPlaceSelectScreenContainer(
+fun PreferredPlaceSelectScreenContainer(
     modifier: Modifier = Modifier,
     viewModel: PreferredPlaceSelectViewModel = hiltViewModel(),
     navigateToPreviousPage: () -> Unit = {},
@@ -141,7 +141,7 @@ fun PreferredPlaceSelectScreen(
                 contentAlignment = Alignment.Center
             ){
                 Column {
-                    FreqPlaceSelectCard(
+                    FreqPlaceSelectGrid(
                         modifier = Modifier
                             .background(AconTheme.color.Gray9),
                         columnSize = columnSize,
@@ -149,7 +149,6 @@ fun PreferredPlaceSelectScreen(
                         onCardClicked = { text ->
                             onCardClicked(text)
                         },
-                        isAllClicked = screenState.selectedCard.isNotEmpty(),
                         selectedCard = screenState.selectedCard
                     )
                 }
@@ -175,11 +174,10 @@ fun PreferredPlaceSelectScreen(
             }
         }
     }
-
 }
 
 @Composable
 @Preview
 private fun PreviewOnboardingScreen4(){
-    FrequentPlaceSelectScreenContainer()
+    PreferredPlaceSelectScreenContainer()
 }

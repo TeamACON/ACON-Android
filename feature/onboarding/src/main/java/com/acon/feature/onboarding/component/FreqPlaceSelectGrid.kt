@@ -22,7 +22,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
@@ -32,18 +31,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.acon.core.designsystem.theme.AconTheme
 import com.acon.feature.onboarding.type.CardItem
-import com.acon.feature.onboarding.type.FoodItems
-import com.acon.feature.onboarding.type.FoodTypeItems
 import com.acon.feature.onboarding.type.PlaceItems
-import kotlinx.coroutines.selects.select
 
 @Composable
-fun <T : CardItem> FreqPlaceSelectCard(
+fun <T : CardItem> FreqPlaceSelectGrid(
     modifier : Modifier = Modifier,
     columnSize : Int,
     placeItems: Array<T>,
     onCardClicked: (String) -> Unit,
-    isAllClicked: Boolean = false,
     selectedCard: Set<String>,
 ){
     LazyVerticalGrid(
@@ -61,7 +56,6 @@ fun <T : CardItem> FreqPlaceSelectCard(
                 onCardClicked = { text ->
                     onCardClicked(text)
                 },
-                isAllClicked = isAllClicked,
             )
         }
     }
@@ -74,7 +68,6 @@ fun PlaceCard(
     text: String,
     selected: Boolean,
     onCardClicked: (String) -> Unit,
-    isAllClicked: Boolean,
 ) {
     Column(
         modifier = modifier,
@@ -83,7 +76,7 @@ fun PlaceCard(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .clickable(enabled = selected || !isAllClicked) { onCardClicked(text) },
+                .clickable { onCardClicked(text) },
             contentAlignment = Alignment.Center
         ){
             // 버튼 하나씩
@@ -118,19 +111,22 @@ fun PlaceCard(
 
 @Preview
 @Composable
-private fun PreviewFreqPlaceSelectCard() {
+private fun PreviewFreqPlaceSelectGrid() {
 
     val selectedCard = remember { mutableStateOf(setOf<String>()) }
 
     Column {
-        FreqPlaceSelectCard(
+        FreqPlaceSelectGrid(
             columnSize = 2,
             placeItems = PlaceItems.entries.toTypedArray(),
             onCardClicked = { it ->
                 if(selectedCard.value.isEmpty()) selectedCard.value += it
                 else if (selectedCard.value.contains(it)) selectedCard.value -= it
+                else {
+                    selectedCard.value = emptySet()
+                    selectedCard.value += it
+                }
             },
-            isAllClicked = false,
             selectedCard = selectedCard.value
         )
     }

@@ -6,6 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import com.acon.acon.navigation.route.OnboardingRoute
 import com.acon.feature.onboarding.screen.PreferredFoodRateScreen.composable.PreferredFoodRateScreenContainer
+import com.acon.feature.onboarding.screen.PreferredPlaceSelectScreen.composable.PreferredPlaceSelectScreenContainer
 import com.acon.feature.onboarding.screen.UnlikeFoodSelectScreen.composable.UnlikeFoodScreenContainer
 
 internal fun NavGraphBuilder.onboardingNavigationNavigation(
