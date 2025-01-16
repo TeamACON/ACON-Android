@@ -20,7 +20,7 @@ import com.acon.core.designsystem.theme.AconTheme
 @Composable
 fun AconChip(
     title: String,
-    selected: Boolean,
+    isSelected: Boolean,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     textStyle: TextStyle = AconTheme.typography.body3_13_reg.copy(
@@ -29,12 +29,12 @@ fun AconChip(
 ) {
 
     val borderColor =
-        if (selected)
+        if (isSelected)
             AconTheme.color.Main_org1
         else AconTheme.color.Gray6
 
     val containerColor =
-        if (selected)
+        if (isSelected)
             AconTheme.color.Main_org35
         else AconTheme.color.Gray8
 
@@ -65,7 +65,7 @@ fun AconChip(
 private fun AconChipPreview() {
     AconChip(
         title = "한식",
-        selected = false,
+        isSelected = false,
         onClick = {}
     )
 }
@@ -75,7 +75,7 @@ private fun AconChipPreview() {
 private fun SelectedAconChipPreview() {
     AconChip(
         title = "한식",
-        selected = true,
+        isSelected = true,
         onClick = {}
     )
 }
