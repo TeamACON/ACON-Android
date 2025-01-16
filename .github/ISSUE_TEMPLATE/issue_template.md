@@ -1,12 +1,3 @@
----
-name: ISSUE_TEMPLATE
-about: ISSUE_TEMPLATE
-title: ISSUE_TEMPLATE
-labels: ''
-assignees: ''
-
----
-
 ## 📋 TO DO
 - [ ] task1
 - [ ] task2
