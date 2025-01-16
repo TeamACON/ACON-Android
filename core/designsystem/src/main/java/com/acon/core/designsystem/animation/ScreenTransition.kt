@@ -14,8 +14,6 @@ private const val FADE_RATIO = .55f
 private const val SCALE_RATIO = .9f
 private const val SLIDE_DIVIDE_RATIO = 3
 
-internal val defaultOutsideColor = Color(0xFF282828)
-
 fun<S> AnimatedContentTransitionScope<S>.defaultEnterTransition() = slideInHorizontally(
     animationSpec = tween(TRANSITION_DURATION),
     initialOffsetX = { it }

@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Modifier
 import androidx.core.view.WindowCompat
@@ -22,7 +23,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             AconTheme {
                 AconNavigation(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier.fillMaxSize().background(AconTheme.color.Gray9),
                     navController = rememberNavController()
                 )
             }
