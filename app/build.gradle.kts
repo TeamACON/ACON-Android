@@ -71,7 +71,6 @@ fun getPropertyKey(propertyKey: String): String {
 
 dependencies {
 
-    implementation(project(":feature:onboarding"))
     implementation(project(":core:common"))
     implementation(project(":core:designsystem"))
     implementation(project(":core:utils:feature"))
@@ -80,7 +79,9 @@ dependencies {
     implementation(project(":domain"))
     implementation(project(":data"))
 
+    implementation(project(":feature:signin"))
     implementation(project(":feature:spot"))
+    implementation(project(":feature:onboarding"))
     implementation(project(":feature:areaverification"))
 
     implementation(libs.androidx.core.ktx)
