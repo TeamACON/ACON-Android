@@ -36,4 +36,18 @@
     <string name="visit_spot">방문 장소</string>
     <string name="spot_purpose">방문 목적</string>
     <string name="people_together">함께하는 사람</string>
+    <string name="available_walking_time">도보 가능 거리</string>
+    <string name="price_range">가격대</string>
+
+    <string name="under_5_minutes">5분 이내</string>
+    <string name="under_10_minutes">10분</string>
+    <string name="under_15_minutes">15분</string>
+    <string name="under_20_minutes">20분</string>
+    <string name="over_20_minutes">20분 이상</string>
+
+    <string name="under_5000">5천원 이하</string>
+    <string name="under_10000">1만원</string>
+    <string name="under_30000">3만원</string>
+    <string name="under_50000">5만원</string>
+    <string name="over_50000">5만원 이상</string>
 </resources>
