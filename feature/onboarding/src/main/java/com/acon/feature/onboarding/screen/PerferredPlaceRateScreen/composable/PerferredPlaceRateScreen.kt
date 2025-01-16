@@ -21,6 +21,7 @@ import com.acon.core.designsystem.component.dialog.AconTwoButtonDialog
 import com.acon.core.designsystem.theme.AconTheme
 import com.acon.feature.onboarding.component.OnboardingTopBar
 import com.acon.feature.onboarding.component.PreferFoodTypeSelectGrid
+import com.acon.feature.onboarding.component.PreferPlaceTypeSelectGrid
 import com.acon.feature.onboarding.screen.PerferredPlaceRateScreen.PreferredPlaceRateScreenSideEffect
 import com.acon.feature.onboarding.screen.PerferredPlaceRateScreen.PreferredPlaceRateScreenState
 import com.acon.feature.onboarding.screen.PerferredPlaceRateScreen.PreferredPlaceRateScreenViewModel
@@ -115,7 +116,7 @@ fun PreferredPlaceRateScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(start = 20.dp, end = 20.dp, top = 50.dp, bottom = 50.dp),
+                .padding(horizontal = 20.dp, vertical = 50.dp),
             verticalArrangement = Arrangement.SpaceBetween
         ){
             Column(
@@ -140,7 +141,7 @@ fun PreferredPlaceRateScreen(
                     .weight(1f),
                 contentAlignment = Alignment.Center
             ){
-                PreferFoodTypeSelectGrid(
+                PreferPlaceTypeSelectGrid(
                     modifier = modifier
                         .background(AconTheme.color.Gray9),
                     columnSize = columnSize,
@@ -149,7 +150,6 @@ fun PreferredPlaceRateScreen(
                         onCardClicked(text)
                     },
                     selectedCard = screenState.selectedCard,
-                    isAllClicked = screenState.selectedCard.size == 3
                 )
             }
 
@@ -161,10 +161,9 @@ fun PreferredPlaceRateScreen(
                 AconFilledLargeButton(
                     text = "다음",
                     textStyle = AconTheme.typography.head8_16_sb,
-                    //textColor = AconTheme.color.White,
                     enabledBackgroundColor = AconTheme.color.Gray5,
                     disabledBackgroundColor =  AconTheme.color.Gray8,
-                    isEnabled = ( screenState.selectedCard.size == 3 ),
+                    isEnabled = ( screenState.selectedCard.size == 4 ),
                     cornerRadius = 6.dp,
                     modifier = Modifier.fillMaxWidth(),
                     contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp),
