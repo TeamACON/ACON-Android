@@ -1,4 +1,4 @@
-package com.acon.feature.onboarding.screen.PreferredFoodRateScreen.composable
+package com.acon.feature.onboarding.screen.PerferredPlaceRateScreen.composable
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -21,27 +21,31 @@ import com.acon.core.designsystem.component.dialog.AconTwoButtonDialog
 import com.acon.core.designsystem.theme.AconTheme
 import com.acon.feature.onboarding.component.OnboardingTopBar
 import com.acon.feature.onboarding.component.PreferFoodTypeSelectGrid
+import com.acon.feature.onboarding.screen.PerferredPlaceRateScreen.PreferredPlaceRateScreenSideEffect
+import com.acon.feature.onboarding.screen.PerferredPlaceRateScreen.PreferredPlaceRateScreenState
+import com.acon.feature.onboarding.screen.PerferredPlaceRateScreen.PreferredPlaceRateScreenViewModel
 import com.acon.feature.onboarding.screen.PreferredFoodRateScreen.PreferredFoodRateScreenViewModel
 import com.acon.feature.onboarding.screen.PreferredFoodRateScreen.RatePreferFoodScreenSideEffect
 import com.acon.feature.onboarding.screen.PreferredFoodRateScreen.RatePreferFoodScreenState
 import com.acon.feature.onboarding.type.FoodTypeItems
+import com.acon.feature.onboarding.type.PreferPlaceItems
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
-fun PreferredFoodRateScreenContainer(
+fun PreferredPlaceRateScreenContainer(
     modifier: Modifier = Modifier,
-    viewModel: PreferredFoodRateScreenViewModel = hiltViewModel(),
+    viewModel: PreferredPlaceRateScreenViewModel = hiltViewModel(),
     navigateToPreviousPage: () -> Unit = {},
     navigateToNextPage: () -> Unit = {},
     navigateToLastLoadingPage: () -> Unit = {}
 ){
     val state = viewModel.collectAsState().value
 
-    PreferredFoodRateScreen(
+    PreferredPlaceRateScreen(
         modifier = modifier,
         screenState = state,
-        columnSize = 3,
+        columnSize = 2,
         onCardClicked = viewModel::onCardClicked,
         onSkipClicked = viewModel::showDialog,
         navigateToPreviousPage = viewModel::navigateToPreviousPage,
@@ -50,10 +54,10 @@ fun PreferredFoodRateScreenContainer(
 
     viewModel.collectSideEffect {
         when(it){
-            RatePreferFoodScreenSideEffect.NavigateToNextPage -> {
+            PreferredPlaceRateScreenSideEffect.NavigateToNextPage -> {
                 navigateToNextPage()
             }
-            RatePreferFoodScreenSideEffect.NavigateToPreviousPage -> {
+            PreferredPlaceRateScreenSideEffect.NavigateToPreviousPage -> {
                 navigateToPreviousPage()
             }
         }
@@ -82,9 +86,9 @@ fun PreferredFoodRateScreenContainer(
 }
 
 @Composable
-fun PreferredFoodRateScreen(
+fun PreferredPlaceRateScreen(
     modifier: Modifier = Modifier,
-    screenState: RatePreferFoodScreenState,
+    screenState: PreferredPlaceRateScreenState,
     columnSize: Int,
     onCardClicked: (String) -> Unit,
     onSkipClicked: () -> Unit,
@@ -118,13 +122,13 @@ fun PreferredFoodRateScreen(
                 modifier = Modifier
             ){
                 Text(
-                    text = "02",
+                    text = "05",
                     color = AconTheme.color.Gray5,
                     style = AconTheme.typography.head4_24_sb,
                     modifier = modifier.padding(vertical = 7.dp)
                 )
                 Text(
-                    text = "선호 음식 Top3까지 순위를 매겨주세요.",
+                    text = "선호하는 맛집 순위를 매겨주세요.",
                     color = Color.White,
                     style = AconTheme.typography.head6_20_sb,
                 )
@@ -140,7 +144,7 @@ fun PreferredFoodRateScreen(
                     modifier = modifier
                         .background(AconTheme.color.Gray9),
                     columnSize = columnSize,
-                    foodItems = FoodTypeItems.entries.toTypedArray(),
+                    foodItems = PreferPlaceItems.entries.toTypedArray(),
                     onCardClicked = { text ->
                         onCardClicked(text)
                     },
@@ -173,6 +177,6 @@ fun PreferredFoodRateScreen(
 
 @Composable
 @Preview
-private fun PreviewOnboardingScreen2(){
-    PreferredFoodRateScreenContainer()
+private fun PreviewOnboardingScreen5(){
+    PreferredPlaceRateScreenContainer()
 }

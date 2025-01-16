@@ -11,7 +11,6 @@ import com.acon.feature.onboarding.screen.UnlikeFoodSelectScreen.composable.Unli
 internal fun NavGraphBuilder.onboardingNavigationNavigation(
     navController: NavHostController
 ) {
-
     navigation<OnboardingRoute.Graph>(
         startDestination = OnboardingRoute.ChooseUnlikeFoods
     ) {
@@ -38,8 +37,6 @@ internal fun NavGraphBuilder.onboardingNavigationNavigation(
                      navController.navigate(OnboardingRoute.LastLoading)
                  }
              )
-
-
         }
         composable<OnboardingRoute.SelectFrequentPlace> {
             // FrequentPlaceSelectScreenContainer()
@@ -48,7 +45,17 @@ internal fun NavGraphBuilder.onboardingNavigationNavigation(
             // PreferredPlaceSelectScreenContainer()
         }
         composable<OnboardingRoute.RatePreferPlace> {
-            // PerferredPlaceRateScreenContainer()
+             PerferredPlaceRateScreenContainer(
+                 navigateToPreviousPage = {
+                     navController.navigate(OnboardingRoute.ChooseUnlikeFoods)
+                 },
+                 navigateToNextPage = {
+                     navController.navigate(OnboardingRoute.SelectFrequentPlace)
+                 },
+                 navigateToLastLoadingPage = {
+                     navController.navigate(OnboardingRoute.LastLoading)
+                 }
+             )
         }
         composable<OnboardingRoute.LastLoading> {
 
