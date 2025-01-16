@@ -22,6 +22,7 @@ import com.acon.acon.navigation.bottom.BottomNavType
 import com.acon.acon.navigation.nested.areaVerificationNavigation
 import com.acon.acon.navigation.nested.onboardingNavigationNavigation
 import com.acon.acon.navigation.nested.signInNavigationNavigation
+import com.acon.acon.navigation.route.AreaVerificationRoute
 import com.acon.acon.navigation.nested.spotNavigation
 import com.acon.acon.navigation.route.SpotRoute
 import com.acon.core.designsystem.animation.defaultEnterTransition

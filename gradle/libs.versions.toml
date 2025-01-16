@@ -15,14 +15,12 @@ appcompat = "1.7.0"
 mapSdk = "3.19.1"
 material = "1.12.0"
 jetbrainsKotlinJvm = "2.0.21"
-naverMapLocation = "21.0.2"
 navigationCompose = "2.8.2"
 kotlinxSerializationJson = "1.7.3"
 okhttp = "4.12.0"
 pulltorefresh = "0.2.0"
 retrofitKotlinSerializationConverter = "1.0.0"
 retrofit = "2.11.0"
-playServicesLocation = "21.0.1"
 uiGraphicsAndroid = "1.6.6"
 foundationAndroid = "1.7.6"
 material3Android = "1.2.1"
@@ -36,7 +34,15 @@ javaxInject = "1"
 uiToolingPreviewAndroid = "1.7.6"
 uiAndroid = "1.7.6"
 orbit = "9.0.0"
+runtimeAndroidVersion = "1.7.1"
+storage = "1.5.0"
+uiToolingPreviewAndroidVersion = "1.8.0-alpha04"
+playServicesLocationVersion = "21.3.0"
+
+## Naver Map
 naverMapCompose = "1.8.0"
+naverMapLocation = "21.0.2"
+playServicesLocation = "21.0.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -85,9 +91,16 @@ retrofit-kotlin-serialization-converter = { group = "com.jakewharton.retrofit", 
 orbit-compose = { module = "org.orbit-mvi:orbit-compose", version.ref = "orbit" }
 orbit-viewmodel = { module = "org.orbit-mvi:orbit-viewmodel", version.ref = "orbit" }
 
+runtime-android = { group = "androidx.compose.runtime", name = "runtime-android", version.ref = "runtimeAndroidVersion" }
+androidx-storage = { group = "androidx.test.services", name = "storage", version.ref = "storage" }
+ui-tooling-preview-android = { group = "androidx.compose.ui", name = "ui-tooling-preview-android", version.ref = "uiToolingPreviewAndroidVersion" }
+gms-play-services-location = { group = "com.google.android.gms", name = "play-services-location", version.ref = "playServicesLocationVersion" }
+
 naver-map-compose = { module = "io.github.fornewid:naver-map-compose", version.ref = "naverMapCompose" }
 naver-map-location = { module = "io.github.fornewid:naver-map-location", version.ref = "naverMapLocation" }
 play-services-location = { module = "com.google.android.gms:play-services-location", version.ref = "playServicesLocation" }
+
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
