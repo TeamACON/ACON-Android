@@ -13,7 +13,7 @@ import androidx.compose.ui.util.fastForEachIndexed
 fun AconChipFlowRow(
     titles: List<String>,
     vararg selectedChipIndexes: Int,
-    onChipSelected: (title: String) -> Unit,
+    onChipSelected: (index: Int) -> Unit,
     modifier: Modifier = Modifier,
     horizontalArrangement: Arrangement.Horizontal = Arrangement.spacedBy(6.dp),
     verticalArrangement: Arrangement.Vertical = Arrangement.spacedBy(6.dp)
@@ -28,7 +28,7 @@ fun AconChipFlowRow(
             AconChip(
                 title = title,
                 isSelected = selectedChipIndexes.contains(index),
-                onClick = { onChipSelected(title) }
+                onClick = { onChipSelected(index) }
             )
         }
     }
