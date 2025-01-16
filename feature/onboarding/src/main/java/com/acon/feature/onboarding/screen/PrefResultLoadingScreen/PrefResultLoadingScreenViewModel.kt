@@ -15,8 +15,8 @@ class PrefResultLoadingScreenViewModel @Inject constructor(
             initialState = PrefResultLoadingScreenState(isLoading = true)
         )
 
-    fun navigateToNextPage() = intent {
-        postSideEffect(PrefResultLoadingScreenSideEffect.NavigateToNextPage)
+    fun navigateToSpotListView() = intent {
+        postSideEffect(PrefResultLoadingScreenSideEffect.navigateToSpotListView)
     }
 }
 
@@ -25,5 +25,5 @@ data class PrefResultLoadingScreenState(
 )
 
 sealed interface PrefResultLoadingScreenSideEffect {
-    data object NavigateToNextPage: PrefResultLoadingScreenSideEffect
+    data object navigateToSpotListView: PrefResultLoadingScreenSideEffect
 }
