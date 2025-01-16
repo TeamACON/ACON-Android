@@ -35,7 +35,7 @@ import com.acon.feature.onboarding.type.CardItem
 import com.acon.feature.onboarding.type.FoodItems
 
 @Composable
-fun <T : CardItem> FoodGrid( //이름을 HateFoodSelectGrid로 수정해야 할 듯.
+fun <T : CardItem> FoodGrid(
     modifier : Modifier = Modifier,
     columnSize : Int,
     foodItems: Array<T>,

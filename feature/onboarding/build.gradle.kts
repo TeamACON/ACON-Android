@@ -53,7 +53,6 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.ui.tooling.preview.android)
-    implementation(project(":core:base"))
     implementation(project(":core:utils:feature"))
     implementation(project(":core:designsystem"))
     testImplementation(libs.junit)

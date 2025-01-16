@@ -88,7 +88,7 @@ fun UnlikeFoodScreen(
             ){
                 FoodGrid(
                     modifier = modifier
-                        .background(Color(0x00000000)),
+                        .background(AconTheme.color.Gray9),
                     columnSize = columnSize,
                     foodItems = FoodItems.entries.toTypedArray(),
                     onCardClicked = { text ->
@@ -107,7 +107,7 @@ fun UnlikeFoodScreen(
                 AconFilledLargeButton(
                     text = "다음",
                     textStyle = AconTheme.typography.head8_16_sb,
-                    textColor = AconTheme.color.White,
+                    //textColor = AconTheme.color.White,
                     enabledBackgroundColor = AconTheme.color.Gray5,
                     disabledBackgroundColor =  AconTheme.color.Gray8,
                     isEnabled = (screenState.selectedCard.size >= 1),
@@ -123,7 +123,7 @@ fun UnlikeFoodScreen(
 
 @Composable
 @Preview
-fun PreviewOnboardingScreen(){
+private fun PreviewOnboardingScreen(){
     UnlikeFoodScreenContainer(
     )
 }

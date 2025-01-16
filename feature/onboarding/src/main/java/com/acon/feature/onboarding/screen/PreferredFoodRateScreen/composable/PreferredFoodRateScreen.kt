@@ -114,25 +114,20 @@ fun PreferredFoodRateScreen(
                 .padding(start = 20.dp, end = 20.dp, top = 50.dp, bottom = 50.dp),
             verticalArrangement = Arrangement.SpaceBetween
         ){
-            Box(
-                modifier = Modifier.fillMaxWidth(),
-                contentAlignment = Alignment.TopStart
+            Column(
+                modifier = Modifier
             ){
-                Column(
-                    modifier = Modifier
-                ){
-                    Text(
-                        text = "02",
-                        color = AconTheme.color.Gray5,
-                        style = AconTheme.typography.head4_24_sb,
-                        modifier = modifier.padding(vertical = 7.dp)
-                    )
-                    Text(
-                        text = "선호 음식 Top3까지 순위를 매겨주세요.",
-                        color = Color.White,
-                        style = AconTheme.typography.head6_20_sb,
-                    )
-                }
+                Text(
+                    text = "02",
+                    color = AconTheme.color.Gray5,
+                    style = AconTheme.typography.head4_24_sb,
+                    modifier = modifier.padding(vertical = 7.dp)
+                )
+                Text(
+                    text = "선호 음식 Top3까지 순위를 매겨주세요.",
+                    color = Color.White,
+                    style = AconTheme.typography.head6_20_sb,
+                )
             }
 
             Box(
@@ -143,7 +138,7 @@ fun PreferredFoodRateScreen(
             ){
                 PreferFoodTypeSelectGrid(
                     modifier = modifier
-                        .background(Color(0x00000000)),
+                        .background(AconTheme.color.Gray9),
                     columnSize = columnSize,
                     foodItems = FoodTypeItems.entries.toTypedArray(),
                     onCardClicked = { text ->
@@ -162,7 +157,7 @@ fun PreferredFoodRateScreen(
                 AconFilledLargeButton(
                     text = "다음",
                     textStyle = AconTheme.typography.head8_16_sb,
-                    textColor = AconTheme.color.White,
+                    //textColor = AconTheme.color.White,
                     enabledBackgroundColor = AconTheme.color.Gray5,
                     disabledBackgroundColor =  AconTheme.color.Gray8,
                     isEnabled = ( screenState.selectedCard.size == 3 ),
@@ -179,6 +174,6 @@ fun PreferredFoodRateScreen(
 
 @Composable
 @Preview
-fun PreviewOnboardingScreen2(){
+private fun PreviewOnboardingScreen2(){
     PreferredFoodRateScreenContainer()
 }

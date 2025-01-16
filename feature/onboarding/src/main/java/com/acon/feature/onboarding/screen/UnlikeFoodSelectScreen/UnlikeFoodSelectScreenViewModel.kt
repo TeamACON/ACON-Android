@@ -1,12 +1,12 @@
 package com.acon.feature.onboarding.screen.UnlikeFoodSelectScreen
 
-import com.acon.base.BaseContainerHost
+import com.acon.core.utils.feature.base.BaseContainerHost
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
 
-const val ONBOARDING_TOTAL_PAGES = 5;
+private const val ONBOARDING_TOTAL_PAGES = 5;
 
 @HiltViewModel
 class UnlikeFoodScreenViewModel @Inject constructor(
