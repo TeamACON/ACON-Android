@@ -7,14 +7,15 @@ import androidx.navigation.compose.NavHost
 import com.acon.acon.navigation.nested.areaVerificationNavigation
 import com.acon.acon.navigation.nested.onboardingNavigationNavigation
 import com.acon.acon.navigation.nested.signInNavigationNavigation
-import com.acon.acon.navigation.route.AreaVerificationRoute
 import com.acon.acon.navigation.nested.spotNavigation
 import com.acon.acon.navigation.route.SignInRoute
+import com.acon.domain.repository.GoogleTokenRepository
 
 @Composable
 fun AconNavigation(
     modifier: Modifier = Modifier,
-    navController: NavHostController
+    navController: NavHostController,
+    googleTokenRepository: GoogleTokenRepository,
 ) {
 
     NavHost(
@@ -23,7 +24,7 @@ fun AconNavigation(
         modifier = modifier,
     ) {
 
-        signInNavigationNavigation(navController)
+        signInNavigationNavigation(navController, googleTokenRepository)
 
         areaVerificationNavigation(navController)
 
