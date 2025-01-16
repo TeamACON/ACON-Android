@@ -1,8 +1,10 @@
 package com.acon.feature.onboarding.screen.PrefResultLoadingScreen.composable
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
@@ -27,6 +29,7 @@ import com.airbnb.lottie.compose.LottieAnimatable
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieClipSpec
 import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieAnimatable
 import com.airbnb.lottie.compose.rememberLottieComposition
 import org.orbitmvi.orbit.compose.collectAsState
@@ -40,18 +43,17 @@ fun PrefResultLoadingScreenContainer(
 ){
     val state = viewModel.collectAsState().value
 
-    val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.loading_lottie))
-    //val composition by rememberLottieComposition(LottieCompositionSpec.Asset("drawable/loading_lottie.json"))
 
-    val lottieAnimatable = rememberLottieAnimatable()
 
-    LaunchedEffect(composition) {
-        lottieAnimatable.animate(
-            composition = composition,
-            clipSpec = LottieClipSpec.Frame(0, 1200),
-            initialProgress = 0f
-        )
-    }
+//    val lottieAnimatable = rememberLottieAnimatable()
+//
+//    LaunchedEffect(composition) {
+//        lottieAnimatable.animate(
+//            composition = composition,
+//            clipSpec = LottieClipSpec.Frame(0, 1200),
+//            initialProgress = 0f
+//        )
+//    }
 
     viewModel.collectSideEffect {
         when(it) {
@@ -65,8 +67,6 @@ fun PrefResultLoadingScreenContainer(
         modifier = modifier,
         screenState = state,
         navigateToSpotListView = navigateToSpotListView,
-        composition = composition,
-        lottieAnimatable = lottieAnimatable,
     )
 }
 
@@ -75,10 +75,9 @@ fun PrefResultLoadingScreen(
     modifier: Modifier = Modifier,
     screenState: PrefResultLoadingScreenState,
     navigateToSpotListView: () -> Unit = {},
-    composition: LottieComposition?,
-    lottieAnimatable: LottieAnimatable
 ){
     //로딩이 다 되면 navigateToSpotListView 로 보내야 하는데 이걸 어떻게 하지?
+    val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.loading_lottie))
 
     Column(
         modifier = modifier
@@ -95,6 +94,7 @@ fun PrefResultLoadingScreen(
         ){
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center,
                 modifier = Modifier.align(Alignment.Center)
             ){
                 Text(
@@ -105,7 +105,12 @@ fun PrefResultLoadingScreen(
                 )
                 LottieAnimation(
                     composition = composition,
+                    iterations = LottieConstants.IterateForever,
                     //progress = lottieAnimatable,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .aspectRatio(1f)
+                        .padding(horizontal = 40.dp),
                     contentScale = ContentScale.FillHeight,
                 )
             }
