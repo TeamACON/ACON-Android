@@ -48,7 +48,7 @@ fun AconNavigation(
             if (backStackEntry?.destination?.shouldShowBottomNav() == true) {
                 BottomBar(
                     modifier = Modifier
-                        .background(color = AconTheme.color.Black)
+                        .background(color = AconTheme.color.Black)  // TODO Color?
                         .fillMaxWidth(),
                     selectedItem = selectedBottomNavItem,
                     onItemClick = {
