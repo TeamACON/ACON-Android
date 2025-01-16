@@ -8,12 +8,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
- import androidx.compose.ui.Modifier
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.acon.core.designsystem.component.button.AconButton
 import com.acon.core.designsystem.component.radiobutton.AconRadioButton
 import com.acon.core.designsystem.theme.AconTheme
+import com.acon.feature.localcerti.R
 
 @Composable
 fun AreaVerificationButton(
@@ -23,8 +25,8 @@ fun AreaVerificationButton(
     isEnabled: Boolean = true,
 ) {
     AconButton(
-        backGroundColor = if(isEnabled) AconTheme.color.Gray9 else AconTheme.color.Gray8,
-        borderColor = if(isEnabled) AconTheme.color.Gray8 else AconTheme.color.Gray7,
+        backGroundColor = if (isEnabled) AconTheme.color.Gray9 else AconTheme.color.Gray8,
+        borderColor = if (isEnabled) AconTheme.color.Gray8 else AconTheme.color.Gray7,
         borderWidth = 1.dp,
         modifier = modifier,
         cornerRadius = 6.dp,
@@ -43,12 +45,12 @@ fun AreaVerificationButton(
             Spacer(modifier = Modifier.width(8.dp))
             Row {
                 Text(
-                    text = "새로운",
+                    text = stringResource(R.string.area_verification_new),
                     style = AconTheme.typography.head8_16_sb,
                     color = AconTheme.color.Main_org1
                 )
                 Text(
-                    text = " 나의 동네 인증하기",
+                    text = stringResource(R.string.area_verification_certify_my_area),
                     style = AconTheme.typography.head8_16_sb,
                     color = AconTheme.color.White
                 )

@@ -12,15 +12,15 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.res.vectorResource
 import com.acon.core.designsystem.component.button.AconFilledLargeButton
@@ -37,9 +37,9 @@ fun DottoriSelectionBottomSheet(
         modifier = modifier
             .fillMaxWidth()
             .fillMaxHeight(0.75f)
+            .clip(RoundedCornerShape(topStart = 10.dp, topEnd = 10.dp))
             .background(
-                color = AconTheme.color.Gray8,
-                shape = RoundedCornerShape(topStart = 10.dp, topEnd = 10.dp)
+                color = AconTheme.color.Gray9
             )
     ) {
         Box(
@@ -61,27 +61,25 @@ fun DottoriSelectionBottomSheet(
         ) {
             IconButton(onClick = onDismiss) {
                 Icon(
-                    imageVector = Icons.Default.Close,
-                    contentDescription = "닫기",
+                    imageVector = ImageVector.vectorResource(com.acon.core.designsystem.R.drawable.ic_dissmiss_24),
+                    contentDescription = stringResource(R.string.close),
                     tint = AconTheme.color.White
                 )
             }
         }
 
         Text(
-            text = "이제 '동네 이름'에\n로컬 도토리를 떨어트릴 수 있어요!",
+            text = stringResource(R.string.local_dottori_available),
             style = AconTheme.typography.head6_20_sb,
             color = AconTheme.color.White,
             modifier = Modifier.padding(start = 20.dp)
         )
 
         Text(
-            text = "로컬 도토리는 본격 맛집을 보증하는 도토리예요.\n만족스러운 식사 후 리뷰에 사용해보세요!",
-            style = AconTheme.typography.body3_13_reg,
+            text = stringResource(R.string.local_dottori_description),
             color = AconTheme.color.Gray3,
             modifier = Modifier
-                .padding(start = 20.dp)
-                .padding(vertical = 8.dp)
+                .padding(start = 20.dp, top = 8.dp)
         )
 
         Spacer(modifier = Modifier.padding(top = 72.dp))
@@ -98,10 +96,10 @@ fun DottoriSelectionBottomSheet(
             ) {
                 Image(
                     imageVector = ImageVector.vectorResource(id = R.drawable.ic_local_acon),
-                    contentDescription = "로컬 도토리"
+                    contentDescription = stringResource(R.string.local_dottori)
                 )
                 Text(
-                    text = "로컬 도토리",
+                    text = stringResource(R.string.local_dottori),
                     style = AconTheme.typography.subtitle1_16_med,
                     color = AconTheme.color.Gray1
                 )
@@ -114,10 +112,10 @@ fun DottoriSelectionBottomSheet(
             ) {
                 Image(
                     imageVector = ImageVector.vectorResource(id = R.drawable.ic_normal_acon),
-                    contentDescription = "일반 도토리"
+                    contentDescription = stringResource(R.string.normal_dottori),
                 )
                 Text(
-                    text = "일반 도토리",
+                    text = stringResource(R.string.normal_dottori),
                     style = AconTheme.typography.subtitle1_16_med,
                     color = AconTheme.color.Gray1
                 )
@@ -126,7 +124,7 @@ fun DottoriSelectionBottomSheet(
 
         Spacer(modifier = Modifier.padding(top = 96.dp))
         AconFilledLargeButton(
-            text = "시작하기",
+            text = stringResource(R.string.start),
             textStyle = AconTheme.typography.head8_16_sb,
             enabledBackgroundColor = AconTheme.color.Gray5,
             disabledBackgroundColor = AconTheme.color.Gray8,

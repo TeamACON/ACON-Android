@@ -25,8 +25,10 @@ import com.acon.core.designsystem.theme.AconTheme
 import com.acon.feature.areaverification.component.AreaVerificationButton
 import android.provider.Settings
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.res.stringResource
 import com.acon.core.designsystem.component.dialog.AconOneButtonDialog
 import com.acon.core.utils.feature.permission.CheckAndRequestLocationPermission
+import com.acon.feature.localcerti.R
 
 @Composable
 fun AreaVerificationScreenContainer(
@@ -47,9 +49,11 @@ fun AreaVerificationScreenContainer(
                     }
                     context.startActivity(intent)
                 }
+
                 is AreaVerificationSideEffect.NavigateToNextScreen -> {
                     onNextScreen(effect.latitude, effect.longitude)
                 }
+
                 is AreaVerificationSideEffect.NavigateToNewArea -> {
                     onNewAreaClick(effect.latitude, effect.longitude)
                 }
@@ -82,9 +86,9 @@ fun AreaVerificationScreen(
 ) {
     if (state.showPermissionDialog) {
         AconOneButtonDialog(
-            title = "위치 권한 필요",
-            content = "정확한 위치 확인이 필요합니다.\n설정에서 '정확한 위치' 권한을 허용해주세요.",
-            buttonContent = "설정으로 이동",
+            title = stringResource(R.string.permission_dialog_title),
+            content = stringResource(R.string.permission_dialog_content),
+            buttonContent = stringResource(R.string.go_to_settings),
             onDismissRequest = onDismissPermissionDialog,
             onClickConfirm = onPermissionSettingClick,
             isImageEnabled = false
@@ -104,14 +108,14 @@ fun AreaVerificationScreen(
             Spacer(modifier = Modifier.height(12.dp))
 
             Text(
-                text = "로컬 맛집 추천을 위해\n지역 인증이 필요해요.",
+                text = stringResource(R.string.local_restaurant_certification_title),
                 style = AconTheme.typography.head6_20_sb,
                 color = AconTheme.color.Gray1
             )
 
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = "지주 거는 동네로 지역 인증을 해보세요",
+                text = stringResource(R.string.local_restaurant_certification_description),
                 style = AconTheme.typography.body3_13_reg,
                 color = AconTheme.color.Gray3
             )
@@ -133,7 +137,7 @@ fun AreaVerificationScreen(
         }
 
         AconFilledLargeButton(
-            text = "다음",
+            text = stringResource(R.string.next),
             textStyle = AconTheme.typography.head8_16_sb,
             enabledBackgroundColor = AconTheme.color.Gray5,
             disabledBackgroundColor = AconTheme.color.Gray8,
