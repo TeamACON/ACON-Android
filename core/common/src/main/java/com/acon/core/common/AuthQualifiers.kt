@@ -12,4 +12,8 @@ annotation class NoAuth
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
-annotation class Refresh
+annotation class TokenInterceptor
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class ResponseInterceptor
