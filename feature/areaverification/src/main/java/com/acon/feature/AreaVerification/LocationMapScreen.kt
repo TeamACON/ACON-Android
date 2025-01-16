@@ -62,7 +62,6 @@ fun LocationMapScreen(
                             isCompassEnabled = true
                         }
 
-                        // 초기 위치 설정
                         if (initialLatitude != 0.0 && initialLongitude != 0.0) {
                             val cameraUpdate =
                                 CameraUpdate.scrollTo(LatLng(initialLatitude, initialLongitude))
