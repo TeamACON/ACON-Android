@@ -25,11 +25,19 @@ rootProject.name = "Acon"
 
 include(":app")
 
+include(
+    ":core:designsystem",
+    ":core:utils:feature",
+    ":core:utils:feature",
+    ":core:common",
+    ":core:map"
+)
+
+include(
+    ":feature:areaverification",
+    ":feature:spot",
+    ":feature:signin"
+)
+
 include(":data")
 include(":domain")
-include(":core:designsystem")
-include(":core:utils:feature")
-include(":core:common")
-include(":core:map")
-include(":feature:spot")
-include(":feature:signin")

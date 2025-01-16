@@ -26,15 +26,23 @@ fun AconButton(
     borderWidth: Dp = 0.dp,
     cornerRadius: Dp = 0.dp,
     contentPadding: PaddingValues = PaddingValues(horizontal = 0.dp, vertical = 0.dp),
+    enabled: Boolean = true,
     content: @Composable () -> Unit,
-    ) {
+) {
     Box(
-      modifier = modifier
-          .clip(RoundedCornerShape(cornerRadius))
-          .background(color = backGroundColor)
-          .clickable { onClick() }
-          .border(width = borderWidth, color = borderColor, shape = RoundedCornerShape(cornerRadius))
-          .padding(contentPadding),
+        modifier = modifier
+            .clip(RoundedCornerShape(cornerRadius))
+            .background(color = backGroundColor)
+            .clickable(
+                enabled = enabled,
+                onClick = onClick
+            )
+            .border(
+                width = borderWidth,
+                color = borderColor,
+                shape = RoundedCornerShape(cornerRadius)
+            )
+            .padding(contentPadding),
         contentAlignment = Alignment.Center
     ) {
         content()
@@ -53,7 +61,8 @@ private fun PreviewAcornButton() {
             borderColor = AconTheme.color.Main_org1,
             borderWidth = Dp.Hairline,
             cornerRadius = 4.dp,
-            contentPadding =PaddingValues(horizontal = 14.dp, vertical = 14.dp),
+            contentPadding = PaddingValues(horizontal = 14.dp, vertical = 14.dp),
+            enabled = true,
         )
     }
 }
