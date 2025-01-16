@@ -36,7 +36,8 @@ include(
 include(
     ":feature:areaverification",
     ":feature:spot",
-    ":feature:signin"
+    ":feature:signin",
+    ":feature:onboarding"
 )
 
 include(":data")
