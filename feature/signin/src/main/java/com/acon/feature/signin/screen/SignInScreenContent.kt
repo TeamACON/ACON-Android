@@ -7,12 +7,15 @@ import com.acon.domain.repository.GoogleTokenRepository
 
 @Composable
 fun SignInScreenContent(
+    navigateToSpotLisView: () -> Unit,
+    navigateToAreaVerification: () -> Unit,
     modifier: Modifier = Modifier,
     googleSignInRepository: GoogleTokenRepository,
     viewModel: SignInViewModel = hiltViewModel()
     ) {
     SignInScreen(
         navigateToSpotLisView = {},
+        navigateToAreaVerification = {},
         onClickTermsOfUse = {},
         onClickPrivacyPolicy = {},
         onClickLoginGoogle = {
