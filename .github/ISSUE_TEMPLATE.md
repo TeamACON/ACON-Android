@@ -1,12 +1,3 @@
----
-name: Issue template
-about: Issue template
-title: ''
-labels: ''
-assignees: ''
-
----
-
 ## 📋 TO DO
 - [ ] task1
 - [ ] task2
