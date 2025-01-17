@@ -2,6 +2,7 @@ package com.acon.feature.upload
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
@@ -13,20 +14,35 @@ class UploadViewModel @Inject constructor() : ViewModel(),
 
     fun onIntent(intent: UploadIntent) {
         when (intent) {
-            is UploadIntent.SelectDotori -> selectDotori()
+            is UploadIntent.SelectDotori -> selectDotori(intent.index)
             is UploadIntent.DeselectDotori -> deselectDotori()
             is UploadIntent.NavigateBack -> navigateBack()
             is UploadIntent.UploadDotori -> uploadDotori()
         }
     }
 
-    private fun selectDotori() = intent {
-        if (state.selectedCount < state.maxCount) {
+    private fun selectDotori(index: Int) = intent {
+        if (index >= state.selectedCount && index < state.maxCount) {
+            reduce {
+                state.copy(animatingIndex = null)
+            }
+
+            delay(50)
             reduce {
                 state.copy(
-                    selectedCount = state.selectedCount + 1,
-                    isButtonEnabled = state.selectedCount + 1 > 0
+                    selectedCount = index + 1,
+                    isButtonEnabled = true,
+                    animatingIndex = index
                 )
+            }
+
+            delay(3000)
+            reduce {
+                if (state.animatingIndex == index) {
+                    state.copy(animatingIndex = null)
+                } else {
+                    state
+                }
             }
         }
     }
@@ -34,10 +50,28 @@ class UploadViewModel @Inject constructor() : ViewModel(),
     private fun deselectDotori() = intent {
         if (state.selectedCount > 0) {
             reduce {
+                state.copy(animatingIndex = null)
+            }
+
+            delay(50)
+            val newSelectedCount = state.selectedCount - 1
+            val animatingIndex = newSelectedCount - 1
+
+            reduce {
                 state.copy(
-                    selectedCount = state.selectedCount - 1,
-                    isButtonEnabled = state.selectedCount - 1 > 0
+                    selectedCount = newSelectedCount,
+                    isButtonEnabled = newSelectedCount > 0,
+                    animatingIndex = newSelectedCount - 1
                 )
+            }
+
+            delay(3000)
+            reduce {
+                if (state.animatingIndex == animatingIndex) {
+                    state.copy(animatingIndex = null)
+                } else {
+                    state
+                }
             }
         }
     }
