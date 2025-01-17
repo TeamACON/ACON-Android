@@ -65,7 +65,9 @@ fun PrefResultLoadingScreen(
     navigateToSpotListView: () -> Unit = {},
 ){
 
-    //로딩이 다 되면 2초 동안 두번째 로띠 보여주고 navigateToSpotListView 로 보내야 하는데 이걸 어떻게 하지?
+    //여기로 넘어오는 버튼 누르는 순간 POST 요청 날리고
+    //응답을 기다리는 순간부터 이 화면으로 넘어옴.
+    //200 OK response가 오면 2초 동안 바뀐 로띠 보여주고 navigateToSpotListView 로 이동시키기.
 
     val lottieRes = if (screenState.isLoading) R.raw.loading_lottie else R.raw.loading_complete_lottie
     val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(lottieRes))
