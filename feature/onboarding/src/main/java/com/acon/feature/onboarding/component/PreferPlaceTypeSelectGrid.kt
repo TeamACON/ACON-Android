@@ -37,12 +37,11 @@ import com.acon.feature.onboarding.type.FoodItems
 import com.acon.feature.onboarding.type.FoodTypeItems
 
 @Composable
-fun <T : CardItem> PreferFoodTypeSelectGrid(
+fun <T : CardItem> PreferPlaceTypeSelectGrid(
     modifier : Modifier = Modifier,
     columnSize : Int,
     foodItems: Array<T>,
     onCardClicked: (String) -> Unit,
-    isAllClicked: Boolean = false,
     selectedCard: Set<String>,
 ){
     LazyVerticalGrid(
@@ -53,14 +52,13 @@ fun <T : CardItem> PreferFoodTypeSelectGrid(
         verticalArrangement = Arrangement.spacedBy(15.dp),
     ){
         items(foodItems) { food ->
-            FoodTypeCard(
+            PlaceTypeCard(
                 imageRes = food.imageResId,
                 text = food.cardName,
                 selected = (selectedCard.contains(food.cardName)),
                 onCardClicked = { text ->
                     onCardClicked(text)
                 },
-                isAllClicked = isAllClicked,
                 selectedCard = selectedCard,
             )
         }
@@ -68,15 +66,14 @@ fun <T : CardItem> PreferFoodTypeSelectGrid(
 }
 
 @Composable
-fun FoodTypeCard(
+fun PlaceTypeCard(
     modifier: Modifier = Modifier,
     imageRes: Int,
     text: String,
     selected: Boolean,
     onCardClicked: (String) -> Unit,
-    isAllClicked: Boolean, //이게 true가 되는 순간 (3개가 선택되는 순간), unselected인 애들은 전부 alpha 처리하기
     selectedCard: Set<String>,
-    ) {
+) {
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -85,46 +82,45 @@ fun FoodTypeCard(
             modifier = Modifier
                 .fillMaxSize()
                 .aspectRatio(1f)
-                .clickable(enabled = selected || !isAllClicked) { onCardClicked(text) },
+                .clickable { onCardClicked(text) }, // 늘 가능하게 해야 함
             contentAlignment = Alignment.Center
 
         ){
             // 버튼 하나씩
-                Box(
-                    modifier = Modifier.alpha(if (isAllClicked && !selected) 0.1f else 1f),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Image(
-                        painter = painterResource(id = imageRes),
-                        contentDescription = text,
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier.clip(RoundedCornerShape(6.dp)).fillMaxSize()
-                    )
+            Box(
+                contentAlignment = Alignment.Center
+            ) {
+                Image(
+                    painter = painterResource(id = imageRes),
+                    contentDescription = text,
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier.clip(RoundedCornerShape(6.dp)).fillMaxSize()
+                )
 
-                    if (selected) { //top 3 이내에 선정된 경우, 체크표시 말고 등수 번호와 함께 선택된 효과
-                        val rateIcon = if (selectedCard.indexOf(text) == 0) com.acon.feature.onboarding.R.drawable.ic_1
-                                        else if (selectedCard.indexOf(text) == 1) com.acon.feature.onboarding.R.drawable.ic_2
-                                        else if (selectedCard.indexOf(text) == 2) com.acon.feature.onboarding.R.drawable.ic_3
-                                        else 0
-                        Box(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .clip(RoundedCornerShape(6.dp))
-                                .background(AconTheme.color.Dim_b_60)
-                        )
-                        Image(
-                            imageVector = ImageVector.vectorResource(rateIcon),
-                            contentDescription = "Clicked",
-                            modifier = Modifier.size(44.dp)
-                        )
-                    }
+                if (selected) { //top 3 이내에 선정된 경우, 체크표시 말고 등수 번호와 함께 선택된 효과
+                    val rateIcon = if (selectedCard.indexOf(text) == 0) com.acon.feature.onboarding.R.drawable.ic_1
+                    else if (selectedCard.indexOf(text) == 1) com.acon.feature.onboarding.R.drawable.ic_2
+                    else if (selectedCard.indexOf(text) == 2) com.acon.feature.onboarding.R.drawable.ic_3
+                    else if (selectedCard.indexOf(text) == 3) com.acon.feature.onboarding.R.drawable.ic_4
+                    else 0
+
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .clip(RoundedCornerShape(6.dp))
+                            .background(AconTheme.color.Dim_b_60)
+                    )
+                    Image(
+                        imageVector = ImageVector.vectorResource(rateIcon),
+                        contentDescription = "Clicked",
+                        modifier = Modifier.size(44.dp)
+                    )
                 }
+            }
 
         }
-        val cardTextAlpha = if (isAllClicked && !selected) 0.1f else 1f //수정 필요
         Spacer(modifier = Modifier.height(4.dp))
         Text(
-            modifier = Modifier.alpha(cardTextAlpha),
             text = text,
             color = AconTheme.color.White,
             style = AconTheme.typography.subtitle2_14_med,
@@ -135,22 +131,19 @@ fun FoodTypeCard(
 
 @Preview
 @Composable
-fun PreviewFoodTypeGrid() {
+fun PreviewPlaceTypeGrid() {
 
     val selectedCard = remember { mutableStateOf(setOf<String>()) }
 
-    Column(
+    Column {
 
-    ){
-
-        PreferFoodTypeSelectGrid(
+        PreferPlaceTypeSelectGrid(
             columnSize = 3,
             foodItems = FoodTypeItems.entries.toTypedArray(),
             onCardClicked = {
                 if(selectedCard.value.contains(it)) selectedCard.value -= it
                 else selectedCard.value += it
             },
-            isAllClicked = false,
             selectedCard = selectedCard.value
         )
     }

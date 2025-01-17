@@ -26,6 +26,8 @@ import com.acon.acon.navigation.nested.onboardingNavigationNavigation
 import com.acon.acon.navigation.nested.signInNavigationNavigation
 import com.acon.acon.navigation.route.AreaVerificationRoute
 import com.acon.acon.navigation.nested.spotNavigation
+import com.acon.acon.navigation.nested.uploadNavigation
+import com.acon.acon.navigation.route.OnboardingRoute
 import com.acon.acon.navigation.route.SpotRoute
 import com.acon.core.designsystem.animation.defaultEnterTransition
 import com.acon.core.designsystem.animation.defaultExitTransition
@@ -66,7 +68,7 @@ fun AconNavigation(
     ) { innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = SpotRoute.Graph,
+            startDestination = OnboardingRoute.Graph,
             modifier = Modifier.padding(innerPadding),
             enterTransition = {
                 defaultEnterTransition()
@@ -85,7 +87,9 @@ fun AconNavigation(
 
             onboardingNavigationNavigation(navController)
 
-            spotNavigation(navController)
+        spotNavigation(navController)
+
+        uploadNavigation(navController)
         }
     }
 
