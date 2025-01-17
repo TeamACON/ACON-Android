@@ -2,9 +2,11 @@ package com.acon.feature.upload
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -17,6 +19,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
@@ -25,6 +28,9 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.acon.core.designsystem.component.button.AconFilledLargeButton
 import com.acon.core.designsystem.theme.AconTheme
 import com.acon.feature.upload.component.DotoriIndicator
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.rememberLottieComposition
 
 @Composable
 fun UploadContainer(
@@ -41,6 +47,7 @@ fun UploadContainer(
                 is UploadSideEffect.NavigateToSuccess -> {
                     onNavigateToSuccess()
                 }
+
                 is UploadSideEffect.NavigateBack -> {
                     onNavigateBack()
                 }
@@ -119,10 +126,41 @@ fun UploadScreen(
             )
         }
 
-        Spacer(modifier = Modifier.weight(1f))
+        Spacer(modifier = Modifier.padding(top = 32.dp))
+        Box(
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxWidth()
+                .padding(bottom = 20.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            if (state.animatingIndex != null) {
+                LottieAnimation(
+                    composition = rememberLottieComposition(
+                        spec = LottieCompositionSpec.RawRes(
+                            when (state.animatingIndex) {
+                                0 -> R.raw.dotori1
+                                1 -> R.raw.dotori2
+                                2 -> R.raw.dotori3
+                                3 -> R.raw.dotori4
+                                else -> R.raw.dotori5
+                            }
+                        )
+                    ).value,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .aspectRatio(1f)
+                        .scale(1.5f),
+                    iterations = 1,
+                    isPlaying = true
+                )
+            }
+        }
 
         Column(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth(1f)
+                .padding(bottom = 58.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(4.dp)
         ) {
@@ -132,12 +170,13 @@ fun UploadScreen(
             ) {
                 repeat(state.maxCount) { index ->
                     DotoriIndicator(
+                        index = index,
                         isSelected = index < state.selectedCount,
                         onClick = {
                             if (index < state.selectedCount) {
                                 onIntent(UploadIntent.DeselectDotori)
                             } else {
-                                onIntent(UploadIntent.SelectDotori)
+                                onIntent(UploadIntent.SelectDotori(index))
                             }
                         }
                     )
