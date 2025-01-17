@@ -77,7 +77,7 @@ internal fun NavGraphBuilder.onboardingNavigationNavigation(
                      navController.navigate(OnboardingRoute.ChooseUnlikeFoods)
                  },
                  navigateToNextPage = {
-                     navController.navigate(OnboardingRoute.SelectFrequentPlace)
+                     navController.navigate(OnboardingRoute.LastLoading)
                  },
                  navigateToLastLoadingPage = {
                      navController.navigate(OnboardingRoute.LastLoading)
