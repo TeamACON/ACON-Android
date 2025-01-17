@@ -86,19 +86,23 @@ fun AconNavigation(
 
             onboardingNavigationNavigation(navController)
 
-        spotNavigation(navController)
+            spotNavigation(navController)
 
-        uploadNavigation(navController)
+            uploadNavigation(navController)
         }
     }
 
     LaunchedEffect(selectedBottomNavItem) {
-        navController.navigate(when(selectedBottomNavItem) {
-            BottomNavType.SPOT -> SpotRoute.SpotList
-            else -> SpotRoute.SpotList // TODO : Route
-        }) {
-            popUpTo(SpotRoute.SpotList) { inclusive = false }
-            launchSingleTop = true
+        if (backStackEntry?.destination?.shouldShowBottomNav() == true) {
+            navController.navigate(
+                when (selectedBottomNavItem) {
+                    BottomNavType.SPOT -> SpotRoute.SpotList
+                    else -> SpotRoute.SpotList // TODO : Route
+                }
+            ) {
+                popUpTo(SpotRoute.SpotList) { inclusive = false }
+                launchSingleTop = true
+            }
         }
     }
 
