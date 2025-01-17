@@ -83,6 +83,7 @@ dependencies {
     implementation(project(":feature:spot"))
     implementation(project(":feature:onboarding"))
     implementation(project(":feature:areaverification"))
+    implementation(project(":feature:upload"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

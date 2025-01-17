@@ -47,6 +47,12 @@ naverMapCompose = "1.8.0"
 naverMapLocation = "21.0.2"
 playServicesLocation = "21.0.1"
 
+lifecycleRuntimeComposeAndroid = "2.8.7"
+foundationAndroidVersion = "1.8.0-alpha04"
+
+##lottie
+lottie = "6.0.0"
+
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-credentials = { module = "androidx.credentials:credentials", version.ref = "credentials" }
@@ -107,8 +113,10 @@ gms-play-services-location = { group = "com.google.android.gms", name = "play-se
 naver-map-compose = { module = "io.github.fornewid:naver-map-compose", version.ref = "naverMapCompose" }
 naver-map-location = { module = "io.github.fornewid:naver-map-location", version.ref = "naverMapLocation" }
 play-services-location = { module = "com.google.android.gms:play-services-location", version.ref = "playServicesLocation" }
+androidx-lifecycle-runtime-compose-android = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose-android", version.ref = "lifecycleRuntimeComposeAndroid" }
+foundation-android = { group = "androidx.compose.foundation", name = "foundation-android", version.ref = "foundationAndroidVersion" }
 
-
+lottie-compose = { group = "com.airbnb.android", name = "lottie-compose", version.ref= "lottie" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
