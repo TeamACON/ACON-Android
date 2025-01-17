@@ -13,14 +13,15 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun DotoriIndicator(
+    index: Int,
     isSelected: Boolean,
-    onClick: () -> Unit,
+    onClick: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Box(
         modifier = modifier
-            .size(40.dp)
-            .clickable(onClick = onClick)
+            .size(48.dp)
+            .clickable { onClick(index) }
     ) {
         Image(
             imageVector = ImageVector.vectorResource(
