@@ -43,18 +43,6 @@ fun PrefResultLoadingScreenContainer(
 ){
     val state = viewModel.collectAsState().value
 
-
-
-//    val lottieAnimatable = rememberLottieAnimatable()
-//
-//    LaunchedEffect(composition) {
-//        lottieAnimatable.animate(
-//            composition = composition,
-//            clipSpec = LottieClipSpec.Frame(0, 1200),
-//            initialProgress = 0f
-//        )
-//    }
-
     viewModel.collectSideEffect {
         when(it) {
             PrefResultLoadingScreenSideEffect.navigateToSpotListView -> {
@@ -76,14 +64,16 @@ fun PrefResultLoadingScreen(
     screenState: PrefResultLoadingScreenState,
     navigateToSpotListView: () -> Unit = {},
 ){
-    //로딩이 다 되면 navigateToSpotListView 로 보내야 하는데 이걸 어떻게 하지?
-    val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.loading_lottie))
+
+    //로딩이 다 되면 2초 동안 두번째 로띠 보여주고 navigateToSpotListView 로 보내야 하는데 이걸 어떻게 하지?
+
+    val lottieRes = if (screenState.isLoading) R.raw.loading_lottie else R.raw.loading_complete_lottie
+    val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(lottieRes))
 
     Box(
         modifier = modifier
             .fillMaxSize()
             .background(color = AconTheme.color.Gray9),
-            //.padding(30.dp),
         contentAlignment = Alignment.Center
     ){
         val loadingText = if (screenState.isLoading) "회원님의 취향을\n빠르게 분석하고 있어요."
@@ -105,7 +95,6 @@ fun PrefResultLoadingScreen(
                 modifier = Modifier
                     .padding(vertical = 40.dp)
                     .aspectRatio(1.5f),
-                //contentScale = ContentScale.FillWidth,
             )
         }
     }
