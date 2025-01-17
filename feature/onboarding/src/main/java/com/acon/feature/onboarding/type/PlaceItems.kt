@@ -8,14 +8,14 @@ enum class PlaceItems(
     override val cardName: String,
 ) : CardItem {
 
-    RESTAURANT(R.drawable.place_img_1, "음식점"),
-    CAFE(R.drawable.place_img_2, "카페"),
+    RESTAURANT(R.drawable.place_img_3, "음식점"),
+    CAFE(R.drawable.place_img_4, "카페"),
 }
 
 enum class MoodItems(
     @DrawableRes override val imageResId: Int,
     override val cardName: String,
 ) : CardItem {
-    OLD(R.drawable.place_img_3, "노포"),
-    MODERN(R.drawable.place_img_4, "모던"),
+    OLD(R.drawable.place_img_1, "노포"),
+    MODERN(R.drawable.place_img_2, "모던"),
 }
