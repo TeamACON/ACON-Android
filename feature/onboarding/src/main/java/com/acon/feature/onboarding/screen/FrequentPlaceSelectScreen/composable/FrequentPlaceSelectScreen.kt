@@ -19,7 +19,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.acon.core.designsystem.component.button.AconFilledLargeButton
 import com.acon.core.designsystem.component.dialog.AconTwoButtonDialog
 import com.acon.core.designsystem.theme.AconTheme
-import com.acon.feature.onboarding.component.FreqPlaceSelectCard
+import com.acon.feature.onboarding.component.FreqPlaceSelectGrid
 import com.acon.feature.onboarding.component.OnboardingTopBar
 import com.acon.feature.onboarding.screen.FrequentPlaceSelectScreen.FrequentPlaceSelectScreenSideEffect
 import com.acon.feature.onboarding.screen.FrequentPlaceSelectScreen.FrequentPlaceSelectScreenState
@@ -141,7 +141,7 @@ fun FrequentPlaceSelectScreen(
                 contentAlignment = Alignment.Center
             ){
                 Column {
-                    FreqPlaceSelectCard(
+                    FreqPlaceSelectGrid(
                         modifier = Modifier
                             .background(AconTheme.color.Gray9),
                         columnSize = columnSize,
@@ -149,7 +149,6 @@ fun FrequentPlaceSelectScreen(
                         onCardClicked = { text ->
                             onCardClicked(text)
                         },
-                        isAllClicked = screenState.selectedCard.isNotEmpty(),
                         selectedCard = screenState.selectedCard
                     )
                 }

@@ -6,6 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import com.acon.acon.navigation.route.OnboardingRoute
 import com.acon.feature.onboarding.screen.FrequentPlaceSelectScreen.composable.FrequentPlaceSelectScreenContainer
+import com.acon.feature.onboarding.screen.PerferredPlaceRateScreen.composable.PreferredPlaceRateScreenContainer
 import com.acon.feature.onboarding.screen.PreferredFoodRateScreen.composable.PreferredFoodRateScreenContainer
 import com.acon.feature.onboarding.screen.PreferredPlaceSelectScreen.composable.PreferredPlaceSelectScreenContainer
 import com.acon.feature.onboarding.screen.UnlikeFoodSelectScreen.composable.UnlikeFoodScreenContainer
@@ -41,6 +42,8 @@ internal fun NavGraphBuilder.onboardingNavigationNavigation(
                      navController.navigate(OnboardingRoute.LastLoading)
                  }
              )
+
+
         }
         composable<OnboardingRoute.SelectFrequentPlace> {
             FrequentPlaceSelectScreenContainer(
@@ -69,7 +72,17 @@ internal fun NavGraphBuilder.onboardingNavigationNavigation(
             )
         }
         composable<OnboardingRoute.RatePreferPlace> {
-            // PerferredPlaceRateScreenContainer()
+            PreferredPlaceRateScreenContainer(
+                 navigateToPreviousPage = {
+                     navController.navigate(OnboardingRoute.ChooseUnlikeFoods)
+                 },
+                 navigateToNextPage = {
+                     navController.navigate(OnboardingRoute.LastLoading)
+                 },
+                 navigateToLastLoadingPage = {
+                     navController.navigate(OnboardingRoute.LastLoading)
+                 }
+             )
         }
         composable<OnboardingRoute.LastLoading> {
 

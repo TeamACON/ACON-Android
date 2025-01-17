@@ -18,13 +18,14 @@ class FrequentPlaceSelectScreenViewModel @Inject constructor(
         )
 
     fun onCardClicked(text: String) = intent {
-        val updatedSelectedCard = state.selectedCard.toMutableList()
-
-        if (updatedSelectedCard.isEmpty()) updatedSelectedCard.add(text)
-        else if (updatedSelectedCard.contains(text)) updatedSelectedCard.remove(text)
+        val updatedSelectedCard = when {
+            state.selectedCard.isEmpty() -> setOf(text)
+            state.selectedCard.contains(text) -> state.selectedCard - text
+            else -> setOf(text)
+        }
 
         reduce {
-            state.copy(selectedCard = updatedSelectedCard.toSet()) // Set으로 변환
+            state.copy(selectedCard = updatedSelectedCard)
         }
     }
 

@@ -25,15 +25,6 @@ class PreferredPlaceSelectViewModel @Inject constructor(
             else -> setOf(text)
         }
 
-//        val updatedSelectedCard = state.selectedCard.toMutableList()
-//
-//        if (updatedSelectedCard.isEmpty()) updatedSelectedCard.add(text) //비어있던 경우
-//        else if (updatedSelectedCard.contains(text)) updatedSelectedCard.remove(text) //안 비었는데 & 원래 있던 경우
-//        else { // 안 비었는데 & 원래 없던 경우
-//            updatedSelectedCard.clear() // 원래 선택돼 있던 것 비우고
-//            updatedSelectedCard.add(text) // 누른 것 추가
-//        }
-
         reduce {
             state.copy(selectedCard = updatedSelectedCard)
         }
