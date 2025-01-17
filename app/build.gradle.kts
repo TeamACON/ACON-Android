@@ -71,6 +71,7 @@ fun getPropertyKey(propertyKey: String): String {
 
 dependencies {
 
+    implementation(project(":feature:onboarding"))
     implementation(project(":core:common"))
     implementation(project(":core:designsystem"))
     implementation(project(":core:utils:feature"))
