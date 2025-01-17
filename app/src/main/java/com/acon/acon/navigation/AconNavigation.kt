@@ -83,12 +83,11 @@ fun AconNavigation(
             }
         ) {
 
-            signInNavigationNavigation(navController)
         signInNavigationNavigation(navController, googleTokenRepository)
 
-            areaVerificationNavigation(navController)
+        areaVerificationNavigation(navController)
 
-            onboardingNavigationNavigation(navController)
+        onboardingNavigationNavigation(navController)
 
         spotNavigation(navController)
 

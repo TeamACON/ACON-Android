@@ -28,7 +28,8 @@ class MainActivity : ComponentActivity() {
             AconTheme {
                 AconNavigation(
                     modifier = Modifier.fillMaxSize(),
-                    navController = rememberNavController()
+                    navController = rememberNavController(),
+                    googleTokenRepository = googleTokenRepository,
                 )
             }
         }
