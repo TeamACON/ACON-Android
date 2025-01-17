@@ -1,5 +1,6 @@
 package com.acon.feature.spot.screen.spotdetail.composable
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -14,28 +15,32 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import coil3.compose.AsyncImage
 import com.acon.core.designsystem.theme.AconTheme
 import com.acon.domain.model.spot.Menu
 import com.acon.domain.model.spot.SpotDetailInfo
 import com.acon.domain.type.SpotType
 import com.acon.feature.spot.screen.spotdetail.composable.component.MenuItem
+import com.acon.feature.spot.screen.spotdetail.composable.component.MoveToTopFAB
 import com.acon.feature.spot.screen.spotdetail.composable.component.RestaurantBottomActionBar
 import com.acon.feature.spot.screen.spotdetail.composable.component.SpotChip
 import com.acon.feature.spot.screen.spotdetail.composable.component.SpotDetailTopBar
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.coroutines.launch
 
 @Composable
 fun SpotDetailScreen(
@@ -43,10 +48,16 @@ fun SpotDetailScreen(
     modifier: Modifier = Modifier,
     onNavigateToSpotListScreen: () -> Unit = {},
 ) {
-    val scrollState = rememberScrollState()
+    val scrollState = rememberLazyListState()
+    val scope = rememberCoroutineScope()
+    val scrollIsAtTop by remember {
+        derivedStateOf {
+            scrollState.firstVisibleItemIndex == 0 && scrollState.firstVisibleItemScrollOffset == 0
+        }
+    }
 
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(AconTheme.color.Gray9)
     ) {
@@ -60,8 +71,10 @@ fun SpotDetailScreen(
         Box(
             modifier = Modifier
                 .fillMaxSize()
+                .weight(1f)
         ) {
             LazyColumn(
+                state = scrollState,
                 modifier = Modifier
                     .fillMaxSize()
             ) {
@@ -160,24 +173,35 @@ fun SpotDetailScreen(
                 }
             }
 
-            RestaurantBottomActionBar(
-                spotDetailInfo = SpotDetailInfo(
-                    name = "",
-                    spotType = "CAFE",
-                    imageList = emptyList(),
-                    openStatus = true,
-                    address = "서울시 마포동 동교동",
-                    localAcornCount = 2221,
-                    basicAcornCount = 1111,
-                    latitude = 1.1,
-                    longitude = 1.1,
-                ),
-                onClickFindDirections = {},
+            MoveToTopFAB(
+                onClickFab = {
+                    scope.launch {
+                        if (!scrollIsAtTop) {
+                            scrollState.animateScrollToItem(index = 0)
+                            Log.d("로그", "scrollIsAtTop : $scrollIsAtTop")
+                        }
+                    }
+                },
                 modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .fillMaxWidth()
+                    .align(alignment = Alignment.BottomEnd)
             )
         }
+        RestaurantBottomActionBar(
+            spotDetailInfo = SpotDetailInfo(
+                name = "",
+                spotType = "CAFE",
+                imageList = emptyList(),
+                openStatus = true,
+                address = "서울시 마포동 동교동",
+                localAcornCount = 2221,
+                basicAcornCount = 1111,
+                latitude = 1.1,
+                longitude = 1.1,
+            ),
+            onClickFindDirections = {},
+            modifier = Modifier
+                .fillMaxWidth()
+        )
     }
 
 }
@@ -203,4 +227,3 @@ private fun SpotDetailScreenPreview() {
         )
     }
 }
-
