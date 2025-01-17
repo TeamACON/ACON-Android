@@ -1,4 +1,4 @@
-package com.acon.feature.spot.screen.spotdetail.composable
+package com.acon.feature.spot.screen.spotdetail.composable.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -15,6 +15,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.acon.core.designsystem.R
 import com.acon.core.designsystem.component.button.AconFilledLargeButton
 import com.acon.core.designsystem.theme.AconTheme
 import com.acon.domain.model.spot.SpotDetailInfo
@@ -32,14 +33,14 @@ fun RestaurantBottomActionBar(
            .padding(start = 20.dp, end = 20.dp, top = 8.dp, bottom = 32.dp)
     ) {
         AconIconAndCount(
-            aconIcon =  com.acon.core.designsystem.R.drawable.ic_local_acon_24,
+            aconIcon =  R.drawable.ic_local_acon_24,
             aconCount = spotDetailInfo.localAcornCount.toString(),
             aconContentDescription = "로컬 도토리",
         )
         Spacer(modifier = Modifier.width(8.dp))
 
         AconIconAndCount(
-            aconIcon =  com.acon.core.designsystem.R.drawable.ic_visitor_acon_24,
+            aconIcon =  R.drawable.ic_visitor_acon_24,
             aconCount = spotDetailInfo.basicAcornCount.toString(),
             aconContentDescription = "여행자 도토리",
         )

@@ -1,4 +1,4 @@
-package com.acon.feature.spot.screen.spotdetail.composable
+package com.acon.feature.spot.screen.spotdetail.composable.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
