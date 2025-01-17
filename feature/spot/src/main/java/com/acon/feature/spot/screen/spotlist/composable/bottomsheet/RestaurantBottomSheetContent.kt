@@ -91,5 +91,4 @@ fun ColumnScope.RestaurantBottomSheetContent(
             priceRangeSliderIndex = it
         }
     )
-    Spacer(modifier = Modifier.weight(1f))
 }

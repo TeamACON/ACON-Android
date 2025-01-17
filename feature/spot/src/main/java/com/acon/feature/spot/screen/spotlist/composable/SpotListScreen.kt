@@ -33,6 +33,7 @@ import androidx.compose.ui.util.fastForEach
 import com.acon.core.designsystem.blur.defaultHazeEffect
 import com.acon.core.designsystem.component.loading.SkeletonItem
 import com.acon.core.designsystem.theme.AconTheme
+import com.acon.domain.model.spot.Condition
 import com.acon.feature.spot.R
 import com.acon.feature.spot.screen.spotlist.SpotListUiState
 import com.acon.feature.spot.screen.spotlist.composable.bottomsheet.SpotFilterBottomSheet
@@ -47,6 +48,8 @@ internal fun SpotListScreen(
     state: SpotListUiState,
     modifier: Modifier = Modifier,
     onRefresh: () -> Unit = {},
+    onResetFilter: () -> Unit = {},
+    onCompleteFilter: (Condition) -> Unit = {},
     onFilterBottomSheetShowStateChange: (Boolean) -> Unit = {},
     onNavigateToSpotDetailScreen: (id: Int) -> Unit = {},
 ) {
@@ -62,12 +65,8 @@ internal fun SpotListScreen(
                     SpotFilterBottomSheet(
                         hazeState = state.hazeState,
                         condition = state.currentCondition,
-                        onComplete = {
-                            // TODO : 필터 완료 시 동작
-                        },
-                        onReset = {
-                            // TODO : 필터 리셋 시 동작
-                        },
+                        onComplete = onCompleteFilter,
+                        onReset = onResetFilter,
                         onDismissRequest = {
                             onFilterBottomSheetShowStateChange(false)
                         },
