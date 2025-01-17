@@ -12,7 +12,7 @@ sealed interface AreaVerificationRoute {
     data object RequireAreaVerification : AreaVerificationRoute
 
     @Serializable
-    data object CheckInMap : AreaVerificationRoute
+    data class CheckInMap(val latitude: Double, val longitude: Double) : AreaVerificationRoute
 
     @Serializable
     data object Complete : AreaVerificationRoute
