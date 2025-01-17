@@ -9,7 +9,6 @@ import com.acon.acon.navigation.nested.onboardingNavigationNavigation
 import com.acon.acon.navigation.nested.signInNavigationNavigation
 import com.acon.acon.navigation.nested.spotNavigation
 import com.acon.acon.navigation.nested.uploadNavigation
-import com.acon.acon.navigation.route.SignInRoute
 import com.acon.acon.navigation.route.UploadRoute
 
 @Composable
