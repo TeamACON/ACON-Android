@@ -79,8 +79,10 @@ dependencies {
     implementation(project(":domain"))
     implementation(project(":data"))
 
+    implementation(project(":feature:onboarding"))
     implementation(project(":feature:spot"))
     implementation(project(":feature:areaverification"))
+    implementation(project(":feature:upload"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

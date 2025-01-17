@@ -28,6 +28,7 @@ include(":app")
 include(
     ":core:designsystem",
     ":core:utils:feature",
+    ":core:utils:feature",
     ":core:common",
     ":core:map"
 )
@@ -36,6 +37,7 @@ include(
     ":feature:areaverification",
     ":feature:spot",
     ":feature:signin",
+    ":feature:upload",
     ":feature:onboarding"
 )
 
