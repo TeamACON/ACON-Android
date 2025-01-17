@@ -3,6 +3,7 @@ package com.acon.acon.navigation
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -46,7 +47,7 @@ fun AconNavigation(
     val currentRoute by remember { derivedStateOf { backStackEntry?.destination?.route } }
 
     Scaffold(
-        modifier = modifier,
+        modifier = modifier.navigationBarsPadding(),
         topBar = {
             Spacer(modifier = Modifier.padding(0.dp))
         },
@@ -61,8 +62,6 @@ fun AconNavigation(
                         selectedBottomNavItem = it
                     }
                 )
-            } else {
-                Spacer(modifier = Modifier.padding(0.dp))
             }
         }
     ) { innerPadding ->
