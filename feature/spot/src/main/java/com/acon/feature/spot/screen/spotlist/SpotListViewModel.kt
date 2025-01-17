@@ -72,6 +72,22 @@ class SpotListViewModel @Inject constructor(
             }
         }
     }
+
+    fun onResetFilter() = intent {
+        runOn<SpotListUiState.Success> {
+            reduce {
+                state.copy(showFilterBottomSheet = false, currentCondition = null)
+            }
+        }
+    }
+
+    fun onCompleteFilter(condition: Condition) = intent {
+        runOn<SpotListUiState.Success> {
+            reduce {
+                state.copy(showFilterBottomSheet = false, currentCondition = condition)
+            }
+        }
+    }
 }
 
 sealed interface SpotListUiState {

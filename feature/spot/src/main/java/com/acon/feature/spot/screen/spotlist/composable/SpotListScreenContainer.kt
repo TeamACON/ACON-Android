@@ -38,6 +38,8 @@ fun SpotListScreenContainer(
                 viewModel.onRefresh(it.latitude, it.longitude)
             }
         }, onFilterBottomSheetShowStateChange = viewModel::onFilterBottomSheetStateChange,
+        onResetFilter = viewModel::onResetFilter,
+        onCompleteFilter = viewModel::onCompleteFilter,
         onNavigateToSpotDetailScreen = onNavigateToSpotDetailScreen
     )
 }
