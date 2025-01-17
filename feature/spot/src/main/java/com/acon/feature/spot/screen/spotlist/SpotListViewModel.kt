@@ -1,5 +1,6 @@
 package com.acon.feature.spot.screen.spotlist
 
+import android.location.Location
 import com.acon.core.utils.feature.base.BaseContainerHost
 import com.acon.domain.model.spot.Condition
 import com.acon.domain.model.spot.Spot
@@ -27,12 +28,15 @@ class SpotListViewModel @Inject constructor(
 
         }
 
+    fun onLocationFetched(location: Location) = intent {
+
+    }
 
     private var debugRefresher = 0
-    fun onLocationReady(latitude: Double, longitude: Double) = intent {
+    fun onLocationReady(location: Location) = intent {
         spotRepository.fetchSpotList(
-            latitude = latitude,
-            longitude = longitude,
+            latitude = location.latitude,
+            longitude = location.longitude,
             condition = Condition(
                 spotType = SpotType.RESTAURANT,
                 filterList = emptyList()
@@ -56,12 +60,12 @@ class SpotListViewModel @Inject constructor(
     }
 
     // TODO : Parameters
-    fun onRefresh(latitude: Double, longitude: Double) = intent {
+    fun onRefresh(location: Location) = intent {
         runOn<SpotListUiState.Success> {
             reduce {
                 state.copy(isRefreshing = true)
             }
-            onLocationReady(latitude, longitude)
+            onLocationReady(location)
         }
     }
 
