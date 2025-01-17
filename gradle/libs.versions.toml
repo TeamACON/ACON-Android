@@ -40,6 +40,9 @@ naverMapCompose = "1.8.0"
 lifecycleRuntimeComposeAndroid = "2.8.7"
 foundationAndroidVersion = "1.8.0-alpha04"
 
+##lottie
+lottie = "6.0.0"
+
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coilCompose" }
@@ -92,6 +95,8 @@ naver-map-location = { module = "io.github.fornewid:naver-map-location", version
 play-services-location = { module = "com.google.android.gms:play-services-location", version.ref = "playServicesLocation" }
 androidx-lifecycle-runtime-compose-android = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose-android", version.ref = "lifecycleRuntimeComposeAndroid" }
 foundation-android = { group = "androidx.compose.foundation", name = "foundation-android", version.ref = "foundationAndroidVersion" }
+
+lottie-compose = { group = "com.airbnb.android", name = "lottie-compose", version.ref= "lottie" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

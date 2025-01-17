@@ -55,5 +55,7 @@ dependencies {
     ksp(libs.hilt.compiler)
     implementation(libs.hilt.compose)
 
+    implementation(libs.lottie.compose)
+
     implementation(project(":core:designsystem"))
 }
