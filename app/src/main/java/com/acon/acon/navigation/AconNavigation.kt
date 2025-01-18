@@ -70,7 +70,7 @@ fun AconNavigation(
     ) { innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = SignInRoute.Graph,
+            startDestination = SpotRoute.Graph,
             modifier = Modifier.padding(innerPadding),
             enterTransition = {
                 defaultEnterTransition()
@@ -95,15 +95,15 @@ fun AconNavigation(
         }
     }
 
-//    LaunchedEffect(selectedBottomNavItem) {
-//        navController.navigate(when(selectedBottomNavItem) {
-//            BottomNavType.SPOT -> SpotRoute.SpotList
-//            else -> SpotRoute.SpotList // TODO : Route
-//        }) {
-//            popUpTo(SpotRoute.SpotList) { inclusive = false }
-//            launchSingleTop = true
-//        }
-//    }
+    LaunchedEffect(selectedBottomNavItem) {
+        navController.navigate(when(selectedBottomNavItem) {
+            BottomNavType.SPOT -> SpotRoute.SpotList
+            else -> SpotRoute.SpotList // TODO : Route
+        }) {
+            popUpTo(SpotRoute.SpotList) { inclusive = false }
+            launchSingleTop = true
+        }
+    }
 
     LaunchedEffect(currentRoute) {   // 뒤로가기에 의한 하단 탭 선택 상태 변경 처리
         selectedBottomNavItem = when (currentRoute) {
