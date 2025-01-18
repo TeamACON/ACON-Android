@@ -1,5 +1,6 @@
 package com.acon.feature.spot.screen.spotdetail.composable.component
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.PaddingValues
@@ -61,7 +62,7 @@ fun RestaurantBottomActionBar(
 
 @Composable
 fun AconIconAndCount(
-    aconIcon: Int,
+    @DrawableRes aconIcon: Int,
     aconCount: String,
     aconContentDescription: String,
 ) {
