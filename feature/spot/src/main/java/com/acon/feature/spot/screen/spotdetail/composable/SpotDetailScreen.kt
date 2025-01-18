@@ -1,6 +1,5 @@
 package com.acon.feature.spot.screen.spotdetail.composable
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -178,12 +177,12 @@ fun SpotDetailScreen(
                     scope.launch {
                         if (!scrollIsAtTop) {
                             scrollState.animateScrollToItem(index = 0)
-                            Log.d("로그", "scrollIsAtTop : $scrollIsAtTop")
                         }
                     }
                 },
                 modifier = Modifier
                     .align(alignment = Alignment.BottomEnd)
+                    .padding(end = 20.dp, bottom = 16.dp)
             )
         }
         RestaurantBottomActionBar(
