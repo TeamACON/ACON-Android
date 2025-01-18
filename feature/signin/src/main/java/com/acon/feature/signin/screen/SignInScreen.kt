@@ -30,7 +30,7 @@ import com.acon.feature.signin.screen.component.SignInTopBar
 
 @Composable
 fun SignInScreen(
-    navigateToSpotLisView: () -> Unit,
+    navigateToSpotListView: () -> Unit,
     navigateToAreaVerification: () -> Unit,
     onClickTermsOfUse: () -> Unit,
     onClickPrivacyPolicy: () -> Unit,
@@ -42,7 +42,7 @@ fun SignInScreen(
             .background(AconTheme.color.Black),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        SignInTopBar(onClickText = navigateToSpotLisView)
+        SignInTopBar(onClickText = navigateToSpotListView)
 
         Column(
             modifier = Modifier
@@ -112,7 +112,7 @@ fun SignInScreen(
 private fun PreviewSignInScreen() {
     AconTheme {
         SignInScreen(
-            navigateToSpotLisView = {},
+            navigateToSpotListView = {},
             navigateToAreaVerification = {},
             onClickLoginGoogle = {},
             onClickTermsOfUse = {},

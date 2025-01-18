@@ -20,7 +20,7 @@ internal fun NavGraphBuilder.signInNavigationNavigation(
     ) {
         composable<SignInRoute.SignIn> {
             SignInScreenContent(
-                navigateToSpotLisView = {
+                navigateToSpotListView = {
                     //navController.navigate(SpotRoute.SpotList)
                 },
                 navigateToAreaVerification = {

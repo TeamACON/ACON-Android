@@ -28,23 +28,21 @@ class AuthAuthenticator @Inject constructor(
             val newResponse = runCatching {
                 reissueTokenApi.postRefresh(RefreshRequest(currentRefreshToken))
             }.onSuccess {
-                if (!it.isSuccessful) {
                     tokenLocalDataSource.removeRefreshToken()
                     goToLoginActivity() // 로그인 화면으로 이동
                     return@withLock null
-                }
             }.onFailure {
                 //Timber.e("Refresh 재발급 API 호출 에러 : ${it.message}")
             }.getOrNull()
 
-            val tokenBody = newResponse?.body()?.toRefreshToken() ?: run {
+            val tokenBody = newResponse?.toRefreshToken() ?: run {
                 tokenLocalDataSource.removeRefreshToken()
                 goToLoginActivity()
                 return@withLock null
             }
 
-            tokenLocalDataSource.saveAccessToken(tokenBody.accessToken)
-            tokenLocalDataSource.saveRefreshToken(tokenBody.refreshToken)
+            tokenBody.accessToken?.let { tokenLocalDataSource.saveAccessToken(it) }
+            tokenBody.refreshToken?.let { tokenLocalDataSource.saveRefreshToken(it) }
             response.request.newBuilder()
                 .removeHeader("Authorization")
                 .addHeader("Authorization", "Bearer ${tokenBody.accessToken}")

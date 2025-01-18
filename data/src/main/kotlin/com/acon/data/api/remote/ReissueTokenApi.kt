@@ -11,5 +11,5 @@ interface ReissueTokenApi {
     @POST("/api/v1/auth/reissue")
     suspend fun postRefresh(
         @Body refreshRequest: RefreshRequest
-    ) : Response<RefreshResponse>
+    ) : RefreshResponse
 }

@@ -6,6 +6,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class GoogleTokenRequest(
-    @SerialName("socialType") val socialType: SocialType,
-    @SerialName("idToken") val idToken: String,
+    @SerialName("socialType") val socialType: SocialType?,
+    @SerialName("idToken") val idToken: String?,
 )

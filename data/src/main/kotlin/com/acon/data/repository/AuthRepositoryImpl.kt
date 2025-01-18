@@ -24,8 +24,8 @@ class AuthRepositoryImpl @Inject constructor(
                     idToken = idToken
                 )
             )
-            tokenLocalDataSource.saveAccessToken(googleLoginResponse.accessToken)
-            tokenLocalDataSource.saveRefreshToken(googleLoginResponse.refreshToken)
+            googleLoginResponse.accessToken?.let { tokenLocalDataSource.saveAccessToken(it) }
+            googleLoginResponse.refreshToken?.let { tokenLocalDataSource.saveRefreshToken(it) }
         }
     }
 
