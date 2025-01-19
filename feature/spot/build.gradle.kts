@@ -75,4 +75,6 @@ dependencies {
     implementation(libs.pulltorefresh)
 
     implementation(libs.kotlinx.collections.immutable)
+
+    implementation(libs.androidx.navigation.compose)
 }
