@@ -1,11 +1,12 @@
 package com.acon.feature.spot.screen.spotdetail.composable.component
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
@@ -38,27 +39,31 @@ fun SpotDetailTopBar(
         )
     },
 ) {
-    Row(
+    Column(
         modifier = modifier
             .fillMaxWidth()
-            .background(AconTheme.color.Black)
-            .padding(vertical = 14.dp),
-        verticalAlignment = Alignment.CenterVertically,
     ) {
-        leadingIcon()
-        Spacer(modifier = Modifier.width(8.dp))
-        Text(
-            text = storeName,
-            style = AconTheme.typography.title2_20_b,
-            color = AconTheme.color.White
-        )
-        Text(
-            text = stringResource(spotType.getNameResId()),
-            style = AconTheme.typography.body2_14_reg,
-            color = AconTheme.color.Gray4,
+        Spacer(modifier = Modifier.height(58.dp))
+        Row(
             modifier = Modifier
-                .padding(start = 4.dp, top = 4.dp, bottom = 4.dp)
-        )
+                .padding(vertical = 14.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            leadingIcon()
+            Spacer(modifier = Modifier.width(8.dp))
+            Text(
+                text = storeName,
+                style = AconTheme.typography.title2_20_b,
+                color = AconTheme.color.White
+            )
+            Text(
+                text = stringResource(spotType.getNameResId()),
+                style = AconTheme.typography.body2_14_reg,
+                color = AconTheme.color.Gray4,
+                modifier = Modifier
+                    .padding(start = 4.dp, top = 4.dp, bottom = 4.dp)
+            )
+        }
     }
 }
 

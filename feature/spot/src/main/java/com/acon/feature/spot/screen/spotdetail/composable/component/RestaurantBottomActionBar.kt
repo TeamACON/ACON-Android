@@ -2,7 +2,6 @@ package com.acon.feature.spot.screen.spotdetail.composable.component
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -30,7 +29,6 @@ fun RestaurantBottomActionBar(
     Row(
        modifier = modifier
            .fillMaxWidth()
-           .background(AconTheme.color.Black)
            .padding(start = 20.dp, end = 20.dp, top = 8.dp, bottom = 32.dp)
     ) {
         AconIconAndCount(
