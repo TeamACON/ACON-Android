@@ -8,6 +8,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.acon.core.map.onLocationReady
 import com.acon.core.utils.feature.permission.CheckAndRequestLocationPermission
+import com.acon.feature.spot.screen.spotlist.SpotListUiState
 import com.acon.feature.spot.screen.spotlist.SpotListViewModel
 import org.orbitmvi.orbit.compose.collectAsState
 
@@ -24,9 +25,10 @@ fun SpotListScreenContainer(
 
     CheckAndRequestLocationPermission(
         onPermissionGranted = {
-            context.onLocationReady {
-                viewModel.onLocationReady(it.latitude, it.longitude)
-            }
+            if (state !is SpotListUiState.Success)
+                context.onLocationReady {
+                    viewModel.onLocationReady(it)
+                }
         }
     )
 
@@ -35,8 +37,21 @@ fun SpotListScreenContainer(
         modifier = modifier.fillMaxSize(),
         onRefresh = {
             context.onLocationReady {
-                viewModel.onRefresh(it.latitude, it.longitude)
+                viewModel.onRefresh(it)
             }
-        }
+        }, onFilterBottomSheetShowStateChange = viewModel::onFilterBottomSheetStateChange,
+        onResetFilter = {
+            viewModel.onResetFilter()
+            context.onLocationReady {
+                viewModel.onLocationReady(it)
+            }
+        },
+        onCompleteFilter = { condition ->
+            viewModel.onCompleteFilter(condition)
+            context.onLocationReady {
+                viewModel.onLocationReady(it)
+            }
+        },
+        onNavigateToSpotDetailScreen = onNavigateToSpotDetailScreen
     )
 }

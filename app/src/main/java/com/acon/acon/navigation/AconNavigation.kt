@@ -3,6 +3,7 @@ package com.acon.acon.navigation
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -48,7 +49,7 @@ fun AconNavigation(
     val currentRoute by remember { derivedStateOf { backStackEntry?.destination?.route } }
 
     Scaffold(
-        modifier = modifier,
+        modifier = modifier.navigationBarsPadding(),
         topBar = {
             Spacer(modifier = Modifier.padding(0.dp))
         },
@@ -63,8 +64,6 @@ fun AconNavigation(
                         selectedBottomNavItem = it
                     }
                 )
-            } else {
-                Spacer(modifier = Modifier.padding(0.dp))
             }
         }
     ) { innerPadding ->
@@ -89,19 +88,23 @@ fun AconNavigation(
 
         onboardingNavigationNavigation(navController)
 
-        spotNavigation(navController)
+            spotNavigation(navController)
 
-        uploadNavigation(navController)
+            uploadNavigation(navController)
         }
     }
 
     LaunchedEffect(selectedBottomNavItem) {
-        navController.navigate(when(selectedBottomNavItem) {
-            BottomNavType.SPOT -> SpotRoute.SpotList
-            else -> SpotRoute.SpotList // TODO : Route
-        }) {
-            popUpTo(SpotRoute.SpotList) { inclusive = false }
-            launchSingleTop = true
+        if (backStackEntry?.destination?.shouldShowBottomNav() == true) {
+            navController.navigate(
+                when (selectedBottomNavItem) {
+                    BottomNavType.SPOT -> SpotRoute.SpotList
+                    else -> SpotRoute.SpotList // TODO : Route
+                }
+            ) {
+                popUpTo(SpotRoute.SpotList) { inclusive = false }
+                launchSingleTop = true
+            }
         }
     }
 
