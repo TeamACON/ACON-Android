@@ -49,8 +49,8 @@ internal val AconColors = AconColor(
     Dim_gra_1 = Brush.horizontalGradient(
         colors = listOf(Color(0x0D000000), Color(0x00000000), Color(0x0D000000))
     ),
-    Dim_gra_2 = Brush.horizontalGradient(
-        colors = listOf(Color(0x0D111111), Color(0x00111111), Color(0x14111111))
+    Dim_gra_2 = Brush.verticalGradient(
+        colors = listOf(Color(0x80111111), Color(0x00111111), Color(0xCC111111))
     ),
 
     //Error Case

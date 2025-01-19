@@ -18,7 +18,6 @@ import kotlinx.coroutines.withContext
 /**
  * 위치 권한을 확인하고 요청하는 컴포저블
  * @param onPermissionGranted 권한이 허용되었을 때 실행할 동작
- * TODO : 다이얼로그 컴포넌트 생성 후 수정
  */
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
@@ -36,18 +35,13 @@ fun CheckAndRequestLocationPermission(
             }
         }
     )
-
-    val permissionLauncher = rememberLauncherForActivityResult(
-        ActivityResultContracts.RequestMultiplePermissions()
-    ) { permMap ->
-        if (permMap[Manifest.permission.ACCESS_FINE_LOCATION] == true) {
-            onPermissionGranted()
-            showPermissionDialog = false
-        }
-    }
-
-//    if (showPermissionDialog)
-//        AconConfirmDialog(...)
+    if (showPermissionDialog)
+        AconPermissionDialog(
+            onPermissionGranted = {
+                showPermissionDialog = false
+                onPermissionGranted()
+            }
+        )
 
     LaunchedEffect(trigger) {
         withContext(Dispatchers.Main.immediate) {
@@ -56,10 +50,10 @@ fun CheckAndRequestLocationPermission(
             } else {
                 if (locationPermissionState.shouldShowRationale) {
                     showPermissionDialog = true
-                    // TODO : 다이얼로그의 버튼 클릭 시 아래 코드 실행
-                    // permissionLauncher.launch(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION))
                 } else {
-                    locationPermissionState.launchMultiplePermissionRequest()
+                    if (trigger == 2) {
+                        showPermissionDialog = true
+                    } else locationPermissionState.launchMultiplePermissionRequest()
                 }
             }
         }
