@@ -12,10 +12,15 @@ import androidx.core.view.WindowCompat
 import androidx.navigation.compose.rememberNavController
 import com.acon.acon.navigation.AconNavigation
 import com.acon.core.designsystem.theme.AconTheme
+import com.acon.domain.repository.GoogleTokenRepository
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    @Inject
+    lateinit var googleTokenRepository: GoogleTokenRepository
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge(
@@ -29,7 +34,8 @@ class MainActivity : ComponentActivity() {
             AconTheme {
                 AconNavigation(
                     modifier = Modifier.fillMaxSize(),
-                    navController = rememberNavController()
+                    navController = rememberNavController(),
+                    googleTokenRepository = googleTokenRepository,
                 )
             }
         }
