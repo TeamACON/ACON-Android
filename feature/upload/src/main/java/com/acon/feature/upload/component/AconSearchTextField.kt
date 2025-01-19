@@ -40,11 +40,13 @@ fun AconSearchTextField(
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(4.dp))
+            .clip(RoundedCornerShape(8.dp))
             .background(
+                shape = RoundedCornerShape(8.dp),
                 color = AconTheme.color.Gray8
             )
             .border(
+                shape = RoundedCornerShape(8.dp),
                 width = 1.dp,
                 color = AconTheme.color.Gray6
             )

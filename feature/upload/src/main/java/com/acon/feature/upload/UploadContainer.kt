@@ -132,7 +132,7 @@ fun SpotListScreen(
 
                 Text(
                     text = "업로드",
-                    style = AconTheme.typography.title2_20_b,
+                    style = AconTheme.typography.head5_22_sb,
                     color = AconTheme.color.White
                 )
 
@@ -141,11 +141,12 @@ fun SpotListScreen(
 
             Text(
                 text = "장소 등록",
-                style = AconTheme.typography.body2_14_reg,
+                style = AconTheme.typography.head7_18_sb,
                 color = AconTheme.color.White,
                 modifier = Modifier.padding(start = 20.dp, bottom = 8.dp)
             )
 
+            Spacer(modifier = Modifier.padding(top = 8.dp))
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -155,12 +156,12 @@ fun SpotListScreen(
                         shape = RoundedCornerShape(8.dp)
                     )
                     .noRippleClickable { showLocationSearch = true }
-                    .padding(vertical = 12.dp, horizontal = 16.dp),
+                    .padding(vertical = 14.dp, horizontal = 16.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Icon(
                     imageVector = ImageVector.vectorResource(
-                        com.acon.core.designsystem.R.drawable.ic_location_gray_24
+                        id = R.drawable.and_ic_location_gray_28
                     ),
                     contentDescription = null,
                     tint = if (state.selectedLocation != null)
@@ -171,8 +172,8 @@ fun SpotListScreen(
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
-                    text = state.selectedLocation?.name ?: "가게명",
-                    style = AconTheme.typography.body2_14_reg,
+                    text = state.selectedLocation?.name ?: "가게명 등록하기",
+                    style = AconTheme.typography.subtitle1_16_med,
                     color = if (state.selectedLocation != null)
                         AconTheme.color.White
                     else
@@ -184,7 +185,7 @@ fun SpotListScreen(
         if (!showLocationSearch) {
             AconFilledLargeButton(
                 text = "이곳에 도토리 남기기",
-                textStyle = AconTheme.typography.head8_16_sb,
+                textStyle = AconTheme.typography.head7_18_sb,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 20.dp),
