@@ -24,7 +24,6 @@ import com.acon.acon.navigation.bottom.BottomNavType
 import com.acon.acon.navigation.nested.areaVerificationNavigation
 import com.acon.acon.navigation.nested.onboardingNavigationNavigation
 import com.acon.acon.navigation.nested.signInNavigationNavigation
-import com.acon.acon.navigation.route.AreaVerificationRoute
 import com.acon.acon.navigation.nested.spotNavigation
 import com.acon.acon.navigation.nested.uploadNavigation
 import com.acon.acon.navigation.route.OnboardingRoute
@@ -34,11 +33,14 @@ import com.acon.core.designsystem.animation.defaultExitTransition
 import com.acon.core.designsystem.animation.defaultPopEnterTransition
 import com.acon.core.designsystem.animation.defaultPopExitTransition
 import com.acon.core.designsystem.theme.AconTheme
+import com.acon.acon.navigation.route.SignInRoute
+import com.acon.domain.repository.GoogleTokenRepository
 
 @Composable
 fun AconNavigation(
     modifier: Modifier = Modifier,
-    navController: NavHostController
+    navController: NavHostController,
+    googleTokenRepository: GoogleTokenRepository,
 ) {
 
     val backStackEntry by navController.currentBackStackEntryAsState()
@@ -68,7 +70,7 @@ fun AconNavigation(
     ) { innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = OnboardingRoute.Graph,
+            startDestination = SpotRoute.Graph,
             modifier = Modifier.padding(innerPadding),
             enterTransition = {
                 defaultEnterTransition()
@@ -81,11 +83,11 @@ fun AconNavigation(
             }
         ) {
 
-            signInNavigationNavigation(navController)
+        signInNavigationNavigation(navController, googleTokenRepository)
 
-            areaVerificationNavigation(navController)
+        areaVerificationNavigation(navController)
 
-            onboardingNavigationNavigation(navController)
+        onboardingNavigationNavigation(navController)
 
         spotNavigation(navController)
 

@@ -1,17 +1,28 @@
 package com.acon.data.di
 
+import android.content.Context
+import com.acon.core.common.Auth
+import com.acon.core.common.NoAuth
+import com.acon.core.common.ResponseInterceptor
+import com.acon.core.common.TokenInterceptor
 import com.acon.data.BuildConfig
+import com.acon.data.api.remote.ReissueTokenApi
+import com.acon.data.datasource.local.TokenLocalDataSource
 import com.acon.data.error.NetworkErrorResponse
 import com.acon.data.error.RemoteError
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.Json
+import okhttp3.Authenticator
 import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
+import okhttp3.Request
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import java.util.concurrent.TimeUnit
@@ -21,10 +32,36 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 internal object NetworkModule {
 
+    @Auth
     @Singleton
     @Provides
-    fun provideClient(
-        responseInterceptor: Interceptor
+    fun provideAuthClient(
+        @ResponseInterceptor responseInterceptor: Interceptor,
+        @TokenInterceptor authInterceptor: Interceptor,
+        refreshAuthenticator: Authenticator,
+    ): OkHttpClient {
+        return OkHttpClient.Builder()
+            .connectTimeout(30, TimeUnit.SECONDS)
+            .readTimeout(30, TimeUnit.SECONDS)
+            .writeTimeout(30, TimeUnit.SECONDS)
+            .apply {
+                if (BuildConfig.DEBUG) {
+                    addInterceptor(HttpLoggingInterceptor().apply {
+                        level = HttpLoggingInterceptor.Level.BODY
+                    })
+                }
+            }
+            .addInterceptor(responseInterceptor)
+            .addInterceptor(authInterceptor)
+            .authenticator(refreshAuthenticator)
+            .build()
+    }
+
+    @NoAuth
+    @Singleton
+    @Provides
+    fun provideNoAuthClient(
+        @ResponseInterceptor responseInterceptor: Interceptor
     ): OkHttpClient {
         return OkHttpClient.Builder()
             .connectTimeout(30, TimeUnit.SECONDS)
@@ -40,10 +77,11 @@ internal object NetworkModule {
             .build()
     }
 
+    @Auth
     @Singleton
     @Provides
     fun provideRetrofit(
-        client: OkHttpClient
+        @Auth client: OkHttpClient
     ): Retrofit {
         val json = Json { ignoreUnknownKeys = true }
         return Retrofit.Builder()
@@ -53,6 +91,46 @@ internal object NetworkModule {
             .build()
     }
 
+    @NoAuth
+    @Provides
+    @Singleton
+    fun provideNoAuthRetrofit(
+        @NoAuth client: OkHttpClient
+    ): Retrofit {
+        val json = Json { ignoreUnknownKeys = true }
+        return Retrofit.Builder()
+            .baseUrl("https://acon.sopt.app/") // TODO : Base URL
+            .client(client)
+            .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
+            .build()
+    }
+
+    @TokenInterceptor
+    @Provides
+    @Singleton
+    fun provideAuthInterceptor(
+        tokenLocalDataSource: TokenLocalDataSource,
+    ): Interceptor {
+        return Interceptor { chain: Interceptor.Chain ->
+            runBlocking {
+                val accessToken = tokenLocalDataSource.getAccessToken() ?: ""
+                val newRequest: Request = chain.request().newBuilder()
+                    .addHeader("Authorization", "Bearer $accessToken")
+                    .build()
+                chain.proceed(newRequest)
+            }
+        }
+    }
+
+    @Provides
+    @Singleton
+    fun provideRefreshInterceptor(
+        @ApplicationContext context: Context,
+        tokenLocalDataSource: TokenLocalDataSource,
+        reissueTokenApi: ReissueTokenApi
+    ): Authenticator = AuthAuthenticator(context, tokenLocalDataSource, reissueTokenApi)
+
+    @ResponseInterceptor
     @Singleton
     @Provides
     fun providesResponseInterceptor() : Interceptor {

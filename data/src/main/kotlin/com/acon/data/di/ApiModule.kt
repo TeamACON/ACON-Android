@@ -1,5 +1,9 @@
 package com.acon.data.di
 
+import com.acon.core.common.Auth
+import com.acon.core.common.NoAuth
+import com.acon.data.api.remote.AuthApi
+import com.acon.data.api.remote.ReissueTokenApi
 import com.acon.data.api.remote.SpotApi
 import dagger.Module
 import dagger.Provides
@@ -14,8 +18,22 @@ internal object ApiModule {
 
     @Singleton
     @Provides
+    fun providesAuthApi(
+        @Auth retrofit: Retrofit
+    ): AuthApi {
+        return retrofit.create(AuthApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideReissueTokenApi(
+       @NoAuth retrofit: Retrofit
+    ) : ReissueTokenApi = retrofit.create(ReissueTokenApi::class.java)
+
+    @Singleton
+    @Provides
     fun providesSpotApi(
-        retrofit: Retrofit
+        @NoAuth retrofit: Retrofit
     ): SpotApi {
         return retrofit.create(SpotApi::class.java)
     }
