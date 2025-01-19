@@ -30,6 +30,7 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.fastForEach
+import com.acon.core.designsystem.blur.LocalHazeState
 import com.acon.core.designsystem.blur.defaultHazeEffect
 import com.acon.core.designsystem.component.loading.SkeletonItem
 import com.acon.core.designsystem.theme.AconTheme
@@ -63,7 +64,7 @@ internal fun SpotListScreen(
             is SpotListUiState.Success -> {
                 if (state.showFilterBottomSheet) {
                     SpotFilterBottomSheet(
-                        hazeState = state.hazeState,
+                        hazeState = LocalHazeState.current,
                         condition = state.currentCondition,
                         onComplete = onCompleteFilter,
                         onReset = onResetFilter,
@@ -98,7 +99,7 @@ internal fun SpotListScreen(
                                 .fillMaxSize()
                                 .verticalScroll(scrollState)
                                 .padding(horizontal = 20.dp)
-                                .hazeSource(state.hazeState)
+                                .hazeSource(LocalHazeState.current)
                         ) {
                             Spacer(modifier = Modifier.height(44.dp))
                             Text(
@@ -151,7 +152,7 @@ internal fun SpotListScreen(
                                 modifier = Modifier
                                     .clip(CircleShape)
                                     .size(48.dp)
-                                    .defaultHazeEffect(hazeState = state.hazeState, tintColor = AconTheme.color.Gla_b_30, blurRadius = 8.dp)
+                                    .defaultHazeEffect(hazeState = LocalHazeState.current, tintColor = AconTheme.color.Gla_b_30, blurRadius = 8.dp)
                                     .clickable {
                                         if (it.enabled) {
                                             when (it) {
