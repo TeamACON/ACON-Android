@@ -1,5 +1,8 @@
 package com.acon.core.designsystem.blur
 
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.graphics.Color
@@ -11,6 +14,11 @@ import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.HazeStyle
 import dev.chrisbanes.haze.HazeTint
 import dev.chrisbanes.haze.hazeEffect
+
+@Composable
+fun rememberHazeState() = remember {
+    HazeState()
+}
 
 fun Modifier.defaultHazeEffect(
     hazeState: HazeState,
@@ -34,4 +42,8 @@ fun Modifier.defaultHazeEffect(
             )
         )
     )
+}
+
+val LocalHazeState = staticCompositionLocalOf {
+    HazeState()
 }

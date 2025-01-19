@@ -16,7 +16,6 @@ import com.acon.feature.spot.type.CafePriceRangeType
 import com.acon.feature.spot.type.RestaurantPriceRangeType
 import com.acon.feature.spot.type.SpotShowType
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.chrisbanes.haze.HazeState
 import kotlinx.coroutines.delay
 import org.orbitmvi.orbit.annotation.OrbitExperimental
 import org.orbitmvi.orbit.viewmodel.container
@@ -111,6 +110,10 @@ class SpotListViewModel @Inject constructor(
             }
         }
     }
+
+    fun onSpotItemClick(id: Int) = intent {
+        postSideEffect(SpotListSideEffect.NavigateToSpotDetail(id))
+    }
 }
 
 sealed interface SpotListUiState {
@@ -118,7 +121,6 @@ sealed interface SpotListUiState {
         val spotList: List<Spot>,
         val spotShowType: SpotShowType,
         val isRefreshing: Boolean = false,
-        val hazeState: HazeState = HazeState(),
         val currentCondition: ConditionState? = null,
         val showFilterBottomSheet: Boolean = false
     ) : SpotListUiState
@@ -140,5 +142,5 @@ data class ConditionState(
 )
 
 sealed interface SpotListSideEffect {
-    data object NavigateToSpotDetail : SpotListSideEffect
+    data class NavigateToSpotDetail(val id: Int) : SpotListSideEffect
 }
