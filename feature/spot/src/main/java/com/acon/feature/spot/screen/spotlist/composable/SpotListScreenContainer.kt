@@ -8,9 +8,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.acon.core.map.onLocationReady
 import com.acon.core.utils.feature.permission.CheckAndRequestLocationPermission
+import com.acon.feature.spot.screen.spotlist.SpotListSideEffect
 import com.acon.feature.spot.screen.spotlist.SpotListUiState
 import com.acon.feature.spot.screen.spotlist.SpotListViewModel
 import org.orbitmvi.orbit.compose.collectAsState
+import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
 fun SpotListScreenContainer(
@@ -52,6 +54,12 @@ fun SpotListScreenContainer(
                 viewModel.onLocationReady(it)
             }
         },
-        onNavigateToSpotDetailScreen = onNavigateToSpotDetailScreen
+        onSpotItemClick = viewModel::onSpotItemClick
     )
+
+    viewModel.collectSideEffect {
+        when (it) {
+            is SpotListSideEffect.NavigateToSpotDetail -> onNavigateToSpotDetailScreen(it.id)
+        }
+    }
 }

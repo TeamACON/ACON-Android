@@ -52,7 +52,7 @@ internal fun SpotListScreen(
     onResetFilter: () -> Unit = {},
     onCompleteFilter: (ConditionState) -> Unit = {},
     onFilterBottomSheetShowStateChange: (Boolean) -> Unit = {},
-    onNavigateToSpotDetailScreen: (id: Int) -> Unit = {},
+    onSpotItemClick: (id: Int) -> Unit = {},
 ) {
     val scrollState = rememberScrollState()
 
@@ -126,7 +126,7 @@ internal fun SpotListScreen(
                                         isFirstRank = isFirstRank,
                                         modifier = Modifier
                                             .clickable {
-                                                onNavigateToSpotDetailScreen(spot.id)
+                                                onSpotItemClick(spot.id)
                                             }
                                             .weight(if (isFirstRank) 3f else 1f),
                                     )

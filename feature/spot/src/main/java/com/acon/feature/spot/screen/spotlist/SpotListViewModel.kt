@@ -110,6 +110,10 @@ class SpotListViewModel @Inject constructor(
             }
         }
     }
+
+    fun onSpotItemClick(id: Int) = intent {
+        postSideEffect(SpotListSideEffect.NavigateToSpotDetail(id))
+    }
 }
 
 sealed interface SpotListUiState {
@@ -138,5 +142,5 @@ data class ConditionState(
 )
 
 sealed interface SpotListSideEffect {
-    data object NavigateToSpotDetail : SpotListSideEffect
+    data class NavigateToSpotDetail(val id: Int) : SpotListSideEffect
 }
