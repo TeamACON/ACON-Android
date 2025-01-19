@@ -160,10 +160,7 @@ fun SpotListScreen(
             ) {
                 Icon(
                     imageVector = ImageVector.vectorResource(
-                        id = if (state.selectedLocation != null)
-                            com.acon.core.designsystem.R.drawable.ic_location_gray_24
-                        else
-                            com.acon.core.designsystem.R.drawable.ic_location_gray_16
+                        com.acon.core.designsystem.R.drawable.ic_location_gray_24
                     ),
                     contentDescription = null,
                     tint = if (state.selectedLocation != null)
