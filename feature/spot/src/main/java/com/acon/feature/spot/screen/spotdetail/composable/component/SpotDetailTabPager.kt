@@ -23,7 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.acon.core.designsystem.theme.AconTheme
-import com.acon.domain.model.spot.Menu
+import com.acon.domain.model.spot.SpotDetailMenu
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.launch
@@ -32,7 +32,7 @@ import kotlinx.coroutines.launch
 fun SpotDetailTabPager(
     pagerState: PagerState,
     tabs: ImmutableList<String>,
-    tabContents: List<Menu>
+    tabContents: List<SpotDetailMenu>
 ) {
     val coroutineScope = rememberCoroutineScope()
 
@@ -111,8 +111,8 @@ fun SpotDetailTabPager(
 fun SpotDetailTabPagerPreview() {
     val tabs = persistentListOf("메뉴","","","","")
     val tabContents = listOf(
-        Menu("1", "Americano", 4000, ""),
-        Menu("2", "Latte", 4500, "")
+        SpotDetailMenu(1, "Americano", 4000, ""),
+        SpotDetailMenu(2, "Latte", 4500, "")
     )
     val pagerState = rememberPagerState(initialPage = 0, pageCount = { tabs.size })
 

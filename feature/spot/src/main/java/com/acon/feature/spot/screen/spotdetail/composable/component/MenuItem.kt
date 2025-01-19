@@ -23,12 +23,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.acon.core.designsystem.theme.AconTheme
-import com.acon.domain.model.spot.Menu
+import com.acon.domain.model.spot.SpotDetailMenu
 import com.acon.feature.spot.toPrice
 
 @Composable
 fun MenuItem(
-    menu: Menu,
+    menu: SpotDetailMenu,
     modifier: Modifier = Modifier,
 ) {
     Row(
@@ -63,7 +63,7 @@ fun MenuItem(
             modifier = Modifier
                 .clip(RoundedCornerShape(6.dp))
         ) {
-            if(menu.image.isBlank()) {
+            if(menu.image?.isBlank() == true) {
                 Image(
                     imageVector = ImageVector.vectorResource(
                         id = com.acon.core.designsystem.R.drawable.ic_store_detail_menu_78),
@@ -86,8 +86,8 @@ fun MenuItem(
 private fun MenuItemPreview() {
     AconTheme {
         MenuItem(
-            menu = Menu(
-                id = "",
+            menu = SpotDetailMenu(
+                id = 1,
                 name = "고양이",
                 price = 100000,
                 image = ""
