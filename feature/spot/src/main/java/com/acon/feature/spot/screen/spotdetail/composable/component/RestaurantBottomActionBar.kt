@@ -30,17 +30,17 @@ fun RestaurantBottomActionBar(
     Row(
        modifier = modifier
            .fillMaxWidth()
-           .padding(start = 20.dp, end = 20.dp, top = 8.dp, bottom = 32.dp)
+           .padding(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 32.dp)
     ) {
         AconIconAndCount(
-            aconIcon =  R.drawable.ic_local_acon_24,
+            aconIcon =  R.drawable.ic_local_acon_28,
             aconCount = localAcornCount.toString(),
             aconContentDescription = stringResource(com.acon.feature.spot.R.string.local_acon_content_description),
         )
         Spacer(modifier = Modifier.width(8.dp))
 
         AconIconAndCount(
-            aconIcon =  R.drawable.ic_visitor_acon_24,
+            aconIcon =  R.drawable.ic_visitor_acon_28,
             aconCount = basicAcornCount.toString(),
             aconContentDescription = stringResource(com.acon.feature.spot.R.string.visitor_acon_content_description),
         )
@@ -66,7 +66,7 @@ fun AconIconAndCount(
 ) {
     Row (
         modifier = Modifier
-            .padding(vertical = 10.dp)
+            .padding(vertical = 8.dp)
     ) {
         Image(
             imageVector = ImageVector.vectorResource(id = aconIcon),
@@ -77,7 +77,7 @@ fun AconIconAndCount(
             style = AconTheme.typography.body2_14_reg,
             color = AconTheme.color.White,
             modifier = Modifier
-                .padding(start = 2.dp, top = 3.dp, bottom = 3.dp)
+                .padding(vertical = 4.dp),
         )
     }
 }
