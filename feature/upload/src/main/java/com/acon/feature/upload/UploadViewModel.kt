@@ -14,6 +14,18 @@ class UploadViewModel @Inject constructor() : ViewModel(),
 
     fun onIntent(intent: UploadIntent) {
         when (intent) {
+            is UploadIntent.SelectLocation -> {
+                intent {
+                    reduce { state.copy(selectedLocation = intent.location) }
+                }
+            }
+
+            is UploadIntent.OnNextStep -> {
+                intent {
+                    reduce { state.copy(currentStep = UploadStep.DOTORI_REVIEW) }
+                }
+            }
+
             is UploadIntent.SelectDotori -> selectDotori(intent.index)
             is UploadIntent.DeselectDotori -> deselectDotori()
             is UploadIntent.NavigateBack -> navigateBack()
