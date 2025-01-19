@@ -9,14 +9,24 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
@@ -26,8 +36,10 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.acon.core.designsystem.component.button.AconFilledLargeButton
+import com.acon.core.designsystem.noRippleClickable
 import com.acon.core.designsystem.theme.AconTheme
 import com.acon.feature.upload.component.DotoriIndicator
+import com.acon.feature.upload.component.LocationSearchBottomSheet
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.rememberLottieComposition
@@ -55,11 +67,153 @@ fun UploadContainer(
         }
     }
 
-    UploadScreen(
-        modifier = modifier,
-        state = state,
-        onIntent = viewModel::onIntent
+    Box(
+        modifier = modifier
+            .fillMaxSize()
+            .background(color = AconTheme.color.Gray9)
+    ) {
+        when (state.currentStep) {
+            UploadStep.LOCATION_SELECTION -> {
+                SpotListScreen(
+                    modifier = Modifier.fillMaxSize(),
+                    state = state,
+                    onIntent = viewModel::onIntent
+                )
+            }
+
+            UploadStep.DOTORI_REVIEW -> {
+                UploadScreen(
+                    modifier = Modifier.fillMaxSize(),
+                    state = state,
+                    onIntent = viewModel::onIntent
+                )
+            }
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun SpotListScreen(
+    modifier: Modifier = Modifier,
+    state: UploadState,
+    onIntent: (UploadIntent) -> Unit
+) {
+    var showLocationSearch by remember { mutableStateOf(false) }
+    val sheetState = rememberModalBottomSheetState(
+        skipPartiallyExpanded = true
     )
+
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .statusBarsPadding()
+            .navigationBarsPadding()
+            .background(color = AconTheme.color.Gray9)
+    ) {
+        Column(
+            modifier = Modifier.weight(1f)
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 20.dp, vertical = 16.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                IconButton(onClick = { onIntent(UploadIntent.NavigateBack) }) {
+                    Icon(
+                        imageVector = ImageVector.vectorResource(id = com.acon.core.designsystem.R.drawable.ic_dissmiss_24),
+                        contentDescription = "Close",
+                        tint = AconTheme.color.White
+                    )
+                }
+
+                Text(
+                    text = "업로드",
+                    style = AconTheme.typography.title2_20_b,
+                    color = AconTheme.color.White
+                )
+
+                Spacer(modifier = Modifier.width(48.dp))
+            }
+
+            Text(
+                text = "장소 등록",
+                style = AconTheme.typography.body2_14_reg,
+                color = AconTheme.color.White,
+                modifier = Modifier.padding(start = 20.dp, bottom = 8.dp)
+            )
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 20.dp)
+                    .background(
+                        color = AconTheme.color.Gray8,
+                        shape = RoundedCornerShape(8.dp)
+                    )
+                    .noRippleClickable { showLocationSearch = true }
+                    .padding(vertical = 12.dp, horizontal = 16.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    imageVector = ImageVector.vectorResource(
+                        id = if (state.selectedLocation != null)
+                            com.acon.core.designsystem.R.drawable.ic_location_gray_24
+                        else
+                            com.acon.core.designsystem.R.drawable.ic_location_gray_16
+                    ),
+                    contentDescription = null,
+                    tint = if (state.selectedLocation != null)
+                        AconTheme.color.White
+                    else
+                        AconTheme.color.Gray5,
+                    modifier = Modifier.size(16.dp)
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(
+                    text = state.selectedLocation?.name ?: "가게명",
+                    style = AconTheme.typography.body2_14_reg,
+                    color = if (state.selectedLocation != null)
+                        AconTheme.color.White
+                    else
+                        AconTheme.color.Gray5
+                )
+            }
+        }
+
+        if (!showLocationSearch) {
+            AconFilledLargeButton(
+                text = "이곳에 도토리 남기기",
+                textStyle = AconTheme.typography.head8_16_sb,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 20.dp),
+                disabledBackgroundColor = AconTheme.color.Gray7,
+                enabledBackgroundColor = AconTheme.color.Main_org1,
+                isEnabled = state.selectedLocation != null,
+                onClick = { onIntent(UploadIntent.OnNextStep) }
+            )
+        }
+
+        if (showLocationSearch) {
+            ModalBottomSheet(
+                onDismissRequest = { showLocationSearch = false },
+                sheetState = sheetState,
+                containerColor = AconTheme.color.Gray9,
+                dragHandle = null,
+            ) {
+                LocationSearchBottomSheet(
+                    onDismiss = { showLocationSearch = false },
+                    onLocationSelected = { locationItem ->
+                        showLocationSearch = false
+                        onIntent(UploadIntent.SelectLocation(locationItem))
+                    }
+                )
+            }
+        }
+    }
 }
 
 @Composable
@@ -71,6 +225,8 @@ fun UploadScreen(
     Column(
         modifier = modifier
             .fillMaxSize()
+            .statusBarsPadding()
+            .navigationBarsPadding()
             .background(color = AconTheme.color.Gray9)
     ) {
         Row(
@@ -159,8 +315,7 @@ fun UploadScreen(
 
         Column(
             modifier = Modifier
-                .fillMaxWidth(1f)
-                .padding(bottom = 58.dp),
+                .fillMaxWidth(1f),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(4.dp)
         ) {
@@ -195,7 +350,7 @@ fun UploadScreen(
             textStyle = AconTheme.typography.head8_16_sb,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
+                .padding(20.dp),
             enabledBackgroundColor = AconTheme.color.Main_org1,
             disabledBackgroundColor = AconTheme.color.Gray7,
             isEnabled = state.isButtonEnabled,
