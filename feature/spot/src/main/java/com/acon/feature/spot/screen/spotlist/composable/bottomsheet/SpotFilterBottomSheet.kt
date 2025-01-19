@@ -36,18 +36,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.fastForEach
 import com.acon.core.designsystem.blur.defaultHazeEffect
-import com.acon.core.designsystem.component.button.AconFilledLargeButton
-import com.acon.core.designsystem.component.button.AconFilledMediumButton
-import com.acon.core.designsystem.component.chip.AconChipFlowRow
 import com.acon.core.designsystem.noRippleClickable
 import com.acon.core.designsystem.theme.AconTheme
-import com.acon.domain.model.spot.Condition
-import com.acon.domain.model.spot.Filter
-import com.acon.domain.type.CategoryType
-import com.acon.domain.type.OptionType
 import com.acon.domain.type.SpotType
 import com.acon.feature.spot.R
 import com.acon.feature.spot.getNameResId
+import com.acon.feature.spot.screen.spotlist.ConditionState
+import com.acon.feature.spot.type.AvailableWalkingTimeType
+import com.acon.feature.spot.type.CafePriceRangeType
+import com.acon.feature.spot.type.RestaurantPriceRangeType
 import dev.chrisbanes.haze.HazeState
 
 
@@ -55,8 +52,8 @@ import dev.chrisbanes.haze.HazeState
 @Composable
 fun SpotFilterBottomSheet(
     hazeState: HazeState,
-    condition: Condition?,
-    onComplete: (Condition) -> Unit,
+    condition: ConditionState?,
+    onComplete: (ConditionState) -> Unit,
     onReset: () -> Unit,
     onDismissRequest: () -> Unit,
     modifier: Modifier = Modifier,
@@ -67,10 +64,60 @@ fun SpotFilterBottomSheet(
             condition?.spotType ?: SpotType.RESTAURANT
         )
     }
-    var selectedRestaurantFeatureIndexes by rememberSaveable { mutableStateOf(listOf<Int>()) }
-    var selectedCafeFeatureIndexes by rememberSaveable { mutableStateOf(listOf<Int>()) }
-    var selectedCompanionTypeIndexes by rememberSaveable { mutableStateOf(listOf<Int>()) }
-    var selectedVisitPurposeIndexes by rememberSaveable { mutableStateOf(listOf<Int>()) }
+    var selectedRestaurantFeatures by rememberSaveable {
+        mutableStateOf(
+            condition?.restaurantFeatureOptionType ?: listOf()
+        )
+    }
+    var selectedCafeFeatures by rememberSaveable {
+        mutableStateOf(
+            condition?.cafeFeatureOptionType ?: listOf()
+        )
+    }
+    var selectedCompanionTypes by rememberSaveable {
+        mutableStateOf(
+            condition?.companionTypeOptionType ?: listOf()
+        )
+    }
+    var selectedVisitPurposes by rememberSaveable {
+        mutableStateOf(
+            condition?.visitPurposeOptionType ?: listOf()
+        )
+    }
+    var selectedRestaurantWalkingTime by rememberSaveable {
+        mutableStateOf(
+            condition?.restaurantWalkingTime ?: AvailableWalkingTimeType.UNDER_15_MINUTES
+        )
+    }
+    var selectedCafeWalkingTime by rememberSaveable {
+        mutableStateOf(
+            condition?.cafeWalkingTime ?: AvailableWalkingTimeType.UNDER_15_MINUTES
+        )
+    }
+    var selectedRestaurantPriceRange by rememberSaveable {
+        mutableStateOf(
+            condition?.restaurantPriceRange ?: RestaurantPriceRangeType.UNDER_10000
+        )
+    }
+    var selectedCafePriceRange by rememberSaveable {
+        mutableStateOf(
+            condition?.cafePriceRange ?: CafePriceRangeType.UNDER_5000
+        )
+    }
+
+    fun resetCafeFilter() {
+        selectedCafeFeatures = listOf()
+        selectedVisitPurposes = listOf()
+        selectedCafeWalkingTime = AvailableWalkingTimeType.UNDER_15_MINUTES
+        selectedCafePriceRange = CafePriceRangeType.UNDER_5000
+    }
+
+    fun resetRestaurantFilter() {
+        selectedRestaurantFeatures = listOf()
+        selectedCompanionTypes = listOf()
+        selectedRestaurantWalkingTime = AvailableWalkingTimeType.UNDER_15_MINUTES
+        selectedRestaurantPriceRange = RestaurantPriceRangeType.UNDER_10000
+    }
 
     ModalBottomSheet(
         sheetState = rememberModalBottomSheetState(
@@ -140,13 +187,11 @@ fun SpotFilterBottomSheet(
                         selectedSpotType = it
                         when (selectedSpotType) {
                             SpotType.RESTAURANT -> {
-                                selectedCafeFeatureIndexes = listOf()
-                                selectedVisitPurposeIndexes = listOf()
+                                resetCafeFilter()
                             }
 
                             SpotType.CAFE -> {
-                                selectedRestaurantFeatureIndexes = listOf()
-                                selectedCompanionTypeIndexes = listOf()
+                                resetRestaurantFilter()
                             }
                         }
                     }
@@ -155,46 +200,60 @@ fun SpotFilterBottomSheet(
                 when (selectedSpotType) {
                     SpotType.RESTAURANT -> {
                         RestaurantBottomSheetContent(
-                            selectedRestaurantFeatureIndexes = selectedRestaurantFeatureIndexes,
-                            selectedCompanionTypeIndexes = selectedCompanionTypeIndexes,
+                            selectedRestaurantFeatures = selectedRestaurantFeatures,
+                            selectedCompanionTypes = selectedCompanionTypes,
+                            selectedWalkingTime = selectedRestaurantWalkingTime,
+                            selectedPriceRange = selectedRestaurantPriceRange,
                             onRestaurantFeatureChipSelected = {
-                                selectedRestaurantFeatureIndexes =
-                                    if (selectedRestaurantFeatureIndexes.contains(it)) {
-                                        selectedRestaurantFeatureIndexes - it
+                                selectedRestaurantFeatures =
+                                    if (selectedRestaurantFeatures.contains(it)) {
+                                        selectedRestaurantFeatures - it
                                     } else {
-                                        selectedRestaurantFeatureIndexes + it
+                                        selectedRestaurantFeatures + it
                                     }
                             },
                             onCompanionTypeChipSelected = {
-                                selectedCompanionTypeIndexes =
-                                    if (selectedCompanionTypeIndexes.contains(it)) {
-                                        selectedCompanionTypeIndexes - it
+                                selectedCompanionTypes =
+                                    if (selectedCompanionTypes.contains(it)) {
+                                        selectedCompanionTypes - it
                                     } else {
-                                        selectedCompanionTypeIndexes + it
+                                        selectedCompanionTypes + it
                                     }
+                            }, onWalkingTimeChange = {
+                                selectedRestaurantWalkingTime = it
+                            }, onPriceRangeChange = {
+                                selectedRestaurantPriceRange = it
                             }
                         )
                     }
 
                     SpotType.CAFE -> {
                         CafeBottomSheetContent(
-                            selectedCafeFeatureIndexes = selectedCafeFeatureIndexes,
-                            selectedVisitPurposeIndexes = selectedVisitPurposeIndexes,
+                            selectedCafeFeatures = selectedCafeFeatures,
+                            selectedVisitPurposes = selectedVisitPurposes,
+                            selectedWalkingTime = selectedCafeWalkingTime,
+                            selectedPriceRange = selectedCafePriceRange,
                             onCafeFeatureChipSelected = {
-                                selectedCafeFeatureIndexes =
-                                    if (selectedCafeFeatureIndexes.contains(it)) {
-                                        selectedCafeFeatureIndexes - it
+                                selectedCafeFeatures =
+                                    if (selectedCafeFeatures.contains(it)) {
+                                        selectedCafeFeatures - it
                                     } else {
-                                        selectedCafeFeatureIndexes + it
+                                        selectedCafeFeatures + it
                                     }
                             },
-                            onCompanionTypeChipSelected = {
-                                selectedVisitPurposeIndexes =
-                                    if (selectedVisitPurposeIndexes.contains(it)) {
-                                        selectedVisitPurposeIndexes - it
+                            onVisitPurposeChipSelected = {
+                                selectedVisitPurposes =
+                                    if (selectedVisitPurposes.contains(it)) {
+                                        selectedVisitPurposes - it
                                     } else {
-                                        selectedVisitPurposeIndexes + it
+                                        selectedVisitPurposes + it
                                     }
+                            },
+                            onWalkingTimeChange = {
+                                selectedCafeWalkingTime = it
+                            },
+                            onPriceRangeChange = {
+                                selectedCafePriceRange = it
                             }
                         )
                     }
@@ -229,7 +288,9 @@ fun SpotFilterBottomSheet(
                     )
                 }
                 Button(
-                    modifier = Modifier.padding(start = 32.dp).weight(1f),
+                    modifier = Modifier
+                        .padding(start = 32.dp)
+                        .weight(1f),
                     shape = RoundedCornerShape(6.dp),
                     colors = ButtonDefaults.buttonColors().copy(
                         containerColor = AconTheme.color.Gray5,
@@ -237,31 +298,16 @@ fun SpotFilterBottomSheet(
                     ),
                     onClick = {
                         onComplete(
-                            Condition(
+                            ConditionState(
                                 spotType = selectedSpotType,
-                                filterList = listOf(
-                                    Filter(
-                                        category = CategoryType.RESTAURANT_FEATURE,
-                                        optionList = selectedRestaurantFeatureIndexes.map {
-                                            OptionType.RestaurantFeatureOptionType.entries[it]
-                                        }
-                                    ), Filter(
-                                        category = CategoryType.COMPANION_TYPE,
-                                        optionList = selectedCompanionTypeIndexes.map {
-                                            OptionType.CompanionTypeOptionType.entries[it]
-                                        }
-                                    ), Filter(
-                                        category = CategoryType.CAFE_FEATURE,
-                                        optionList = selectedCafeFeatureIndexes.map {
-                                            OptionType.CafeFeatureOptionType.entries[it]
-                                        }
-                                    ), Filter(
-                                        category = CategoryType.VISIT_PURPOSE,
-                                        optionList = selectedVisitPurposeIndexes.map {
-                                            OptionType.VisitPurposeOptionType.entries[it]
-                                        }
-                                    )
-                                )
+                                restaurantFeatureOptionType = selectedRestaurantFeatures,
+                                companionTypeOptionType = selectedCompanionTypes,
+                                cafeFeatureOptionType = selectedCafeFeatures,
+                                visitPurposeOptionType = selectedVisitPurposes,
+                                restaurantWalkingTime = selectedRestaurantWalkingTime,
+                                cafeWalkingTime = selectedCafeWalkingTime,
+                                restaurantPriceRange = selectedRestaurantPriceRange,
+                                cafePriceRange = selectedCafePriceRange
                             )
                         )
                     }

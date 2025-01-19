@@ -33,8 +33,8 @@ import androidx.compose.ui.util.fastForEach
 import com.acon.core.designsystem.blur.defaultHazeEffect
 import com.acon.core.designsystem.component.loading.SkeletonItem
 import com.acon.core.designsystem.theme.AconTheme
-import com.acon.domain.model.spot.Condition
 import com.acon.feature.spot.R
+import com.acon.feature.spot.screen.spotlist.ConditionState
 import com.acon.feature.spot.screen.spotlist.SpotListUiState
 import com.acon.feature.spot.screen.spotlist.composable.bottomsheet.SpotFilterBottomSheet
 import com.acon.feature.spot.type.FloatingButtonType
@@ -49,7 +49,7 @@ internal fun SpotListScreen(
     modifier: Modifier = Modifier,
     onRefresh: () -> Unit = {},
     onResetFilter: () -> Unit = {},
-    onCompleteFilter: (Condition) -> Unit = {},
+    onCompleteFilter: (ConditionState) -> Unit = {},
     onFilterBottomSheetShowStateChange: (Boolean) -> Unit = {},
     onNavigateToSpotDetailScreen: (id: Int) -> Unit = {},
 ) {

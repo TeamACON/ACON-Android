@@ -45,10 +45,12 @@
     <string name="under_20_minutes">20분</string>
     <string name="over_20_minutes">20분 이상</string>
 
+    <string name="under_3000">3천원 이하</string>
     <string name="under_5000">5천원 이하</string>
     <string name="under_10000">1만원</string>
     <string name="under_30000">3만원</string>
     <string name="under_50000">5만원</string>
+    <string name="over_10000">1만원 이상</string>
     <string name="over_50000">5만원 이상</string>
 
     <string name="filter_reset">초기화</string>

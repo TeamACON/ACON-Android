@@ -4,10 +4,6 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -18,29 +14,28 @@ import com.acon.domain.type.OptionType
 import com.acon.feature.spot.R
 import com.acon.feature.spot.getNameResId
 import com.acon.feature.spot.type.AvailableWalkingTimeType
-import com.acon.feature.spot.type.PriceRangeType
+import com.acon.feature.spot.type.CafePriceRangeType
 
 @Composable
 fun ColumnScope.CafeBottomSheetContent(
-    selectedCafeFeatureIndexes: List<Int>,
-    selectedVisitPurposeIndexes: List<Int>,
-    onCafeFeatureChipSelected: (Int) -> Unit,
-    onCompanionTypeChipSelected: (Int) -> Unit,
+    selectedCafeFeatures: List<OptionType.CafeFeatureOptionType>,
+    selectedVisitPurposes: List<OptionType.VisitPurposeOptionType>,
+    selectedWalkingTime: AvailableWalkingTimeType,
+    selectedPriceRange: CafePriceRangeType,
+    onCafeFeatureChipSelected: (OptionType.CafeFeatureOptionType) -> Unit,
+    onVisitPurposeChipSelected: (OptionType.VisitPurposeOptionType) -> Unit,
+    onWalkingTimeChange: (AvailableWalkingTimeType) -> Unit,
+    onPriceRangeChange: (CafePriceRangeType) -> Unit,
 ) {
-
-    var availableWalkingTimeSliderIndex by remember { mutableIntStateOf(AvailableWalkingTimeType.entries.size / 2) }
-    var priceRangeSliderIndex by remember { mutableIntStateOf(1.coerceIn(0, PriceRangeType.entries.size)) }
 
     AconChipFlowRow(
         modifier = Modifier.padding(top = 12.dp),
         titles = OptionType.CafeFeatureOptionType.entries.map {
-            stringResource(
-                it.getNameResId()
-            )
+            stringResource(it.getNameResId())
         },
-        selectedChipIndexes = selectedCafeFeatureIndexes.toIntArray(),
+        selectedChipIndexes = selectedCafeFeatures.map { it.ordinal }.toIntArray(),
         onChipSelected = {
-            onCafeFeatureChipSelected(it)
+            onCafeFeatureChipSelected(OptionType.CafeFeatureOptionType.entries[it])
         }
     )
 
@@ -55,9 +50,9 @@ fun ColumnScope.CafeBottomSheetContent(
         titles = OptionType.VisitPurposeOptionType.entries.map {
             stringResource(it.getNameResId())
         },
-        selectedChipIndexes = selectedVisitPurposeIndexes.toIntArray(),
+        selectedChipIndexes = selectedVisitPurposes.map { it.ordinal }.toIntArray(),
         onChipSelected = {
-            onCompanionTypeChipSelected(it)
+            onVisitPurposeChipSelected(OptionType.VisitPurposeOptionType.entries[it])
         }
     )
 
@@ -71,9 +66,9 @@ fun ColumnScope.CafeBottomSheetContent(
         labels = AvailableWalkingTimeType.entries.map {
             stringResource(it.titleResId)
         },
-        sliderIndex = availableWalkingTimeSliderIndex,
+        sliderIndex = selectedWalkingTime.ordinal,
         onSliderIndexChange = {
-            availableWalkingTimeSliderIndex = it
+            onWalkingTimeChange(AvailableWalkingTimeType.entries[it])
         }
     )
 
@@ -84,12 +79,12 @@ fun ColumnScope.CafeBottomSheetContent(
         color = AconTheme.color.White,
     )
     AconSlider(
-        labels = PriceRangeType.entries.map {
+        labels = CafePriceRangeType.entries.map {
             stringResource(it.titleResId)
         },
-        sliderIndex = priceRangeSliderIndex,
+        sliderIndex = selectedPriceRange.ordinal,
         onSliderIndexChange = {
-            priceRangeSliderIndex = it
+            onPriceRangeChange(CafePriceRangeType.entries[it])
         }
     )
 }

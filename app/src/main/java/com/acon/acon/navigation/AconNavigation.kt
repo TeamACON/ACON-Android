@@ -67,7 +67,7 @@ fun AconNavigation(
     ) { innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = OnboardingRoute.Graph,
+            startDestination = SpotRoute.Graph,
             modifier = Modifier.padding(innerPadding),
             enterTransition = {
                 defaultEnterTransition()
