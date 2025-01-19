@@ -31,7 +31,7 @@ fun SpotDetailTopBar(
     onLeadingIconClicked: () -> Unit = {},
     leadingIcon: @Composable () -> Unit = {
         Image (
-            imageVector = ImageVector.vectorResource(R.drawable.ic_arrow_left_24),
+            imageVector = ImageVector.vectorResource(R.drawable.ic_arrow_left_28),
             contentDescription = "뒤로가기",
             modifier = Modifier
                 .padding(start = 20.dp, top = 2.dp, bottom = 2.dp)
