@@ -1,6 +1,7 @@
 package com.acon.feature.onboarding.screen.FrequentPlaceSelectScreen
 
 import com.acon.core.utils.feature.base.BaseContainerHost
+import com.acon.domain.repository.OnboardingRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.viewmodel.container
@@ -10,6 +11,7 @@ private const val ONBOARDING_TOTAL_PAGES = 5;
 
 @HiltViewModel
 class FrequentPlaceSelectScreenViewModel @Inject constructor(
+    private val onboardingRepository: OnboardingRepository
 ) : BaseContainerHost<FrequentPlaceSelectScreenState, FrequentPlaceSelectScreenSideEffect>() {
 
     override val container: Container<FrequentPlaceSelectScreenState, FrequentPlaceSelectScreenSideEffect> =
@@ -46,6 +48,7 @@ class FrequentPlaceSelectScreenViewModel @Inject constructor(
     }
 
     fun navigateToNextPage() = intent {
+        onboardingRepository.postFavoriteSpotStyle(state.selectedCard.toString())
         postSideEffect(FrequentPlaceSelectScreenSideEffect.NavigateToNextPage)
     }
 }

@@ -122,7 +122,7 @@ fun FoodCard(
                     Text(
                         text = text,
                         color = AconTheme.color.White,
-                        style = AconTheme.typography.subtitle2_14_med
+                        style = AconTheme.typography.subtitle1_16_med
                     )
                     if(isNothingClicked){
                         Image(

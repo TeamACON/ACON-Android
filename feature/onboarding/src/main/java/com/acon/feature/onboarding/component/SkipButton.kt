@@ -17,7 +17,7 @@ fun SkipButton(
     Text(
         text = "건너뛰기",
         color = AconTheme.color.White,
-        style = AconTheme.typography.body2_14_reg,
+        style = AconTheme.typography.subtitle1_16_med,
         modifier = modifier
             .padding(5.dp)
             .clickable {

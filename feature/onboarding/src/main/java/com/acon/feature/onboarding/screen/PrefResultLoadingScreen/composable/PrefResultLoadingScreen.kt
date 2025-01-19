@@ -32,6 +32,7 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieAnimatable
 import com.airbnb.lottie.compose.rememberLottieComposition
+import kotlinx.coroutines.delay
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
@@ -54,6 +55,7 @@ fun PrefResultLoadingScreenContainer(
     PrefResultLoadingScreen(
         modifier = modifier,
         screenState = state,
+        postOnboardingResult = viewModel::postOnboardingResult,
         navigateToSpotListView = navigateToSpotListView,
     )
 }
@@ -62,42 +64,86 @@ fun PrefResultLoadingScreenContainer(
 fun PrefResultLoadingScreen(
     modifier: Modifier = Modifier,
     screenState: PrefResultLoadingScreenState,
+    postOnboardingResult: () -> Unit = {},
     navigateToSpotListView: () -> Unit = {},
 ){
+    LaunchedEffect(Unit) {
+        postOnboardingResult()
+    }
 
-    //여기로 넘어오는 버튼 누르는 순간 POST 요청 날리고
-    //응답을 기다리는 순간부터 이 화면으로 넘어옴.
-    //200 OK response가 오면 2초 동안 바뀐 로띠 보여주고 navigateToSpotListView 로 이동시키기.
+    var lottieRes = 0
+    var loadingText = ""
 
-    val lottieRes = if (screenState.isLoading) R.raw.loading_lottie else R.raw.loading_complete_lottie
-    val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(lottieRes))
+    when (screenState) {
+        is PrefResultLoadingScreenState.Loading -> {
+            lottieRes = R.raw.loading_lottie
+            loadingText = "회원님의 취향을\n빠르게 분석하고 있어요."
 
-    Box(
-        modifier = modifier
-            .fillMaxSize()
-            .background(color = AconTheme.color.Gray9),
-        contentAlignment = Alignment.Center
-    ){
-        val loadingText = if (screenState.isLoading) "회원님의 취향을\n빠르게 분석하고 있어요."
-                            else "분석이 완료되었어요!\n추천 맛집을 보여드릴게요."
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            Text(
-                text = loadingText,
-                style = AconTheme.typography.head6_20_sb,
-                color = AconTheme.color.White,
-                textAlign = TextAlign.Center
-            )
-            LottieAnimation(
-                composition = composition,
-                iterations = LottieConstants.IterateForever,
-                modifier = Modifier
-                    .padding(vertical = 40.dp)
-                    .aspectRatio(1.5f),
-            )
+            val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(lottieRes))
+
+            Box(
+                modifier = modifier
+                    .fillMaxSize()
+                    .background(color = AconTheme.color.Gray9),
+                contentAlignment = Alignment.Center
+            ){
+
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Text(
+                        text = loadingText,
+                        style = AconTheme.typography.head6_20_sb,
+                        color = AconTheme.color.White,
+                        textAlign = TextAlign.Center
+                    )
+                    LottieAnimation(
+                        composition = composition,
+                        iterations = LottieConstants.IterateForever,
+                        modifier = Modifier
+                            .padding(vertical = 40.dp)
+                            .aspectRatio(1.5f),
+                    )
+                }
+            }
+        }
+
+        PrefResultLoadingScreenState.LoadSucceed -> {
+            lottieRes = R.raw.loading_complete_lottie
+            loadingText = "분석이 완료되었어요!\n추천 맛집을 보여드릴게요."
+
+            val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(lottieRes))
+
+            Box(
+                modifier = modifier
+                    .fillMaxSize()
+                    .background(color = AconTheme.color.Gray9),
+                contentAlignment = Alignment.Center
+            ){
+
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Text(
+                        text = loadingText,
+                        style = AconTheme.typography.head6_20_sb,
+                        color = AconTheme.color.White,
+                        textAlign = TextAlign.Center
+                    )
+                    LottieAnimation(
+                        composition = composition,
+                        iterations = LottieConstants.IterateForever,
+                        modifier = Modifier
+                            .padding(vertical = 40.dp)
+                            .aspectRatio(1.5f),
+                    )
+                }
+            }
+
         }
     }
 }

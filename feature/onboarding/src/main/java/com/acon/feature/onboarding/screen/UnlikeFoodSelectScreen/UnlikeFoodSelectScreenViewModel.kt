@@ -1,6 +1,7 @@
 package com.acon.feature.onboarding.screen.UnlikeFoodSelectScreen
 
 import com.acon.core.utils.feature.base.BaseContainerHost
+import com.acon.domain.repository.OnboardingRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.viewmodel.container
@@ -10,6 +11,7 @@ private const val ONBOARDING_TOTAL_PAGES = 5;
 
 @HiltViewModel
 class UnlikeFoodScreenViewModel @Inject constructor(
+    private val onboardingRepository: OnboardingRepository
 ) : BaseContainerHost<UnlikeFoodScreenState, UnlikeFoodScreenSideEffect>() {
 
     override val container: Container<UnlikeFoodScreenState, UnlikeFoodScreenSideEffect> =
@@ -55,6 +57,7 @@ class UnlikeFoodScreenViewModel @Inject constructor(
     }
 
     fun navigateToNextPage() = intent {
+        onboardingRepository.postDislikeFood(state.selectedCard)
         postSideEffect(UnlikeFoodScreenSideEffect.NavigateToNextPage)
     }
 }

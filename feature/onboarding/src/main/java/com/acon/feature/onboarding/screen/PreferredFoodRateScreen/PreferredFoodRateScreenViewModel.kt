@@ -1,6 +1,7 @@
 package com.acon.feature.onboarding.screen.PreferredFoodRateScreen
 
 import com.acon.core.utils.feature.base.BaseContainerHost
+import com.acon.domain.repository.OnboardingRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.viewmodel.container
@@ -10,6 +11,7 @@ private const val ONBOARDING_TOTAL_PAGES = 5;
 
 @HiltViewModel
 class PreferredFoodRateScreenViewModel @Inject constructor(
+    private val onboardingRepository: OnboardingRepository
 ) : BaseContainerHost<RatePreferFoodScreenState, RatePreferFoodScreenSideEffect>() {
 
     override val container: Container<RatePreferFoodScreenState, RatePreferFoodScreenSideEffect> =
@@ -47,6 +49,7 @@ class PreferredFoodRateScreenViewModel @Inject constructor(
     }
 
     fun navigateToNextPage() = intent {
+        onboardingRepository.postFavoriteSpotRank(state.selectedCard.toList())
         postSideEffect(RatePreferFoodScreenSideEffect.NavigateToNextPage)
     }
 }

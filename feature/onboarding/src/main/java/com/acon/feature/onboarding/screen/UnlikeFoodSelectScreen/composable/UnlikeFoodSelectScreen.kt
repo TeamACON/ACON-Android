@@ -75,7 +75,7 @@ fun UnlikeFoodScreen(
                     Text(
                         text = "어떤 음식을 피하고 싶으신가요?",
                         color = Color.White,
-                        style = AconTheme.typography.head6_20_sb,
+                        style = AconTheme.typography.head4_24_sb,
                     )
                 }
             }
