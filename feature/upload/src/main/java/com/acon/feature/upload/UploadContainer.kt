@@ -32,6 +32,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -262,14 +263,14 @@ fun UploadScreen(
         ) {
             Spacer(modifier = Modifier.padding(top = 32.dp))
             Text(
-                text = "이제 도토리를\n떨어트려볼까요?",
+                text = "도토리를 떨어트려\n리뷰를 남겨 볼까요?",
                 style = AconTheme.typography.head6_20_sb,
                 color = AconTheme.color.White
             )
 
             Spacer(modifier = Modifier.padding(top = 8.dp))
             Text(
-                text = "도토리를 사용해 리뷰를 남겨주세요.",
+                text = "아래의 도토리 아이콘을 클릭해 리뷰를 남겨주세요.",
                 style = AconTheme.typography.body3_13_reg,
                 color = AconTheme.color.Gray3
             )
@@ -282,12 +283,49 @@ fun UploadScreen(
             )
         }
 
-        Spacer(modifier = Modifier.padding(top = 32.dp))
+        Spacer(modifier = Modifier.padding(top = 52.dp))
+        Text(
+            text = "${state.selectedCount}/${state.maxCount}",
+            style = AconTheme.typography.body4_12_reg,
+            color = AconTheme.color.White,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        Spacer(modifier = Modifier.padding(top = 8.dp))
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center
+        ) {
+            repeat(state.maxCount) { index ->
+                DotoriIndicator(
+                    index = index,
+                    isSelected = index < state.selectedCount,
+                    onClick = {
+                        if (index < state.selectedCount) {
+                            onIntent(UploadIntent.DeselectDotori(index))
+                        } else {
+                            onIntent(UploadIntent.SelectDotori(index))
+                        }
+                    }
+                )
+            }
+        }
+
+        Spacer(modifier = Modifier.padding(top = 12.dp))
+        Text(
+            text = "도토리를 터치해보세요.",
+            style = AconTheme.typography.body2_14_reg,
+            color = AconTheme.color.Gray3,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.fillMaxWidth()
+        )
+
         Box(
             modifier = Modifier
-                .weight(1f)
                 .fillMaxWidth()
-                .padding(bottom = 20.dp),
+                .weight(1f)
+                .padding(top = 12.dp, bottom = 20.dp),
             contentAlignment = Alignment.Center
         ) {
             if (state.animatingIndex != null) {
@@ -306,43 +344,11 @@ fun UploadScreen(
                     modifier = Modifier
                         .fillMaxSize()
                         .aspectRatio(1f)
-                        .scale(1.5f),
+                        .scale(1f),
                     iterations = 1,
                     isPlaying = true
                 )
             }
-        }
-
-        Column(
-            modifier = Modifier
-                .fillMaxWidth(1f),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(4.dp)
-        ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.Center
-            ) {
-                repeat(state.maxCount) { index ->
-                    DotoriIndicator(
-                        index = index,
-                        isSelected = index < state.selectedCount,
-                        onClick = {
-                            if (index < state.selectedCount) {
-                                onIntent(UploadIntent.DeselectDotori)
-                            } else {
-                                onIntent(UploadIntent.SelectDotori(index))
-                            }
-                        }
-                    )
-                }
-            }
-
-            Text(
-                text = "${state.selectedCount}/${state.maxCount}",
-                style = AconTheme.typography.body4_12_reg,
-                color = AconTheme.color.White
-            )
         }
 
         AconFilledLargeButton(
