@@ -19,11 +19,11 @@ import androidx.compose.ui.unit.dp
 import com.acon.core.designsystem.R
 import com.acon.core.designsystem.component.button.AconFilledLargeButton
 import com.acon.core.designsystem.theme.AconTheme
-import com.acon.domain.model.spot.SpotDetailInfo
 
 @Composable
 fun RestaurantBottomActionBar(
-    spotDetailInfo: SpotDetailInfo,
+    localAcornCount: Int,
+    basicAcornCount: Int,
     onClickFindDirections: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -35,14 +35,14 @@ fun RestaurantBottomActionBar(
     ) {
         AconIconAndCount(
             aconIcon =  R.drawable.ic_local_acon_24,
-            aconCount = spotDetailInfo.localAcornCount.toString(),
+            aconCount = localAcornCount.toString(),
             aconContentDescription = "로컬 도토리",
         )
         Spacer(modifier = Modifier.width(8.dp))
 
         AconIconAndCount(
             aconIcon =  R.drawable.ic_visitor_acon_24,
-            aconCount = spotDetailInfo.basicAcornCount.toString(),
+            aconCount = basicAcornCount.toString(),
             aconContentDescription = "여행자 도토리",
         )
         Spacer(modifier = Modifier.weight(1f))
@@ -89,17 +89,8 @@ fun AconIconAndCount(
 private fun RestaurantBottomActionBarPreview() {
     AconTheme {
         RestaurantBottomActionBar(
-            spotDetailInfo = SpotDetailInfo(
-                name = "",
-                spotType = "CAFE",
-                imageList = emptyList(),
-                openStatus = true,
-                address = "서울시 마포동 동교동",
-                localAcornCount = 2221,
-                basicAcornCount = 1111,
-                latitude =  1.1,
-                longitude = 1.1,
-            ),
+            localAcornCount = 111,
+            basicAcornCount = 123,
             onClickFindDirections = {}
         )
     }
