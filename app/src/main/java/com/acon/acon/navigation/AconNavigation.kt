@@ -1,9 +1,11 @@
 package com.acon.acon.navigation
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
@@ -14,6 +16,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -50,13 +53,30 @@ fun AconNavigation(
     val hazeState = rememberHazeState()
 
     CompositionLocalProvider(LocalHazeState provides hazeState) {
-        Column(
+        Scaffold(
             modifier = modifier.navigationBarsPadding(),
-        ) {
+            topBar = {
+                Spacer(modifier = Modifier.padding(0.dp))
+            },
+            bottomBar = {
+                if (backStackEntry?.destination?.shouldShowBottomNav() == true) {
+                    BottomBar(
+                        modifier = Modifier
+                            .background(color = AconTheme.color.Black)  // TODO Color?
+                            .fillMaxWidth()
+                            .defaultHazeEffect(hazeState = LocalHazeState.current, tintColor = AconTheme.color.Gla_b_30),
+                        selectedItem = selectedBottomNavItem,
+                        onItemClick = {
+                            selectedBottomNavItem = it
+                        }
+                    )
+                }
+            }
+        ) { innerPadding ->
             NavHost(
                 navController = navController,
                 startDestination = SpotRoute.Graph,
-                modifier = Modifier,
+                modifier = Modifier.padding(innerPadding),
                 enterTransition = {
                     defaultEnterTransition()
                 }, exitTransition = {
@@ -78,21 +98,6 @@ fun AconNavigation(
 
                 uploadNavigation(navController)
             }
-        }
-        if (backStackEntry?.destination?.shouldShowBottomNav() == true) {
-            BottomBar(
-                modifier = Modifier
-                    .background(color = AconTheme.color.Black)  // TODO Color?
-                    .fillMaxWidth()
-                    .defaultHazeEffect(
-                        hazeState = LocalHazeState.current,
-                        tintColor = AconTheme.color.Gla_b_30
-                    ),
-                selectedItem = selectedBottomNavItem,
-                onItemClick = {
-                    selectedBottomNavItem = it
-                }
-            )
         }
     }
 
