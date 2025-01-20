@@ -5,7 +5,6 @@ import com.acon.core.utils.feature.base.BaseContainerHost
 import com.acon.domain.model.spot.Condition
 import com.acon.domain.model.spot.Spot
 import com.acon.domain.repository.SpotRepository
-import com.acon.domain.type.SpotType
 import com.acon.feature.spot.BuildConfig
 import com.acon.feature.spot.mock.spotListMock
 import com.acon.feature.spot.state.ConditionState
@@ -34,12 +33,7 @@ class SpotListViewModel @Inject constructor(
         spotRepository.fetchSpotList(
             latitude = location.latitude,
             longitude = location.longitude,
-            condition = Condition(
-                spotType = SpotType.RESTAURANT,
-                filterList = emptyList()
-            ),
-            walkingTime = 10,
-            priceRange = 10000
+            condition = Condition.Default,
         ).onSuccess {
             reduce {
                 (state as? SpotListUiState.Success)?.copy(spotList = it)
@@ -65,16 +59,12 @@ class SpotListViewModel @Inject constructor(
         }
     }
 
-    fun onLocationReady(newLocation: Location) = intent {
+    fun onLocationReady(newLocation: Location) = blockingIntent {
         runOn<SpotListUiState.Success> {
             spotRepository.fetchSpotList(
                 latitude = newLocation.latitude,
                 longitude = newLocation.longitude,
-                condition = state.currentCondition?.toCondition()!!, // TODO API 논의
-                walkingTime = (if (state.currentCondition?.spotType == SpotType.RESTAURANT)
-                    state.currentCondition?.restaurantWalkingTime else state.currentCondition?.cafeWalkingTime)!!.value, // TODO API 논의
-                priceRange = (if (state.currentCondition?.spotType == SpotType.RESTAURANT)
-                    state.currentCondition?.restaurantPriceRange?.value else state.currentCondition?.cafePriceRange?.value)!! // TODO API 논의
+                condition = state.currentCondition?.toCondition() ?: Condition.Default,
             ).onSuccess {
                 reduce {
                     (state as? SpotListUiState.Success)?.copy(spotList = it)
@@ -89,7 +79,7 @@ class SpotListViewModel @Inject constructor(
                     delay(1500)
                     reduce {
                         (state as? SpotListUiState.Success)?.copy(
-                            spotList = spotListMock,
+                            spotList = spotListMock.shuffled(),
                             isRefreshing = false
                         ) ?: SpotListUiState.Success(
                             spotList = spotListMock,
@@ -127,10 +117,14 @@ class SpotListViewModel @Inject constructor(
         }
     }
 
-    fun onCompleteFilter(condition: ConditionState) = intent {
+    fun onCompleteFilter(location: Location, condition: ConditionState) = intent {
         runOn<SpotListUiState.Success> {
             reduce {
-                state.copy(showFilterBottomSheet = false, currentCondition = condition)
+                state.copy(isFilteredResultFetching = true, currentCondition = condition)
+            }
+            onLocationReady(location)
+            reduce {
+                state.copy(isFilteredResultFetching = false, showFilterBottomSheet = false)
             }
         }
     }
@@ -145,7 +139,8 @@ sealed interface SpotListUiState {
         val spotList: List<Spot>,
         val isRefreshing: Boolean = false,
         val currentCondition: ConditionState? = null,
-        val showFilterBottomSheet: Boolean = false
+        val showFilterBottomSheet: Boolean = false,
+        val isFilteredResultFetching: Boolean = false
     ) : SpotListUiState
     data object Loading : SpotListUiState
     data object LoadFailed: SpotListUiState

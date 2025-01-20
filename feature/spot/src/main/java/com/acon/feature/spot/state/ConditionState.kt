@@ -24,7 +24,30 @@ data class ConditionState(
 ) {
 
     fun toCondition(): Condition {
-        val filterList = when (spotType) {
+        return Condition(
+            spotType = spotType,
+            filterList = getFilterList(),
+            walkingTime = getWalkingTime(),
+            priceRange = getPriceRange()
+        )
+    }
+
+    private fun getPriceRange() : Int {
+        return when (spotType) {
+            SpotType.RESTAURANT -> restaurantPriceRange.value
+            SpotType.CAFE -> cafePriceRange.value
+        }
+    }
+
+    private fun getWalkingTime() : Int {
+        return when (spotType) {
+            SpotType.RESTAURANT -> restaurantWalkingTime.value
+            SpotType.CAFE -> cafeWalkingTime.value
+        }
+    }
+
+    private fun getFilterList() : List<Filter> {
+        return when (spotType) {
             SpotType.RESTAURANT -> {
                 listOf(
                     Filter(
@@ -51,10 +74,5 @@ data class ConditionState(
                 )
             }
         }
-
-        return Condition(
-            spotType = spotType,
-            filterList = filterList
-        )
     }
 }

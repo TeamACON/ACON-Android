@@ -50,9 +50,8 @@ fun SpotListScreenContainer(
             }
         },
         onCompleteFilter = { condition ->
-            viewModel.onCompleteFilter(condition)
             context.onLocationReady {
-                viewModel.onLocationReady(it)
+                viewModel.onCompleteFilter(it, condition)
             }
         },
         onSpotItemClick = viewModel::onSpotItemClick

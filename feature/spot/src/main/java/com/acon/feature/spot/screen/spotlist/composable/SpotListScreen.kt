@@ -73,7 +73,8 @@ internal fun SpotListScreen(
                         },
                         modifier = Modifier
                             .padding(top = 50.dp)
-                            .fillMaxSize()
+                            .fillMaxSize(),
+                        isFilteredResultFetching = state.isFilteredResultFetching
                     )
                 }
 

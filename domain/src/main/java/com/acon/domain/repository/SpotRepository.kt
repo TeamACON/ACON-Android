@@ -9,7 +9,5 @@ interface SpotRepository {
         latitude: Double,
         longitude: Double,
         condition: Condition,
-        walkingTime: Int,
-        priceRange: Int
     ): Result<List<Spot>>
 }
