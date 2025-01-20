@@ -71,7 +71,9 @@ internal fun SpotListScreen(
                         onDismissRequest = {
                             onFilterBottomSheetShowStateChange(false)
                         },
-                        modifier = Modifier.padding(top = 50.dp).fillMaxSize()
+                        modifier = Modifier
+                            .padding(top = 50.dp)
+                            .fillMaxSize()
                     )
                 }
 
@@ -159,22 +161,29 @@ internal fun SpotListScreen(
                                 modifier = Modifier
                                     .clip(CircleShape)
                                     .size(48.dp)
-                                    .defaultHazeEffect(hazeState = LocalHazeState.current, tintColor = AconTheme.color.Gla_b_30, blurRadius = 8.dp)
+                                    .defaultHazeEffect(
+                                        hazeState = LocalHazeState.current,
+                                        tintColor = AconTheme.color.Gla_b_30,
+                                        blurRadius = 8.dp
+                                    )
                                     .clickable {
                                         if (it.enabled) {
                                             when (it) {
                                                 FloatingButtonType.LOCATION -> {
                                                     // TODO : 위치 버튼 클릭 시 동작
                                                 }
+
                                                 FloatingButtonType.MAP -> {
                                                     // TODO : 지도 버튼 클릭 시 동작
                                                 }
+
                                                 FloatingButtonType.FILTER -> {
                                                     onFilterBottomSheetShowStateChange(true)
                                                 }
                                             }
                                         }
-                                    }.padding(10.dp)
+                                    }
+                                    .padding(10.dp)
                             )
                         }
                     }
@@ -204,18 +213,22 @@ internal fun SpotListScreen(
                     Spacer(modifier = Modifier.height(12.dp))
                     SkeletonItem(
                         modifier = Modifier
-                            .weight(3f)
-                            .clip(RoundedCornerShape(6.dp))
                             .fillMaxWidth()
-                    )
-                    SkeletonItem(
-                        modifier = Modifier
-                            .padding(top = 12.dp)
-                            .weight(1f)
+                            .aspectRatio(328f / 408f)
                             .clip(RoundedCornerShape(6.dp))
-                            .fillMaxWidth()
+                            .hazeSource(LocalHazeState.current)
                     )
-                    Spacer(modifier = Modifier.height(4.dp))
+                    repeat(5) {
+                        SkeletonItem(
+                            modifier = Modifier
+                                .padding(top = 12.dp)
+                                .fillMaxWidth()
+                                .aspectRatio(328f / 128f)
+                                .clip(RoundedCornerShape(6.dp))
+                                .hazeSource(LocalHazeState.current)
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(46.dp))
                 }
             }
 
