@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.acon.core.designsystem.R
@@ -64,6 +65,19 @@ fun AconIconAndCount(
     aconCount: String,
     aconContentDescription: String,
 ) {
+    val textMeasurer = rememberTextMeasurer()
+    val singleCharWidth = textMeasurer.measure("8").size.width
+    val desiredWidth = singleCharWidth * 4
+
+    val displayedCount = if (aconCount.length < 4) {
+        val currentWidth = textMeasurer.measure(aconCount).size.width
+        val spaceWidth = desiredWidth - currentWidth
+        aconCount + " ".repeat((spaceWidth / textMeasurer.measure(" ").size.width).toInt())
+    } else {
+        if(aconCount.toInt() > 1000) { "999+" }
+        else { aconCount }
+    }
+
     Row (
         modifier = Modifier
             .padding(vertical = 8.dp)
@@ -73,7 +87,7 @@ fun AconIconAndCount(
             contentDescription = aconContentDescription
         )
         Text(
-            text = aconCount,
+            text = displayedCount,
             style = AconTheme.typography.body2_14_reg,
             color = AconTheme.color.White,
             modifier = Modifier
