@@ -84,9 +84,7 @@ fun UnlikeFoodScreen(
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
-                            //.weight(1f)
                             .padding(vertical = 20.dp),
-                        //contentAlignment = Alignment.Center
                     ){
                         FoodGrid(
                             modifier = modifier
