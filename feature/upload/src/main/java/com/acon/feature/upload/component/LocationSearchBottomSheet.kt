@@ -33,6 +33,8 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.acon.core.designsystem.blur.LocalHazeState
+import com.acon.core.designsystem.blur.defaultHazeEffect
 import com.acon.core.designsystem.theme.AconTheme
 import com.acon.feature.upload.LocationItem
 import com.acon.feature.upload.MockSpotData
@@ -57,22 +59,21 @@ fun LocationSearchBottomSheet(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .fillMaxHeight(0.75f)
+            .fillMaxHeight(0.9f)
             .clip(RoundedCornerShape(topStart = 10.dp, topEnd = 10.dp))
-            .background(
-                color = AconTheme.color.Gla_w_10
+            .background(AconTheme.color.Gray9.copy(alpha = 0.5f))
+            .defaultHazeEffect(
+                hazeState = LocalHazeState.current,
+                tintColor = AconTheme.color.Gray8,
+                alpha = 0.7f,
+                blurRadius = 20.dp
             )
-
     ) {
         Box(
             modifier = Modifier
                 .padding(vertical = 4.dp)
                 .align(Alignment.CenterHorizontally)
                 .size(width = 36.dp, height = 5.dp)
-                .background(
-                    color = AconTheme.color.Gray5,
-                    shape = RoundedCornerShape(2.dp)
-                )
         )
 
         Spacer(modifier = Modifier.padding(top = 12.dp))

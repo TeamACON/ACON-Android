@@ -50,6 +50,10 @@ foundationAndroidVersion = "1.8.0-alpha04"
 ##lottie
 lottie = "6.0.0"
 
+##glassmorphism
+haze = "1.2.1"
+hazeAndroid = "1.2.1"
+
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycleRuntimeKtx" }
@@ -110,6 +114,10 @@ androidx-lifecycle-runtime-compose-android = { group = "androidx.lifecycle", nam
 foundation-android = { group = "androidx.compose.foundation", name = "foundation-android", version.ref = "foundationAndroidVersion" }
 
 lottie-compose = { group = "com.airbnb.android", name = "lottie-compose", version.ref= "lottie" }
+
+haze = { module = "dev.chrisbanes.haze:haze", version.ref = "haze" }
+haze-materials = { module = "dev.chrisbanes.haze:haze-materials", version.ref = "haze" }
+haze-android = { group = "dev.chrisbanes.haze", name = "haze-android", version.ref = "hazeAndroid" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

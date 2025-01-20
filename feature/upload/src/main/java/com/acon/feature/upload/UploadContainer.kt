@@ -36,6 +36,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.acon.core.designsystem.blur.LocalHazeState
 import com.acon.core.designsystem.component.button.AconFilledLargeButton
 import com.acon.core.designsystem.noRippleClickable
 import com.acon.core.designsystem.theme.AconTheme
@@ -44,6 +45,7 @@ import com.acon.feature.upload.component.LocationSearchBottomSheet
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.rememberLottieComposition
+import dev.chrisbanes.haze.hazeSource
 
 @Composable
 fun UploadContainer(
@@ -108,12 +110,12 @@ fun SpotListScreen(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .statusBarsPadding()
-            .navigationBarsPadding()
-            .background(color = AconTheme.color.Gray9)
+            .hazeSource(LocalHazeState.current)
     ) {
         Column(
-            modifier = Modifier.weight(1f)
+            modifier = Modifier
+                .weight(1f)
+                .hazeSource(LocalHazeState.current)
         ) {
             Row(
                 modifier = Modifier
@@ -200,7 +202,7 @@ fun SpotListScreen(
             ModalBottomSheet(
                 onDismissRequest = { showLocationSearch = false },
                 sheetState = sheetState,
-                containerColor = AconTheme.color.Gray9,
+                containerColor = AconTheme.color.Gla_w_10,
                 dragHandle = null,
             ) {
                 LocationSearchBottomSheet(

@@ -58,5 +58,8 @@ dependencies {
 
     implementation(libs.lottie.compose)
 
+    implementation(libs.haze)
+    implementation(libs.haze.materials)
+
     implementation(project(":core:designsystem"))
 }
