@@ -5,7 +5,7 @@ import com.acon.domain.error.RootError
 
 sealed class GetSpotDetailInfoError : RootError() {
     class SpaceNotFoundError : GetSpotDetailInfoError() {
-        override val code: Int = 40402
+        override val code: Int = 40403
     }
 
     companion object : ErrorFactory {
