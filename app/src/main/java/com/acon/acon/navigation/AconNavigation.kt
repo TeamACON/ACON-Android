@@ -115,7 +115,6 @@ fun AconNavigation(
 private fun NavDestination.shouldShowBottomNav(): Boolean {
     return when (route) {
         SpotRoute.SpotList::class.qualifiedName -> true
-        UploadRoute.Upload::class.qualifiedName -> true
         else -> false
     }
 }
