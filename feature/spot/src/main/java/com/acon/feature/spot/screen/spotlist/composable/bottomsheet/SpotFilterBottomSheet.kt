@@ -20,7 +20,6 @@ import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -47,7 +46,6 @@ import com.acon.feature.spot.type.RestaurantPriceRangeType
 import com.airbnb.lottie.LottieComposition
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
-import com.airbnb.lottie.compose.rememberLottieAnimatable
 import com.airbnb.lottie.compose.rememberLottieComposition
 import dev.chrisbanes.haze.HazeState
 
@@ -113,7 +111,6 @@ fun SpotFilterBottomSheet(
     val lottieComposition by rememberLottieComposition(
         LottieCompositionSpec.RawRes(R.raw.lottie_progress_w)
     )
-    val resultLottieAnimatable = rememberLottieAnimatable()
 
     fun resetCafeFilter() {
         selectedCafeFeatures = listOf()
@@ -303,15 +300,6 @@ fun SpotFilterBottomSheet(
                     .defaultHazeEffect(hazeState, tintColor = AconTheme.color.Gla_b_30, alpha = .6f)
                     .padding(horizontal = 20.dp)
                     .padding(top = 10.dp, bottom = 32.dp)
-            )
-        }
-    }
-
-    LaunchedEffect(isFilteredResultFetching) {
-        if (isFilteredResultFetching) {
-            resultLottieAnimatable.animate(
-                composition = lottieComposition,
-                iterations = Int.MAX_VALUE
             )
         }
     }
