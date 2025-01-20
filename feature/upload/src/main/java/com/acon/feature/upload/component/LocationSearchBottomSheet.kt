@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -124,14 +123,13 @@ fun LocationSearchBottomSheet(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(400.dp)
                 .padding(top = 16.dp)
                 .padding(horizontal = 20.dp)
         ) {
             if (searchText.isEmpty()) {
-                EmptySearchState()
+                EmptySearchScreen()
             } else if (searchResults.isEmpty()) {
-                NoResultsState()
+                NoResultsScreen()
             } else {
                 LazyColumn {
                     items(searchResults) { location ->
@@ -147,7 +145,7 @@ fun LocationSearchBottomSheet(
 }
 
 @Composable
-private fun EmptySearchState() {
+private fun EmptySearchScreen() {
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
@@ -161,7 +159,7 @@ private fun EmptySearchState() {
 }
 
 @Composable
-private fun NoResultsState() {
+private fun NoResultsScreen() {
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
