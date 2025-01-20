@@ -2,6 +2,8 @@ package com.acon.domain.repository
 
 import com.acon.domain.model.spot.Condition
 import com.acon.domain.model.spot.Spot
+import com.acon.domain.model.spot.SpotDetailInfo
+import com.acon.domain.model.spot.SpotDetailMenu
 
 interface SpotRepository {
 
@@ -12,4 +14,12 @@ interface SpotRepository {
         walkingTime: Int,
         priceRange: Int
     ): Result<List<Spot>>
+
+    suspend fun getSpotDetailInfo(
+         spotId: Long,
+    ): Result<SpotDetailInfo>
+
+    suspend fun getSpotMenuList(
+        spotId: Long,
+    ): Result<List<SpotDetailMenu>>
 }

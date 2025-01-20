@@ -3,9 +3,9 @@ package com.acon.domain.model.spot
 import androidx.compose.runtime.Immutable
 
 @Immutable
-data class Menu(
-    val id: String,
+data class SpotDetailMenu(
+    val id: Long,
     val name: String,
     val price: Int,
-    val image: String,
+    val image: String?,
 )

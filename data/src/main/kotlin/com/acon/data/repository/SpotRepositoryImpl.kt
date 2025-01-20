@@ -6,8 +6,12 @@ import com.acon.data.dto.request.FilterListRequest
 import com.acon.data.dto.request.SpotListRequest
 import com.acon.data.error.runCatchingWith
 import com.acon.domain.error.spot.FetchSpotListError
+import com.acon.domain.error.spot.GetSpotDetailInfoError
+import com.acon.domain.error.spot.GetSpotMenuListError
 import com.acon.domain.model.spot.Condition
 import com.acon.domain.model.spot.Spot
+import com.acon.domain.model.spot.SpotDetailInfo
+import com.acon.domain.model.spot.SpotDetailMenu
 import com.acon.domain.repository.SpotRepository
 import javax.inject.Inject
 
@@ -42,4 +46,21 @@ class SpotRepositoryImpl @Inject constructor(
             ).spotList.map { it.toSpot() }
         }
     }
+
+    override suspend fun getSpotDetailInfo(
+        spotId: Long,
+    ): Result<SpotDetailInfo> {
+        return runCatchingWith(*GetSpotDetailInfoError.createErrorInstances()) {
+            spotRemoteDataSource.getSpotDetailInfo(spotId).toSpotDetailInfo()
+        }
+    }
+
+    override suspend fun getSpotMenuList(
+        spotId: Long
+    ): Result<List<SpotDetailMenu>> {
+        return runCatchingWith(*GetSpotMenuListError.createErrorInstances()) {
+            spotRemoteDataSource.getSpotMenuList(spotId).spotMenuList.map { it.toSpotDetailMenu() }
+        }
+    }
+
 }

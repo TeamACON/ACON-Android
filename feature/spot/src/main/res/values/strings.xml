@@ -9,6 +9,17 @@
     <string name="walking_time">%s분</string>
     <string name="alert_no_spot">앗! 일치하는 도토리 맛집이 없어요</string>
 
+    <string name="spot_detail_navigate_button">길 찾기</string>
+    <string name="spot_gps_icon">위치 아이콘</string>
+    <string name="spot_no_menu_image">메뉴 기본 사진(없음)</string>
+    <string name="spot_menu_image">메뉴 사진</string>
+    <string name="spot_store_image">가게 사진</string>
+    <string name="spot_detail_tab_menu">메뉴</string>
+    <string name="local_acon_content_description">로컬 도토리</string>
+    <string name="visitor_acon_content_description">로컬 도토리</string>
+    <string name="top_button_description">최상단 이동 버튼</string>
+    <string name="topbar_back_button_description">탑 바 뒤로가기 버튼</string>
+
     <string name="korean">한식</string>
     <string name="chinese">중식</string>
     <string name="japanese">일식</string>

@@ -27,7 +27,7 @@ fun OnboardingTopBar(
     onTrailingIconClicked: () -> Unit = {},
     leadingIcon: @Composable () -> Unit = {
         Image (
-            imageVector = ImageVector.vectorResource(R.drawable.ic_arrow_left_24),
+            imageVector = ImageVector.vectorResource(R.drawable.ic_arrow_left_28),
             contentDescription = "Back",
             modifier = Modifier
                 .padding(start = 15.dp),
