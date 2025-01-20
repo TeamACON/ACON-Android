@@ -117,7 +117,7 @@ fun FrequentPlaceSelectScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(start = 20.dp, end = 20.dp, top = 50.dp, bottom = 50.dp),
+                .padding(horizontal = 15.dp, vertical = 50.dp),
             verticalArrangement = Arrangement.SpaceBetween
         ){
             Column(
