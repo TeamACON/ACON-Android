@@ -77,6 +77,4 @@ dependencies {
     implementation(libs.haze.materials)
 
     implementation(libs.kotlinx.collections.immutable)
-
-    implementation(libs.androidx.navigation.compose)
 }

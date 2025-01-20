@@ -18,7 +18,7 @@ data class SpotDetailInfoResponse(
     @SerialName("latitude") val latitude: Double,
     @SerialName("longitude") val longitude: Double,
 ) {
-    fun toSpotDetailInfoResponse() = SpotDetailInfo(
+    fun toSpotDetailInfo() = SpotDetailInfo(
         id = id,
         name =  name,
         spotType = spotType,

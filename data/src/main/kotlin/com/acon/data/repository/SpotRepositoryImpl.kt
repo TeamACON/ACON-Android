@@ -51,7 +51,7 @@ class SpotRepositoryImpl @Inject constructor(
         spotId: Long,
     ): Result<SpotDetailInfo> {
         return runCatchingWith(*GetSpotDetailInfoError.createErrorInstances()) {
-            spotRemoteDataSource.getSpotDetailInfo(spotId).toSpotDetailInfoResponse()
+            spotRemoteDataSource.getSpotDetailInfo(spotId).toSpotDetailInfo()
         }
     }
 

@@ -66,11 +66,10 @@ fun AconIconAndCount(
     aconContentDescription: String,
 ) {
     val textMeasurer = rememberTextMeasurer()
-    val singleCharWidth = textMeasurer.measure("8").size.width
-    val desiredWidth = singleCharWidth * 4
 
     val displayedCount = if (aconCount.length < 4) {
         val currentWidth = textMeasurer.measure(aconCount).size.width
+        val desiredWidth = textMeasurer.measure("8888").size.width
         val spaceWidth = desiredWidth - currentWidth
         aconCount + " ".repeat((spaceWidth / textMeasurer.measure(" ").size.width).toInt())
     } else {

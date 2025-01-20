@@ -17,7 +17,7 @@ internal fun NavGraphBuilder.spotNavigation(
 ) {
 
     navigation<SpotRoute.Graph>(
-        startDestination = SpotRoute.SpotList
+        startDestination = SpotRoute.SpotDetail(1)
     ) {
         composable<SpotRoute.SpotList>(
             enterTransition = {
