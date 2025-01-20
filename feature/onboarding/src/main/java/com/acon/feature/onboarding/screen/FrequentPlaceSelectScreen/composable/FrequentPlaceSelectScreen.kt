@@ -134,25 +134,24 @@ fun FrequentPlaceSelectScreen(
                     color = Color.White,
                     style = AconTheme.typography.head4_24_sb,
                 )
-            }
 
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f),
-                contentAlignment = Alignment.Center
-            ){
-                Column {
-                    FreqPlaceSelectGrid(
-                        modifier = Modifier
-                            .background(AconTheme.color.Gray9),
-                        columnSize = columnSize,
-                        placeItems = PlaceItems.entries.toTypedArray(),
-                        onCardClicked = { text ->
-                            onCardClicked(text)
-                        },
-                        selectedCard = screenState.selectedCard
-                    )
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 20.dp),
+                ){
+                    Column {
+                        FreqPlaceSelectGrid(
+                            modifier = Modifier
+                                .background(AconTheme.color.Gray9),
+                            columnSize = columnSize,
+                            placeItems = PlaceItems.entries.toTypedArray(),
+                            onCardClicked = { text ->
+                                onCardClicked(text)
+                            },
+                            selectedCard = screenState.selectedCard
+                        )
+                    }
                 }
             }
 

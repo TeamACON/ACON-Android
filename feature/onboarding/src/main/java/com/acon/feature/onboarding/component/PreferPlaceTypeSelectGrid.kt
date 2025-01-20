@@ -47,7 +47,6 @@ fun <T : CardItem> PreferPlaceTypeSelectGrid(
     LazyVerticalGrid(
         modifier = modifier,
         columns = GridCells.Fixed(columnSize),
-        contentPadding = PaddingValues(horizontal = 10.dp),
         horizontalArrangement = Arrangement.spacedBy(10.dp),
         verticalArrangement = Arrangement.spacedBy(15.dp),
     ){
@@ -113,7 +112,7 @@ fun PlaceTypeCard(
                     Image(
                         imageVector = ImageVector.vectorResource(rateIcon),
                         contentDescription = "Clicked",
-                        modifier = Modifier.size(44.dp)
+                        modifier = Modifier.size(48.dp)
                     )
                 }
             }

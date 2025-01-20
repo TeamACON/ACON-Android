@@ -46,7 +46,6 @@ fun <T : CardItem> FoodGrid(
     LazyVerticalGrid(
         modifier = modifier,
         columns = GridCells.Fixed(columnSize),
-        contentPadding = PaddingValues(horizontal = 10.dp),
         horizontalArrangement = Arrangement.spacedBy(10.dp),
         verticalArrangement = Arrangement.spacedBy(15.dp),
     ){

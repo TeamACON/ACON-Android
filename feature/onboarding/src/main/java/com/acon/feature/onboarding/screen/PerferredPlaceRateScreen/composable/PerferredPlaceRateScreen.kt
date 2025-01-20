@@ -135,24 +135,23 @@ fun PreferredPlaceRateScreen(
                     color = Color.White,
                     style = AconTheme.typography.head4_24_sb,
                 )
-            }
 
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f),
-                contentAlignment = Alignment.Center
-            ){
-                PreferPlaceTypeSelectGrid(
-                    modifier = modifier
-                        .background(AconTheme.color.Gray9),
-                    columnSize = columnSize,
-                    foodItems = PreferPlaceItems.entries.toTypedArray(),
-                    onCardClicked = { text ->
-                        onCardClicked(text)
-                    },
-                    selectedCard = screenState.selectedCard,
-                )
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 20.dp)
+                ){
+                    PreferPlaceTypeSelectGrid(
+                        modifier = modifier
+                            .background(AconTheme.color.Gray9),
+                        columnSize = columnSize,
+                        foodItems = PreferPlaceItems.entries.toTypedArray(),
+                        onCardClicked = { text ->
+                            onCardClicked(text)
+                        },
+                        selectedCard = screenState.selectedCard,
+                    )
+                }
             }
 
             Box(

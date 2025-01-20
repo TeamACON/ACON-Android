@@ -5,8 +5,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -78,26 +80,27 @@ fun UnlikeFoodScreen(
                         color = Color.White,
                         style = AconTheme.typography.head4_24_sb,
                     )
-                }
-            }
 
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f),
-                contentAlignment = Alignment.Center
-            ){
-                FoodGrid(
-                    modifier = modifier
-                        .background(AconTheme.color.Gray9),
-                    columnSize = columnSize,
-                    foodItems = FoodItems.entries.toTypedArray(),
-                    onCardClicked = { text ->
-                        onCardClicked(text)
-                    },
-                    isNothingClicked = screenState.isNothingClicked,
-                    selectedCard = screenState.selectedCard
-                )
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            //.weight(1f)
+                            .padding(vertical = 20.dp),
+                        //contentAlignment = Alignment.Center
+                    ){
+                        FoodGrid(
+                            modifier = modifier
+                                .background(AconTheme.color.Gray9),
+                            columnSize = columnSize,
+                            foodItems = FoodItems.entries.toTypedArray(),
+                            onCardClicked = { text ->
+                                onCardClicked(text)
+                            },
+                            isNothingClicked = screenState.isNothingClicked,
+                            selectedCard = screenState.selectedCard
+                        )
+                    }
+                }
             }
 
             Box(

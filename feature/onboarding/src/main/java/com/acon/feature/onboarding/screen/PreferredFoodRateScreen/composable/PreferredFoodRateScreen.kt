@@ -71,25 +71,26 @@ fun PreferredFoodRateScreen(
                     color = Color.White,
                     style = AconTheme.typography.head4_24_sb,
                 )
-            }
 
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f),
-                contentAlignment = Alignment.Center
-            ){
-                PreferFoodTypeSelectGrid(
-                    modifier = modifier
-                        .background(AconTheme.color.Gray9),
-                    columnSize = columnSize,
-                    foodItems = FoodTypeItems.entries.toTypedArray(),
-                    onCardClicked = { text ->
-                        onCardClicked(text)
-                    },
-                    selectedCard = screenState.selectedCard,
-                    isAllClicked = screenState.selectedCard.size == 3
-                )
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 20.dp),
+                    //.weight(1f),
+                    //contentAlignment = Alignment.Center
+                ){
+                    PreferFoodTypeSelectGrid(
+                        modifier = modifier
+                            .background(AconTheme.color.Gray9),
+                        columnSize = columnSize,
+                        foodItems = FoodTypeItems.entries.toTypedArray(),
+                        onCardClicked = { text ->
+                            onCardClicked(text)
+                        },
+                        selectedCard = screenState.selectedCard,
+                        isAllClicked = screenState.selectedCard.size == 3
+                    )
+                }
             }
 
             Box(
