@@ -27,10 +27,11 @@ fun SpotListScreenContainer(
 
     CheckAndRequestLocationPermission(
         onPermissionGranted = {
-            if (state !is SpotListUiState.Success)
+            if (state !is SpotListUiState.Success) {
                 context.onLocationReady {
-                    viewModel.onLocationReady(it)
+                    viewModel.fetchInitialSpots(it)
                 }
+            }
         }
     )
 

@@ -36,9 +36,9 @@ import com.acon.core.designsystem.blur.defaultHazeEffect
 import com.acon.core.designsystem.component.loading.SkeletonItem
 import com.acon.core.designsystem.theme.AconTheme
 import com.acon.feature.spot.R
-import com.acon.feature.spot.screen.spotlist.ConditionState
 import com.acon.feature.spot.screen.spotlist.SpotListUiState
 import com.acon.feature.spot.screen.spotlist.composable.bottomsheet.SpotFilterBottomSheet
+import com.acon.feature.spot.state.ConditionState
 import com.acon.feature.spot.type.FloatingButtonType
 import com.github.fengdai.compose.pulltorefresh.PullToRefresh
 import com.github.fengdai.compose.pulltorefresh.rememberPullToRefreshState

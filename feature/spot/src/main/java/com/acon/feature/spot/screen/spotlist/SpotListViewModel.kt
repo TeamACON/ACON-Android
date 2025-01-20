@@ -1,18 +1,14 @@
 package com.acon.feature.spot.screen.spotlist
 
 import android.location.Location
-import androidx.compose.runtime.Immutable
 import com.acon.core.utils.feature.base.BaseContainerHost
 import com.acon.domain.model.spot.Condition
 import com.acon.domain.model.spot.Spot
 import com.acon.domain.repository.SpotRepository
-import com.acon.domain.type.OptionType
 import com.acon.domain.type.SpotType
 import com.acon.feature.spot.BuildConfig
 import com.acon.feature.spot.mock.spotListMock
-import com.acon.feature.spot.type.AvailableWalkingTimeType
-import com.acon.feature.spot.type.CafePriceRangeType
-import com.acon.feature.spot.type.RestaurantPriceRangeType
+import com.acon.feature.spot.state.ConditionState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import org.orbitmvi.orbit.annotation.OrbitExperimental
@@ -34,8 +30,7 @@ class SpotListViewModel @Inject constructor(
 
     }
 
-    private var debugRefresher = 0
-    fun onLocationReady(location: Location) = intent {
+    fun fetchInitialSpots(location: Location) = intent {
         spotRepository.fetchSpotList(
             latitude = location.latitude,
             longitude = location.longitude,
@@ -51,9 +46,13 @@ class SpotListViewModel @Inject constructor(
                     ?: SpotListUiState.Success(it, false)
             }
         }.onFailure {
-            delay(1000)
-            reduce {
-                if (BuildConfig.DEBUG)
+            if (BuildConfig.DEBUG.not()) {
+                reduce {
+                    SpotListUiState.LoadFailed
+                }
+            } else {
+                delay(1500)
+                reduce {
                     (state as? SpotListUiState.Success)?.copy(
                         spotList = spotListMock,
                         isRefreshing = false
@@ -61,14 +60,43 @@ class SpotListViewModel @Inject constructor(
                         spotList = spotListMock,
                         isRefreshing = false
                     )
-
-                else SpotListUiState.LoadFailed
+                }
             }
         }
+    }
 
+    fun onLocationReady(newLocation: Location) = intent {
         runOn<SpotListUiState.Success> {
-            reduce {
-                state.copy()
+            spotRepository.fetchSpotList(
+                latitude = newLocation.latitude,
+                longitude = newLocation.longitude,
+                condition = state.currentCondition?.toCondition()!!, // TODO API 논의
+                walkingTime = (if (state.currentCondition?.spotType == SpotType.RESTAURANT)
+                    state.currentCondition?.restaurantWalkingTime else state.currentCondition?.cafeWalkingTime)!!.value, // TODO API 논의
+                priceRange = (if (state.currentCondition?.spotType == SpotType.RESTAURANT)
+                    state.currentCondition?.restaurantPriceRange?.value else state.currentCondition?.cafePriceRange?.value)!! // TODO API 논의
+            ).onSuccess {
+                reduce {
+                    (state as? SpotListUiState.Success)?.copy(spotList = it)
+                        ?: SpotListUiState.Success(it, false)
+                }
+            }.onFailure {
+                if (BuildConfig.DEBUG.not()) {
+                    reduce {
+                        SpotListUiState.LoadFailed
+                    }
+                } else {
+                    delay(1500)
+                    reduce {
+                        (state as? SpotListUiState.Success)?.copy(
+                            spotList = spotListMock,
+                            isRefreshing = false
+                        ) ?: SpotListUiState.Success(
+                            spotList = spotListMock,
+                            isRefreshing = false
+                        )
+                    }
+                }
             }
         }
     }
@@ -122,19 +150,6 @@ sealed interface SpotListUiState {
     data object Loading : SpotListUiState
     data object LoadFailed: SpotListUiState
 }
-
-@Immutable
-data class ConditionState(
-    val spotType: SpotType,
-    val restaurantFeatureOptionType: List<OptionType.RestaurantFeatureOptionType>,
-    val companionTypeOptionType: List<OptionType.CompanionTypeOptionType>,
-    val cafeFeatureOptionType: List<OptionType.CafeFeatureOptionType>,
-    val visitPurposeOptionType: List<OptionType.VisitPurposeOptionType>,
-    val restaurantWalkingTime: AvailableWalkingTimeType,
-    val cafeWalkingTime: AvailableWalkingTimeType,
-    val restaurantPriceRange: RestaurantPriceRangeType,
-    val cafePriceRange: CafePriceRangeType
-)
 
 sealed interface SpotListSideEffect {
     data class NavigateToSpotDetail(val id: Int) : SpotListSideEffect
