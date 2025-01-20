@@ -71,8 +71,8 @@ fun PrefResultLoadingScreen(
         postOnboardingResult()
     }
 
-    var lottieRes = 0
-    var loadingText = ""
+    var lottieRes : Int
+    var loadingText : String
 
     when (screenState) {
         is PrefResultLoadingScreenState.Loading -> {
@@ -144,6 +144,10 @@ fun PrefResultLoadingScreen(
                 }
             }
 
+        }
+
+        PrefResultLoadingScreenState.LoadFailed -> {
+            Text(text = "load failed")
         }
     }
 }

@@ -1,10 +1,11 @@
 package com.acon.feature.onboarding.screen.PrefResultLoadingScreen
 
+import android.util.Log
 import com.acon.core.utils.feature.base.BaseContainerHost
+import com.acon.domain.error.onboarding.PostOnboardingResultError
 import com.acon.domain.repository.OnboardingRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
-import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
 
@@ -33,8 +34,42 @@ class PrefResultLoadingScreenViewModel @Inject constructor(
             }
             delay(2000L)
             navigateToSpotListView()
-        }.onFailure {
-            //실패하면 어케함?
+        }.onFailure { throwable ->
+            when (throwable) {
+                is PostOnboardingResultError.InvalidDislikeFood -> Log.e(
+                    "OnboardingError",
+                    "Invalid Dislike Food: ${throwable.code}"
+                )
+                is PostOnboardingResultError.InvalidCuisine -> Log.e(
+                    "OnboardingError",
+                    "Invalid Cuisine: ${throwable.code}"
+                )
+                is PostOnboardingResultError.InvalidSpotType -> Log.e(
+                    "OnboardingError",
+                    "Invalid Spot Type: ${throwable.code}"
+                )
+                is PostOnboardingResultError.InvalidSpotStyle -> Log.e(
+                    "OnboardingError",
+                    "Invalid Spot Style: ${throwable.code}"
+                )
+                is PostOnboardingResultError.InvalidSpotRank -> Log.e(
+                    "OnboardingError",
+                    "Invalid Spot Rank: ${throwable.code}"
+                )
+                is PostOnboardingResultError.InvalidFavSpotRankSize -> Log.e(
+                    "OnboardingError",
+                    "Invalid Favorite Spot Rank Size: ${throwable.code}"
+                )
+                is PostOnboardingResultError.InvalidFavCuisineRankSize -> Log.e(
+                    "OnboardingError",
+                    "Invalid Favorite Cuisine Rank Size: ${throwable.code}"
+                )
+                else -> Log.e(
+                    "OnboardingError",
+                    "Unexpected Error: ${throwable.localizedMessage}",
+                    throwable
+                )
+            }
         }
     }
 
@@ -46,6 +81,7 @@ class PrefResultLoadingScreenViewModel @Inject constructor(
 sealed interface PrefResultLoadingScreenState {
     data object Loading : PrefResultLoadingScreenState
     data object LoadSucceed : PrefResultLoadingScreenState
+    data object LoadFailed: PrefResultLoadingScreenState
 }
 
 
