@@ -27,6 +27,7 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -50,6 +51,7 @@ import com.acon.feature.spot.type.FloatingButtonType
 import com.github.fengdai.compose.pulltorefresh.PullToRefresh
 import com.github.fengdai.compose.pulltorefresh.rememberPullToRefreshState
 import dev.chrisbanes.haze.hazeSource
+import kotlinx.coroutines.launch
 
 @Composable
 internal fun SpotListScreen(
@@ -62,6 +64,7 @@ internal fun SpotListScreen(
     onSpotItemClick: (id: Int) -> Unit = {},
 ) {
     val scrollState = rememberScrollState()
+    val coroutineScope = rememberCoroutineScope()
     val isDragged by scrollState.interactionSource.collectIsDraggedAsState()
 
     var scrollableScreenHeightPx by remember {
@@ -85,7 +88,7 @@ internal fun SpotListScreen(
                 }
         }
     }
-    
+
     Surface(
         modifier = modifier.onSizeChanged {
             fullVisibleScreenHeight = it.height
@@ -99,7 +102,12 @@ internal fun SpotListScreen(
                         hazeState = LocalHazeState.current,
                         condition = state.currentCondition,
                         onComplete = onCompleteFilter,
-                        onReset = onResetFilter,
+                        onReset = {
+                            onResetFilter()
+                            coroutineScope.launch {
+                                scrollState.scrollTo(0)
+                            }
+                        },
                         onDismissRequest = {
                             onFilterBottomSheetShowStateChange(false)
                         },
