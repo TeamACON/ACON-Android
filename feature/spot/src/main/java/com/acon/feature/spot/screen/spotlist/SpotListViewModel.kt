@@ -25,10 +25,6 @@ class SpotListViewModel @Inject constructor(
 
         }
 
-    fun onLocationFetched(location: Location) = intent {
-
-    }
-
     fun fetchInitialSpots(location: Location) = intent {
         spotRepository.fetchSpotList(
             latitude = location.latitude,
@@ -91,7 +87,6 @@ class SpotListViewModel @Inject constructor(
         }
     }
 
-    // TODO : Parameters
     fun onRefresh(location: Location) = intent {
         runOn<SpotListUiState.Success> {
             reduce {
@@ -109,11 +104,12 @@ class SpotListViewModel @Inject constructor(
         }
     }
 
-    fun onResetFilter() = intent {
+    fun onResetFilter(location: Location) = intent {
         runOn<SpotListUiState.Success> {
             reduce {
-                state.copy(showFilterBottomSheet = false, currentCondition = null)
+                SpotListUiState.Loading
             }
+            fetchInitialSpots(location)
         }
     }
 

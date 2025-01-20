@@ -44,9 +44,8 @@ fun SpotListScreenContainer(
             }
         }, onFilterBottomSheetShowStateChange = viewModel::onFilterBottomSheetStateChange,
         onResetFilter = {
-            viewModel.onResetFilter()
             context.onLocationReady {
-                viewModel.onLocationReady(it)
+                viewModel.onResetFilter(it)
             }
         },
         onCompleteFilter = { condition ->

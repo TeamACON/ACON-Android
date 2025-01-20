@@ -85,6 +85,7 @@ internal fun SpotListScreen(
                 }
         }
     }
+    
     Surface(
         modifier = modifier.onSizeChanged {
             fullVisibleScreenHeight = it.height
