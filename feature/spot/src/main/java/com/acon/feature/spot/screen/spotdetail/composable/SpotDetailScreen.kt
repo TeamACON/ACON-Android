@@ -6,16 +6,13 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -28,10 +25,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import coil3.compose.AsyncImage
+import com.acon.core.designsystem.blur.LocalHazeState
+import com.acon.core.designsystem.blur.defaultHazeEffect
 import com.acon.core.designsystem.theme.AconTheme
 import com.acon.domain.model.spot.SpotDetailInfo
 import com.acon.domain.type.SpotType
@@ -41,25 +42,27 @@ import com.acon.feature.spot.screen.spotdetail.composable.component.MoveToTopFAB
 import com.acon.feature.spot.screen.spotdetail.composable.component.RestaurantBottomActionBar
 import com.acon.feature.spot.screen.spotdetail.composable.component.SpotChip
 import com.acon.feature.spot.screen.spotdetail.composable.component.SpotDetailTopBar
+import dev.chrisbanes.haze.hazeSource
 import kotlinx.coroutines.launch
 
 @Composable
 internal fun SpotDetailScreen(
     state: SpotDetailUiState,
     modifier: Modifier = Modifier,
-    onNavigateToSpotListScreen: () -> Unit = {},
+    onNavigateToSpotListView: () -> Unit = {},
+    onFindWayButtonClick: () -> Unit,
 ) {
-    val scrollState = rememberLazyListState()
+    val scrollState = rememberScrollState()
     val scope = rememberCoroutineScope()
     val scrollIsAtTop by remember {
         derivedStateOf {
-            scrollState.firstVisibleItemIndex == 0 && scrollState.firstVisibleItemScrollOffset == 0
+            scrollState.value == 0
         }
     }
 
     Surface(
-        modifier = modifier
-            .background(AconTheme.color.Gray9)
+        modifier = modifier,
+        color = AconTheme.color.Gray9
     ) {
         when(state) {
             is SpotDetailUiState.Success -> {
@@ -67,85 +70,83 @@ internal fun SpotDetailScreen(
                     modifier = Modifier
                         .fillMaxSize()
                 ) {
-                    Spacer(modifier = Modifier.height(24.dp))
-                    SpotDetailTopBar(
-                        storeName = state.spotDetailInfo.name,
-                        spotType = state.spotDetailInfo.spotType,
-                        onLeadingIconClicked = onNavigateToSpotListScreen,
-                    )
-
                     Box(
                         modifier = Modifier
-                            .fillMaxSize()
                             .weight(1f)
                     ) {
-                        LazyColumn(
-                            state = scrollState,
+                        SpotDetailTopBar(
+                            storeName = state.spotDetailInfo.name,
+                            spotType = state.spotDetailInfo.spotType,
+                            onLeadingIconClicked = onNavigateToSpotListView,
+                            modifier = Modifier
+                                .background(AconTheme.color.Black)
+                                .defaultHazeEffect(
+                                    hazeState = LocalHazeState.current,
+                                    tintColor = AconTheme.color.Gla_b_30,
+                                )
+                                .zIndex(1f)
+                        )
+                        Column(
                             modifier = Modifier
                                 .fillMaxSize()
+                                .verticalScroll(scrollState)
+                                .padding(top = 58.dp)
+                                .hazeSource(LocalHazeState.current)
                         ) {
-                            item {
-                                Box(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .aspectRatio(90f / 49f)
-                                        //.height(196.dp) // 임시 수치
-                                        .background(AconTheme.color.Gray5)
-                                ) {
-                                    AsyncImage(
-                                        model = state.spotDetailInfo.imageList[0],
-                                        contentDescription = "가게 이미지",
-                                        modifier = Modifier.fillMaxSize(),
-                                        contentScale = ContentScale.Crop,
-                                    )
-                                }
-                            }
+                            AsyncImage(
+                                model = state.spotDetailInfo.imageList[0],
+                                contentDescription = stringResource(com.acon.feature.spot.R.string.spot_store_image),
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .aspectRatio(360f / 290f)
+                                    .hazeSource(LocalHazeState.current),
+                                contentScale = ContentScale.Crop,
+                            )
 
-                            item {
-                                SpotChip(
-                                    title = state.spotDetailInfo.name,
-                                    selected = state.spotDetailInfo.openStatus,
+                            SpotChip(
+                                title = state.spotDetailInfo.name,
+                                selected = state.spotDetailInfo.openStatus,
+                                modifier = Modifier
+                                    .padding(start = 16.dp, top = 20.dp)
+                                    .hazeSource(LocalHazeState.current)
+                            )
+                            Row(
+                                modifier = Modifier
+                                    .padding(start = 20.dp, top = 8.dp)
+                                    .hazeSource(LocalHazeState.current)
+                            ) {
+                                Image(
+                                    imageVector = ImageVector.vectorResource(
+                                        com.acon.core.designsystem.R.drawable.ic_location_gray_20
+                                    ),
+                                    contentDescription = stringResource(com.acon.feature.spot.R.string.spot_gps_icon)
+                                )
+                                Text(
+                                    text = state.spotDetailInfo.address,
+                                    style = AconTheme.typography.body2_14_reg,
+                                    color = AconTheme.color.Gray4,
                                     modifier = Modifier
-                                        .padding(start = 20.dp, top = 16.dp)
+                                        .padding(start = 4.dp)
                                 )
                             }
-                            item {
-                                Row(
-                                    modifier = Modifier
-                                        .padding(start = 20.dp, top = 8.dp)
-                                ) {
-                                    Image(
-                                        imageVector = ImageVector.vectorResource(
-                                            com.acon.core.designsystem.R.drawable.ic_location_gray_16
-                                        ),
-                                        contentDescription = "위치 아이콘"
-                                    )
-                                    Text(
-                                        text = state.spotDetailInfo.address,
-                                        style = AconTheme.typography.body4_12_reg,
-                                        color = AconTheme.color.Gray4,
-                                        modifier = Modifier
-                                            .padding(start = 2.dp, top = 1.dp, bottom = 1.dp)
-                                    )
-                                }
-                            }
 
-                            item {
-                                Spacer(modifier = Modifier.height(40.dp))
-                            }
-
-                            stickyHeader {
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .background(AconTheme.color.Gray9)
+                                    .padding(top = 40.dp)
+                            ) {
                                 Column(
                                     modifier = Modifier
                                         .padding(start = 20.dp)
                                         .width(intrinsicSize = IntrinsicSize.Max),
                                 ) {
                                     Text(
-                                        text = "메뉴",
-                                        style = AconTheme.typography.subtitle2_14_med,
+                                        text = stringResource(com.acon.feature.spot.R.string.spot_detail_tab_menu),
+                                        style = AconTheme.typography.subtitle1_16_med,
                                         color = AconTheme.color.White,
                                         modifier = Modifier
-                                            .padding(horizontal = 20.dp, vertical = 8.dp)
+                                            .padding(horizontal = 17.dp, vertical = 10.dp)
                                     )
                                     HorizontalDivider(
                                         color = AconTheme.color.White,
@@ -156,29 +157,21 @@ internal fun SpotDetailScreen(
                                 }
                             }
 
-                            item {
-                                Spacer(modifier = Modifier.height(17.dp))
-                            }
-
-                            itemsIndexed(
-                                items = state.spotDetailMenuList,
-                                key = { _, menu ->
-                                    menu.id
-                                }
-                            ) { _, menu ->
+                            List(state.spotDetailMenuList.size) { index ->
                                 MenuItem(
-                                    menu = menu,
+                                    menu = state.spotDetailMenuList[index],
                                     modifier = Modifier
-                                        .padding(horizontal = 20.dp)
+                                        .background(AconTheme.color.Gray9)
+                                        .padding(start = 20.dp, end = 20.dp, top = 17.dp)
+                                        .hazeSource(LocalHazeState.current),
                                 )
                             }
                         }
-
                         MoveToTopFAB(
                             onClickFab = {
                                 scope.launch {
                                     if (!scrollIsAtTop) {
-                                        scrollState.animateScrollToItem(index = 0)
+                                        scrollState.animateScrollTo(0)
                                     }
                                 }
                             },
@@ -186,24 +179,30 @@ internal fun SpotDetailScreen(
                                 .align(alignment = Alignment.BottomEnd)
                                 .padding(end = 20.dp, bottom = 16.dp)
                         )
+
                     }
+
                     RestaurantBottomActionBar(
                         localAcornCount = state.spotDetailInfo.localAcornCount,
                         basicAcornCount = state.spotDetailInfo.basicAcornCount,
-                        onClickFindDirections = {},
+                        onClickFindDirections = {
+                            onFindWayButtonClick() },
                         modifier = Modifier
-                            .fillMaxWidth()
+                            .background(AconTheme.color.Black)
+                            .defaultHazeEffect(
+                                hazeState = LocalHazeState.current,
+                                tintColor = AconTheme.color.Gla_b_30,
+                            )
                     )
                 }
             }
             is SpotDetailUiState.Loading -> {
-
+                // TODO : 로딩중 - 스켈레톤 뷰
             }
             is SpotDetailUiState.LoadFailed -> {
                 // TODO : 로드 실패 뷰
             }
         }
-
     }
 }
 
@@ -227,7 +226,8 @@ private fun SpotDetailScreenPreview() {
                 ),
                 spotDetailMenuList = emptyList()
             ),
-            onNavigateToSpotListScreen = {}
+            onNavigateToSpotListView = {},
+            onFindWayButtonClick = {}
         )
     }
 }
