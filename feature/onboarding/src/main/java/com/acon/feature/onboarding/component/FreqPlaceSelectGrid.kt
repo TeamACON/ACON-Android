@@ -76,6 +76,8 @@ fun PlaceCard(
         Box(
             modifier = Modifier
                 .fillMaxSize()
+                .clip(RoundedCornerShape(6.dp))
+                .aspectRatio(0.5f)
                 .clickable { onCardClicked(text) },
             contentAlignment = Alignment.Center
         ){
@@ -96,7 +98,7 @@ fun PlaceCard(
                 Image(
                     imageVector = ImageVector.vectorResource(com.acon.core.designsystem.R.drawable.ic_check_44),
                     contentDescription = "Clicked",
-                    modifier = Modifier.size(44.dp)
+                    modifier = Modifier.size(48.dp)
                 )
             }
         }

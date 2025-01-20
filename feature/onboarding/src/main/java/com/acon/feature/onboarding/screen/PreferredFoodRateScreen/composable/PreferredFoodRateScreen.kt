@@ -76,8 +76,6 @@ fun PreferredFoodRateScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(vertical = 20.dp),
-                    //.weight(1f),
-                    //contentAlignment = Alignment.Center
                 ){
                     PreferFoodTypeSelectGrid(
                         modifier = modifier

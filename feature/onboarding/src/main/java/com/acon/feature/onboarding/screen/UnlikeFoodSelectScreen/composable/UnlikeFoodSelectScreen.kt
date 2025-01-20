@@ -26,10 +26,6 @@ import com.acon.feature.onboarding.component.OnboardingTopBar
 import com.acon.feature.onboarding.screen.UnlikeFoodSelectScreen.UnlikeFoodScreenState
 import com.acon.feature.onboarding.type.FoodItems
 
-/*
-* TODO: 탑바 다음 버튼 버그 (없음 누르고 취소하면 안없어짐)
-*/
-
 @Composable
 fun UnlikeFoodScreen(
     modifier: Modifier = Modifier,
