@@ -1,6 +1,7 @@
 package com.acon.feature.spot.screen.spotlist
 
 import android.location.Location
+import androidx.compose.runtime.Immutable
 import com.acon.core.utils.feature.base.BaseContainerHost
 import com.acon.domain.model.spot.Condition
 import com.acon.domain.model.spot.Spot
@@ -131,6 +132,7 @@ class SpotListViewModel @Inject constructor(
 }
 
 sealed interface SpotListUiState {
+    @Immutable
     data class Success(
         val spotList: List<Spot>,
         val isRefreshing: Boolean = false,
