@@ -3,6 +3,7 @@ package com.acon.feature.spot.screen.spotlist.composable.bottomsheet
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -151,7 +152,7 @@ fun SpotFilterBottomSheet(
             ) {
                 Text(
                     text = stringResource(R.string.filter_detail),
-                    style = AconTheme.typography.head8_16_sb,
+                    style = AconTheme.typography.head6_20_sb,
                     color = AconTheme.color.White
                 )
                 Icon(
@@ -173,14 +174,14 @@ fun SpotFilterBottomSheet(
             ) {
                 Text(
                     text = stringResource(R.string.visit_spot),
-                    style = AconTheme.typography.subtitle2_14_med,
+                    style = AconTheme.typography.head7_18_sb,
                     color = AconTheme.color.White,
                 )
                 SpotTypeTabRow(
                     modifier = Modifier
                         .clip(RoundedCornerShape(6.dp))
                         .padding(top = 12.dp)
-                        .background(AconTheme.color.Gray8)
+                        .background(color = AconTheme.color.Gray8, shape = RoundedCornerShape(6.dp))
                         .padding(4.dp),
                     selectedSpotType = selectedSpotType,
                     onSpotTypeSelected = {
@@ -267,7 +268,7 @@ fun SpotFilterBottomSheet(
                     .background(AconTheme.color.Black)
                     .defaultHazeEffect(hazeState, tintColor = AconTheme.color.Gla_b_30, alpha = .6f)
                     .padding(horizontal = 20.dp)
-                    .padding(top = 8.dp, bottom = 32.dp),
+                    .padding(top = 10.dp, bottom = 32.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Row(
@@ -282,7 +283,7 @@ fun SpotFilterBottomSheet(
                     )
                     Text(
                         text = stringResource(R.string.filter_reset),
-                        style = AconTheme.typography.subtitle2_14_med,
+                        style = AconTheme.typography.subtitle1_16_med,
                         color = AconTheme.color.White,
                         modifier = Modifier.padding(start = 7.dp)
                     )
@@ -296,6 +297,7 @@ fun SpotFilterBottomSheet(
                         containerColor = AconTheme.color.Gray5,
                         contentColor = AconTheme.color.White
                     ),
+                    contentPadding = PaddingValues(vertical = 12.dp),
                     onClick = {
                         onComplete(
                             ConditionState(
@@ -314,7 +316,7 @@ fun SpotFilterBottomSheet(
                 ) {
                     Text(
                         text = stringResource(R.string.filter_see_result),
-                        style = AconTheme.typography.head8_16_sb,
+                        style = AconTheme.typography.subtitle1_16_med,
                         color = AconTheme.color.White
                     )
                 }
@@ -360,9 +362,9 @@ private fun SpotTypeTab(
         contentAlignment = Alignment.Center
     ) {
         Text(
-            modifier = Modifier.padding(vertical = 6.dp),
+            modifier = Modifier.padding(vertical = 8.dp),
             text = stringResource(spotType.getNameResId()),
-            style = AconTheme.typography.subtitle2_14_med,
+            style = AconTheme.typography.subtitle1_16_med,
             color = if (isSelected) AconTheme.color.Gray9 else AconTheme.color.Gray5
         )
     }

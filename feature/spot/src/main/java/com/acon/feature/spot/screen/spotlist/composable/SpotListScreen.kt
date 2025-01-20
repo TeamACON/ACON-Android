@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -39,7 +40,6 @@ import com.acon.feature.spot.screen.spotlist.ConditionState
 import com.acon.feature.spot.screen.spotlist.SpotListUiState
 import com.acon.feature.spot.screen.spotlist.composable.bottomsheet.SpotFilterBottomSheet
 import com.acon.feature.spot.type.FloatingButtonType
-import com.acon.feature.spot.type.SpotShowType
 import com.github.fengdai.compose.pulltorefresh.PullToRefresh
 import com.github.fengdai.compose.pulltorefresh.rememberPullToRefreshState
 import dev.chrisbanes.haze.hazeSource
@@ -113,28 +113,28 @@ internal fun SpotListScreen(
                             } else {
                                 Text(
                                     text = stringResource(R.string.spot_recommendation_description),
-                                    style = AconTheme.typography.head7_18_sb,
+                                    style = AconTheme.typography.head6_20_sb,
                                     color = AconTheme.color.White,
                                     modifier = Modifier.padding(top = 16.dp)
                                 )
                                 Spacer(modifier = Modifier.height(12.dp))
                                 state.spotList.fastForEach { spot ->
-                                    val isFirstRank =
-                                        state.spotShowType == SpotShowType.BEST1 && spot === state.spotList.first()
+                                    val isFirstRank = spot === state.spotList.first()
                                     SpotItem(
                                         spot = spot,
                                         isFirstRank = isFirstRank,
                                         modifier = Modifier
+                                            .fillMaxWidth()
+                                            .aspectRatio(if (isFirstRank) 328f / 408f else 328f / 128f)
                                             .clickable {
                                                 onSpotItemClick(spot.id)
-                                            }
-                                            .weight(if (isFirstRank) 3f else 1f),
+                                            },
                                     )
                                     if (spot !== state.spotList.last())
                                         Spacer(modifier = Modifier.height(12.dp))
                                 }
                             }
-                            Spacer(modifier = Modifier.height(4.dp))
+                            Spacer(modifier = Modifier.height(46.dp))
                         }
                     }
                     Column(
@@ -147,7 +147,14 @@ internal fun SpotListScreen(
                         FloatingButtonType.entries.fastForEach {
                             Icon(
                                 imageVector = ImageVector.vectorResource(it.iconRes),
-                                tint = if (it.enabled) AconTheme.color.White else AconTheme.color.Gray5,
+                                tint = if (it == FloatingButtonType.FILTER) {
+                                    if (state.currentCondition != null)
+                                        AconTheme.color.Main_org1
+                                    else
+                                        AconTheme.color.White
+                                } else {
+                                    if (it.enabled) AconTheme.color.White else AconTheme.color.Gray5
+                                },
                                 contentDescription = stringResource(it.contentDescriptionRes),
                                 modifier = Modifier
                                     .clip(CircleShape)
@@ -167,8 +174,7 @@ internal fun SpotListScreen(
                                                 }
                                             }
                                         }
-                                    }
-                                    .padding(10.dp)
+                                    }.padding(10.dp)
                             )
                         }
                     }
@@ -224,7 +230,7 @@ internal fun SpotListScreen(
 @Composable
 private fun SpotListScreenPreview() {
     SpotListScreen(
-        state = SpotListUiState.Success(emptyList(), SpotShowType.BEST1)
+        state = SpotListUiState.Success(emptyList())
     )
 }
 

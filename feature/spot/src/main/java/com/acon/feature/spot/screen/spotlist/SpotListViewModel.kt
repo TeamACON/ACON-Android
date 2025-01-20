@@ -9,12 +9,10 @@ import com.acon.domain.repository.SpotRepository
 import com.acon.domain.type.OptionType
 import com.acon.domain.type.SpotType
 import com.acon.feature.spot.BuildConfig
-import com.acon.feature.spot.mock.spotListMock1
-import com.acon.feature.spot.mock.spotListMock2
+import com.acon.feature.spot.mock.spotListMock
 import com.acon.feature.spot.type.AvailableWalkingTimeType
 import com.acon.feature.spot.type.CafePriceRangeType
 import com.acon.feature.spot.type.RestaurantPriceRangeType
-import com.acon.feature.spot.type.SpotShowType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import org.orbitmvi.orbit.annotation.OrbitExperimental
@@ -50,19 +48,17 @@ class SpotListViewModel @Inject constructor(
         ).onSuccess {
             reduce {
                 (state as? SpotListUiState.Success)?.copy(spotList = it)
-                    ?: SpotListUiState.Success(it, SpotShowType.BEST1, false)
+                    ?: SpotListUiState.Success(it, false)
             }
         }.onFailure {
             delay(1000)
             reduce {
                 if (BuildConfig.DEBUG)
                     (state as? SpotListUiState.Success)?.copy(
-                        spotList = if (debugRefresher % 2 == 0) spotListMock1 else spotListMock2,
-                        spotShowType = if (debugRefresher++ % 2 == 0) SpotShowType.BEST1 else SpotShowType.BEST2,
+                        spotList = spotListMock,
                         isRefreshing = false
                     ) ?: SpotListUiState.Success(
-                        if (debugRefresher % 2 == 0) spotListMock1 else spotListMock2,
-                        if (debugRefresher++ % 2 == 0) SpotShowType.BEST1 else SpotShowType.BEST2,
+                        spotList = spotListMock,
                         isRefreshing = false
                     )
 
@@ -119,7 +115,6 @@ class SpotListViewModel @Inject constructor(
 sealed interface SpotListUiState {
     data class Success(
         val spotList: List<Spot>,
-        val spotShowType: SpotShowType,
         val isRefreshing: Boolean = false,
         val currentCondition: ConditionState? = null,
         val showFilterBottomSheet: Boolean = false
