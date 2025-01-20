@@ -16,7 +16,7 @@ internal fun OptionType.RestaurantFeatureOptionType.getNameResId(): Int {
         OptionType.RestaurantFeatureOptionType.WESTERN -> R.string.western
         OptionType.RestaurantFeatureOptionType.CHINESE -> R.string.chinese
         OptionType.RestaurantFeatureOptionType.JAPANESE -> R.string.japanese
-        OptionType.RestaurantFeatureOptionType.SNACK -> R.string.snack
+        OptionType.RestaurantFeatureOptionType.KOREAN_STREET -> R.string.korean_street
         OptionType.RestaurantFeatureOptionType.ASIAN -> R.string.asian
         OptionType.RestaurantFeatureOptionType.BAR -> R.string.bar
         OptionType.RestaurantFeatureOptionType.EXCLUDE_FRANCHISE -> R.string.exclude_franchise

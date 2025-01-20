@@ -7,7 +7,7 @@ sealed interface OptionType {
     }
 
     enum class RestaurantFeatureOptionType : OptionType {
-        KOREAN, WESTERN, CHINESE, JAPANESE, SNACK, ASIAN, BAR, EXCLUDE_FRANCHISE
+        KOREAN, WESTERN, CHINESE, JAPANESE, KOREAN_STREET, ASIAN, BAR, EXCLUDE_FRANCHISE
     }
 
     enum class CafeFeatureOptionType : OptionType {
