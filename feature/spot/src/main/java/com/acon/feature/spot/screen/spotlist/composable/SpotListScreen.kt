@@ -1,6 +1,9 @@
 package com.acon.feature.spot.screen.spotlist.composable
 
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.SpringSpec
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.collectIsDraggedAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -19,13 +22,17 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -55,9 +62,33 @@ internal fun SpotListScreen(
     onSpotItemClick: (id: Int) -> Unit = {},
 ) {
     val scrollState = rememberScrollState()
+    val isDragged by scrollState.interactionSource.collectIsDraggedAsState()
 
+    var scrollableScreenHeightPx by remember {
+        mutableIntStateOf(0)
+    }
+    var scrollableInvisibleHeightPx by remember {
+        mutableIntStateOf(0)
+    }
+    var fullVisibleScreenHeight by remember {
+        mutableIntStateOf(0)
+    }
+
+    LaunchedEffect(scrollState.value, isDragged) {
+        if (isDragged.not()) {
+            if (scrollState.value != 0 && scrollableScreenHeightPx != 0 && scrollableInvisibleHeightPx != 0 && fullVisibleScreenHeight != 0)
+                if (scrollState.value > scrollableScreenHeightPx - scrollableInvisibleHeightPx - fullVisibleScreenHeight) {
+                    scrollState.animateScrollTo(
+                        value = scrollState.maxValue - scrollableInvisibleHeightPx,
+                        animationSpec = SpringSpec(stiffness = Spring.StiffnessHigh)
+                    )
+                }
+        }
+    }
     Surface(
-        modifier = modifier,
+        modifier = modifier.onSizeChanged {
+            fullVisibleScreenHeight = it.height
+        },
         color = AconTheme.color.Gray9
     ) {
         when (state) {
@@ -103,6 +134,9 @@ internal fun SpotListScreen(
                                 .verticalScroll(scrollState)
                                 .padding(horizontal = 20.dp)
                                 .hazeSource(LocalHazeState.current)
+                                .onSizeChanged { size ->
+                                    scrollableScreenHeightPx = size.height
+                                }
                         ) {
                             Spacer(modifier = Modifier.height(44.dp))
                             Text(
@@ -137,7 +171,22 @@ internal fun SpotListScreen(
                                         Spacer(modifier = Modifier.height(12.dp))
                                 }
                             }
-                            Spacer(modifier = Modifier.height(46.dp))
+                            Column(
+                                modifier = Modifier
+                                    .padding(top = 12.dp)
+                                    .fillMaxWidth()
+                                    .onSizeChanged { size ->
+                                        scrollableInvisibleHeightPx = size.height
+                                    },
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                Text(
+                                    modifier = Modifier.padding(top = 38.dp, bottom = 50.dp),
+                                    text = stringResource(R.string.alert_max_spot_count),
+                                    style = AconTheme.typography.body2_14_reg,
+                                    color = AconTheme.color.Gray5
+                                )
+                            }
                         }
                     }
                     Column(

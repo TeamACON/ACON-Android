@@ -8,6 +8,7 @@
     <string name="cafe">카페</string>
     <string name="walking_time">%s분</string>
     <string name="alert_no_spot">앗! 일치하는 도토리 맛집이 없어요</string>
+    <string name="alert_max_spot_count">장소는 최대 6순위까지만 제공됩니다</string>
 
     <string name="korean">한식</string>
     <string name="chinese">중식</string>
