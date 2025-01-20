@@ -4,19 +4,52 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.acon.core.map.onLocationReady
+import com.acon.feature.spot.openNaverMap
+import com.acon.feature.spot.screen.spotdetail.SpotDetailSideEffect
 import com.acon.feature.spot.screen.spotdetail.SpotDetailViewModel
 import org.orbitmvi.orbit.compose.collectAsState
+import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
 fun SpotDetailScreenContainer(
+    onNavigateToSpotListView: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: SpotDetailViewModel = hiltViewModel()
 ) {
+    val context = LocalContext.current
     val state by viewModel.collectAsState()
 
     SpotDetailScreen(
         state = state,
         modifier = modifier.fillMaxSize(),
+        onNavigateToSpotListView = {
+            viewModel.navigateToSpotListView()
+        },
+        onFindWayButtonClick = { ->
+            context.onLocationReady {
+                viewModel.onFindWay(it)
+            }
+        },
     )
+
+    viewModel.collectSideEffect { sideEffect ->
+        when(sideEffect) {
+            is SpotDetailSideEffect.NavigateToSpotListView -> {
+                onNavigateToSpotListView()
+            }
+            is SpotDetailSideEffect.OnFindWayButtonClick -> {
+                openNaverMap(
+                    context = context,
+                    location = sideEffect.location,
+                    destinationLat = sideEffect.destinationLat,
+                    destinationLng = sideEffect.destinationLng,
+                    destinationName = sideEffect.destinationName
+                )
+            }
+        }
+    }
+
 }
