@@ -129,7 +129,7 @@ fun PreferredPlaceRateScreen(
                     modifier = modifier.padding(vertical = 7.dp)
                 )
                 Text(
-                    text = "선호하는 맛집 순위를 매겨주세요.",
+                    text = "선호하는 맛집 스타일의\n순위를 매겨주세요",
                     color = Color.White,
                     style = AconTheme.typography.head4_24_sb,
                 )
