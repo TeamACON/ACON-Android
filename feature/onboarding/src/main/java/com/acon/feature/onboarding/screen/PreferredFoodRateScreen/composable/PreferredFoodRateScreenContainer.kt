@@ -2,8 +2,10 @@ package com.acon.feature.onboarding.screen.PreferredFoodRateScreen.composable
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.acon.core.designsystem.component.dialog.AconTwoButtonDialog
+import com.acon.feature.onboarding.R
 import com.acon.feature.onboarding.screen.PreferredFoodRateScreen.PreferredFoodRateScreenViewModel
 import com.acon.feature.onboarding.screen.PreferredFoodRateScreen.RatePreferFoodScreenSideEffect
 import org.orbitmvi.orbit.compose.collectAsState
@@ -42,10 +44,10 @@ fun PreferredFoodRateScreenContainer(
 
     if (state.openCloseDialog) {
         AconTwoButtonDialog(
-            title = "취향분석을 그만둘까요?",
-            content = "선호도 조사만이 남아있어요!\n1분 내로 빠르게 끝내실 수 있어요.",
-            leftButtonContent = "그만두기",
-            rightButtonContent = "계속하기",
+            title = stringResource(R.string.onboarding_alert_title),
+            content = stringResource(R.string.onboarding_alert_description),
+            leftButtonContent = stringResource(R.string.onboarding_alert_left_btn),
+            rightButtonContent = stringResource(R.string.onboarding_alert_right_btn),
             contentImage = 0,
             onDismissRequest = {
                 viewModel.hideDialog()

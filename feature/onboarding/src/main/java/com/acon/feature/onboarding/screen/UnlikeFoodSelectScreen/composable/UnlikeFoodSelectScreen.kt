@@ -13,10 +13,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.acon.core.designsystem.component.button.AconFilledLargeButton
 import com.acon.core.designsystem.theme.AconTheme
+import com.acon.feature.onboarding.R
 import com.acon.feature.onboarding.component.FoodGrid
 import com.acon.feature.onboarding.component.OnboardingTopBar
 import com.acon.feature.onboarding.screen.UnlikeFoodSelectScreen.UnlikeFoodScreenState
@@ -41,7 +43,6 @@ fun UnlikeFoodScreen(
             .fillMaxSize()
             .background(color = AconTheme.color.Gray9)
     ){
-
         OnboardingTopBar(
             totalPages = screenState.totalPages,
             currentPage = screenState.currentPage,
@@ -73,7 +74,7 @@ fun UnlikeFoodScreen(
                         modifier = modifier.padding(vertical = 7.dp)
                     )
                     Text(
-                        text = "싫어하는 음식을 선택해주세요",
+                        text = stringResource(R.string.onboarding_1_title),
                         color = Color.White,
                         style = AconTheme.typography.head4_24_sb,
                     )

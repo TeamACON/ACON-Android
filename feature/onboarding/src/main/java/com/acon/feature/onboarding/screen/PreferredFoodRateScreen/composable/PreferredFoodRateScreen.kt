@@ -13,10 +13,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.acon.core.designsystem.component.button.AconFilledLargeButton
 import com.acon.core.designsystem.theme.AconTheme
+import com.acon.feature.onboarding.R
 import com.acon.feature.onboarding.component.OnboardingTopBar
 import com.acon.feature.onboarding.component.PreferFoodTypeSelectGrid
 import com.acon.feature.onboarding.screen.PreferredFoodRateScreen.RatePreferFoodScreenState
@@ -65,7 +67,7 @@ fun PreferredFoodRateScreen(
                     modifier = modifier.padding(vertical = 7.dp)
                 )
                 Text(
-                    text = "선호 음식 Top3까지 순위를 매겨주세요",
+                    text = stringResource(R.string.onboarding_2_title),
                     color = Color.White,
                     style = AconTheme.typography.head4_24_sb,
                 )
