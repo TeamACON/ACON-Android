@@ -28,6 +28,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.acon.core.designsystem.theme.AconTheme
@@ -116,12 +117,6 @@ fun FoodTypeCard(
                             contentDescription = "Clicked",
                             modifier = Modifier.size(44.dp)
                         )
-//                        Text(
-//                            text = "${selectedCard.indexOf(text) + 1}",
-//                            style = AconTheme.typography.head8_16_sb,
-//                            color = AconTheme.color.White,
-//                            modifier = Modifier.align(Alignment.Center)
-//                        )
                     }
                 }
 
@@ -132,7 +127,8 @@ fun FoodTypeCard(
             modifier = Modifier.alpha(cardTextAlpha),
             text = text,
             color = AconTheme.color.White,
-            style = AconTheme.typography.subtitle2_14_med
+            style = AconTheme.typography.subtitle2_14_med,
+            textAlign = TextAlign.Center
         )
     }
 }

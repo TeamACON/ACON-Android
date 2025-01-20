@@ -8,4 +8,51 @@
     <string name="cafe">카페</string>
     <string name="walking_time">%s분</string>
     <string name="alert_no_spot">앗! 일치하는 도토리 맛집이 없어요</string>
+
+    <string name="korean">한식</string>
+    <string name="chinese">중식</string>
+    <string name="japanese">일식</string>
+    <string name="western">양식</string>
+    <string name="snack">분식</string>
+    <string name="asian">아시안</string>
+    <string name="bar">술/bar</string>
+    <string name="exclude_franchise">프랜차이즈 제외</string>
+
+    <string name="family">가족</string>
+    <string name="date">연인</string>
+    <string name="friend">친구</string>
+    <string name="alone">혼자</string>
+    <string name="group">단체</string>
+
+    <string name="large">대형</string>
+    <string name="good_view">뷰 좋은 곳</string>
+    <string name="dessert">디저트</string>
+    <string name="terrace">테라스</string>
+
+    <string name="meeting">만남용</string>
+    <string name="study">공부용</string>
+
+    <string name="filter_detail">상세 조건</string>
+    <string name="visit_spot">방문 장소</string>
+    <string name="spot_purpose">방문 목적</string>
+    <string name="people_together">함께하는 사람</string>
+    <string name="available_walking_time">도보 가능 거리</string>
+    <string name="price_range">가격대</string>
+
+    <string name="under_5_minutes">5분 이내</string>
+    <string name="under_10_minutes">10분</string>
+    <string name="under_15_minutes">15분</string>
+    <string name="under_20_minutes">20분</string>
+    <string name="over_20_minutes">20분 이상</string>
+
+    <string name="under_3000">3천원 이하</string>
+    <string name="under_5000">5천원 이하</string>
+    <string name="under_10000">1만원</string>
+    <string name="under_30000">3만원</string>
+    <string name="under_50000">5만원</string>
+    <string name="over_10000">1만원 이상</string>
+    <string name="over_50000">5만원 이상</string>
+
+    <string name="filter_reset">초기화</string>
+    <string name="filter_see_result">결과보기</string>
 </resources>

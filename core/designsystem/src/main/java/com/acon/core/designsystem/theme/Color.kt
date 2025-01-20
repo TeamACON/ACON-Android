@@ -44,11 +44,13 @@ internal val AconColors = AconColor(
     Gla_w_20 = Color(0x33FFFFFF),
     Gla_w_10 = Color(0x1AFFFFFF),
 
+    Fab_shaodw_1 = Color(0x1A000000),
+
     Dim_gra_1 = Brush.horizontalGradient(
         colors = listOf(Color(0x0D000000), Color(0x00000000), Color(0x0D000000))
     ),
-    Dim_gra_2 = Brush.horizontalGradient(
-        colors = listOf(Color(0x0D111111), Color(0x00111111), Color(0x14111111))
+    Dim_gra_2 = Brush.verticalGradient(
+        colors = listOf(Color(0x80111111), Color(0x00111111), Color(0xCC111111))
     ),
 
     //Error Case
@@ -87,6 +89,8 @@ data class AconColor(
     val Gla_b_30: Color,
     val Gla_w_20: Color,
     val Gla_w_10: Color,
+
+    val Fab_shaodw_1: Color,
 
     val Dim_gra_1: Brush,
     val Dim_gra_2: Brush,

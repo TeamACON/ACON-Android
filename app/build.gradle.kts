@@ -79,8 +79,9 @@ dependencies {
     implementation(project(":domain"))
     implementation(project(":data"))
 
-    implementation(project(":feature:onboarding"))
+    implementation(project(":feature:signin"))
     implementation(project(":feature:spot"))
+    implementation(project(":feature:onboarding"))
     implementation(project(":feature:areaverification"))
     implementation(project(":feature:upload"))
 
@@ -109,4 +110,7 @@ dependencies {
     implementation(libs.naver.map.compose)
     implementation(libs.play.services.location)
     implementation(libs.naver.map.location)
+
+    implementation(libs.haze)
+    implementation(libs.haze.materials)
 }

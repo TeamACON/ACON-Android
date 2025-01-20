@@ -44,14 +44,20 @@ fun SpotItem(
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(AconTheme.color.Gla_w_10)
+                    .background(AconTheme.color.Dim_gra_2)
             )
         } else {
             AsyncImage(
                 model = spot.image,
                 contentDescription = spot.name,
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier
+                    .fillMaxSize(),
                 contentScale = ContentScale.Crop,
+            )
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(AconTheme.color.Dim_gra_2)
             )
         }
         Column(

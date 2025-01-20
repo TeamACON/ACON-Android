@@ -73,4 +73,8 @@ dependencies {
     implementation(libs.coil.network.okhttp)
 
     implementation(libs.pulltorefresh)
+    implementation(libs.haze)
+    implementation(libs.haze.materials)
+
+    implementation(libs.kotlinx.collections.immutable)
 }
