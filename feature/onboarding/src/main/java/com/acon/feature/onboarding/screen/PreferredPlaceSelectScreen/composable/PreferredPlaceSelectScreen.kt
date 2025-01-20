@@ -130,7 +130,7 @@ fun PreferredPlaceSelectScreen(
                 Text(
                     text = "어떤 분위기의 공간이 좋으세요?",
                     color = Color.White,
-                    style = AconTheme.typography.head6_20_sb,
+                    style = AconTheme.typography.head4_24_sb,
                 )
             }
 
@@ -161,8 +161,7 @@ fun PreferredPlaceSelectScreen(
 
                 AconFilledLargeButton(
                     text = "다음",
-                    textStyle = AconTheme.typography.head8_16_sb,
-                    //textColor = AconTheme.color.White,
+                    textStyle = AconTheme.typography.head7_18_sb,
                     enabledBackgroundColor = AconTheme.color.Gray5,
                     disabledBackgroundColor =  AconTheme.color.Gray8,
                     isEnabled = ( screenState.selectedCard.isNotEmpty() ),

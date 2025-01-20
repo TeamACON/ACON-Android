@@ -115,7 +115,7 @@ fun FoodTypeCard(
                         Image(
                             imageVector = ImageVector.vectorResource(rateIcon),
                             contentDescription = "Clicked",
-                            modifier = Modifier.size(44.dp)
+                            modifier = Modifier.size(48.dp)
                         )
                     }
                 }

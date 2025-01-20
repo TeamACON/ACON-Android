@@ -95,7 +95,7 @@ fun PrefResultLoadingScreen(
                 ) {
                     Text(
                         text = loadingText,
-                        style = AconTheme.typography.head6_20_sb,
+                        style = AconTheme.typography.head4_24_sb,
                         color = AconTheme.color.White,
                         textAlign = TextAlign.Center
                     )
@@ -143,7 +143,6 @@ fun PrefResultLoadingScreen(
                     )
                 }
             }
-
         }
 
         PrefResultLoadingScreenState.LoadFailed -> {

@@ -65,9 +65,9 @@ fun PreferredFoodRateScreen(
                     modifier = modifier.padding(vertical = 7.dp)
                 )
                 Text(
-                    text = "선호 음식 Top3까지 순위를 매겨주세요.",
+                    text = "선호 음식 Top3까지 순위를 매겨주세요",
                     color = Color.White,
-                    style = AconTheme.typography.head6_20_sb,
+                    style = AconTheme.typography.head4_24_sb,
                 )
             }
 
@@ -97,8 +97,7 @@ fun PreferredFoodRateScreen(
 
                 AconFilledLargeButton(
                     text = "다음",
-                    textStyle = AconTheme.typography.head8_16_sb,
-                    //textColor = AconTheme.color.White,
+                    textStyle = AconTheme.typography.head7_18_sb,
                     enabledBackgroundColor = AconTheme.color.Gray5,
                     disabledBackgroundColor =  AconTheme.color.Gray8,
                     isEnabled = ( screenState.selectedCard.size == 3 ),

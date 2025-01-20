@@ -76,7 +76,7 @@ internal fun NavGraphBuilder.onboardingNavigationNavigation(
         composable<OnboardingRoute.RatePreferPlace> {
             PreferredPlaceRateScreenContainer(
                  navigateToPreviousPage = {
-                     navController.navigate(OnboardingRoute.ChooseUnlikeFoods)
+                     navController.navigate(OnboardingRoute.SelectPreferPlace)
                  },
                  navigateToNextPage = {
                      navController.navigate(OnboardingRoute.LastLoading)
