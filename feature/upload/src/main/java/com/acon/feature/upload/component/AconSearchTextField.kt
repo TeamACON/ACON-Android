@@ -68,6 +68,7 @@ fun AconSearchTextField(
                 textStyle = AconTheme.typography.body2_14_reg.copy(
                     color = AconTheme.color.White
                 ),
+                maxLines = 1,
                 cursorBrush = SolidColor(AconTheme.color.White),
                 modifier = Modifier
                     .weight(1f)
