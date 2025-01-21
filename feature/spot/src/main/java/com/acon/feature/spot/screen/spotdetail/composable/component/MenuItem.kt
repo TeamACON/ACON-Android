@@ -50,7 +50,7 @@ fun MenuItem(
             Spacer(modifier = Modifier.height(4.dp))
 
             Text(
-                text = menu.price.toPrice(),
+                text = toPrice(menu.price),
                 style = AconTheme.typography.title3_18_b,
                 maxLines = 1,
                 color = AconTheme.color.White
@@ -62,7 +62,7 @@ fun MenuItem(
             modifier = Modifier
                 .clip(RoundedCornerShape(6.dp))
         ) {
-            if(menu.image?.isBlank() == true) {
+            if(menu.image == null) {
                 Image(
                     imageVector = ImageVector.vectorResource(
                         id = com.acon.core.designsystem.R.drawable.ic_store_detail_menu_78),
