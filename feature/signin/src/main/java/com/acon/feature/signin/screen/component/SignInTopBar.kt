@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.acon.core.designsystem.noRippleClickable
 import com.acon.core.designsystem.theme.AconTheme
 
 @Composable
@@ -32,7 +33,7 @@ fun SignInTopBar(
             color = AconTheme.color.White,
             modifier = Modifier
                 .padding(end = 20.dp)
-                .clickable { onClickText() }
+                .noRippleClickable { onClickText() }
         )
     }
 }
