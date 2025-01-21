@@ -57,6 +57,9 @@ fun AreaVerificationScreenContainer(
                 is AreaVerificationSideEffect.NavigateToNewArea -> {
                     onNewAreaClick(effect.latitude, effect.longitude)
                 }
+
+                else -> {
+                }
             }
         }
     }
