@@ -21,12 +21,12 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import com.acon.core.designsystem.noRippleClickable
 import com.acon.core.designsystem.theme.AconTheme
-import com.acon.feature.upload.LocationItem
+import com.acon.domain.model.upload.SpotListItem
 import com.acon.feature.upload.R
 
 @Composable
 fun LocationSelectionButton(
-    selectedLocation: LocationItem?,
+    selectedLocation: SpotListItem?,
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
