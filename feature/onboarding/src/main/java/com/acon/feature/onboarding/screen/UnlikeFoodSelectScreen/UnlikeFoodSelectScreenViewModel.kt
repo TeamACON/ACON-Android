@@ -71,7 +71,10 @@ class UnlikeFoodScreenViewModel @Inject constructor(
     }
 
     fun navigateToNextPage() = intent {
-        onboardingRepository.postDislikeFood(state.selectedCard)
+
+        val disLikeFoodSet = if (state.selectedCard.contains("")) emptySet<String>()
+                                else state.selectedCard
+        onboardingRepository.postDislikeFood(disLikeFoodSet)
         postSideEffect(UnlikeFoodScreenSideEffect.NavigateToNextPage)
     }
 }
