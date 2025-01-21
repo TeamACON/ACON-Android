@@ -2,7 +2,7 @@ package com.acon.feature.upload
 
 data class UploadState(
     val selectedLocation: LocationItem? = null,
-    val currentStep: UploadStep = UploadStep.LOCATION_SELECTION,
+    val currentStep: UploadStep = UploadStep.Upload_Search,
     val selectedCount: Int = 0,
     val maxCount: Int = 5,
     val ownedDotoriCount: Int = 25, //from server

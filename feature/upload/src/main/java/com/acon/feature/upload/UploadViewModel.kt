@@ -22,7 +22,7 @@ class UploadViewModel @Inject constructor() : ViewModel(),
 
             is UploadIntent.OnNextStep -> {
                 intent {
-                    reduce { state.copy(currentStep = UploadStep.DOTORI_REVIEW) }
+                    reduce { state.copy(currentStep = UploadStep.Upload_REVIEW) }
                 }
             }
 
