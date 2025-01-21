@@ -22,7 +22,7 @@ class UnlikeFoodScreenViewModel @Inject constructor(
 
     fun onCardClicked(id: String) = intent {
 
-        if (id == "") {
+        if (id == "") { //없음인 경우
             if(state.selectedCard.contains(id)){
                 reduce {
                     state.copy(

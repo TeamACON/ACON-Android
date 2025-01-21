@@ -19,14 +19,14 @@ class PreferredPlaceRateScreenViewModel @Inject constructor(
             initialState = PreferredPlaceRateScreenState(  )
         )
 
-    fun onCardClicked(text: String) = intent {
+    fun onCardClicked(id: String) = intent {
 
         val updatedSelectedCard = state.selectedCard.toMutableList()
 
-        if (updatedSelectedCard.contains(text)) {
-            updatedSelectedCard.remove(text)
+        if (updatedSelectedCard.contains(id)) {
+            updatedSelectedCard.remove(id)
         } else if (updatedSelectedCard.size < 4) {
-            updatedSelectedCard.add(text)
+            updatedSelectedCard.add(id)
         }
         reduce {
             state.copy(selectedCard = updatedSelectedCard.toSet()) // Set으로 변환

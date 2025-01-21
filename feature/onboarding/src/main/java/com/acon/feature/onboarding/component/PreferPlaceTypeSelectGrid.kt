@@ -40,7 +40,7 @@ import com.acon.feature.onboarding.type.FoodTypeItems
 fun <T : CardItem> PreferPlaceTypeSelectGrid(
     modifier : Modifier = Modifier,
     columnSize : Int,
-    foodItems: Array<T>,
+    placeItems: Array<T>,
     onCardClicked: (String) -> Unit,
     selectedCard: Set<String>,
 ){
@@ -50,11 +50,12 @@ fun <T : CardItem> PreferPlaceTypeSelectGrid(
         horizontalArrangement = Arrangement.spacedBy(10.dp),
         verticalArrangement = Arrangement.spacedBy(15.dp),
     ){
-        items(foodItems) { food ->
+        items(placeItems) { place ->
             PlaceTypeCard(
-                imageRes = food.imageResId,
-                text = food.cardName,
-                selected = (selectedCard.contains(food.cardName)),
+                imageRes = place.imageResId,
+                text = place.cardName,
+                id = place.id,
+                selected = (selectedCard.contains(place.cardName)),
                 onCardClicked = { text ->
                     onCardClicked(text)
                 },
@@ -69,6 +70,7 @@ fun PlaceTypeCard(
     modifier: Modifier = Modifier,
     imageRes: Int,
     text: String,
+    id: String,
     selected: Boolean,
     onCardClicked: (String) -> Unit,
     selectedCard: Set<String>,
@@ -81,7 +83,7 @@ fun PlaceTypeCard(
             modifier = Modifier
                 .fillMaxSize()
                 .aspectRatio(1f)
-                .clickable { onCardClicked(text) }, // 늘 가능하게 해야 함
+                .clickable { onCardClicked(id) },
             contentAlignment = Alignment.Center
 
         ){
@@ -97,10 +99,10 @@ fun PlaceTypeCard(
                 )
 
                 if (selected) { //top 3 이내에 선정된 경우, 체크표시 말고 등수 번호와 함께 선택된 효과
-                    val rateIcon = if (selectedCard.indexOf(text) == 0) com.acon.feature.onboarding.R.drawable.ic_1
-                    else if (selectedCard.indexOf(text) == 1) com.acon.feature.onboarding.R.drawable.ic_2
-                    else if (selectedCard.indexOf(text) == 2) com.acon.feature.onboarding.R.drawable.ic_3
-                    else if (selectedCard.indexOf(text) == 3) com.acon.feature.onboarding.R.drawable.ic_4
+                    val rateIcon = if (selectedCard.indexOf(id) == 0) com.acon.feature.onboarding.R.drawable.ic_1
+                    else if (selectedCard.indexOf(id) == 1) com.acon.feature.onboarding.R.drawable.ic_2
+                    else if (selectedCard.indexOf(id) == 2) com.acon.feature.onboarding.R.drawable.ic_3
+                    else if (selectedCard.indexOf(id) == 3) com.acon.feature.onboarding.R.drawable.ic_4
                     else 0
 
                     Box(
@@ -138,7 +140,7 @@ fun PreviewPlaceTypeGrid() {
 
         PreferPlaceTypeSelectGrid(
             columnSize = 3,
-            foodItems = FoodTypeItems.entries.toTypedArray(),
+            placeItems = FoodTypeItems.entries.toTypedArray(),
             onCardClicked = {
                 if(selectedCard.value.contains(it)) selectedCard.value -= it
                 else selectedCard.value += it
