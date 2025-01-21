@@ -5,6 +5,7 @@ import com.acon.core.common.NoAuth
 import com.acon.data.api.remote.AuthApi
 import com.acon.data.api.remote.ReissueTokenApi
 import com.acon.data.api.remote.SpotApi
+import com.acon.data.api.remote.UploadApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -36,5 +37,13 @@ internal object ApiModule {
         @NoAuth retrofit: Retrofit
     ): SpotApi {
         return retrofit.create(SpotApi::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun providesUploadApi(
+        @NoAuth retrofit: Retrofit
+    ): UploadApi {
+        return retrofit.create(UploadApi::class.java)
     }
 }
