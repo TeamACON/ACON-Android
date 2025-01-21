@@ -26,9 +26,11 @@ import com.acon.acon.navigation.bottom.BottomNavType
 import com.acon.acon.navigation.nested.areaVerificationNavigation
 import com.acon.acon.navigation.nested.onboardingNavigationNavigation
 import com.acon.acon.navigation.nested.signInNavigationNavigation
+import com.acon.acon.navigation.route.AreaVerificationRoute
 import com.acon.acon.navigation.nested.spotNavigation
 import com.acon.acon.navigation.nested.uploadNavigation
 import com.acon.acon.navigation.route.SpotRoute
+import com.acon.acon.navigation.route.UploadRoute
 import com.acon.core.designsystem.animation.defaultEnterTransition
 import com.acon.core.designsystem.animation.defaultExitTransition
 import com.acon.core.designsystem.animation.defaultPopEnterTransition
@@ -106,6 +108,7 @@ fun AconNavigation(
             navController.navigate(
                 when (selectedBottomNavItem) {
                     BottomNavType.SPOT -> SpotRoute.SpotList
+                    BottomNavType.UPLOAD -> UploadRoute.Upload
                     else -> SpotRoute.SpotList // TODO : Route
                 }
             ) {
@@ -118,6 +121,7 @@ fun AconNavigation(
     LaunchedEffect(currentRoute) {   // 뒤로가기에 의한 하단 탭 선택 상태 변경 처리
         selectedBottomNavItem = when (currentRoute) {
             SpotRoute.SpotList::class.qualifiedName -> BottomNavType.SPOT
+            UploadRoute.Upload::class.qualifiedName -> BottomNavType.UPLOAD
             else -> BottomNavType.SPOT // TODO : Route
         }
     }
