@@ -40,6 +40,8 @@ android {
 
 dependencies {
 
+    implementation(project(":core:common"))
+    
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -54,9 +56,12 @@ dependencies {
     implementation(libs.androidx.ui.text.android)
     implementation(libs.material3.android)
     implementation(libs.androidx.ui.tooling.preview.android)
+    implementation(libs.haze.android)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-    implementation(project(":core:common"))
+    implementation(libs.haze)
+    implementation(libs.haze.materials)
+
 }

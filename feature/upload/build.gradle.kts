@@ -8,7 +8,7 @@ plugins {
 
 android {
     namespace = "com.acon.feature.upload"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         minSdk = 28
@@ -44,6 +44,9 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.compose.android)
     implementation(libs.foundation.android)
     implementation(libs.material3.android)
+    implementation(libs.androidx.ui.tooling.preview.android)
+    implementation(libs.androidx.ui.test.android)
+    implementation(libs.ui.test.android)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -56,6 +59,9 @@ dependencies {
     implementation(libs.hilt.compose)
 
     implementation(libs.lottie.compose)
+
+    implementation(libs.haze)
+    implementation(libs.haze.materials)
 
     implementation(project(":core:designsystem"))
 }

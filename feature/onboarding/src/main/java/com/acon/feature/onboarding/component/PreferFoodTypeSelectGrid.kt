@@ -73,7 +73,7 @@ fun FoodTypeCard(
     text: String,
     selected: Boolean,
     onCardClicked: (String) -> Unit,
-    isAllClicked: Boolean, //이게 true가 되는 순간 (3개가 선택되는 순간), unselected인 애들은 전부 alpha 처리하기
+    isAllClicked: Boolean,
     selectedCard: Set<String>,
     ) {
     Column(

@@ -20,7 +20,7 @@ fun SpotChip(
     title: String,
     selected: Boolean,
     modifier: Modifier = Modifier,
-    textStyle: TextStyle = AconTheme.typography.body2_14_reg,
+    textStyle: TextStyle = AconTheme.typography.subtitle2_14_med,
 ) {
     val containerColor =
         if (selected)
@@ -41,7 +41,7 @@ fun SpotChip(
     ) {
         Text(
             modifier = Modifier
-                .padding(vertical = 7.dp, horizontal = 16.dp),
+                .padding(vertical = 4.dp, horizontal = 14.dp),
             text = title,
             color = textColor,
             style = textStyle

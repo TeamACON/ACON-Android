@@ -1,9 +1,13 @@
 package com.acon.data.api.remote
 
 import com.acon.data.dto.request.SpotListRequest
+import com.acon.data.dto.response.SpotDetailInfoResponse
+import com.acon.data.dto.response.SpotDetailMenuListResponse
 import com.acon.data.dto.response.SpotListResponse
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 
 interface SpotApi {
 
@@ -11,4 +15,14 @@ interface SpotApi {
     suspend fun fetchSpotList(
         @Body request: SpotListRequest
     ): SpotListResponse
+
+    @GET("/api/v1/spot/{spotId}")
+    suspend fun getSpotDetailInfo(
+        @Path ("spotId") spotId: Long
+    ): SpotDetailInfoResponse
+
+    @GET("/api/v1/spot/{spotId}/menus")
+    suspend fun getSpotMenuList(
+        @Path ("spotId") spotId: Long
+    ): SpotDetailMenuListResponse
 }

@@ -1,14 +1,17 @@
 package com.acon.domain.model.spot
 
+import androidx.compose.runtime.Immutable
 import com.acon.domain.type.CategoryType
 import com.acon.domain.type.OptionType
 import com.acon.domain.type.SpotType
 
+@Immutable
 data class Condition(
     val spotType: SpotType,
     val filterList: List<Filter>
 )
 
+@Immutable
 data class Filter(
     val category: CategoryType,
     val optionList: List<OptionType>
