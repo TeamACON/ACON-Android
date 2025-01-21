@@ -145,7 +145,7 @@ fun PreferredPlaceRateScreen(
                         modifier = modifier
                             .background(AconTheme.color.Gray9),
                         columnSize = columnSize,
-                        foodItems = PreferPlaceItems.entries.toTypedArray(),
+                        placeItems = PreferPlaceItems.entries.toTypedArray(),
                         onCardClicked = { id ->
                             onCardClicked(id)
                         },
