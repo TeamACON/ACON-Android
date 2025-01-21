@@ -55,9 +55,10 @@ fun <T : CardItem> PreferFoodTypeSelectGrid(
             FoodTypeCard(
                 imageRes = food.imageResId,
                 text = food.cardName,
-                selected = (selectedCard.contains(food.cardName)),
-                onCardClicked = { text ->
-                    onCardClicked(text)
+                id = food.id,
+                selected = (selectedCard.contains(food.id)),
+                onCardClicked = { id ->
+                    onCardClicked(id)
                 },
                 isAllClicked = isAllClicked,
                 selectedCard = selectedCard,
@@ -71,6 +72,7 @@ fun FoodTypeCard(
     modifier: Modifier = Modifier,
     imageRes: Int,
     text: String,
+    id: String,
     selected: Boolean,
     onCardClicked: (String) -> Unit,
     isAllClicked: Boolean,
@@ -84,7 +86,7 @@ fun FoodTypeCard(
             modifier = Modifier
                 .fillMaxSize()
                 .aspectRatio(1f)
-                .clickable(enabled = selected || !isAllClicked) { onCardClicked(text) },
+                .clickable(enabled = selected || !isAllClicked) { onCardClicked(id) },
             contentAlignment = Alignment.Center
 
         ){
@@ -101,9 +103,9 @@ fun FoodTypeCard(
                     )
 
                     if (selected) { //top 3 이내에 선정된 경우, 체크표시 말고 등수 번호와 함께 선택된 효과
-                        val rateIcon = if (selectedCard.indexOf(text) == 0) com.acon.feature.onboarding.R.drawable.ic_1
-                                        else if (selectedCard.indexOf(text) == 1) com.acon.feature.onboarding.R.drawable.ic_2
-                                        else if (selectedCard.indexOf(text) == 2) com.acon.feature.onboarding.R.drawable.ic_3
+                        val rateIcon = if (selectedCard.indexOf(id) == 0) com.acon.feature.onboarding.R.drawable.ic_1
+                                        else if (selectedCard.indexOf(id) == 1) com.acon.feature.onboarding.R.drawable.ic_2
+                                        else if (selectedCard.indexOf(id) == 2) com.acon.feature.onboarding.R.drawable.ic_3
                                         else 0
                         Box(
                             modifier = Modifier
