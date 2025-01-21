@@ -19,7 +19,7 @@ class SpotRemoteDataSource @Inject constructor(
         return spotApi.getSpotDetailInfo(spotId)
     }
 
-    suspend fun getSpotMenuList(spotId: Long): SpotDetailMenuListResponse {
+    suspend fun getSpotMenuList(spotId: Int): SpotDetailMenuListResponse {
         return spotApi.getSpotMenuList(spotId)
     }
 }

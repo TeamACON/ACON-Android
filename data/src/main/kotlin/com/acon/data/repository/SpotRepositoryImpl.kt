@@ -56,10 +56,10 @@ class SpotRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getSpotMenuList(
-        spotId: Long
+        spotId: Int
     ): Result<List<SpotDetailMenu>> {
         return runCatchingWith(*GetSpotMenuListError.createErrorInstances()) {
-            spotRemoteDataSource.getSpotMenuList(spotId).spotMenuList.map { it.toSpotDetailMenu() }
+            spotRemoteDataSource.getSpotMenuList(spotId).menuList.map { it.toSpotDetailMenu() }
         }
     }
 

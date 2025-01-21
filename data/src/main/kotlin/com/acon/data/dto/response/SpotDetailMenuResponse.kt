@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class SpotDetailMenuListResponse(
-    @SerialName("spotMenuList") val spotMenuList: List<SpotDetailMenuResponse>
+    @SerialName("menuList") val menuList: List<SpotDetailMenuResponse>
 )
 
 @Serializable
