@@ -7,8 +7,8 @@ import retrofit2.http.POST
 
 interface OnboardingApi {
 
-    //@POST("/api/v1/member/preferences")
-    @POST("/api/v1/member/acorn")
+    @POST("/api/v1/member/preference")
+    //@POST("/api/v1/member/acorn")
     suspend fun postOnboardingResult(
         @Body body: PostOnboardingResultRequest
     ) : Response<Unit>

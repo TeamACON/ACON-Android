@@ -55,7 +55,7 @@ fun <T : CardItem> PreferPlaceTypeSelectGrid(
                 imageRes = place.imageResId,
                 text = place.cardName,
                 id = place.id,
-                selected = (selectedCard.contains(place.cardName)),
+                selected = (selectedCard.contains(place.id)),
                 onCardClicked = { text ->
                     onCardClicked(text)
                 },
