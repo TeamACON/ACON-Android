@@ -29,7 +29,7 @@ import com.acon.acon.navigation.nested.signInNavigationNavigation
 import com.acon.acon.navigation.nested.spotNavigation
 import com.acon.acon.navigation.nested.uploadNavigation
 import com.acon.feature.spot.com.acon.feature.spot.SpotRoute
-import com.acon.acon.navigation.route.UploadRoute
+import com.acon.feature.upload.UploadRoute
 import com.acon.core.designsystem.animation.defaultEnterTransition
 import com.acon.core.designsystem.animation.defaultExitTransition
 import com.acon.core.designsystem.animation.defaultPopEnterTransition

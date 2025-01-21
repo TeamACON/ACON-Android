@@ -5,7 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.acon.feature.spot.com.acon.feature.spot.SpotRoute
-import com.acon.acon.navigation.route.UploadRoute
+import com.acon.feature.upload.UploadRoute
 import com.acon.feature.upload.UploadContainer
 import com.acon.feature.upload.UploadSuccessContainer
 
