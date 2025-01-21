@@ -1,5 +1,6 @@
 package com.acon.feature.upload
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -12,9 +13,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
@@ -36,6 +35,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.acon.core.designsystem.blur.LocalHazeState
 import com.acon.core.designsystem.component.button.AconFilledLargeButton
+import com.acon.core.designsystem.component.dialog.AconTwoButtonDialog
+import com.acon.core.designsystem.component.topbar.AconTopBar
 import com.acon.core.designsystem.theme.AconTheme
 import com.acon.feature.upload.component.DotoriIndicator
 import com.acon.feature.upload.component.LocationSearchBottomSheet
@@ -74,16 +75,16 @@ fun UploadContainer(
             .background(color = AconTheme.color.Gray9)
     ) {
         when (state.currentStep) {
-            UploadStep.LOCATION_SELECTION -> {
-                SpotListScreen(
+            UploadStep.Upload_Search -> {
+                UploadSearchScreen(
                     modifier = Modifier.fillMaxSize(),
                     state = state,
                     onIntent = viewModel::onIntent
                 )
             }
 
-            UploadStep.DOTORI_REVIEW -> {
-                UploadScreen(
+            UploadStep.Upload_REVIEW -> {
+                UploadReviewScreen(
                     modifier = Modifier.fillMaxSize(),
                     state = state,
                     onIntent = viewModel::onIntent
@@ -95,50 +96,66 @@ fun UploadContainer(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SpotListScreen(
+fun UploadSearchScreen(
     state: UploadState,
     onIntent: (UploadIntent) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     var showLocationSearch by remember { mutableStateOf(false) }
+    var showExitDialog by remember { mutableStateOf(false) }
     val sheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = true
     )
+
+    if (showExitDialog) {
+        AconTwoButtonDialog(
+            title = "작성을 그만둘까요?",
+            content = "작성 중인 내용이 저장되지 않아요.",
+            leftButtonContent = "그만두기",
+            rightButtonContent = "계속하기",
+            contentImage = com.acon.core.designsystem.R.drawable.ic_review_g_40,
+            onDismissRequest = { showExitDialog = false },
+            onClickLeft = { onIntent(UploadIntent.NavigateBack) },
+            onClickRight = { showExitDialog = false },
+            isImageEnabled = false
+        )
+    }
 
     Column(
         modifier = modifier
             .fillMaxSize()
             .hazeSource(LocalHazeState.current)
+            .statusBarsPadding()
+            .navigationBarsPadding()
     ) {
         Column(
             modifier = Modifier
                 .weight(1f)
                 .hazeSource(LocalHazeState.current)
         ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 20.dp, vertical = 16.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                IconButton(onClick = { onIntent(UploadIntent.NavigateBack) }) {
-                    Icon(
-                        imageVector = ImageVector.vectorResource(id = com.acon.core.designsystem.R.drawable.ic_dissmiss_24),
-                        contentDescription = "Close",
-                        tint = AconTheme.color.White
+            AconTopBar(
+                leadingIcon = {
+                    IconButton(
+                        onClick = { showExitDialog = true }
+                    ) {
+                        Image(
+                            imageVector = ImageVector.vectorResource(
+                                id = com.acon.core.designsystem.R.drawable.ic_dissmiss_24
+                            ),
+                            contentDescription = "Close",
+                        )
+                    }
+                },
+                content = {
+                    Text(
+                        text = "업로드",
+                        style = AconTheme.typography.head5_22_sb,
+                        color = AconTheme.color.White
                     )
                 }
+            )
 
-                Text(
-                    text = "업로드",
-                    style = AconTheme.typography.head5_22_sb,
-                    color = AconTheme.color.White
-                )
-
-                Spacer(modifier = Modifier.width(48.dp))
-            }
-
+            Spacer(modifier = Modifier.padding(top = 32.dp))
             Column(
                 modifier = Modifier
                     .weight(1f)
@@ -146,12 +163,11 @@ fun SpotListScreen(
             ) {
                 Text(
                     text = "장소 등록",
-                    style = AconTheme.typography.head7_18_sb,
+                    style = AconTheme.typography.head8_16_sb,
                     color = AconTheme.color.White,
-                    modifier = Modifier.padding(bottom = 8.dp)
                 )
 
-                Spacer(modifier = Modifier.padding(top = 8.dp))
+                Spacer(modifier = Modifier.padding(top = 12.dp))
                 LocationSelectionButton(
                     selectedLocation = state.selectedLocation,
                     onClick = { showLocationSearch = true }
@@ -165,7 +181,8 @@ fun SpotListScreen(
                     textStyle = AconTheme.typography.head7_18_sb,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 20.dp),
+                        .padding(horizontal = 16.dp)
+                        .padding(bottom = 40.dp),
                     disabledBackgroundColor = AconTheme.color.Gray7,
                     enabledBackgroundColor = AconTheme.color.Main_org1,
                     isEnabled = state.selectedLocation != null,
@@ -194,11 +211,27 @@ fun SpotListScreen(
 }
 
 @Composable
-fun UploadScreen(
+fun UploadReviewScreen(
     modifier: Modifier = Modifier,
     state: UploadState,
     onIntent: (UploadIntent) -> Unit,
 ) {
+    var showExitDialog by remember { mutableStateOf(false) }
+
+    if (showExitDialog) {
+        AconTwoButtonDialog(
+            title = "작성을 그만둘까요?",
+            content = "작성 중인 내용이 저장되지 않아요.",
+            leftButtonContent = "그만두기",
+            rightButtonContent = "계속하기",
+            contentImage = com.acon.core.designsystem.R.drawable.ic_review_g_40,
+            onDismissRequest = { showExitDialog = false },
+            onClickLeft = { onIntent(UploadIntent.NavigateBack) },
+            onClickRight = { showExitDialog = false },
+            isImageEnabled = false
+        )
+    }
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -206,30 +239,27 @@ fun UploadScreen(
             .navigationBarsPadding()
             .background(color = AconTheme.color.Gray9)
     ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            IconButton(onClick = { onIntent(UploadIntent.NavigateBack) }) {
-                val imageVector =
-                    ImageVector.vectorResource(id = com.acon.core.designsystem.R.drawable.ic_dissmiss_24)
-                Icon(
-                    imageVector = imageVector,
-                    contentDescription = "Close",
-                    tint = AconTheme.color.White
+        AconTopBar(
+            leadingIcon = {
+                IconButton(
+                    onClick = { showExitDialog = true }
+                ) {
+                    Image(
+                        imageVector = ImageVector.vectorResource(
+                            id = com.acon.core.designsystem.R.drawable.ic_dissmiss_24
+                        ),
+                        contentDescription = "Close",
+                    )
+                }
+            },
+            content = {
+                Text(
+                    text = "업로드",
+                    style = AconTheme.typography.title2_20_b,
+                    color = AconTheme.color.White
                 )
             }
-
-            Text(
-                text = "업로드",
-                style = AconTheme.typography.title2_20_b,
-                color = AconTheme.color.White
-            )
-            Spacer(modifier = Modifier.width(24.dp))
-        }
+        )
 
         Column(
             modifier = Modifier
@@ -332,7 +362,8 @@ fun UploadScreen(
             textStyle = AconTheme.typography.head8_16_sb,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(20.dp),
+                .padding(horizontal = 20.dp)
+                .padding(bottom = 40.dp),
             enabledBackgroundColor = AconTheme.color.Main_org1,
             disabledBackgroundColor = AconTheme.color.Gray7,
             isEnabled = state.isButtonEnabled,
