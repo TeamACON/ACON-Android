@@ -4,6 +4,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import com.acon.acon.navigation.route.SpotRoute
 import com.acon.acon.navigation.route.UploadRoute
 import com.acon.feature.upload.UploadContainer
 import com.acon.feature.upload.UploadSuccessContainer
@@ -27,8 +28,8 @@ internal fun NavGraphBuilder.uploadNavigation(
 
         composable<UploadRoute.Success> {
             UploadSuccessContainer(
-                onNavigateBack = {
-                    navController.navigate(UploadRoute.Graph) {
+                onNavigateToSpotList = {
+                    navController.navigate(SpotRoute.SpotList) {
                         popUpTo(UploadRoute.Graph) {
                             inclusive = true
                         }

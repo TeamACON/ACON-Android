@@ -55,6 +55,11 @@ foundationAndroidVersion = "1.8.0-alpha04"
 ##lottie
 lottie = "6.0.0"
 
+##glassmorphism
+hazeAndroid = "1.2.1"
+uiTestAndroid = "1.7.0"
+uiTestAndroidVersion = "1.7.6"
+
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-credentials = { module = "androidx.credentials:credentials", version.ref = "credentials" }
@@ -122,6 +127,10 @@ androidx-lifecycle-runtime-compose-android = { group = "androidx.lifecycle", nam
 foundation-android = { group = "androidx.compose.foundation", name = "foundation-android", version.ref = "foundationAndroidVersion" }
 
 lottie-compose = { group = "com.airbnb.android", name = "lottie-compose", version.ref= "lottie" }
+
+haze-android = { group = "dev.chrisbanes.haze", name = "haze-android", version.ref = "hazeAndroid" }
+androidx-ui-test-android = { group = "androidx.compose.ui", name = "ui-test-android", version.ref = "uiTestAndroid" }
+ui-test-android = { group = "androidx.compose.ui", name = "ui-test-android", version.ref = "uiTestAndroidVersion" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

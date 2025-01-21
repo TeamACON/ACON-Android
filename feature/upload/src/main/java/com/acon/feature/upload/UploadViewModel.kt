@@ -14,8 +14,20 @@ class UploadViewModel @Inject constructor() : ViewModel(),
 
     fun onIntent(intent: UploadIntent) {
         when (intent) {
+            is UploadIntent.SelectLocation -> {
+                intent {
+                    reduce { state.copy(selectedLocation = intent.location) }
+                }
+            }
+
+            is UploadIntent.OnNextStep -> {
+                intent {
+                    reduce { state.copy(currentStep = UploadStep.Upload_REVIEW) }
+                }
+            }
+
             is UploadIntent.SelectDotori -> selectDotori(intent.index)
-            is UploadIntent.DeselectDotori -> deselectDotori()
+            is UploadIntent.DeselectDotori -> deselectDotori(intent.index)
             is UploadIntent.NavigateBack -> navigateBack()
             is UploadIntent.UploadDotori -> uploadDotori()
         }
@@ -47,27 +59,25 @@ class UploadViewModel @Inject constructor() : ViewModel(),
         }
     }
 
-    private fun deselectDotori() = intent {
+    private fun deselectDotori(index: Int) = intent {
         if (state.selectedCount > 0) {
             reduce {
                 state.copy(animatingIndex = null)
             }
 
             delay(50)
-            val newSelectedCount = state.selectedCount - 1
-            val animatingIndex = newSelectedCount - 1
 
             reduce {
                 state.copy(
-                    selectedCount = newSelectedCount,
-                    isButtonEnabled = newSelectedCount > 0,
-                    animatingIndex = newSelectedCount - 1
+                    selectedCount = index + 1,
+                    isButtonEnabled = true,
+                    animatingIndex = index
                 )
             }
 
             delay(3000)
             reduce {
-                if (state.animatingIndex == animatingIndex) {
+                if (state.animatingIndex == index) {
                     state.copy(animatingIndex = null)
                 } else {
                     state
