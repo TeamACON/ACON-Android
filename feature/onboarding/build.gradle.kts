@@ -57,6 +57,7 @@ dependencies {
     implementation(project(":core:utils:feature"))
     implementation(project(":core:designsystem"))
     implementation(libs.kotlinx.serialization.json)
+    implementation(libs.androidx.navigation.compose)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
