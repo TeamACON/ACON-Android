@@ -21,10 +21,10 @@ internal fun NavGraphBuilder.signInNavigationNavigation(
         composable<SignInRoute.SignIn> {
             SignInScreenContent(
                 navigateToSpotListView = {
-                    //navController.navigate(SpotRoute.SpotList)
+                    navController.navigate(SpotRoute.SpotList)
                 },
                 navigateToAreaVerification = {
-                    //navController.navigate(AreaVerificationRoute.RequireAreaVerification)
+                    navController.navigate(AreaVerificationRoute.RequireAreaVerification)
                 },
                 googleSignInRepository = googleTokenRepository,
             )
