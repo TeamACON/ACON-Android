@@ -60,6 +60,8 @@ hazeAndroid = "1.2.1"
 uiTestAndroid = "1.7.0"
 uiTestAndroidVersion = "1.7.6"
 
+kotlinxImmutable = "0.3.7"
+
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-credentials = { module = "androidx.credentials:credentials", version.ref = "credentials" }
@@ -131,6 +133,8 @@ lottie-compose = { group = "com.airbnb.android", name = "lottie-compose", versio
 haze-android = { group = "dev.chrisbanes.haze", name = "haze-android", version.ref = "hazeAndroid" }
 androidx-ui-test-android = { group = "androidx.compose.ui", name = "ui-test-android", version.ref = "uiTestAndroid" }
 ui-test-android = { group = "androidx.compose.ui", name = "ui-test-android", version.ref = "uiTestAndroidVersion" }
+
+kotlinx-immutable = { group = "org.jetbrains.kotlinx", name = "kotlinx-collections-immutable", version.ref = "kotlinxImmutable" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
