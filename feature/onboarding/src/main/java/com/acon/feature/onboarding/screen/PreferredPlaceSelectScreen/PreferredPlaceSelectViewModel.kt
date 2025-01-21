@@ -19,12 +19,12 @@ class PreferredPlaceSelectViewModel @Inject constructor(
             initialState = PreferredPlaceSelectScreenState(  )
         )
 
-    fun onCardClicked(text: String) = intent {
+    fun onCardClicked(id: String) = intent {
 
         val updatedSelectedCard = when {
-            state.selectedCard.isEmpty() -> setOf(text)
-            state.selectedCard.contains(text) -> state.selectedCard - text
-            else -> setOf(text)
+            state.selectedCard.isEmpty() -> setOf(id)
+            state.selectedCard.contains(id) -> state.selectedCard - id
+            else -> setOf(id)
         }
 
         reduce {

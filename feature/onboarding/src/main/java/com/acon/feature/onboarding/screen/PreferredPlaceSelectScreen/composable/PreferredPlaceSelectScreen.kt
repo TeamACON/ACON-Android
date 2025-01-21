@@ -146,8 +146,8 @@ fun PreferredPlaceSelectScreen(
                                 .background(AconTheme.color.Gray9),
                             columnSize = columnSize,
                             placeItems = MoodItems.entries.toTypedArray(),
-                            onCardClicked = { text ->
-                                onCardClicked(text)
+                            onCardClicked = { id ->
+                                onCardClicked(id)
                             },
                             selectedCard = screenState.selectedCard
                         )
