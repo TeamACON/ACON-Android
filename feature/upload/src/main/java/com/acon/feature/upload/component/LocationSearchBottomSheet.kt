@@ -6,6 +6,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -14,7 +16,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -30,29 +31,47 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.acon.core.designsystem.blur.LocalHazeState
 import com.acon.core.designsystem.blur.defaultHazeEffect
+import com.acon.core.designsystem.component.chip.AconChip
 import com.acon.core.designsystem.theme.AconTheme
-import com.acon.feature.upload.LocationItem
-import com.acon.feature.upload.MockSpotData
+import com.acon.core.map.ProceedWithLocation
+import com.acon.domain.model.upload.SpotListItem
 import com.acon.feature.upload.R
-import com.acon.feature.upload.SpotType
+import com.acon.feature.upload.UploadIntent
+import com.acon.feature.upload.UploadViewModel
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun LocationSearchBottomSheet(
+    viewModel: UploadViewModel = hiltViewModel(),
     onDismiss: () -> Unit,
-    onLocationSelected: (LocationItem) -> Unit,
+    onLocationSelected: (SpotListItem) -> Unit,
 ) {
     var searchText by remember { mutableStateOf("") }
     val focusRequester = remember { FocusRequester() }
     val keyboardController = LocalSoftwareKeyboardController.current
-    val searchResults = remember(searchText) { MockSpotData.searchSpots(searchText) }
+    val state by viewModel.container.stateFlow.collectAsStateWithLifecycle()
 
     LaunchedEffect(Unit) {
         focusRequester.requestFocus()
         keyboardController?.show()
+    }
+
+    LaunchedEffect(searchText) {
+        viewModel.searchFlow.emit(searchText)
+    }
+
+    ProceedWithLocation { location ->
+        viewModel.onIntent(
+            UploadIntent.LoadSuggestions(
+                latitude = location.latitude,
+                longitude = location.longitude
+            )
+        )
     }
 
     Column(
@@ -104,7 +123,10 @@ fun LocationSearchBottomSheet(
                     style = AconTheme.typography.body2_14_reg,
                     color = AconTheme.color.Gray5,
                     modifier = Modifier
-                        .clickable { onDismiss() }
+                        .clickable {
+                            onDismiss()
+                            state.selectedLocation?.let { onLocationSelected(it) }
+                        }
                         .padding(end = 28.dp)
                 )
             }
@@ -126,17 +148,42 @@ fun LocationSearchBottomSheet(
                 .padding(top = 16.dp)
                 .padding(horizontal = 20.dp)
         ) {
-            if (searchText.isEmpty()) {
-                EmptySearchScreen()
-            } else if (searchResults.isEmpty()) {
-                NoResultsScreen()
-            } else {
-                LazyColumn {
-                    items(searchResults) { location ->
-                        LocationItem(
-                            locationItem = location,
-                            onClick = { onLocationSelected(location) }
-                        )
+            when {
+                searchText.isEmpty() -> {
+                    FlowRow(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        state.suggestions.forEach { suggestion ->
+                            AconChip(
+                                title = suggestion.spotName,
+                                isSelected = false,
+                                onClick = {
+                                    searchText = suggestion.spotName
+                                    focusRequester.requestFocus()
+                                }
+                            )
+                        }
+                    }
+                }
+
+                searchText.isNotEmpty() && state.searchResults.isEmpty() -> {
+                    NoResultsScreen()
+                }
+
+                searchText.isNotEmpty() -> {
+                    LazyColumn {
+                        items(state.searchResults.size) { index ->
+                            LocationItem(
+                                locationItem = state.searchResults[index],
+                                onClick = {
+                                    viewModel.onIntent(UploadIntent.SelectLocation(state.searchResults[index]))
+                                    onLocationSelected(state.searchResults[index])
+                                    onDismiss()
+                                }
+                            )
+                        }
                     }
                 }
             }
@@ -183,22 +230,3 @@ private fun NoResultsScreen() {
     }
 }
 
-@Preview(showBackground = true, backgroundColor = 0xFF1C1C1E)
-@Composable
-private fun LocationItemCafePreview() {
-    AconTheme {
-        Column(
-            modifier = Modifier.background(AconTheme.color.Gray9)
-        ) {
-            LocationItem(
-                locationItem = LocationItem(
-                    spotId = 1,
-                    name = "스타벅스 강남역점",
-                    address = "서울 강남구 강남대로 390",
-                    spotType = SpotType.CAFE
-                ),
-                onClick = {}
-            )
-        }
-    }
-}
