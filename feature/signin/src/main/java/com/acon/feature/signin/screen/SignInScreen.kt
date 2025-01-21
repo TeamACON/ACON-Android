@@ -16,7 +16,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
@@ -30,19 +29,23 @@ import com.acon.feature.signin.screen.component.SignInTopBar
 
 @Composable
 fun SignInScreen(
+    state: SignInUiState,
+    modifier: Modifier = Modifier,
     navigateToSpotListView: () -> Unit,
-    navigateToAreaVerification: () -> Unit,
     onClickTermsOfUse: () -> Unit,
     onClickPrivacyPolicy: () -> Unit,
     onClickLoginGoogle: () -> Unit,
 ) {
     Column(
-        modifier = Modifier
-            .fillMaxSize()
+        modifier = modifier
             .background(AconTheme.color.Black),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        SignInTopBar(onClickText = navigateToSpotListView)
+        SignInTopBar(
+            modifier = Modifier
+                .padding(top = 42.dp),
+            onClickText = navigateToSpotListView
+        )
 
         Column(
             modifier = Modifier
@@ -111,12 +114,12 @@ fun SignInScreen(
 @Composable
 private fun PreviewSignInScreen() {
     AconTheme {
-        SignInScreen(
-            navigateToSpotListView = {},
-            navigateToAreaVerification = {},
-            onClickLoginGoogle = {},
-            onClickTermsOfUse = {},
-            onClickPrivacyPolicy = {}
-        )
+//        SignInScreen(
+//            state = ,
+//            navigateToSpotListView = {},
+//            onClickTermsOfUse = {},
+//            onClickPrivacyPolicy = {},
+//            onClickLoginGoogle = {}
+//        )
     }
 }

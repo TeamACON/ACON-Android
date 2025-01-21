@@ -1,10 +1,8 @@
 package com.acon.feature.signin.screen
 
-import androidx.lifecycle.viewModelScope
 import com.acon.core.utils.feature.base.BaseContainerHost
 import com.acon.domain.repository.GoogleTokenRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
@@ -14,23 +12,52 @@ class SignInViewModel @Inject constructor(
 
 ) : BaseContainerHost<SignInUiState, SignInSideEffect>() {
 
-    override val container: Container<SignInUiState, SignInSideEffect>
-    = container(initialState = SignInUiState.Loading)
+    override val container: Container<SignInUiState, SignInSideEffect> =
+        container(initialState = SignInUiState.Loading)
 
-    fun googleLogin(googleTokenRepository: GoogleTokenRepository) {
-        viewModelScope.launch {
-            googleTokenRepository.signIn()
-        }
+    fun googleLogin(googleTokenRepository: GoogleTokenRepository) = intent {
+        googleTokenRepository.signIn()
+            .onSuccess {
+                reduce {
+                    SignInUiState.Success
+                }
+                postSideEffect(SignInSideEffect.NavigateToAreaVerification)
+            }.onFailure  {
+                reduce {
+                    SignInUiState.LoadFailed
+                }
+            }
+    }
+
+    fun navigateToSpotListView() = intent {
+        postSideEffect(
+            SignInSideEffect.NavigateToSpotListView
+        )
+    }
+
+    fun onClickTermsOfUse() = intent {
+        postSideEffect(
+            SignInSideEffect.OnClickTermsOfUse
+        )
+    }
+
+    fun onClickPrivacyPolicy() = intent {
+        postSideEffect(
+            SignInSideEffect.OnClickPrivacyPolicy
+        )
     }
 
 }
 
 sealed interface SignInUiState {
-//    data class Success(val spotList: List<Spot>, val spotShowType: SpotShowType) : SignInUiState
+    data object Success: SignInUiState
     data object Loading : SignInUiState
     data object LoadFailed: SignInUiState
 }
 
 sealed interface SignInSideEffect {
-    data object NavigateToSpotDetail : SignInSideEffect
+    data object NavigateToSpotListView : SignInSideEffect
+    data object NavigateToAreaVerification: SignInSideEffect
+    data object OnClickTermsOfUse : SignInSideEffect
+    data object OnClickPrivacyPolicy : SignInSideEffect
 }
