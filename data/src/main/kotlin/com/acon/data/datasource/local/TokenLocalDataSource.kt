@@ -9,7 +9,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class TokenLocalLocalDataSource @Inject constructor(
+class TokenLocalDataSource @Inject constructor(
     @ApplicationContext applicationContext: Context,
     @IoDispatcher private val dispatchersIO: CoroutineDispatcher,
 ) {

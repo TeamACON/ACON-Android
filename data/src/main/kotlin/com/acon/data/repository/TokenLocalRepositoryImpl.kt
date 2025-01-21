@@ -1,46 +1,46 @@
 package com.acon.data.repository
 
-import com.acon.data.datasource.local.TokenLocalLocalDataSource
+import com.acon.data.datasource.local.TokenLocalDataSource
 import com.acon.data.error.runCatchingWith
 import com.acon.domain.repository.TokenLocalRepository
 import javax.inject.Inject
 
 class TokenLocalRepositoryImpl @Inject constructor(
-    private val tokenLocalLocalDataSource: TokenLocalLocalDataSource,
+    private val tokenLocalDataSource: TokenLocalDataSource,
 ): TokenLocalRepository {
     override suspend fun saveAccessToken(accessToken: String): Result<Unit> {
         return runCatchingWith() {
-            tokenLocalLocalDataSource.saveAccessToken(accessToken)
+            tokenLocalDataSource.saveAccessToken(accessToken)
         }
     }
 
     override suspend fun saveRefreshToken(refreshToken: String): Result<Unit> {
         return runCatchingWith() {
-            tokenLocalLocalDataSource.saveAccessToken(refreshToken)
+            tokenLocalDataSource.saveAccessToken(refreshToken)
         }
     }
 
     override suspend fun getAccessToken(): Result<String?> {
         return runCatchingWith() {
-            tokenLocalLocalDataSource.getAccessToken()
+            tokenLocalDataSource.getAccessToken()
         }
     }
 
     override suspend fun getRefreshToken(): Result<String?> {
         return runCatchingWith() {
-            tokenLocalLocalDataSource.getRefreshToken()
+            tokenLocalDataSource.getRefreshToken()
         }
     }
 
     override suspend fun removeAccessToken(): Result<Unit> {
         return runCatchingWith() {
-            tokenLocalLocalDataSource.removeAccessToken()
+            tokenLocalDataSource.removeAccessToken()
         }
     }
 
     override suspend fun removeRefreshToken(): Result<Unit> {
         return runCatchingWith() {
-            tokenLocalLocalDataSource.removeRefreshToken()
+            tokenLocalDataSource.removeRefreshToken()
         }
     }
 
