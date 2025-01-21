@@ -9,7 +9,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class TokenLocalDataSource @Inject constructor(
+class TokenLocalLocalDataSource @Inject constructor(
     @ApplicationContext applicationContext: Context,
     @IoDispatcher private val dispatchersIO: CoroutineDispatcher,
 ) {
@@ -25,7 +25,7 @@ class TokenLocalDataSource @Inject constructor(
         EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
     )
 
-    suspend fun saveAccessToken(
+     suspend fun saveAccessToken(
         accessToken: String,
     ) = withContext(dispatchersIO) {
         with(sharedPreferences.edit()) {
@@ -34,8 +34,7 @@ class TokenLocalDataSource @Inject constructor(
         }
     }
 
-    suspend fun saveRefreshToken(
-        refreshToken: String,
+     suspend fun saveRefreshToken(refreshToken: String,
     ) = withContext(dispatchersIO) {
         with(sharedPreferences.edit()) {
             putString(SHARED_PREF_REFRESH_KEY, refreshToken)
@@ -43,22 +42,22 @@ class TokenLocalDataSource @Inject constructor(
         }
     }
 
-    suspend fun getAccessToken(): String? = withContext(dispatchersIO) {
+     suspend fun getAccessToken(): String? = withContext(dispatchersIO) {
         sharedPreferences.getString(SHARED_PREF_KEY, null)
     }
 
-    suspend fun getRefreshToken(): String? = withContext(dispatchersIO) {
+     suspend fun getRefreshToken(): String? = withContext(dispatchersIO) {
         sharedPreferences.getString(SHARED_PREF_REFRESH_KEY, null)
     }
 
-    suspend fun removeAccessToken() = withContext(dispatchersIO) {
+     suspend fun removeAccessToken() = withContext(dispatchersIO) {
         with(sharedPreferences.edit()) {
             remove(SHARED_PREF_KEY)
             apply()
         }
     }
 
-    suspend fun removeRefreshToken() = withContext(dispatchersIO) {
+     suspend fun removeRefreshToken() = withContext(dispatchersIO) {
         with(sharedPreferences.edit()) {
             remove(SHARED_PREF_REFRESH_KEY)
             apply()
