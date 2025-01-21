@@ -50,7 +50,7 @@ class PreferredPlaceRateScreenViewModel @Inject constructor(
     }
 
     fun navigateToNextPage() = intent {
-        onboardingRepository.postFavoriteCuisineRank(state.selectedCard.toList())
+        onboardingRepository.postFavoriteSpotRank(state.selectedCard.toList())
 
         //만약 local DB에 정보가 다 들어가 있으면.
         postSideEffect(PreferredPlaceRateScreenSideEffect.NavigateToNextPage)

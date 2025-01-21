@@ -23,12 +23,12 @@ class OnboardingLocalDataSourceImpl @Inject constructor(
         set(value) = sharedPreferences.edit { putString("FAVORITE_CUISINE_RANK", value.joinToString(",")) }
 
     override var favoriteSpotType: String
-        get() = sharedPreferences.getString(FAVORITE_SPOT_TYPE, INITIAL_VALUE).toString()
-        set(value) = sharedPreferences.edit { putString(FAVORITE_SPOT_TYPE, value) }
+        get() = sharedPreferences.getString("FAVORITE_SPOT_TYPE", INITIAL_VALUE).toString()
+        set(value) = sharedPreferences.edit { putString("FAVORITE_SPOT_TYPE", value) }
 
     override var favoriteSpotStyle: String
-        get() = sharedPreferences.getString(FAVORITE_SPOT_STYLE, INITIAL_VALUE).toString()
-        set(value) = sharedPreferences.edit { putString(FAVORITE_SPOT_STYLE, value) }
+        get() = sharedPreferences.getString("FAVORITE_SPOT_STYLE", INITIAL_VALUE).toString()
+        set(value) = sharedPreferences.edit { putString("FAVORITE_SPOT_STYLE", value) }
 
     override var favoriteSpotRank: List<String>
         get() = sharedPreferences.getString("FAVORITE_SPOT_RANK", "")?.split(",") ?: emptyList()

@@ -30,9 +30,6 @@ import com.acon.feature.onboarding.type.PlaceItems
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
-/*
-* TODO : 선택 시 버튼 Dim 처리가 안 됨
-* */
 
 @Composable
 fun FrequentPlaceSelectScreenContainer(

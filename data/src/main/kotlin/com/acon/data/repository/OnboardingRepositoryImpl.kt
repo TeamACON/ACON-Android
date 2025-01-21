@@ -1,5 +1,6 @@
 package com.acon.data.repository
 
+import android.util.Log
 import com.acon.data.datasource.local.OnboardingLocalDataSource
 import com.acon.data.datasource.remote.OnboardingRemoteDataSource
 import com.acon.data.dto.request.PostOnboardingResultRequest
@@ -7,6 +8,8 @@ import com.acon.data.error.runCatchingWith
 import com.acon.domain.error.onboarding.PostOnboardingResultError
 import com.acon.domain.model.onboarding.OnboardingPreferences
 import com.acon.domain.repository.OnboardingRepository
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import javax.inject.Inject
 
 class OnboardingRepositoryImpl @Inject constructor(
@@ -22,15 +25,27 @@ class OnboardingRepositoryImpl @Inject constructor(
         favoriteSpotRank: List<String>
     ): Result<Unit> {
         return runCatchingWith(*PostOnboardingResultError.createErrorInstances()){
-            onboardingRemoteDataSource.postResult(
-                PostOnboardingResultRequest(
-                    dislikeFoodList = dislikeFoodList,
-                    favoriteCuisineRank = favoriteCuisineRank,
-                    favoriteSpotType = favoriteSpotType,
-                    favoriteSpotStyle = favoriteSpotStyle,
-                    favoriteSpotRank = favoriteSpotRank
-                )
+            val request = PostOnboardingResultRequest(
+                dislikeFoodList = dislikeFoodList,
+                favoriteCuisineRank = favoriteCuisineRank,
+                favoriteSpotType = favoriteSpotType,
+                favoriteSpotStyle = favoriteSpotStyle,
+                favoriteSpotRank = favoriteSpotRank
             )
+
+            // 요청 데이터 로그 출력
+            val requestJson = Json.encodeToString(request)
+            Log.d("OnboardingRequest", "Request Data: $requestJson")
+
+            val response = onboardingRemoteDataSource.postResult(request)
+
+            if (response.isSuccessful) {
+                Log.d("OnboardingResponse", "Success: ${response.code()} - ${response.body()}")
+            } else {
+                val errorBody = response.errorBody()?.string() ?: "Unknown error"
+                Log.e("OnboardingResponse", "Error: ${response.code()} - $errorBody")
+                throw RuntimeException("Server error: $errorBody")
+            }
         }
     }
 
@@ -64,9 +79,3 @@ class OnboardingRepositoryImpl @Inject constructor(
         )
     }
 }
-
-//var dislikeFoodList: Set<String>
-//var favoriteCuisineRank: List<String>
-//var favoriteSpotType: String
-//var favoriteSpotStyle: String
-//var favoriteSpotRank: List<String>
