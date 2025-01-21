@@ -75,10 +75,10 @@ fun FrequentPlaceSelectScreenContainer(
             onDismissRequest = {
                 viewModel.hideDialog()
             },
-            onClickLeft = { // 그만두기
+            onClickLeft = {
                 navigateToLastLoadingPage()
             },
-            onClickRight = { // 계속하기
+            onClickRight = {
                 viewModel.hideDialog()
             },
             isImageEnabled = false
@@ -146,8 +146,8 @@ fun FrequentPlaceSelectScreen(
                                 .background(AconTheme.color.Gray9),
                             columnSize = columnSize,
                             placeItems = PlaceItems.entries.toTypedArray(),
-                            onCardClicked = { text ->
-                                onCardClicked(text)
+                            onCardClicked = { id ->
+                                onCardClicked(id)
                             },
                             selectedCard = screenState.selectedCard
                         )

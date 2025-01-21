@@ -52,9 +52,10 @@ fun <T : CardItem> FreqPlaceSelectGrid(
             PlaceCard(
                 imageRes = place.imageResId,
                 text = place.cardName,
-                selected = (selectedCard.contains(place.cardName)),
-                onCardClicked = { text ->
-                    onCardClicked(text)
+                id = place.id,
+                selected = (selectedCard.contains(place.id)),
+                onCardClicked = { id ->
+                    onCardClicked(id)
                 },
             )
         }
@@ -66,6 +67,7 @@ fun PlaceCard(
     modifier: Modifier = Modifier,
     imageRes: Int,
     text: String,
+    id: String,
     selected: Boolean,
     onCardClicked: (String) -> Unit,
 ) {
@@ -78,7 +80,7 @@ fun PlaceCard(
                 .fillMaxSize()
                 .clip(RoundedCornerShape(6.dp))
                 .aspectRatio(0.5f)
-                .clickable { onCardClicked(text) },
+                .clickable { onCardClicked(id) },
             contentAlignment = Alignment.Center
         ){
             // 버튼 하나씩

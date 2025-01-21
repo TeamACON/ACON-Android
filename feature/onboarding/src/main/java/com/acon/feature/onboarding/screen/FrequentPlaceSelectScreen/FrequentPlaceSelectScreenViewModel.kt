@@ -19,11 +19,11 @@ class FrequentPlaceSelectScreenViewModel @Inject constructor(
             initialState = FrequentPlaceSelectScreenState(  )
         )
 
-    fun onCardClicked(text: String) = intent {
+    fun onCardClicked(id: String) = intent {
         val updatedSelectedCard = when {
-            state.selectedCard.isEmpty() -> setOf(text)
-            state.selectedCard.contains(text) -> state.selectedCard - text
-            else -> setOf(text)
+            state.selectedCard.isEmpty() -> setOf(id)
+            state.selectedCard.contains(id) -> state.selectedCard - id
+            else -> setOf(id)
         }
 
         reduce {
@@ -48,7 +48,7 @@ class FrequentPlaceSelectScreenViewModel @Inject constructor(
     }
 
     fun navigateToNextPage() = intent {
-        onboardingRepository.postFavoriteSpotStyle(state.selectedCard.toString())
+        onboardingRepository.postFavoriteSpotType(state.selectedCard.toString())
         postSideEffect(FrequentPlaceSelectScreenSideEffect.NavigateToNextPage)
     }
 }
