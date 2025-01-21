@@ -11,6 +11,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
 import org.orbitmvi.orbit.annotation.OrbitExperimental
 import org.orbitmvi.orbit.viewmodel.container
+import javax.annotation.concurrent.Immutable
 import javax.inject.Inject
 
 @HiltViewModel
@@ -72,6 +73,7 @@ class SpotDetailViewModel @Inject constructor(
 }
 
 sealed interface SpotDetailUiState {
+    @Immutable
     data class Success(
         val spotDetailInfo: SpotDetailInfo,
         val spotDetailMenuList: List<SpotDetailMenu>,
