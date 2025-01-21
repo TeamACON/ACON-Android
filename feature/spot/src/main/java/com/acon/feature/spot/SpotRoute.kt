@@ -1,4 +1,4 @@
-package com.acon.acon.navigation.route
+package com.acon.feature.spot.com.acon.feature.spot
 
 import kotlinx.serialization.Serializable
 
