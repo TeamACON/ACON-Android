@@ -11,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Constraints
@@ -35,9 +36,9 @@ fun AconSlider(
     ),
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
 ) {
+    val spacing = (labels.size.toFloat() / (labels.size - 1)) / labels.size
     val floatPositions = remember {
         buildList {
-            val spacing = (labels.size.toFloat() / (labels.size - 1)) / labels.size
             repeat(labels.size) {
                 add(spacing * it)
             }
@@ -48,7 +49,7 @@ fun AconSlider(
             modifier = modifier,
             value = floatPositions[sliderIndex],
             onValueChange = {
-                onSliderIndexChange(floatPositions.indexOfFirst { position -> position >= it })
+                onSliderIndexChange(floatPositions.indexOfFirst { position -> position + spacing / 2f >= it })
             },
             colors = colors,
             thumb = {
@@ -61,6 +62,7 @@ fun AconSlider(
             },
             track = { sliderState ->
                 SliderDefaults.Track(
+                    modifier = Modifier.scale(scaleX = 1f, scaleY = 0.8f),
                     colors = colors,
                     enabled = enabled,
                     sliderState = sliderState,
