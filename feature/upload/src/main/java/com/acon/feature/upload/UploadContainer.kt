@@ -75,7 +75,7 @@ fun UploadContainer(
             .background(color = AconTheme.color.Gray9)
     ) {
         when (state.currentStep) {
-            UploadStep.Upload_Search -> {
+            UploadStep.UPLOAD_SEARCH -> {
                 UploadSearchScreen(
                     modifier = Modifier.fillMaxSize(),
                     state = state,
@@ -83,7 +83,7 @@ fun UploadContainer(
                 )
             }
 
-            UploadStep.Upload_REVIEW -> {
+            UploadStep.UPLOAD_REVIEW -> {
                 UploadReviewScreen(
                     modifier = Modifier.fillMaxSize(),
                     state = state,
@@ -140,7 +140,7 @@ fun UploadSearchScreen(
                     ) {
                         Image(
                             imageVector = ImageVector.vectorResource(
-                                id = com.acon.core.designsystem.R.drawable.ic_dissmiss_24
+                                id = R.drawable.and_ic_dissmiss_28
                             ),
                             contentDescription = "Close",
                         )
