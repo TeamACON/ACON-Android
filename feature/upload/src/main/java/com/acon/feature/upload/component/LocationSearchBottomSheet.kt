@@ -1,5 +1,6 @@
 package com.acon.feature.upload.component
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -73,6 +74,17 @@ fun LocationSearchBottomSheet(
             )
         )
     }
+
+//    LaunchedEffect(Unit) {
+//        val mockLatitude = 37.5665 // 서울
+//        val mockLongitude = 126.9780
+//        viewModel.onIntent(
+//            UploadIntent.LoadSuggestions(
+//                latitude = mockLatitude,
+//                longitude = mockLongitude
+//            )
+//        )
+//    }
 
     Column(
         modifier = Modifier
@@ -188,20 +200,6 @@ fun LocationSearchBottomSheet(
                 }
             }
         }
-    }
-}
-
-@Composable
-private fun EmptySearchScreen() {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        Text(
-            text = "장소를 검색해보세요",
-            style = AconTheme.typography.body2_14_reg,
-            color = AconTheme.color.Gray5
-        )
     }
 }
 
