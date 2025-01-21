@@ -20,10 +20,10 @@ class UnlikeFoodScreenViewModel @Inject constructor(
             initialState = UnlikeFoodScreenState(  )
         )
 
-    fun onCardClicked(text: String) = intent {
+    fun onCardClicked(id: String) = intent {
 
-        if (text == "없음") {
-            if(state.selectedCard.contains(text)){
+        if (id == "") {
+            if(state.selectedCard.contains(id)){
                 reduce {
                     state.copy(
                         selectedCard = emptySet()
@@ -32,7 +32,7 @@ class UnlikeFoodScreenViewModel @Inject constructor(
             } else {
                 reduce {
                     state.copy(
-                        selectedCard = setOf(text)
+                        selectedCard = setOf(id)
                     )
                 }
             }
@@ -43,10 +43,10 @@ class UnlikeFoodScreenViewModel @Inject constructor(
             }
 
         } else {
-            val updatedSelectedCard = if (state.selectedCard.contains(text)) {
-                state.selectedCard - text
+            val updatedSelectedCard = if (state.selectedCard.contains(id)) {
+                state.selectedCard - id
             } else {
-                state.selectedCard + text
+                state.selectedCard + id
             }
 
             reduce {

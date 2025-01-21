@@ -53,9 +53,10 @@ fun <T : CardItem> FoodGrid(
             FoodCard(
                 imageRes = food.imageResId,
                 text = food.cardName,
-                selected = (selectedCard.contains(food.cardName)),
-                onCardClicked = { text ->
-                    onCardClicked(text)
+                id = food.id,
+                selected = (selectedCard.contains(food.id)),
+                onCardClicked = { id ->
+                    onCardClicked(id)
                 },
                 isNothingClicked = isNothingClicked,
             )
@@ -68,6 +69,7 @@ fun FoodCard(
     modifier: Modifier = Modifier,
     imageRes: Int,
     text: String,
+    id: String,
     selected: Boolean,
     onCardClicked: (String) -> Unit,
     isNothingClicked: Boolean,
@@ -80,7 +82,7 @@ fun FoodCard(
             modifier = Modifier
                 .fillMaxSize()
                 .aspectRatio(1f)
-                .clickable { onCardClicked(text) },
+                .clickable { onCardClicked(id) },
             contentAlignment = Alignment.Center
         ){
             //음식 카드인 경우
