@@ -2,8 +2,10 @@ package com.acon.data.di
 
 import com.acon.data.repository.AuthRepositoryImpl
 import com.acon.data.repository.SpotRepositoryImpl
+import com.acon.data.repository.UploadRepositoryImpl
 import com.acon.domain.repository.AuthRepository
 import com.acon.domain.repository.SpotRepository
+import com.acon.domain.repository.UploadRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -25,4 +27,10 @@ internal abstract class RepositoryModule {
     abstract fun bindsSpotRepository(
         impl: SpotRepositoryImpl
     ): SpotRepository
+
+    @Singleton
+    @Binds
+    abstract fun bindsUploadRepository(
+        impl: UploadRepositoryImpl
+    ): UploadRepository
 }
