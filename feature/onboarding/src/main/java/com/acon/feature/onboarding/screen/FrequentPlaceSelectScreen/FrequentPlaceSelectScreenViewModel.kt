@@ -43,6 +43,13 @@ class FrequentPlaceSelectScreenViewModel @Inject constructor(
         }
     }
 
+    fun skipConfirmed() = intent {
+        reduce {
+            state.copy(openCloseDialog = false)
+        }
+        postSideEffect(FrequentPlaceSelectScreenSideEffect.NavigateToLastPage)
+    }
+
     fun navigateToPreviousPage() = intent {
         postSideEffect(FrequentPlaceSelectScreenSideEffect.NavigateToPreviousPage)
     }
@@ -63,4 +70,5 @@ data class FrequentPlaceSelectScreenState(
 sealed interface FrequentPlaceSelectScreenSideEffect {
     data object NavigateToPreviousPage: FrequentPlaceSelectScreenSideEffect
     data object NavigateToNextPage: FrequentPlaceSelectScreenSideEffect
+    data object NavigateToLastPage: FrequentPlaceSelectScreenSideEffect
 }

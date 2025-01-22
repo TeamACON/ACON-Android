@@ -59,6 +59,9 @@ fun FrequentPlaceSelectScreenContainer(
             FrequentPlaceSelectScreenSideEffect.NavigateToPreviousPage -> {
                 navigateToPreviousPage()
             }
+            FrequentPlaceSelectScreenSideEffect.NavigateToLastPage -> {
+                navigateToLastLoadingPage()
+            }
         }
     }
 
@@ -73,8 +76,7 @@ fun FrequentPlaceSelectScreenContainer(
                 viewModel.hideDialog()
             },
             onClickLeft = {
-                viewModel.hideDialog()
-                navigateToLastLoadingPage()
+                viewModel.skipConfirmed()
             },
             onClickRight = {
                 viewModel.hideDialog()

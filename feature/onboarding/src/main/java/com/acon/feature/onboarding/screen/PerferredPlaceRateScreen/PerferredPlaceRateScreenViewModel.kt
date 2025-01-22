@@ -45,6 +45,13 @@ class PreferredPlaceRateScreenViewModel @Inject constructor(
         }
     }
 
+    fun skipConfirmed() = intent {
+        reduce {
+            state.copy(openCloseDialog = false)
+        }
+        postSideEffect(PreferredPlaceRateScreenSideEffect.NavigateToLastPage)
+    }
+
     fun navigateToPreviousPage() = intent {
         postSideEffect(PreferredPlaceRateScreenSideEffect.NavigateToPreviousPage)
     }
@@ -67,4 +74,5 @@ data class PreferredPlaceRateScreenState(
 sealed interface PreferredPlaceRateScreenSideEffect {
     data object NavigateToPreviousPage: PreferredPlaceRateScreenSideEffect
     data object NavigateToNextPage: PreferredPlaceRateScreenSideEffect
+    data object NavigateToLastPage: PreferredPlaceRateScreenSideEffect
 }

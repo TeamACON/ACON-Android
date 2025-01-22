@@ -39,6 +39,9 @@ fun PreferredFoodRateScreenContainer(
             RatePreferFoodScreenSideEffect.NavigateToPreviousPage -> {
                 navigateToPreviousPage()
             }
+            RatePreferFoodScreenSideEffect.NavigateToLastPage -> {
+                navigateToLastLoadingPage()
+            }
         }
     }
 
@@ -53,8 +56,7 @@ fun PreferredFoodRateScreenContainer(
                 viewModel.hideDialog()
             },
             onClickLeft = { // 그만두기
-                viewModel.hideDialog()
-                navigateToLastLoadingPage()
+                viewModel.skipConfirmed()
             },
             onClickRight = { // 계속하기
                 viewModel.hideDialog()

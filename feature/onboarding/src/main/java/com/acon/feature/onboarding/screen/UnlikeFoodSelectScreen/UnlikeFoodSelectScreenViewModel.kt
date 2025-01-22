@@ -70,6 +70,13 @@ class UnlikeFoodScreenViewModel @Inject constructor(
         }
     }
 
+    fun skipConfirmed() = intent {
+        reduce {
+            state.copy(openCloseDialog = false)
+        }
+        postSideEffect(UnlikeFoodScreenSideEffect.NavigateToLastPage)
+    }
+
     fun navigateToNextPage() = intent {
 
         val disLikeFoodList = if (state.selectedCard.contains("")) emptySet()
@@ -89,4 +96,5 @@ data class UnlikeFoodScreenState(
 
 sealed interface UnlikeFoodScreenSideEffect {
     data object NavigateToNextPage: UnlikeFoodScreenSideEffect
+    data object NavigateToLastPage: UnlikeFoodScreenSideEffect
 }

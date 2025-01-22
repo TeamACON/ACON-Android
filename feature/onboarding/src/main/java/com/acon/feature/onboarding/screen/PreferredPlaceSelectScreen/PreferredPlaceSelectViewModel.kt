@@ -44,6 +44,13 @@ class PreferredPlaceSelectViewModel @Inject constructor(
         }
     }
 
+    fun skipConfirmed() = intent {
+        reduce {
+            state.copy(openCloseDialog = false)
+        }
+        postSideEffect(PreferredPlaceSelectScreenSideEffect.NavigateToLastPage)
+    }
+
     fun navigateToPreviousPage() = intent {
         postSideEffect(PreferredPlaceSelectScreenSideEffect.NavigateToPreviousPage)
     }
@@ -64,4 +71,5 @@ data class PreferredPlaceSelectScreenState(
 sealed interface PreferredPlaceSelectScreenSideEffect {
     data object NavigateToPreviousPage: PreferredPlaceSelectScreenSideEffect
     data object NavigateToNextPage: PreferredPlaceSelectScreenSideEffect
+    data object NavigateToLastPage: PreferredPlaceSelectScreenSideEffect
 }
