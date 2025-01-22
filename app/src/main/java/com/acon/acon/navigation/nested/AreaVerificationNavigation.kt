@@ -44,6 +44,9 @@ fun NavGraphBuilder.areaVerificationNavigation(
                 onNavigateToNext = {
                     //Skip to next screen
                     navController.navigate(AreaVerificationRoute.Complete)
+                },
+                onBackClick = {
+                    navController.popBackStack()
                 }
             )
         }
