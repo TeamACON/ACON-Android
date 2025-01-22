@@ -1,6 +1,6 @@
 package com.acon.feature.upload.component
 
-import android.util.Log
+import android.location.Location
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -38,8 +38,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.acon.core.designsystem.blur.LocalHazeState
 import com.acon.core.designsystem.blur.defaultHazeEffect
 import com.acon.core.designsystem.component.chip.AconChip
+import com.acon.core.designsystem.component.dialog.AconOneButtonDialog
 import com.acon.core.designsystem.theme.AconTheme
-import com.acon.core.map.ProceedWithLocation
 import com.acon.domain.model.upload.SpotListItem
 import com.acon.feature.upload.R
 import com.acon.feature.upload.UploadIntent
@@ -56,6 +56,32 @@ fun LocationSearchBottomSheet(
     val focusRequester = remember { FocusRequester() }
     val keyboardController = LocalSoftwareKeyboardController.current
     val state by viewModel.container.stateFlow.collectAsStateWithLifecycle()
+    var currentLocation by remember { mutableStateOf<Location?>(null) }
+    var showVerificationFailDialog by remember { mutableStateOf(false) }
+
+    LaunchedEffect(state.locationVerificationResult) {
+        if (state.locationVerificationResult == false) {
+            showVerificationFailDialog = true
+        }
+    }
+
+    if (showVerificationFailDialog) {
+        AconOneButtonDialog(
+            title = "위치 인식 실패",
+            content = "현재 위치와 등록장소가 오차범위 밖에\n있습니다. 좀 더 가까이 이동해보세요.",
+            buttonContent = "확인",
+            contentImage = R.drawable.and_ic_error_2_104,
+            onDismissRequest = {
+                showVerificationFailDialog = false
+                viewModel.onIntent(UploadIntent.ResetVerification)
+            },
+            onClickConfirm = {
+                showVerificationFailDialog = false
+                viewModel.onIntent(UploadIntent.ResetVerification)
+            },
+            isImageEnabled = true
+        )
+    }
 
     LaunchedEffect(Unit) {
         focusRequester.requestFocus()
@@ -66,25 +92,32 @@ fun LocationSearchBottomSheet(
         viewModel.searchFlow.emit(searchText)
     }
 
-    ProceedWithLocation { location ->
-        viewModel.onIntent(
-            UploadIntent.LoadSuggestions(
-                latitude = location.latitude,
-                longitude = location.longitude
-            )
-        )
-    }
-
-//    LaunchedEffect(Unit) {
-//        val mockLatitude = 37.5665 // 서울
-//        val mockLongitude = 126.9780
+//    ProceedWithLocation { location ->
+//        currentLocation = location
 //        viewModel.onIntent(
 //            UploadIntent.LoadSuggestions(
-//                latitude = mockLatitude,
-//                longitude = mockLongitude
+//                latitude = location.latitude,
+//                longitude = location.longitude
 //            )
 //        )
 //    }
+
+    LaunchedEffect(Unit) {
+//        val mockLatitude = 37.5665 // 서울
+//        val mockLongitude = 126.9780
+        val mockLatitude = 37.5626
+        val mockLongitude = 126.9252
+        currentLocation = Location("mock").apply {
+            latitude = mockLatitude
+            longitude = mockLongitude
+        }
+        viewModel.onIntent(
+            UploadIntent.LoadSuggestions(
+                latitude = mockLatitude,
+                longitude = mockLongitude
+            )
+        )
+    }
 
     Column(
         modifier = Modifier
@@ -190,9 +223,20 @@ fun LocationSearchBottomSheet(
                             LocationItem(
                                 locationItem = state.searchResults[index],
                                 onClick = {
-                                    viewModel.onIntent(UploadIntent.SelectLocation(state.searchResults[index]))
-                                    onLocationSelected(state.searchResults[index])
-                                    onDismiss()
+                                    currentLocation?.let { location ->
+                                        viewModel.onIntent(
+                                            UploadIntent.VerifyLocation(
+                                                spotId = state.searchResults[index].spotId,
+                                                latitude = location.latitude,
+                                                longitude = location.longitude
+                                            )
+                                        )
+                                    }
+                                    if (state.isLocationVerified) {
+                                        viewModel.onIntent(UploadIntent.SelectLocation(state.searchResults[index]))
+                                        onLocationSelected(state.searchResults[index])
+                                        onDismiss()
+                                    }
                                 }
                             )
                         }
