@@ -25,12 +25,12 @@ fun AreaVerificationButton(
     isEnabled: Boolean = true,
 ) {
     AconButton(
-        backGroundColor = if (isEnabled) AconTheme.color.Gray9 else AconTheme.color.Gray8,
-        borderColor = if (isEnabled) AconTheme.color.Gray8 else AconTheme.color.Gray7,
+        backGroundColor = if (selected) AconTheme.color.Gray8 else AconTheme.color.Gray9,
+        borderColor = if (selected) AconTheme.color.Gray7 else AconTheme.color.Gray8,
         borderWidth = 1.dp,
         modifier = modifier,
         cornerRadius = 6.dp,
-        contentPadding = PaddingValues(horizontal = 14.dp, vertical = 14.dp),
+        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp),
         onClick = onClick,
     ) {
         Row(
@@ -46,12 +46,12 @@ fun AreaVerificationButton(
             Row {
                 Text(
                     text = stringResource(R.string.area_verification_new),
-                    style = AconTheme.typography.head8_16_sb,
+                    style = AconTheme.typography.subtitle1_16_med,
                     color = AconTheme.color.Main_org1
                 )
                 Text(
                     text = stringResource(R.string.area_verification_certify_my_area),
-                    style = AconTheme.typography.head8_16_sb,
+                    style = AconTheme.typography.subtitle1_16_med,
                     color = AconTheme.color.White
                 )
             }
