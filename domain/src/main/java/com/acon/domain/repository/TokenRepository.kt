@@ -1,6 +1,6 @@
 package com.acon.domain.repository
 
-interface TokenLocalRepository {
+interface TokenRepository {
     suspend fun saveAccessToken(accessToken: String): Result<Unit>
     suspend fun saveRefreshToken(refreshToken: String): Result<Unit>
     suspend fun getAccessToken(): Result<String?>

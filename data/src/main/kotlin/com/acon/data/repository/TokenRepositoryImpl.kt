@@ -2,12 +2,12 @@ package com.acon.data.repository
 
 import com.acon.data.datasource.local.TokenLocalDataSource
 import com.acon.data.error.runCatchingWith
-import com.acon.domain.repository.TokenLocalRepository
+import com.acon.domain.repository.TokenRepository
 import javax.inject.Inject
 
-class TokenLocalRepositoryImpl @Inject constructor(
+class TokenRepositoryImpl @Inject constructor(
     private val tokenLocalDataSource: TokenLocalDataSource,
-): TokenLocalRepository {
+): TokenRepository {
     override suspend fun saveAccessToken(accessToken: String): Result<Unit> {
         return runCatchingWith() {
             tokenLocalDataSource.saveAccessToken(accessToken)

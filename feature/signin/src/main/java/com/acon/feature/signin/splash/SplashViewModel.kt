@@ -1,20 +1,20 @@
 package com.acon.feature.signin.splash
 
 import com.acon.core.utils.feature.base.BaseContainerHost
-import com.acon.domain.repository.TokenLocalRepository
+import com.acon.domain.repository.TokenRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
 
 @HiltViewModel
 class SplashViewModel @Inject constructor(
-    private val tokenLocalRepository: TokenLocalRepository
+    private val tokenRepository: TokenRepository
 ) : BaseContainerHost<SplashUiState, SplashSideEffect>() {
 
     override val container = container<SplashUiState, SplashSideEffect>(SplashUiState.StartSplash) {}
 
      fun isTokenValid() = intent {
-         tokenLocalRepository.getAccessToken().onSuccess { accessToken ->
+         tokenRepository.getAccessToken().onSuccess { accessToken ->
              if (!accessToken.isNullOrEmpty()) {
                  postSideEffect(SplashSideEffect.NavigationToSpotListView)
              } else {

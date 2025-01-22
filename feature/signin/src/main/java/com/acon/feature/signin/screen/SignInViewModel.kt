@@ -2,7 +2,7 @@ package com.acon.feature.signin.screen
 
 import com.acon.core.utils.feature.base.BaseContainerHost
 import com.acon.domain.repository.GoogleTokenRepository
-import com.acon.domain.repository.TokenLocalRepository
+import com.acon.domain.repository.TokenRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.viewmodel.container
@@ -10,7 +10,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SignInViewModel @Inject constructor(
-    private val tokenLocalRepository: TokenLocalRepository
+    private val tokenRepository: TokenRepository
 ) : BaseContainerHost<SignInUiState, SignInSideEffect>() {
 
     override val container: Container<SignInUiState, SignInSideEffect> =
@@ -33,7 +33,7 @@ class SignInViewModel @Inject constructor(
     }
 
     private fun isTokenValid() = intent {
-        tokenLocalRepository.getAccessToken().onSuccess { accessToken ->
+        tokenRepository.getAccessToken().onSuccess { accessToken ->
             if (!accessToken.isNullOrEmpty()) {
                 postSideEffect(SignInSideEffect.NavigateToSpotListView)
             }
