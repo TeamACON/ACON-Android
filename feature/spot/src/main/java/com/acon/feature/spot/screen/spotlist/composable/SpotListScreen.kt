@@ -59,7 +59,7 @@ internal fun SpotListScreen(
     modifier: Modifier = Modifier,
     onRefresh: () -> Unit = {},
     onResetFilter: () -> Unit = {},
-    onCompleteFilter: (ConditionState) -> Unit = {},
+    onCompleteFilter: (ConditionState, () -> Unit) -> Unit = { _, _ -> },
     onFilterBottomSheetShowStateChange: (Boolean) -> Unit = {},
     onSpotItemClick: (id: Int) -> Unit = {},
 ) {
@@ -100,8 +100,13 @@ internal fun SpotListScreen(
                 if (state.showFilterBottomSheet) {
                     SpotFilterBottomSheet(
                         hazeState = LocalHazeState.current,
-                        condition = state.currentCondition,
-                        onComplete = onCompleteFilter,
+                        condition = state.currentCondition, onComplete = {
+                            onCompleteFilter(it) {
+                                coroutineScope.launch {
+                                    scrollState.animateScrollTo(0)
+                                }
+                            }
+                        },
                         onReset = {
                             onResetFilter()
                             coroutineScope.launch {
@@ -220,7 +225,11 @@ internal fun SpotListScreen(
                                 modifier = Modifier
                                     .clip(CircleShape)
                                     .size(48.dp)
-                                    .defaultHazeEffect(hazeState = LocalHazeState.current, tintColor = AconTheme.color.Gla_w_30, blurRadius = 8.dp)
+                                    .defaultHazeEffect(
+                                        hazeState = LocalHazeState.current,
+                                        tintColor = AconTheme.color.Dim_b_30,
+                                        blurRadius = 8.dp
+                                    )
                                     .clickable {
                                         if (it.enabled) {
                                             when (it) {

@@ -162,7 +162,7 @@ fun SpotFilterBottomSheet(
                         color = AconTheme.color.White
                     )
                     Icon(
-                        imageVector = ImageVector.vectorResource(com.acon.core.designsystem.R.drawable.ic_dissmiss_16),
+                        imageVector = ImageVector.vectorResource(com.acon.core.designsystem.R.drawable.ic_dissmiss_28),
                         contentDescription = stringResource(com.acon.core.designsystem.R.string.dismiss_content_description),
                         modifier = Modifier
                             .align(Alignment.CenterEnd)
@@ -297,7 +297,7 @@ fun SpotFilterBottomSheet(
                     .fillMaxWidth()
                     .align(Alignment.BottomCenter)
                     .background(AconTheme.color.Black)
-                    .defaultHazeEffect(hazeState, tintColor = AconTheme.color.Gla_w_30, alpha = .6f)
+                    .defaultHazeEffect(hazeState, tintColor = AconTheme.color.Dim_b_30, alpha = .6f)
                     .padding(horizontal = 20.dp)
                     .padding(top = 10.dp, bottom = 32.dp)
             )
@@ -369,6 +369,7 @@ private fun BottomCompleteRow(
         ) {
             Icon(
                 imageVector = ImageVector.vectorResource(com.acon.core.designsystem.R.drawable.ic_reset),
+                modifier = Modifier.size(13.dp),
                 contentDescription = stringResource(com.acon.core.designsystem.R.string.reset_content_description),
                 tint = AconTheme.color.White
             )

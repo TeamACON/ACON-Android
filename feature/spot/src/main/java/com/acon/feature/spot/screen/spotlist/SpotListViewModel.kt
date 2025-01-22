@@ -114,14 +114,16 @@ class SpotListViewModel @Inject constructor(
         }
     }
 
-    fun onCompleteFilter(location: Location, condition: ConditionState) = intent {
+    fun onCompleteFilter(location: Location, condition: ConditionState, proceed: () -> Unit) = intent {
         runOn<SpotListUiState.Success> {
             reduce {
                 state.copy(isFilteredResultFetching = true, currentCondition = condition)
             }
             onLocationReady(location)
             reduce {
-                state.copy(isFilteredResultFetching = false, showFilterBottomSheet = false)
+                state.copy(isFilteredResultFetching = false, showFilterBottomSheet = false).also {
+                    proceed()
+                }
             }
         }
     }
