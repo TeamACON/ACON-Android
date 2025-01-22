@@ -6,9 +6,11 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -34,6 +36,7 @@ import androidx.compose.ui.zIndex
 import coil3.compose.AsyncImage
 import com.acon.core.designsystem.blur.LocalHazeState
 import com.acon.core.designsystem.blur.defaultHazeEffect
+import com.acon.core.designsystem.component.loading.SkeletonItem
 import com.acon.core.designsystem.theme.AconTheme
 import com.acon.domain.model.spot.SpotDetailInfo
 import com.acon.domain.type.SpotType
@@ -210,7 +213,29 @@ internal fun SpotDetailScreen(
                 }
             }
             is SpotDetailUiState.Loading -> {
-                // TODO : 로딩중 - 스켈레톤 뷰
+                Column(
+                    modifier = Modifier
+                        .verticalScroll(scrollState)
+                        .fillMaxSize()
+                        .padding()
+                ) {
+                    Spacer(modifier = Modifier.height(58.dp))
+                    SkeletonItem(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .aspectRatio(254f / 30f)
+                            .padding(start = 16.dp, end = 90.dp)
+                    )
+                    Spacer(modifier = Modifier.height(16.dp))
+                    SkeletonItem(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .aspectRatio(360f / 296f)
+                    )
+
+                }
+
+
             }
             is SpotDetailUiState.LoadFailed -> {
                 // TODO : 로드 실패 뷰
