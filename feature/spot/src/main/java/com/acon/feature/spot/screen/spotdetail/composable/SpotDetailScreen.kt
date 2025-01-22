@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
@@ -82,7 +83,7 @@ internal fun SpotDetailScreen(
                                 .background(AconTheme.color.Black)
                                 .defaultHazeEffect(
                                     hazeState = LocalHazeState.current,
-                                    tintColor = AconTheme.color.Gla_w_30,
+                                    tintColor = AconTheme.color.Dim_b_30,
                                 )
                                 .zIndex(1f)
                         )
@@ -90,24 +91,36 @@ internal fun SpotDetailScreen(
                             modifier = Modifier
                                 .fillMaxSize()
                                 .verticalScroll(scrollState)
-                                .padding(top = 58.dp)
+                                .padding(top = 52.dp)
                                 .hazeSource(LocalHazeState.current)
                         ) {
-                            AsyncImage(
-                                model = state.spotDetailInfo.imageList[0],
-                                contentDescription = stringResource(com.acon.feature.spot.R.string.spot_store_image),
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .aspectRatio(360f / 290f)
-                                    .hazeSource(LocalHazeState.current),
-                                contentScale = ContentScale.Crop,
-                            )
+                            Box() {
+                                AsyncImage(
+                                    model = state.spotDetailInfo.imageList[0],
+                                    contentDescription = stringResource(com.acon.feature.spot.R.string.spot_store_image),
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .aspectRatio(360f / 290f)
+                                        .hazeSource(LocalHazeState.current),
+                                    contentScale = ContentScale.Crop,
+                                )
+                                AsyncImage(
+                                    model = state.spotDetailInfo.imageList[0],
+                                    contentDescription = stringResource(com.acon.feature.spot.R.string.spot_store_image),
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .aspectRatio(360f / 290f)
+                                        .offset(y = 58.dp)
+                                        .hazeSource(LocalHazeState.current),
+                                    contentScale = ContentScale.Crop,
+                                )
+                            }
 
                             SpotChip(
                                 title = state.spotDetailInfo.name,
                                 selected = state.spotDetailInfo.openStatus,
                                 modifier = Modifier
-                                    .padding(start = 16.dp, top = 20.dp)
+                                    .padding(start = 16.dp, top = 78.dp)
                                     .hazeSource(LocalHazeState.current)
                             )
                             Row(
@@ -146,7 +159,7 @@ internal fun SpotDetailScreen(
                                         style = AconTheme.typography.subtitle1_16_med,
                                         color = AconTheme.color.White,
                                         modifier = Modifier
-                                            .padding(horizontal = 17.dp, vertical = 10.dp)
+                                            .padding(horizontal = 16.dp, vertical = 10.dp)
                                     )
                                     HorizontalDivider(
                                         color = AconTheme.color.White,
@@ -191,7 +204,7 @@ internal fun SpotDetailScreen(
                             .background(AconTheme.color.Black)
                             .defaultHazeEffect(
                                 hazeState = LocalHazeState.current,
-                                tintColor = AconTheme.color.Gla_w_30,
+                                tintColor = AconTheme.color.Dim_b_30,
                             )
                     )
                 }
