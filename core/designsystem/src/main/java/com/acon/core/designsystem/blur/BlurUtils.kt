@@ -24,12 +24,13 @@ fun Modifier.defaultHazeEffect(
     hazeState: HazeState,
     tintColor: Color,
     blurRadius: Dp = 40.dp,
-    alpha : Float = .4f,
-) = composed {
-    this.then(
+    alpha: Float = .4f,
+    backgroundColor: Color = Color.Black
+): Modifier {
+    return this.then(
         Modifier.hazeEffect(
             state = hazeState, style = HazeStyle(
-                backgroundColor = AconTheme.color.Black,
+                backgroundColor = backgroundColor,
                 tints = listOf(
                     HazeTint(
                         tintColor.copy(
@@ -42,6 +43,7 @@ fun Modifier.defaultHazeEffect(
             )
         )
     )
+
 }
 
 val LocalHazeState = staticCompositionLocalOf {

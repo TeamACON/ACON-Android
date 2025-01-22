@@ -65,15 +65,16 @@ fun SpotItem(
                 .padding(16.dp)
                 .fillMaxSize()
         ) {
-            Text(
-                text = stringResource(R.string.matching_rate, spot.matchingRate.toString().padStart(2, '0')),
-                style = AconTheme.typography.subtitle2_14_med,
-                color = AconTheme.color.White,
-                modifier = Modifier
-                    .clip(RoundedCornerShape(4.dp))
-                    .background(if (isFirstRank) AconTheme.color.Gray9 else AconTheme.color.Gla_w_20)
-                    .padding(horizontal = 12.dp, vertical = 6.dp)
-            )
+            if (spot.matchingRate >= 0)
+                Text(
+                    text = stringResource(R.string.matching_rate, spot.matchingRate.toString().padStart(2, '0')),
+                    style = AconTheme.typography.subtitle2_14_med,
+                    color = AconTheme.color.White,
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(4.dp))
+                        .background(if (isFirstRank) AconTheme.color.Gray9 else AconTheme.color.Gla_w_20)
+                        .padding(horizontal = 12.dp, vertical = 6.dp)
+                )
             Spacer(modifier = Modifier.weight(1f))
             Text(
                 text = stringResource(spot.type.getNameResId()),

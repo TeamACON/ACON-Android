@@ -2,6 +2,7 @@ package com.acon.feature.spot.screen.spotlist.composable
 
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.SpringSpec
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.collectIsDraggedAsState
 import androidx.compose.foundation.layout.Arrangement
@@ -32,6 +33,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.res.stringResource
@@ -50,6 +52,7 @@ import com.acon.feature.spot.state.ConditionState
 import com.acon.feature.spot.type.FloatingButtonType
 import com.github.fengdai.compose.pulltorefresh.PullToRefresh
 import com.github.fengdai.compose.pulltorefresh.rememberPullToRefreshState
+import dev.chrisbanes.haze.hazeEffect
 import dev.chrisbanes.haze.hazeSource
 import kotlinx.coroutines.launch
 
@@ -142,113 +145,122 @@ internal fun SpotListScreen(
                             SpotListPullToRefreshIndicator(refreshTriggerDistance, state)
                         }
                     ) {
-                        Column(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .verticalScroll(scrollState)
-                                .padding(horizontal = 20.dp)
-                                .hazeSource(LocalHazeState.current)
-                                .onSizeChanged { size ->
-                                    scrollableScreenHeightPx = size.height
-                                }
-                        ) {
-                            Spacer(modifier = Modifier.height(44.dp))
+                        Column {
                             Text(
                                 text = stringResource(R.string.spot_name),
                                 style = AconTheme.typography.title2_20_b,
                                 color = AconTheme.color.White,
-                                modifier = Modifier.padding(vertical = 14.dp)
-                            )
-                            if (isResultEmpty) {
-                                EmptySpotListView(modifier = Modifier.fillMaxSize())
-                            } else {
-                                Text(
-                                    text = stringResource(R.string.spot_recommendation_description),
-                                    style = AconTheme.typography.head6_20_sb,
-                                    color = AconTheme.color.White,
-                                    modifier = Modifier.padding(top = 16.dp)
-                                )
-                                Spacer(modifier = Modifier.height(12.dp))
-                                state.spotList.fastForEach { spot ->
-                                    val isFirstRank = spot === state.spotList.first()
-                                    SpotItem(
-                                        spot = spot,
-                                        isFirstRank = isFirstRank,
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .aspectRatio(if (isFirstRank) 328f / 408f else 328f / 128f)
-                                            .clickable {
-                                                onSpotItemClick(spot.id)
-                                            },
-                                    )
-                                    if (spot !== state.spotList.last())
-                                        Spacer(modifier = Modifier.height(12.dp))
-                                }
-                            }
-                            Column(
                                 modifier = Modifier
-                                    .padding(top = 12.dp)
                                     .fillMaxWidth()
-                                    .onSizeChanged { size ->
-                                        scrollableInvisibleHeightPx = size.height
-                                    },
-                                horizontalAlignment = Alignment.CenterHorizontally
-                            ) {
-                                Text(
-                                    modifier = Modifier.padding(top = 38.dp, bottom = 50.dp),
-                                    text = stringResource(R.string.alert_max_spot_count),
-                                    style = AconTheme.typography.body2_14_reg,
-                                    color = AconTheme.color.Gray5
-                                )
-                            }
-                        }
-                    }
-                    Column(
-                        modifier = Modifier
-                            .align(Alignment.BottomEnd)
-                            .padding(bottom = 16.dp)
-                            .padding(horizontal = 20.dp),
-                        verticalArrangement = Arrangement.spacedBy(8.dp)
-                    ) {
-                        FloatingButtonType.entries.fastForEach {
-                            Icon(
-                                imageVector = ImageVector.vectorResource(it.iconRes),
-                                tint = if (it == FloatingButtonType.FILTER) {
-                                    if (state.currentCondition != null)
-                                        AconTheme.color.Main_org1
-                                    else
-                                        AconTheme.color.White
-                                } else {
-                                    if (it.enabled) AconTheme.color.White else AconTheme.color.Gray5
-                                },
-                                contentDescription = stringResource(it.contentDescriptionRes),
-                                modifier = Modifier
-                                    .clip(CircleShape)
-                                    .size(48.dp)
                                     .defaultHazeEffect(
                                         hazeState = LocalHazeState.current,
                                         tintColor = AconTheme.color.Dim_b_30,
-                                        blurRadius = 8.dp
+                                        backgroundColor = Color(0xFF25262A)
                                     )
-                                    .clickable {
-                                        if (it.enabled) {
-                                            when (it) {
-                                                FloatingButtonType.LOCATION -> {
-                                                    // TODO : 위치 버튼 클릭 시 동작
-                                                }
+                                    .padding(vertical = 14.dp, horizontal = 20.dp)
+                                    .padding(top = 44.dp),
+                            )
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .verticalScroll(scrollState)
+                                    .padding(horizontal = 20.dp)
+                                    .hazeSource(LocalHazeState.current)
+                                    .onSizeChanged { size ->
+                                        scrollableScreenHeightPx = size.height
+                                    }
+                            ) {
+                                if (isResultEmpty) {
+                                    EmptySpotListView(modifier = Modifier.fillMaxSize())
+                                } else {
+                                    Text(
+                                        text = stringResource(R.string.spot_recommendation_description),
+                                        style = AconTheme.typography.head6_20_sb,
+                                        color = AconTheme.color.White,
+                                        modifier = Modifier.padding(top = 16.dp)
+                                    )
+                                    Spacer(modifier = Modifier.height(12.dp))
+                                    state.spotList.fastForEach { spot ->
+                                        val isFirstRank = spot === state.spotList.first()
+                                        SpotItem(
+                                            spot = spot,
+                                            isFirstRank = isFirstRank,
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .aspectRatio(if (isFirstRank) 328f / 408f else 328f / 128f)
+                                                .clickable {
+                                                    onSpotItemClick(spot.id)
+                                                },
+                                        )
+                                        if (spot !== state.spotList.last())
+                                            Spacer(modifier = Modifier.height(12.dp))
+                                    }
+                                }
+                                Column(
+                                    modifier = Modifier
+                                        .padding(top = 12.dp)
+                                        .fillMaxWidth()
+                                        .onSizeChanged { size ->
+                                            scrollableInvisibleHeightPx = size.height
+                                        },
+                                    horizontalAlignment = Alignment.CenterHorizontally
+                                ) {
+                                    Text(
+                                        modifier = Modifier.padding(top = 38.dp, bottom = 50.dp),
+                                        text = stringResource(R.string.alert_max_spot_count),
+                                        style = AconTheme.typography.body2_14_reg,
+                                        color = AconTheme.color.Gray5
+                                    )
+                                }
+                            }
+                        }
+                        Column(
+                            modifier = Modifier
+                                .align(Alignment.BottomEnd)
+                                .padding(bottom = 16.dp)
+                                .padding(horizontal = 20.dp),
+                            verticalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            FloatingButtonType.entries.fastForEach {
+                                Icon(
+                                    imageVector = ImageVector.vectorResource(it.iconRes),
+                                    tint = if (it == FloatingButtonType.FILTER) {
+                                        if (state.currentCondition != null)
+                                            AconTheme.color.Main_org1
+                                        else
+                                            AconTheme.color.White
+                                    } else {
+                                        if (it.enabled) AconTheme.color.White else AconTheme.color.Gray5
+                                    },
+                                    contentDescription = stringResource(it.contentDescriptionRes),
+                                    modifier = Modifier
+                                        .clip(CircleShape)
+                                        .size(48.dp)
+                                        .defaultHazeEffect(
+                                            hazeState = LocalHazeState.current,
+                                            tintColor = AconTheme.color.Dim_b_30,
+                                            blurRadius = 8.dp
+                                        )
+                                        .clickable {
+                                            if (it.enabled) {
+                                                when (it) {
+                                                    FloatingButtonType.LOCATION -> {
+                                                        // TODO : 위치 버튼 클릭 시 동작
+                                                    }
 
-                                                FloatingButtonType.MAP -> {
-                                                    // TODO : 지도 버튼 클릭 시 동작
-                                                }
+                                                    FloatingButtonType.MAP -> {
+                                                        // TODO : 지도 버튼 클릭 시 동작
+                                                    }
 
-                                                FloatingButtonType.FILTER -> {
-                                                    onFilterBottomSheetShowStateChange(true)
+                                                    FloatingButtonType.FILTER -> {
+                                                        onFilterBottomSheetShowStateChange(true)
+                                                    }
                                                 }
                                             }
                                         }
-                                    }
-                                    .padding(10.dp)
-                            )
+                                        .padding(10.dp)
+                                )
+                            }
                         }
                     }
                 }

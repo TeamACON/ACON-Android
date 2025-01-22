@@ -58,6 +58,7 @@ fun AconNavigation(
 
     CompositionLocalProvider(LocalHazeState provides hazeState) {
         Scaffold(
+            containerColor = AconTheme.color.Gray9,
             modifier = modifier.navigationBarsPadding(),
             topBar = {
                 Spacer(modifier = Modifier.padding(0.dp))
