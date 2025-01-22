@@ -3,7 +3,6 @@ package com.acon.data.repository
 import com.acon.data.datasource.remote.UploadRemoteDataSource
 import com.acon.domain.model.upload.DotoriCount
 import com.acon.domain.model.upload.KeyWord
-import com.acon.domain.model.upload.ReviewResult
 import com.acon.domain.model.upload.SpotVerification
 import com.acon.domain.model.upload.Suggestions
 import com.acon.domain.repository.UploadRepository
