@@ -5,7 +5,7 @@ import com.acon.domain.type.SpotType
 
 @Immutable
 data class Spot(
-    val id: Int,
+    val id: Long,
     val image: String,
     val matchingRate: Int,
     val type: SpotType,

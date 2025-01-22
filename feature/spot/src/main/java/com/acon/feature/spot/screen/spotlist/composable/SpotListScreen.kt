@@ -61,7 +61,7 @@ internal fun SpotListScreen(
     onResetFilter: () -> Unit = {},
     onCompleteFilter: (ConditionState, () -> Unit) -> Unit = { _, _ -> },
     onFilterBottomSheetShowStateChange: (Boolean) -> Unit = {},
-    onSpotItemClick: (id: Int) -> Unit = {},
+    onSpotItemClick: (id: Long) -> Unit = {},
 ) {
     val scrollState = rememberScrollState()
     val coroutineScope = rememberCoroutineScope()
