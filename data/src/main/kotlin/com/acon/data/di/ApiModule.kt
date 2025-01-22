@@ -52,7 +52,7 @@ internal object ApiModule {
     @Singleton
     @Provides
     fun providesUploadApi(
-        @NoAuth retrofit: Retrofit
+        @Auth retrofit: Retrofit
     ): UploadApi {
         return retrofit.create(UploadApi::class.java)
     }
