@@ -2,33 +2,37 @@ package com.acon.feature.signin.screen
 
 import android.app.Activity
 import androidx.activity.compose.BackHandler
-import androidx.compose.foundation.Image
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.acon.core.designsystem.component.button.AconGoogleLoginButton
+import com.acon.core.designsystem.noRippleClickable
 import com.acon.core.designsystem.theme.AconTheme
 import com.acon.feature.signin.R
 import com.acon.feature.signin.screen.component.SignInTopBar
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.animateLottieCompositionAsState
+import com.airbnb.lottie.compose.rememberLottieComposition
 
 @Composable
 fun SignInScreen(
@@ -44,77 +48,95 @@ fun SignInScreen(
 
     BackHandler(enabled = true) { activity?.finish() }
 
-    Column(
-        modifier = modifier
-            .background(AconTheme.color.Black),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        SignInTopBar(
-            modifier = Modifier
-                .padding(top = 42.dp),
-            onClickText = navigateToSpotListView
-        )
+    when(state) {
+        is SignInUiState.Loading -> {
+            Column(
+                modifier = modifier
+                    .background(AconTheme.color.Gray9),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                val composition by rememberLottieComposition(
+                    LottieCompositionSpec.Asset("acon_splash_lottie.json")
+                )
+                val logoAnimationState = animateLottieCompositionAsState(composition = composition)
+                val alpha by animateFloatAsState(
+                    targetValue = if (logoAnimationState.value >= .99f) 1f else 0f,
+                    animationSpec = tween(1000),
+                    label = stringResource(R.string.splash_text_animation_label)
+                )
 
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .weight(1f)
-                .padding(bottom = 50.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            Text(
-                text = stringResource(R.string.signin_logo_title),
-                style = AconTheme.typography.subtitle2_14_med,
-                textAlign = TextAlign.Center,
-                color = AconTheme.color.White
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            Image(
-                imageVector = ImageVector.vectorResource(com.acon.core.designsystem.R.drawable.ic_word_logo_splash_org_78),
-                contentDescription = stringResource(R.string.signin_logo_title_content_description)
-            )
-        }
+                SignInTopBar(
+                    modifier = Modifier
+                        .padding(top = 42.dp)
+                        .alpha(alpha),
+                    onClickText = { if (alpha >= 0.75f) navigateToSpotListView() }
+                )
 
-        AconGoogleLoginButton(
-            modifier = Modifier
-                .padding(horizontal = 20.dp)
-                .padding(top = 16.dp),
-            onClick = onClickLoginGoogle
-        )
-        Text(
-            text = stringResource(R.string.signin_policy),
-            style = AconTheme.typography.cap1_11_reg,
-            color = AconTheme.color.Gray3,
-            textAlign = TextAlign.Center,
-            modifier = Modifier
-                .padding(horizontal = 24.dp, vertical = 8.dp)
-        )
-        Row(
-            modifier = Modifier
-                .padding(bottom = 76.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                text = stringResource(R.string.signin_terms_of_service),
-                style = AconTheme.typography.cap1_11_reg,
-                color = AconTheme.color.Gray5,
-                textAlign = TextAlign.Center,
-                textDecoration = TextDecoration.Underline,
-                modifier = Modifier
-                    .clickable { onClickTermsOfUse() }
-            )
-            Spacer(modifier = Modifier.width(16.dp))
-            Text(
-                text = stringResource(R.string.signin_privacy_policy),
-                style = AconTheme.typography.cap1_11_reg,
-                color = AconTheme.color.Gray5,
-                textAlign = TextAlign.Center,
-                textDecoration = TextDecoration.Underline,
-                modifier = Modifier
-                    .clickable { onClickPrivacyPolicy() }
-            )
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .weight(1f)
+                        .padding(bottom = 200.dp),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    LottieAnimation(
+                        composition = composition,
+                        progress = {
+                            logoAnimationState.progress
+                        },
+                        modifier = Modifier
+                            .width(width = 320.dp)
+                    )
+                }
+
+                AconGoogleLoginButton(
+                    modifier = Modifier
+                        .padding(horizontal = 20.dp)
+                        .padding(top = 16.dp)
+                        .alpha(alpha),
+                    onClick = { if (alpha >= 0.75f) onClickLoginGoogle() },
+                    textStyle = AconTheme.typography.subtitle1_16_med
+                )
+                Text(
+                    text = stringResource(R.string.signin_policy),
+                    style = AconTheme.typography.body2_14_reg,
+                    color = AconTheme.color.Gray3,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .padding(horizontal = 24.dp, vertical = 8.dp)
+                        .alpha(alpha)
+                )
+                Row(
+                    modifier = Modifier
+                        .padding(bottom = 76.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = stringResource(R.string.signin_terms_of_service),
+                        style = AconTheme.typography.body2_14_reg,
+                        color = AconTheme.color.Gray5,
+                        textAlign = TextAlign.Center,
+                        textDecoration = TextDecoration.Underline,
+                        modifier = Modifier
+                            .noRippleClickable { if (alpha >= 0.75f) onClickTermsOfUse() }
+                            .alpha(alpha)
+                    )
+                    Spacer(modifier = Modifier.width(16.dp))
+                    Text(
+                        text = stringResource(R.string.signin_privacy_policy),
+                        style = AconTheme.typography.body2_14_reg,
+                        color = AconTheme.color.Gray5,
+                        textAlign = TextAlign.Center,
+                        textDecoration = TextDecoration.Underline,
+                        modifier = Modifier
+                            .noRippleClickable { if (alpha >= 0.75f) onClickPrivacyPolicy() }
+                            .alpha(alpha)
+                    )
+                }
+            }
         }
+        is SignInUiState.Success -> {}
+        is SignInUiState.LoadFailed -> {}
     }
 }
 
@@ -122,12 +144,12 @@ fun SignInScreen(
 @Composable
 private fun PreviewSignInScreen() {
     AconTheme {
-//        SignInScreen(
-//            state = ,
-//            navigateToSpotListView = {},
-//            onClickTermsOfUse = {},
-//            onClickPrivacyPolicy = {},
-//            onClickLoginGoogle = {}
-//        )
+        SignInScreen(
+            state = SignInUiState.Loading,
+            navigateToSpotListView = {},
+            onClickTermsOfUse = {},
+            onClickPrivacyPolicy = {},
+            onClickLoginGoogle = {}
+        )
     }
 }

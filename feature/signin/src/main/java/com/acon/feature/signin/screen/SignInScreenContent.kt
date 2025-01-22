@@ -25,17 +25,10 @@ fun SignInScreenContent(
 
     SignInScreen(
         state = state,
-        modifier = modifier
-            .fillMaxSize(),
-        navigateToSpotListView = {
-            viewModel.navigateToSpotListView()
-        },
-        onClickTermsOfUse = {
-            viewModel.onClickTermsOfUse()
-        },
-        onClickPrivacyPolicy = {
-            viewModel.onClickPrivacyPolicy()
-        },
+        modifier = modifier.fillMaxSize(),
+        navigateToSpotListView = viewModel::navigateToSpotListView,
+        onClickTermsOfUse = viewModel::onClickTermsOfUse,
+        onClickPrivacyPolicy = viewModel::onClickPrivacyPolicy,
         onClickLoginGoogle = {
             viewModel.googleLogin(googleSignInRepository)
         }

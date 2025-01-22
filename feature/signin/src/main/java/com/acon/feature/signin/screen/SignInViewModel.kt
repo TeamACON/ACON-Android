@@ -2,6 +2,7 @@ package com.acon.feature.signin.screen
 
 import com.acon.core.utils.feature.base.BaseContainerHost
 import com.acon.domain.repository.GoogleTokenRepository
+import com.acon.domain.repository.TokenLocalRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.viewmodel.container
@@ -9,11 +10,13 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SignInViewModel @Inject constructor(
-
+    private val tokenLocalRepository: TokenLocalRepository
 ) : BaseContainerHost<SignInUiState, SignInSideEffect>() {
 
     override val container: Container<SignInUiState, SignInSideEffect> =
-        container(initialState = SignInUiState.Loading)
+        container(initialState = SignInUiState.Loading) {
+            isTokenValid()
+        }
 
     fun googleLogin(googleTokenRepository: GoogleTokenRepository) = intent {
         googleTokenRepository.signIn()
@@ -27,6 +30,14 @@ class SignInViewModel @Inject constructor(
                     SignInUiState.LoadFailed
                 }
             }
+    }
+
+    fun isTokenValid() = intent {
+        tokenLocalRepository.getAccessToken().onSuccess { accessToken ->
+            if (!accessToken.isNullOrEmpty()) {
+                postSideEffect(SignInSideEffect.NavigateToSpotListView)
+            }
+        }
     }
 
     fun navigateToSpotListView() = intent {
