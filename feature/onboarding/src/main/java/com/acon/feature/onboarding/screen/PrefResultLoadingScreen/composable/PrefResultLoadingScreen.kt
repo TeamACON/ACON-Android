@@ -15,6 +15,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -77,7 +78,7 @@ fun PrefResultLoadingScreen(
     when (screenState) {
         is PrefResultLoadingScreenState.Loading -> {
             lottieRes = R.raw.loading_lottie
-            loadingText = "회원님의 취향을\n빠르게 분석하고 있어요."
+            loadingText = stringResource(R.string.onboarding_6_title)
 
             val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(lottieRes))
 
@@ -112,7 +113,7 @@ fun PrefResultLoadingScreen(
 
         PrefResultLoadingScreenState.LoadSucceed -> {
             lottieRes = R.raw.loading_complete_lottie
-            loadingText = "분석이 완료되었어요!\n추천 맛집을 보여드릴게요."
+            loadingText = stringResource(R.string.onboarding_6_title2)
 
             val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(lottieRes))
 
@@ -130,7 +131,7 @@ fun PrefResultLoadingScreen(
                 ) {
                     Text(
                         text = loadingText,
-                        style = AconTheme.typography.head6_20_sb,
+                        style = AconTheme.typography.head4_24_sb,
                         color = AconTheme.color.White,
                         textAlign = TextAlign.Center
                     )
