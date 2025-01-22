@@ -5,7 +5,6 @@ import com.acon.data.dto.response.upload.UploadGetDotoriResponse
 import com.acon.data.dto.response.upload.UploadGetKeyWordResponse
 import com.acon.data.dto.response.upload.UploadGetSpotVerifyResponse
 import com.acon.data.dto.response.upload.UploadGetSuggestionsResponse
-import com.acon.data.dto.response.upload.UploadPostReviewResponse
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Headers
