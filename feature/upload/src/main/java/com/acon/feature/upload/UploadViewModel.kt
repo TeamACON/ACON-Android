@@ -1,6 +1,5 @@
 package com.acon.feature.upload
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.acon.domain.repository.UploadRepository
@@ -47,8 +46,8 @@ class UploadViewModel @Inject constructor(
                                 state.copy(searchResults = keyWord.spotList.toPersistentList())
                             }
                         }
-                        .onFailure { error ->
-                            Log.d("search", "장소 검색 에러: ${error.message}")
+                        .onFailure {
+                            //timber
                             reduce { state.copy(searchResults = persistentListOf()) }
                         }
                 }
@@ -62,6 +61,20 @@ class UploadViewModel @Inject constructor(
             is UploadIntent.SelectLocation -> {
                 intent {
                     reduce { state.copy(selectedLocation = intent.location) }
+                }
+            }
+
+            is UploadIntent.VerifyLocation -> {
+                verifyLocation(
+                    spotId = intent.spotId,
+                    latitude = intent.latitude,
+                    longitude = intent.longitude
+                )
+            }
+
+            is UploadIntent.ResetVerification -> intent {
+                reduce {
+                    state.copy(locationVerificationResult = null)
                 }
             }
 
@@ -140,23 +153,21 @@ class UploadViewModel @Inject constructor(
                     state.copy(ownedDotoriCount = dotoriCount.count)
                 }
             }
-            .onFailure { error ->
-                Log.d("dotori","도토리 카운트 에러: ${error.message}")
+            .onFailure {
+                //timber
             }
     }
 
 
     private fun loadSuggestions(latitude: Double, longitude: Double) = intent {
-        Log.d("LocationSearch", "loadSuggestions 호출됨: lat=$latitude, lon=$longitude")
         uploadRepository.getSuggestions(latitude, longitude)
             .onSuccess { suggestions ->
-                Log.d("LocationSearch", "추천 검색어 로드 성공: ${suggestions.suggestionList.size}개")
                 reduce {
                     state.copy(suggestions = suggestions.suggestionList.toPersistentList())
                 }
             }
-            .onFailure { error ->
-                Log.d("LocationSearch", "추천 검색어 로드 실패: ${error.message}")
+            .onFailure {
+                //timber
                 reduce {
                     state.copy(suggestions = persistentListOf())
                 }
@@ -164,7 +175,38 @@ class UploadViewModel @Inject constructor(
     }
 
     private fun uploadDotori() = intent {
-        postSideEffect(UploadSideEffect.NavigateToSuccess)
+        state.selectedLocation?.let { location ->
+            uploadRepository.postReview(
+                spotId = location.spotId,
+                acornCount = state.selectedCount
+            ).onSuccess {
+                postSideEffect(UploadSideEffect.NavigateToSuccess)
+            }.onFailure {
+                //timber
+            }
+        }
+    }
+
+    private fun verifyLocation(spotId: Long, latitude: Double, longitude: Double) = intent {
+        uploadRepository.getVerifySpotLocation(spotId, latitude, longitude)
+            .onSuccess { verification ->
+                reduce {
+                    state.copy(
+                        isLocationVerified = verification.success,
+                        locationVerificationResult = verification.success
+                    )
+                }
+            }
+            .onFailure {
+                //timber
+                reduce {
+                    state.copy(
+                        isLocationVerified = false,
+                        locationVerificationResult = false,
+                        selectedLocation = null
+                    )
+                }
+            }
     }
 
     private fun navigateBack() = intent {
