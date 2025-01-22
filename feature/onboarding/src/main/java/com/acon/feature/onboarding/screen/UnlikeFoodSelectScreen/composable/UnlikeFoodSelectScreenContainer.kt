@@ -34,6 +34,9 @@ fun UnlikeFoodScreenContainer(
             UnlikeFoodScreenSideEffect.NavigateToNextPage -> {
                 navigateToNextPage()
             }
+            UnlikeFoodScreenSideEffect.NavigateToLastPage -> {
+                navigateToLastLoadingPage()
+            }
         }
     }
 
@@ -48,8 +51,7 @@ fun UnlikeFoodScreenContainer(
                 viewModel.hideDialog()
             },
             onClickLeft = { // 그만두기
-                viewModel.hideDialog()
-                navigateToLastLoadingPage()
+                viewModel.skipConfirmed()
             },
             onClickRight = { // 계속하기
                 viewModel.hideDialog()
