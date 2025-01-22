@@ -29,6 +29,7 @@ class PrefResultLoadingScreenViewModel @Inject constructor(
             favoriteSpotStyle = onboardingResult.favoriteSpotStyle,
             favoriteSpotRank = onboardingResult.favoriteSpotRank
         ).onSuccess {
+            delay(1000L)
             reduce {
                 PrefResultLoadingScreenState.LoadSucceed
             }

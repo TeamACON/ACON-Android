@@ -109,7 +109,7 @@ fun PlaceTypeCard(
                         modifier = Modifier
                             .fillMaxSize()
                             .clip(RoundedCornerShape(6.dp))
-                            .background(AconTheme.color.Dim_b_60)
+                            .background(AconTheme.color.Gla_w_30)
                     )
                     Image(
                         imageVector = ImageVector.vectorResource(rateIcon),

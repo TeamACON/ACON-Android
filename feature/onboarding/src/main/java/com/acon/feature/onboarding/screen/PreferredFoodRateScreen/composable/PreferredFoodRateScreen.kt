@@ -54,7 +54,7 @@ fun PreferredFoodRateScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = 15.dp, vertical = 50.dp),
+                .padding(horizontal = 15.dp, vertical = 30.dp),
             verticalArrangement = Arrangement.SpaceBetween
         ){
             Column(
