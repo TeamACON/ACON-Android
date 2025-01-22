@@ -26,6 +26,7 @@ import com.acon.acon.navigation.bottom.BottomNavType
 import com.acon.acon.navigation.nested.areaVerificationNavigation
 import com.acon.acon.navigation.nested.onboardingNavigationNavigation
 import com.acon.acon.navigation.nested.signInNavigationNavigation
+import com.acon.acon.navigation.nested.splashNavigationNavigation
 import com.acon.acon.navigation.nested.spotNavigation
 import com.acon.acon.navigation.nested.uploadNavigation
 import com.acon.feature.spot.com.acon.feature.spot.SpotRoute
@@ -39,7 +40,7 @@ import com.acon.core.designsystem.blur.defaultHazeEffect
 import com.acon.core.designsystem.blur.rememberHazeState
 import com.acon.core.designsystem.theme.AconTheme
 import com.acon.domain.repository.GoogleTokenRepository
-import com.acon.feature.onboarding.OnboardingRoute
+import com.acon.feature.signin.screen.SignInRoute
 
 @Composable
 fun AconNavigation(
@@ -77,7 +78,7 @@ fun AconNavigation(
         ) { innerPadding ->
             NavHost(
                 navController = navController,
-                startDestination = OnboardingRoute.Graph,
+                startDestination = SignInRoute.Graph,
                 modifier = Modifier.padding(innerPadding),
                 enterTransition = {
                     defaultEnterTransition()
@@ -89,6 +90,7 @@ fun AconNavigation(
                     defaultPopExitTransition()
                 }
             ) {
+                splashNavigationNavigation(navController)
 
                 signInNavigationNavigation(navController, googleTokenRepository)
 

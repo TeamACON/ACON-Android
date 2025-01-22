@@ -54,7 +54,7 @@ fun RestaurantBottomActionBar(
             enabledBackgroundColor = AconTheme.color.Main_org1,
             disabledBackgroundColor = AconTheme.color.Main_org1,
             onClick = onClickFindDirections,
-            contentPadding = PaddingValues(horizontal = 65.dp, vertical = 10.dp),
+            contentPadding = PaddingValues(horizontal = 66.dp, vertical = 12.dp),
         )
     }
 }
@@ -87,7 +87,7 @@ fun AconIconAndCount(
         )
         Text(
             text = displayedCount,
-            style = AconTheme.typography.body2_14_reg,
+            style = AconTheme.typography.head8_16_sb,
             color = AconTheme.color.White,
             modifier = Modifier
                 .padding(vertical = 4.dp),
