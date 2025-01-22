@@ -64,7 +64,7 @@ class SpotListViewModel @Inject constructor(
                 condition = state.currentCondition?.toCondition() ?: Condition.Default,
             ).onSuccess {
                 reduce {
-                    (state as? SpotListUiState.Success)?.copy(spotList = it)
+                    (state as? SpotListUiState.Success)?.copy(spotList = it, isRefreshing = false)
                         ?: SpotListUiState.Success(it, false)
                 }
             }.onFailure {

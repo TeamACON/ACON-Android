@@ -3,7 +3,11 @@ package com.acon.domain.type
 sealed interface OptionType {
 
     fun getName(): String {
-        return this::class.java.simpleName
+        return if (this is Enum<*>) {
+            this.name
+        } else {
+            throw IllegalArgumentException("OptionType must be Enum")
+        }
     }
 
     enum class RestaurantFeatureOptionType : OptionType {
