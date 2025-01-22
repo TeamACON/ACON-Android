@@ -18,6 +18,6 @@ interface SpotRepository {
     ): Result<SpotDetailInfo>
 
     suspend fun getSpotMenuList(
-        spotId: Int,
+        spotId: Long,
     ): Result<List<SpotDetailMenu>>
 }
