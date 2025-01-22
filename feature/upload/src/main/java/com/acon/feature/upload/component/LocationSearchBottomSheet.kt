@@ -40,6 +40,7 @@ import com.acon.core.designsystem.blur.defaultHazeEffect
 import com.acon.core.designsystem.component.chip.AconChip
 import com.acon.core.designsystem.component.dialog.AconOneButtonDialog
 import com.acon.core.designsystem.theme.AconTheme
+import com.acon.core.map.ProceedWithLocation
 import com.acon.domain.model.upload.SpotListItem
 import com.acon.feature.upload.R
 import com.acon.feature.upload.UploadIntent
@@ -92,29 +93,12 @@ fun LocationSearchBottomSheet(
         viewModel.searchFlow.emit(searchText)
     }
 
-//    ProceedWithLocation { location ->
-//        currentLocation = location
-//        viewModel.onIntent(
-//            UploadIntent.LoadSuggestions(
-//                latitude = location.latitude,
-//                longitude = location.longitude
-//            )
-//        )
-//    }
-
-    LaunchedEffect(Unit) {
-//        val mockLatitude = 37.5665 // 서울
-//        val mockLongitude = 126.9780
-        val mockLatitude = 37.5626
-        val mockLongitude = 126.9252
-        currentLocation = Location("mock").apply {
-            latitude = mockLatitude
-            longitude = mockLongitude
-        }
+    ProceedWithLocation { location ->
+        currentLocation = location
         viewModel.onIntent(
             UploadIntent.LoadSuggestions(
-                latitude = mockLatitude,
-                longitude = mockLongitude
+                latitude = location.latitude,
+                longitude = location.longitude
             )
         )
     }
