@@ -16,7 +16,6 @@ lifecycleRuntimeKtx = "2.8.7"
 activityCompose = "1.8.0"
 composeBom = "2024.04.01"
 appcompat = "1.7.0"
-lottieCompose = "6.6.2"
 mapSdk = "3.19.1"
 material = "1.12.0"
 jetbrainsKotlinJvm = "2.0.21"
@@ -54,7 +53,7 @@ lifecycleRuntimeComposeAndroid = "2.8.7"
 foundationAndroidVersion = "1.8.0-alpha04"
 
 ##lottie
-lottie = "6.0.0"
+lottie = "6.6.2"
 
 ##glassmorphism
 hazeAndroid = "1.2.1"
@@ -89,7 +88,6 @@ androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 kotlinx-collections-immutable = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version.ref = "kotlinxCollectionsImmutable" }
-lottie-compose-v662 = { module = "com.airbnb.android:lottie-compose", version.ref = "lottieCompose" }
 map-sdk = { module = "com.naver.maps:map-sdk", version.ref = "mapSdk" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 androidx-ui-graphics-android = { group = "androidx.compose.ui", name = "ui-graphics-android", version.ref = "uiGraphicsAndroid" }
