@@ -29,6 +29,8 @@ import com.acon.acon.navigation.nested.signInNavigationNavigation
 import com.acon.acon.navigation.nested.splashNavigationNavigation
 import com.acon.acon.navigation.nested.spotNavigation
 import com.acon.acon.navigation.nested.uploadNavigation
+import com.acon.feature.spot.com.acon.feature.spot.SpotRoute
+import com.acon.feature.upload.UploadRoute
 import com.acon.acon.navigation.route.SignInRoute
 import com.acon.acon.navigation.route.SpotRoute
 import com.acon.acon.navigation.route.UploadRoute
@@ -41,6 +43,7 @@ import com.acon.core.designsystem.blur.defaultHazeEffect
 import com.acon.core.designsystem.blur.rememberHazeState
 import com.acon.core.designsystem.theme.AconTheme
 import com.acon.domain.repository.GoogleTokenRepository
+import com.acon.feature.onboarding.OnboardingRoute
 
 @Composable
 fun AconNavigation(
@@ -67,7 +70,7 @@ fun AconNavigation(
                         modifier = Modifier
                             .background(color = AconTheme.color.Black)  // TODO Color?
                             .fillMaxWidth()
-                            .defaultHazeEffect(hazeState = LocalHazeState.current, tintColor = AconTheme.color.Gla_b_30),
+                            .defaultHazeEffect(hazeState = LocalHazeState.current, tintColor = AconTheme.color.Dim_b_30),
                         selectedItem = selectedBottomNavItem,
                         onItemClick = {
                             selectedBottomNavItem = it

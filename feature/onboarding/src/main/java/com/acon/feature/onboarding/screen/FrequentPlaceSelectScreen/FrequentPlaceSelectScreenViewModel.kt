@@ -1,6 +1,7 @@
 package com.acon.feature.onboarding.screen.FrequentPlaceSelectScreen
 
 import com.acon.core.utils.feature.base.BaseContainerHost
+import com.acon.domain.repository.OnboardingRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.viewmodel.container
@@ -10,6 +11,7 @@ private const val ONBOARDING_TOTAL_PAGES = 5;
 
 @HiltViewModel
 class FrequentPlaceSelectScreenViewModel @Inject constructor(
+    private val onboardingRepository: OnboardingRepository
 ) : BaseContainerHost<FrequentPlaceSelectScreenState, FrequentPlaceSelectScreenSideEffect>() {
 
     override val container: Container<FrequentPlaceSelectScreenState, FrequentPlaceSelectScreenSideEffect> =
@@ -17,11 +19,11 @@ class FrequentPlaceSelectScreenViewModel @Inject constructor(
             initialState = FrequentPlaceSelectScreenState(  )
         )
 
-    fun onCardClicked(text: String) = intent {
+    fun onCardClicked(id: String) = intent {
         val updatedSelectedCard = when {
-            state.selectedCard.isEmpty() -> setOf(text)
-            state.selectedCard.contains(text) -> state.selectedCard - text
-            else -> setOf(text)
+            state.selectedCard.isEmpty() -> setOf(id)
+            state.selectedCard.contains(id) -> state.selectedCard - id
+            else -> setOf(id)
         }
 
         reduce {
@@ -41,11 +43,19 @@ class FrequentPlaceSelectScreenViewModel @Inject constructor(
         }
     }
 
+    fun skipConfirmed() = intent {
+        reduce {
+            state.copy(openCloseDialog = false)
+        }
+        postSideEffect(FrequentPlaceSelectScreenSideEffect.NavigateToLastPage)
+    }
+
     fun navigateToPreviousPage() = intent {
         postSideEffect(FrequentPlaceSelectScreenSideEffect.NavigateToPreviousPage)
     }
 
     fun navigateToNextPage() = intent {
+        onboardingRepository.postFavoriteSpotType(state.selectedCard.first().toString())
         postSideEffect(FrequentPlaceSelectScreenSideEffect.NavigateToNextPage)
     }
 }
@@ -60,4 +70,5 @@ data class FrequentPlaceSelectScreenState(
 sealed interface FrequentPlaceSelectScreenSideEffect {
     data object NavigateToPreviousPage: FrequentPlaceSelectScreenSideEffect
     data object NavigateToNextPage: FrequentPlaceSelectScreenSideEffect
+    data object NavigateToLastPage: FrequentPlaceSelectScreenSideEffect
 }

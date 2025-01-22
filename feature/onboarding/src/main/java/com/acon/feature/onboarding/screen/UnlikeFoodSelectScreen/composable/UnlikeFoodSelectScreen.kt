@@ -5,26 +5,26 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.acon.core.designsystem.component.button.AconFilledLargeButton
 import com.acon.core.designsystem.theme.AconTheme
+import com.acon.feature.onboarding.R
 import com.acon.feature.onboarding.component.FoodGrid
 import com.acon.feature.onboarding.component.OnboardingTopBar
 import com.acon.feature.onboarding.screen.UnlikeFoodSelectScreen.UnlikeFoodScreenState
 import com.acon.feature.onboarding.type.FoodItems
-
-/*
-* TODO: 탑바 다음 버튼 버그 (없음 누르고 취소하면 안없어짐)
-*/
 
 @Composable
 fun UnlikeFoodScreen(
@@ -41,7 +41,6 @@ fun UnlikeFoodScreen(
             .fillMaxSize()
             .background(color = AconTheme.color.Gray9)
     ){
-
         OnboardingTopBar(
             totalPages = screenState.totalPages,
             currentPage = screenState.currentPage,
@@ -56,7 +55,7 @@ fun UnlikeFoodScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(start = 20.dp, end = 20.dp, top = 50.dp, bottom = 50.dp),
+                .padding(horizontal = 15.dp, vertical = 30.dp),
             verticalArrangement = Arrangement.SpaceBetween
         ){
             Box(
@@ -73,30 +72,29 @@ fun UnlikeFoodScreen(
                         modifier = modifier.padding(vertical = 7.dp)
                     )
                     Text(
-                        text = "어떤 음식을 피하고 싶으신가요?",
+                        text = stringResource(R.string.onboarding_1_title),
                         color = Color.White,
-                        style = AconTheme.typography.head6_20_sb,
+                        style = AconTheme.typography.head4_24_sb,
                     )
-                }
-            }
 
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f),
-                contentAlignment = Alignment.Center
-            ){
-                FoodGrid(
-                    modifier = modifier
-                        .background(AconTheme.color.Gray9),
-                    columnSize = columnSize,
-                    foodItems = FoodItems.entries.toTypedArray(),
-                    onCardClicked = { text ->
-                        onCardClicked(text)
-                    },
-                    isNothingClicked = screenState.isNothingClicked,
-                    selectedCard = screenState.selectedCard
-                )
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 20.dp),
+                    ){
+                        FoodGrid(
+                            modifier = modifier
+                                .background(AconTheme.color.Gray9),
+                            columnSize = columnSize,
+                            foodItems = FoodItems.entries.toTypedArray(),
+                            onCardClicked = { text ->
+                                onCardClicked(text)
+                            },
+                            isNothingClicked = screenState.isNothingClicked,
+                            selectedCard = screenState.selectedCard
+                        )
+                    }
+                }
             }
 
             Box(
@@ -106,8 +104,7 @@ fun UnlikeFoodScreen(
                 
                 AconFilledLargeButton(
                     text = "다음",
-                    textStyle = AconTheme.typography.head8_16_sb,
-                    //textColor = AconTheme.color.White,
+                    textStyle = AconTheme.typography.head7_18_sb,
                     enabledBackgroundColor = AconTheme.color.Gray5,
                     disabledBackgroundColor =  AconTheme.color.Gray8,
                     isEnabled = (screenState.selectedCard.size >= 1),

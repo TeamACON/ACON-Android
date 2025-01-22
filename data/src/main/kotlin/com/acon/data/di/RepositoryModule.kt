@@ -1,9 +1,10 @@
 package com.acon.data.di
 
 import com.acon.data.repository.AuthRepositoryImpl
+import com.acon.data.repository.OnboardingRepositoryImpl
 import com.acon.data.repository.SpotRepositoryImpl
-import com.acon.data.repository.TokenLocalRepositoryImpl
 import com.acon.domain.repository.AuthRepository
+import com.acon.domain.repository.OnboardingRepository
 import com.acon.domain.repository.SpotRepository
 import com.acon.domain.repository.TokenLocalRepository
 import dagger.Binds
@@ -33,4 +34,10 @@ internal abstract class RepositoryModule {
     abstract fun bindsTokenLocalRepository(
         impl: TokenLocalRepositoryImpl
     ): TokenLocalRepository
+
+    @Singleton
+    @Binds
+    abstract fun binsOnboardingRepository(
+        impl: OnboardingRepositoryImpl
+    ): OnboardingRepository
 }

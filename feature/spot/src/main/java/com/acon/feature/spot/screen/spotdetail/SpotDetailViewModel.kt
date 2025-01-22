@@ -3,10 +3,12 @@ package com.acon.feature.spot.screen.spotdetail
 import android.location.Location
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.toRoute
 import com.acon.core.utils.feature.base.BaseContainerHost
 import com.acon.domain.model.spot.SpotDetailInfo
 import com.acon.domain.model.spot.SpotDetailMenu
 import com.acon.domain.repository.SpotRepository
+import com.acon.feature.spot.com.acon.feature.spot.SpotRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
 import org.orbitmvi.orbit.annotation.OrbitExperimental
@@ -20,16 +22,15 @@ class SpotDetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : BaseContainerHost<SpotDetailUiState, SpotDetailSideEffect>() {
 
-    // TODO - SpotListView에서 spotId 받아야 함
-    // val spotId = savedStateHandle.get<Long>("spotId")
+    private val spotId = savedStateHandle.toRoute<SpotRoute.SpotDetail>().id
 
     override val container =
         container<SpotDetailUiState, SpotDetailSideEffect>(SpotDetailUiState.Loading) {
             val spotDetailInfoDeferred = viewModelScope.async {
-                spotRepository.getSpotDetailInfo(1)
+                spotRepository.getSpotDetailInfo(spotId)
             }
             val spotDetailMenuDeferred = viewModelScope.async {
-                spotRepository.getSpotMenuList(1)
+                spotRepository.getSpotMenuList(spotId)
             }
 
             val spotDetailInfoResult = spotDetailInfoDeferred.await()

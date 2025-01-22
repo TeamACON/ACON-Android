@@ -13,12 +13,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.acon.core.designsystem.component.button.AconFilledLargeButton
 import com.acon.core.designsystem.component.dialog.AconTwoButtonDialog
 import com.acon.core.designsystem.theme.AconTheme
+import com.acon.feature.onboarding.R
 import com.acon.feature.onboarding.component.FreqPlaceSelectGrid
 import com.acon.feature.onboarding.component.OnboardingTopBar
 import com.acon.feature.onboarding.screen.PreferredPlaceSelectScreen.PreferredPlaceSelectScreenSideEffect
@@ -27,10 +29,6 @@ import com.acon.feature.onboarding.screen.PreferredPlaceSelectScreen.PreferredPl
 import com.acon.feature.onboarding.type.MoodItems
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
-
-/*
-* TODO : 선택 시 버튼 Dim 처리가 안 됨
-* */
 
 @Composable
 fun PreferredPlaceSelectScreenContainer(
@@ -60,21 +58,24 @@ fun PreferredPlaceSelectScreenContainer(
             PreferredPlaceSelectScreenSideEffect.NavigateToPreviousPage -> {
                 navigateToPreviousPage()
             }
+            PreferredPlaceSelectScreenSideEffect.NavigateToLastPage -> {
+                navigateToLastLoadingPage()
+            }
         }
     }
 
     if (state.openCloseDialog) {
         AconTwoButtonDialog(
-            title = "취향분석을 그만둘까요?",
-            content = "선호도 조사만이 남아있어요!\n1분 내로 빠르게 끝내실 수 있어요.",
-            leftButtonContent = "그만두기",
-            rightButtonContent = "계속하기",
+            title = stringResource(R.string.onboarding_alert_title),
+            content = stringResource(R.string.onboarding_alert_description),
+            leftButtonContent = stringResource(R.string.onboarding_alert_left_btn),
+            rightButtonContent = stringResource(R.string.onboarding_alert_right_btn),
             contentImage = 0,
             onDismissRequest = {
                 viewModel.hideDialog()
             },
             onClickLeft = { // 그만두기
-                navigateToLastLoadingPage()
+                viewModel.skipConfirmed()
             },
             onClickRight = { // 계속하기
                 viewModel.hideDialog()
@@ -115,7 +116,7 @@ fun PreferredPlaceSelectScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(start = 20.dp, end = 20.dp, top = 50.dp, bottom = 50.dp),
+                .padding(horizontal = 15.dp, vertical = 30.dp),
             verticalArrangement = Arrangement.SpaceBetween
         ){
             Column(
@@ -128,29 +129,28 @@ fun PreferredPlaceSelectScreen(
                     modifier = modifier.padding(vertical = 7.dp)
                 )
                 Text(
-                    text = "어떤 분위기의 공간이 좋으세요?",
+                    text = stringResource(R.string.onboarding_4_title),
                     color = Color.White,
-                    style = AconTheme.typography.head6_20_sb,
+                    style = AconTheme.typography.head4_24_sb,
                 )
-            }
 
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f),
-                contentAlignment = Alignment.Center
-            ){
-                Column {
-                    FreqPlaceSelectGrid(
-                        modifier = Modifier
-                            .background(AconTheme.color.Gray9),
-                        columnSize = columnSize,
-                        placeItems = MoodItems.entries.toTypedArray(),
-                        onCardClicked = { text ->
-                            onCardClicked(text)
-                        },
-                        selectedCard = screenState.selectedCard
-                    )
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 20.dp)
+                ){
+                    Column {
+                        FreqPlaceSelectGrid(
+                            modifier = Modifier
+                                .background(AconTheme.color.Gray9),
+                            columnSize = columnSize,
+                            placeItems = MoodItems.entries.toTypedArray(),
+                            onCardClicked = { id ->
+                                onCardClicked(id)
+                            },
+                            selectedCard = screenState.selectedCard
+                        )
+                    }
                 }
             }
 
@@ -161,8 +161,7 @@ fun PreferredPlaceSelectScreen(
 
                 AconFilledLargeButton(
                     text = "다음",
-                    textStyle = AconTheme.typography.head8_16_sb,
-                    //textColor = AconTheme.color.White,
+                    textStyle = AconTheme.typography.head7_18_sb,
                     enabledBackgroundColor = AconTheme.color.Gray5,
                     disabledBackgroundColor =  AconTheme.color.Gray8,
                     isEnabled = ( screenState.selectedCard.isNotEmpty() ),

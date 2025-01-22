@@ -1,6 +1,7 @@
 package com.acon.feature.onboarding.screen.PreferredFoodRateScreen
 
 import com.acon.core.utils.feature.base.BaseContainerHost
+import com.acon.domain.repository.OnboardingRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.viewmodel.container
@@ -10,6 +11,7 @@ private const val ONBOARDING_TOTAL_PAGES = 5;
 
 @HiltViewModel
 class PreferredFoodRateScreenViewModel @Inject constructor(
+    private val onboardingRepository: OnboardingRepository
 ) : BaseContainerHost<RatePreferFoodScreenState, RatePreferFoodScreenSideEffect>() {
 
     override val container: Container<RatePreferFoodScreenState, RatePreferFoodScreenSideEffect> =
@@ -17,13 +19,13 @@ class PreferredFoodRateScreenViewModel @Inject constructor(
             initialState = RatePreferFoodScreenState(  )
         )
 
-    fun onCardClicked(text: String) = intent {
+    fun onCardClicked(id: String) = intent {
         val updatedSelectedCard = state.selectedCard.toMutableList()
 
-        if (updatedSelectedCard.contains(text)) {
-            updatedSelectedCard.remove(text)
+        if (updatedSelectedCard.contains(id)) {
+            updatedSelectedCard.remove(id)
         } else if (updatedSelectedCard.size < 3) {
-            updatedSelectedCard.add(text)
+            updatedSelectedCard.add(id)
         }
         reduce {
             state.copy(selectedCard = updatedSelectedCard.toSet()) // Set으로 변환
@@ -42,11 +44,19 @@ class PreferredFoodRateScreenViewModel @Inject constructor(
         }
     }
 
+    fun skipConfirmed() = intent {
+        reduce {
+            state.copy(openCloseDialog = false)
+        }
+        postSideEffect(RatePreferFoodScreenSideEffect.NavigateToLastPage)
+    }
+
     fun navigateToPreviousPage() = intent {
         postSideEffect(RatePreferFoodScreenSideEffect.NavigateToPreviousPage)
     }
 
     fun navigateToNextPage() = intent {
+        onboardingRepository.postFavoriteCuisineRank(state.selectedCard.toList())
         postSideEffect(RatePreferFoodScreenSideEffect.NavigateToNextPage)
     }
 }
@@ -61,4 +71,5 @@ data class RatePreferFoodScreenState(
 sealed interface RatePreferFoodScreenSideEffect {
     data object NavigateToPreviousPage: RatePreferFoodScreenSideEffect
     data object NavigateToNextPage: RatePreferFoodScreenSideEffect
+    data object NavigateToLastPage: RatePreferFoodScreenSideEffect
 }

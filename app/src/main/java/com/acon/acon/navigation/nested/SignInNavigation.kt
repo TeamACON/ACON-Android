@@ -4,9 +4,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
-import com.acon.acon.navigation.route.AreaVerificationRoute
-import com.acon.acon.navigation.route.SignInRoute
-import com.acon.acon.navigation.route.SpotRoute
+import com.acon.feature.signin.screen.SignInRoute
 import com.acon.domain.repository.GoogleTokenRepository
 import com.acon.feature.signin.screen.SignInScreenContent
 

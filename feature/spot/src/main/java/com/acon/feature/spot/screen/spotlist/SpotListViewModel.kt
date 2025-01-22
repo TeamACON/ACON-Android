@@ -6,15 +6,9 @@ import com.acon.core.utils.feature.base.BaseContainerHost
 import com.acon.domain.model.spot.Condition
 import com.acon.domain.model.spot.Spot
 import com.acon.domain.repository.SpotRepository
-import com.acon.domain.type.OptionType
-import com.acon.domain.type.SpotType
 import com.acon.feature.spot.BuildConfig
-import com.acon.feature.spot.mock.spotListMock1
-import com.acon.feature.spot.mock.spotListMock2
-import com.acon.feature.spot.type.AvailableWalkingTimeType
-import com.acon.feature.spot.type.CafePriceRangeType
-import com.acon.feature.spot.type.RestaurantPriceRangeType
-import com.acon.feature.spot.type.SpotShowType
+import com.acon.feature.spot.mock.spotListMock
+import com.acon.feature.spot.state.ConditionState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import org.orbitmvi.orbit.annotation.OrbitExperimental
@@ -32,52 +26,68 @@ class SpotListViewModel @Inject constructor(
 
         }
 
-    fun onLocationFetched(location: Location) = intent {
-
-    }
-
-    private var debugRefresher = 0
-    fun onLocationReady(location: Location) = intent {
+    fun fetchInitialSpots(location: Location) = intent {
         spotRepository.fetchSpotList(
             latitude = location.latitude,
             longitude = location.longitude,
-            condition = Condition(
-                spotType = SpotType.RESTAURANT,
-                filterList = emptyList()
-            ),
-            walkingTime = 10,
-            priceRange = 10000
+            condition = Condition.Default,
         ).onSuccess {
             reduce {
                 (state as? SpotListUiState.Success)?.copy(spotList = it)
-                    ?: SpotListUiState.Success(it, SpotShowType.BEST1, false)
+                    ?: SpotListUiState.Success(it, false)
             }
         }.onFailure {
-            delay(1000)
-            reduce {
-                if (BuildConfig.DEBUG)
+            if (BuildConfig.DEBUG.not()) {
+                reduce {
+                    SpotListUiState.LoadFailed
+                }
+            } else {
+                delay(1500)
+                reduce {
                     (state as? SpotListUiState.Success)?.copy(
-                        spotList = if (debugRefresher % 2 == 0) spotListMock1 else spotListMock2,
-                        spotShowType = if (debugRefresher++ % 2 == 0) SpotShowType.BEST1 else SpotShowType.BEST2,
+                        spotList = spotListMock,
                         isRefreshing = false
                     ) ?: SpotListUiState.Success(
-                        if (debugRefresher % 2 == 0) spotListMock1 else spotListMock2,
-                        if (debugRefresher++ % 2 == 0) SpotShowType.BEST1 else SpotShowType.BEST2,
+                        spotList = spotListMock,
                         isRefreshing = false
                     )
-
-                else SpotListUiState.LoadFailed
-            }
-        }
-
-        runOn<SpotListUiState.Success> {
-            reduce {
-                state.copy()
+                }
             }
         }
     }
 
-    // TODO : Parameters
+    fun onLocationReady(newLocation: Location) = blockingIntent {
+        runOn<SpotListUiState.Success> {
+            spotRepository.fetchSpotList(
+                latitude = newLocation.latitude,
+                longitude = newLocation.longitude,
+                condition = state.currentCondition?.toCondition() ?: Condition.Default,
+            ).onSuccess {
+                reduce {
+                    (state as? SpotListUiState.Success)?.copy(spotList = it, isRefreshing = false)
+                        ?: SpotListUiState.Success(it, false)
+                }
+            }.onFailure {
+                if (BuildConfig.DEBUG.not()) {
+                    reduce {
+                        SpotListUiState.LoadFailed
+                    }
+                } else {
+                    delay(1500)
+                    reduce {
+                        (state as? SpotListUiState.Success)?.copy(
+                            spotList = spotListMock.shuffled(),
+                            isRefreshing = false
+                        ) ?: SpotListUiState.Success(
+                            spotList = spotListMock,
+                            isRefreshing = false
+                        )
+                    }
+                }
+            }
+        }
+    }
+
     fun onRefresh(location: Location) = intent {
         runOn<SpotListUiState.Success> {
             reduce {
@@ -95,52 +105,47 @@ class SpotListViewModel @Inject constructor(
         }
     }
 
-    fun onResetFilter() = intent {
+    fun onResetFilter(location: Location) = intent {
         runOn<SpotListUiState.Success> {
             reduce {
-                state.copy(showFilterBottomSheet = false, currentCondition = null)
+                SpotListUiState.Loading
+            }
+            fetchInitialSpots(location)
+        }
+    }
+
+    fun onCompleteFilter(location: Location, condition: ConditionState, proceed: () -> Unit) = intent {
+        runOn<SpotListUiState.Success> {
+            reduce {
+                state.copy(isFilteredResultFetching = true, currentCondition = condition)
+            }
+            onLocationReady(location)
+            reduce {
+                state.copy(isFilteredResultFetching = false, showFilterBottomSheet = false).also {
+                    proceed()
+                }
             }
         }
     }
 
-    fun onCompleteFilter(condition: ConditionState) = intent {
-        runOn<SpotListUiState.Success> {
-            reduce {
-                state.copy(showFilterBottomSheet = false, currentCondition = condition)
-            }
-        }
-    }
-
-    fun onSpotItemClick(id: Int) = intent {
+    fun onSpotItemClick(id: Long) = intent {
         postSideEffect(SpotListSideEffect.NavigateToSpotDetail(id))
     }
 }
 
 sealed interface SpotListUiState {
+    @Immutable
     data class Success(
         val spotList: List<Spot>,
-        val spotShowType: SpotShowType,
         val isRefreshing: Boolean = false,
         val currentCondition: ConditionState? = null,
-        val showFilterBottomSheet: Boolean = false
+        val showFilterBottomSheet: Boolean = false,
+        val isFilteredResultFetching: Boolean = false
     ) : SpotListUiState
     data object Loading : SpotListUiState
     data object LoadFailed: SpotListUiState
 }
 
-@Immutable
-data class ConditionState(
-    val spotType: SpotType,
-    val restaurantFeatureOptionType: List<OptionType.RestaurantFeatureOptionType>,
-    val companionTypeOptionType: List<OptionType.CompanionTypeOptionType>,
-    val cafeFeatureOptionType: List<OptionType.CafeFeatureOptionType>,
-    val visitPurposeOptionType: List<OptionType.VisitPurposeOptionType>,
-    val restaurantWalkingTime: AvailableWalkingTimeType,
-    val cafeWalkingTime: AvailableWalkingTimeType,
-    val restaurantPriceRange: RestaurantPriceRangeType,
-    val cafePriceRange: CafePriceRangeType
-)
-
 sealed interface SpotListSideEffect {
-    data class NavigateToSpotDetail(val id: Int) : SpotListSideEffect
+    data class NavigateToSpotDetail(val id: Long) : SpotListSideEffect
 }

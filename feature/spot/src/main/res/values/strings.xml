@@ -8,6 +8,7 @@
     <string name="cafe">카페</string>
     <string name="walking_time">%s분</string>
     <string name="alert_no_spot">앗! 일치하는 도토리 맛집이 없어요</string>
+    <string name="alert_max_spot_count">장소는 최대 6순위까지만 제공됩니다</string>
 
     <string name="spot_detail_navigate_button">길 찾기</string>
     <string name="spot_gps_icon">위치 아이콘</string>
@@ -24,7 +25,7 @@
     <string name="chinese">중식</string>
     <string name="japanese">일식</string>
     <string name="western">양식</string>
-    <string name="snack">분식</string>
+    <string name="korean_street">분식</string>
     <string name="asian">아시안</string>
     <string name="bar">술/bar</string>
     <string name="exclude_franchise">프랜차이즈 제외</string>
