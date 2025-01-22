@@ -20,7 +20,7 @@ enum class FloatingButtonType(
         contentDescriptionRes = R.string.map_content_description,
     ),
     FILTER(
-        iconRes = R.drawable.ic_filter_w_24,
+        iconRes = R.drawable.ic_filter_w_28,
         contentDescriptionRes = R.string.filter_content_description,
     )
 }
