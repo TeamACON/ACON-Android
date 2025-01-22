@@ -31,10 +31,12 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.acon.core.designsystem.noRippleClickable
 import com.acon.core.designsystem.theme.AconTheme
 import com.acon.feature.onboarding.type.CardItem
 import com.acon.feature.onboarding.type.FoodItems
 import com.acon.feature.onboarding.type.FoodTypeItems
+import kotlinx.coroutines.selects.select
 
 @Composable
 fun <T : CardItem> PreferFoodTypeSelectGrid(
@@ -86,7 +88,9 @@ fun FoodTypeCard(
             modifier = Modifier
                 .fillMaxSize()
                 .aspectRatio(1f)
-                .clickable(enabled = selected || !isAllClicked) { onCardClicked(id) },
+                .noRippleClickable(enabled = selected || !isAllClicked) {
+                    onCardClicked(id)
+                },
             contentAlignment = Alignment.Center
 
         ){

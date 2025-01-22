@@ -22,15 +22,10 @@ import com.acon.core.designsystem.component.dialog.AconTwoButtonDialog
 import com.acon.core.designsystem.theme.AconTheme
 import com.acon.feature.onboarding.R
 import com.acon.feature.onboarding.component.OnboardingTopBar
-import com.acon.feature.onboarding.component.PreferFoodTypeSelectGrid
 import com.acon.feature.onboarding.component.PreferPlaceTypeSelectGrid
 import com.acon.feature.onboarding.screen.PerferredPlaceRateScreen.PreferredPlaceRateScreenSideEffect
 import com.acon.feature.onboarding.screen.PerferredPlaceRateScreen.PreferredPlaceRateScreenState
 import com.acon.feature.onboarding.screen.PerferredPlaceRateScreen.PreferredPlaceRateScreenViewModel
-import com.acon.feature.onboarding.screen.PreferredFoodRateScreen.PreferredFoodRateScreenViewModel
-import com.acon.feature.onboarding.screen.PreferredFoodRateScreen.RatePreferFoodScreenSideEffect
-import com.acon.feature.onboarding.screen.PreferredFoodRateScreen.RatePreferFoodScreenState
-import com.acon.feature.onboarding.type.FoodTypeItems
 import com.acon.feature.onboarding.type.PreferPlaceItems
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
