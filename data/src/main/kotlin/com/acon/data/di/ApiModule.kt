@@ -34,7 +34,7 @@ internal object ApiModule {
     @Singleton
     @Provides
     fun providesSpotApi(
-        @NoAuth retrofit: Retrofit
+        @Auth retrofit: Retrofit
     ): SpotApi {
         return retrofit.create(SpotApi::class.java)
     }
