@@ -43,3 +43,4 @@ include(
 
 include(":data")
 include(":domain")
+include(":feature:profile")
