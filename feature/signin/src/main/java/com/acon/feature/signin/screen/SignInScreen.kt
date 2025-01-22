@@ -77,7 +77,7 @@ fun SignInScreen(
                         .fillMaxSize()
                         .weight(1f)
                         .padding(bottom = 200.dp),
-                    contentAlignment = Alignment.Center,
+                    contentAlignment = Alignment.Center
                 ) {
                     LottieAnimation(
                         composition = composition,
