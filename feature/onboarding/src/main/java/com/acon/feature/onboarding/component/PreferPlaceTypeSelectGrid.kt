@@ -119,7 +119,7 @@ fun PlaceTypeCard(
             }
 
         }
-        Spacer(modifier = Modifier.height(4.dp))
+        Spacer(modifier = Modifier.height(10.dp))
         Text(
             text = text,
             color = AconTheme.color.White,
