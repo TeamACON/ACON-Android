@@ -36,7 +36,7 @@ fun PreferredPlaceSelectScreenContainer(
     viewModel: PreferredPlaceSelectViewModel = hiltViewModel(),
     navigateToPreviousPage: () -> Unit = {},
     navigateToNextPage: () -> Unit = {},
-    navigateToLastLoadingPage: () -> Unit = {}
+    navigateToSpotListView: () -> Unit = {}
 ){
     val state = viewModel.collectAsState().value
 
@@ -59,7 +59,7 @@ fun PreferredPlaceSelectScreenContainer(
                 navigateToPreviousPage()
             }
             PreferredPlaceSelectScreenSideEffect.NavigateToLastPage -> {
-                navigateToLastLoadingPage()
+                navigateToSpotListView()
             }
         }
     }
