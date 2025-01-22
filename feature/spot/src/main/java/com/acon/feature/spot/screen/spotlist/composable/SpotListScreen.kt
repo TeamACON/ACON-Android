@@ -258,7 +258,7 @@ internal fun SpotListScreen(
                                                 }
                                             }
                                         }
-                                        .padding(10.dp)
+                                        .padding(12.dp)
                                 )
                             }
                         }
