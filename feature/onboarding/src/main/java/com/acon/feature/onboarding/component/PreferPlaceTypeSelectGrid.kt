@@ -98,7 +98,7 @@ fun PlaceTypeCard(
                     modifier = Modifier.clip(RoundedCornerShape(6.dp)).fillMaxSize()
                 )
 
-                if (selected) { //top 3 이내에 선정된 경우, 체크표시 말고 등수 번호와 함께 선택된 효과
+                if (selected) {
                     val rateIcon = if (selectedCard.indexOf(id) == 0) com.acon.feature.onboarding.R.drawable.ic_1
                     else if (selectedCard.indexOf(id) == 1) com.acon.feature.onboarding.R.drawable.ic_2
                     else if (selectedCard.indexOf(id) == 2) com.acon.feature.onboarding.R.drawable.ic_3

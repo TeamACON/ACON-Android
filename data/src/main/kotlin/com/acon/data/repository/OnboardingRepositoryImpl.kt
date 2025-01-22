@@ -66,7 +66,7 @@ class OnboardingRepositoryImpl @Inject constructor(
     }
 
     override fun postFavoriteSpotRank(choice: List<String>) {
-        onboardingLocalDataSource.favoriteSpotRank
+        onboardingLocalDataSource.favoriteSpotRank = choice
     }
 
     override fun getOnboardingResults(): OnboardingPreferences {

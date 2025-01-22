@@ -49,7 +49,7 @@ class PreferredPlaceSelectViewModel @Inject constructor(
     }
 
     fun navigateToNextPage() = intent {
-        onboardingRepository.postFavoriteSpotStyle(state.selectedCard.toString())
+        onboardingRepository.postFavoriteSpotStyle(state.selectedCard.first().toString())
         postSideEffect(PreferredPlaceSelectScreenSideEffect.NavigateToNextPage)
     }
 }

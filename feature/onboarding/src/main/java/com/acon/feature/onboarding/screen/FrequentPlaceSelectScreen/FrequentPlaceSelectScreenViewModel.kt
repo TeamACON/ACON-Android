@@ -48,7 +48,7 @@ class FrequentPlaceSelectScreenViewModel @Inject constructor(
     }
 
     fun navigateToNextPage() = intent {
-        onboardingRepository.postFavoriteSpotType(state.selectedCard.toString())
+        onboardingRepository.postFavoriteSpotType(state.selectedCard.first().toString())
         postSideEffect(FrequentPlaceSelectScreenSideEffect.NavigateToNextPage)
     }
 }
