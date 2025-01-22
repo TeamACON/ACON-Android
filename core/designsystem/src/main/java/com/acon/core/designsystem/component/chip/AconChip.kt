@@ -24,7 +24,7 @@ fun AconChip(
     isSelected: Boolean,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    textStyle: TextStyle = AconTheme.typography.body3_13_reg.copy(
+    textStyle: TextStyle = AconTheme.typography.subtitle1_16_med.copy(
         color = AconTheme.color.White
     )
 ) {
@@ -54,7 +54,7 @@ fun AconChip(
     ) {
         Text(
             modifier = Modifier
-                .padding(vertical = 7.dp, horizontal = 16.dp),
+                .padding(vertical = 10.dp, horizontal = 18.dp),
             text = title,
             style = textStyle
         )

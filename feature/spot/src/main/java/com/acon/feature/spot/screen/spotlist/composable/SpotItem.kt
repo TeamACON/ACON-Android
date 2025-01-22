@@ -67,26 +67,27 @@ fun SpotItem(
         ) {
             Text(
                 text = stringResource(R.string.matching_rate, spot.matchingRate.toString().padStart(2, '0')),
-                style = AconTheme.typography.body4_12_reg,
+                style = AconTheme.typography.subtitle2_14_med,
                 color = AconTheme.color.White,
                 modifier = Modifier
                     .clip(RoundedCornerShape(4.dp))
                     .background(if (isFirstRank) AconTheme.color.Gray9 else AconTheme.color.Gla_w_20)
-                    .padding(horizontal = 8.dp, vertical = 2.dp)
+                    .padding(horizontal = 12.dp, vertical = 6.dp)
             )
             Spacer(modifier = Modifier.weight(1f))
             Text(
                 text = stringResource(spot.type.getNameResId()),
-                style = AconTheme.typography.body4_12_reg,
+                style = AconTheme.typography.subtitle2_14_med,
                 color = AconTheme.color.White
             )
             Text(
                 text = spot.name,
-                style = AconTheme.typography.head7_18_sb,
+                style = AconTheme.typography.title2_20_b,
                 color = AconTheme.color.White
             )
             Row(
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.padding(top = 4.dp)
             ) {
                 Icon(
                     imageVector = ImageVector.vectorResource(com.acon.core.designsystem.R.drawable.ic_walking_w_24),
@@ -96,7 +97,7 @@ fun SpotItem(
                 )
                 Text(
                     text = stringResource(R.string.walking_time, spot.walkingTime.toString().padStart(2, ' ')),
-                    style = AconTheme.typography.body4_12_reg,
+                    style = AconTheme.typography.subtitle2_14_med,
                     color = AconTheme.color.Gray3
                 )
             }

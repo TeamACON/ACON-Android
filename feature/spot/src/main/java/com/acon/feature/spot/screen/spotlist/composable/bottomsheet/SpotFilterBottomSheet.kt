@@ -14,8 +14,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ModalBottomSheet
@@ -41,10 +39,14 @@ import com.acon.core.designsystem.theme.AconTheme
 import com.acon.domain.type.SpotType
 import com.acon.feature.spot.R
 import com.acon.feature.spot.getNameResId
-import com.acon.feature.spot.screen.spotlist.ConditionState
+import com.acon.feature.spot.state.ConditionState
 import com.acon.feature.spot.type.AvailableWalkingTimeType
 import com.acon.feature.spot.type.CafePriceRangeType
 import com.acon.feature.spot.type.RestaurantPriceRangeType
+import com.airbnb.lottie.LottieComposition
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.rememberLottieComposition
 import dev.chrisbanes.haze.HazeState
 
 
@@ -53,6 +55,7 @@ import dev.chrisbanes.haze.HazeState
 fun SpotFilterBottomSheet(
     hazeState: HazeState,
     condition: ConditionState?,
+    isFilteredResultFetching: Boolean,
     onComplete: (ConditionState) -> Unit,
     onReset: () -> Unit,
     onDismissRequest: () -> Unit,
@@ -105,6 +108,10 @@ fun SpotFilterBottomSheet(
         )
     }
 
+    val lottieComposition by rememberLottieComposition(
+        LottieCompositionSpec.RawRes(R.raw.lottie_progress_w)
+    )
+
     fun resetCafeFilter() {
         selectedCafeFeatures = listOf()
         selectedVisitPurposes = listOf()
@@ -128,197 +135,172 @@ fun SpotFilterBottomSheet(
         onDismissRequest = onDismissRequest,
         dragHandle = null
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(AconTheme.color.Dim_b_60)
-                .defaultHazeEffect(hazeState, tintColor = AconTheme.color.Dim_b_60)
-                .verticalScroll(rememberScrollState())
-        ) {
-            Spacer(
-                modifier = Modifier
-                    .align(Alignment.CenterHorizontally)
-                    .padding(vertical = 8.dp)
-                    .clip(CircleShape)
-                    .size(width = 36.dp, height = 5.dp)
-                    .background(AconTheme.color.Gray5)
-            )
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 24.dp),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = stringResource(R.string.filter_detail),
-                    style = AconTheme.typography.head8_16_sb,
-                    color = AconTheme.color.White
-                )
-                Icon(
-                    imageVector = ImageVector.vectorResource(com.acon.core.designsystem.R.drawable.ic_dissmiss_16),
-                    contentDescription = stringResource(com.acon.core.designsystem.R.string.dismiss_content_description),
-                    modifier = Modifier
-                        .align(Alignment.CenterEnd)
-                        .padding(end = 24.dp)
-                        .noRippleClickable {
-                            onDismissRequest()
-                        },
-                    tint = AconTheme.color.White
-                )
-            }
+        Box {
             Column(
                 modifier = Modifier
-                    .padding(horizontal = 20.dp)
-                    .padding(top = 53.dp)
+                    .fillMaxSize()
+                    .background(AconTheme.color.Dim_b_60)
+                    .defaultHazeEffect(hazeState, tintColor = AconTheme.color.Dim_b_60)
             ) {
-                Text(
-                    text = stringResource(R.string.visit_spot),
-                    style = AconTheme.typography.subtitle2_14_med,
-                    color = AconTheme.color.White,
-                )
-                SpotTypeTabRow(
+                Spacer(
                     modifier = Modifier
-                        .clip(RoundedCornerShape(6.dp))
-                        .padding(top = 12.dp)
-                        .background(AconTheme.color.Gray8)
-                        .padding(4.dp),
-                    selectedSpotType = selectedSpotType,
-                    onSpotTypeSelected = {
-                        selectedSpotType = it
-                        when (selectedSpotType) {
-                            SpotType.RESTAURANT -> {
-                                resetCafeFilter()
-                            }
+                        .align(Alignment.CenterHorizontally)
+                        .padding(vertical = 8.dp)
+                        .clip(CircleShape)
+                        .size(width = 36.dp, height = 5.dp)
+                        .background(AconTheme.color.Gray5)
+                )
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 24.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = stringResource(R.string.filter_detail),
+                        style = AconTheme.typography.head6_20_sb,
+                        color = AconTheme.color.White
+                    )
+                    Icon(
+                        imageVector = ImageVector.vectorResource(com.acon.core.designsystem.R.drawable.ic_dissmiss_16),
+                        contentDescription = stringResource(com.acon.core.designsystem.R.string.dismiss_content_description),
+                        modifier = Modifier
+                            .align(Alignment.CenterEnd)
+                            .padding(end = 24.dp)
+                            .noRippleClickable {
+                                onDismissRequest()
+                            },
+                        tint = AconTheme.color.White
+                    )
+                }
+                Column(
+                    modifier = Modifier
+                        .padding(horizontal = 20.dp)
+                        .padding(top = 10.dp)
+                        .weight(1f)
+                        .verticalScroll(rememberScrollState())
+                ) {
+                    Spacer(modifier = Modifier.height(43.dp))
+                    Text(
+                        text = stringResource(R.string.visit_spot),
+                        style = AconTheme.typography.head7_18_sb,
+                        color = AconTheme.color.White,
+                    )
+                    SpotTypeTabRow(
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(6.dp))
+                            .padding(top = 12.dp)
+                            .background(
+                                color = AconTheme.color.Gray8,
+                                shape = RoundedCornerShape(6.dp)
+                            )
+                            .padding(4.dp),
+                        selectedSpotType = selectedSpotType,
+                        onSpotTypeSelected = {
+                            selectedSpotType = it
+                            when (selectedSpotType) {
+                                SpotType.RESTAURANT -> {
+                                    resetCafeFilter()
+                                }
 
-                            SpotType.CAFE -> {
-                                resetRestaurantFilter()
+                                SpotType.CAFE -> {
+                                    resetRestaurantFilter()
+                                }
                             }
                         }
-                    }
-                )
+                    )
 
-                when (selectedSpotType) {
-                    SpotType.RESTAURANT -> {
-                        RestaurantBottomSheetContent(
-                            selectedRestaurantFeatures = selectedRestaurantFeatures,
-                            selectedCompanionTypes = selectedCompanionTypes,
-                            selectedWalkingTime = selectedRestaurantWalkingTime,
-                            selectedPriceRange = selectedRestaurantPriceRange,
-                            onRestaurantFeatureChipSelected = {
-                                selectedRestaurantFeatures =
-                                    if (selectedRestaurantFeatures.contains(it)) {
-                                        selectedRestaurantFeatures - it
-                                    } else {
-                                        selectedRestaurantFeatures + it
-                                    }
-                            },
-                            onCompanionTypeChipSelected = {
-                                selectedCompanionTypes =
-                                    if (selectedCompanionTypes.contains(it)) {
-                                        selectedCompanionTypes - it
-                                    } else {
-                                        selectedCompanionTypes + it
-                                    }
-                            }, onWalkingTimeChange = {
-                                selectedRestaurantWalkingTime = it
-                            }, onPriceRangeChange = {
-                                selectedRestaurantPriceRange = it
-                            }
-                        )
-                    }
+                    when (selectedSpotType) {
+                        SpotType.RESTAURANT -> {
+                            RestaurantBottomSheetContent(
+                                selectedRestaurantFeatures = selectedRestaurantFeatures,
+                                selectedCompanionTypes = selectedCompanionTypes,
+                                selectedWalkingTime = selectedRestaurantWalkingTime,
+                                selectedPriceRange = selectedRestaurantPriceRange,
+                                onRestaurantFeatureChipSelected = {
+                                    selectedRestaurantFeatures =
+                                        if (selectedRestaurantFeatures.contains(it)) {
+                                            selectedRestaurantFeatures - it
+                                        } else {
+                                            selectedRestaurantFeatures + it
+                                        }
+                                },
+                                onCompanionTypeChipSelected = {
+                                    selectedCompanionTypes =
+                                        if (selectedCompanionTypes.contains(it)) {
+                                            selectedCompanionTypes - it
+                                        } else {
+                                            selectedCompanionTypes + it
+                                        }
+                                }, onWalkingTimeChange = {
+                                    selectedRestaurantWalkingTime = it
+                                }, onPriceRangeChange = {
+                                    selectedRestaurantPriceRange = it
+                                }
+                            )
+                        }
 
-                    SpotType.CAFE -> {
-                        CafeBottomSheetContent(
-                            selectedCafeFeatures = selectedCafeFeatures,
-                            selectedVisitPurposes = selectedVisitPurposes,
-                            selectedWalkingTime = selectedCafeWalkingTime,
-                            selectedPriceRange = selectedCafePriceRange,
-                            onCafeFeatureChipSelected = {
-                                selectedCafeFeatures =
-                                    if (selectedCafeFeatures.contains(it)) {
-                                        selectedCafeFeatures - it
-                                    } else {
-                                        selectedCafeFeatures + it
-                                    }
-                            },
-                            onVisitPurposeChipSelected = {
-                                selectedVisitPurposes =
-                                    if (selectedVisitPurposes.contains(it)) {
-                                        selectedVisitPurposes - it
-                                    } else {
-                                        selectedVisitPurposes + it
-                                    }
-                            },
-                            onWalkingTimeChange = {
-                                selectedCafeWalkingTime = it
-                            },
-                            onPriceRangeChange = {
-                                selectedCafePriceRange = it
-                            }
-                        )
+                        SpotType.CAFE -> {
+                            CafeBottomSheetContent(
+                                selectedCafeFeatures = selectedCafeFeatures,
+                                selectedVisitPurposes = selectedVisitPurposes,
+                                selectedWalkingTime = selectedCafeWalkingTime,
+                                selectedPriceRange = selectedCafePriceRange,
+                                onCafeFeatureChipSelected = {
+                                    selectedCafeFeatures =
+                                        if (selectedCafeFeatures.contains(it)) {
+                                            selectedCafeFeatures - it
+                                        } else {
+                                            selectedCafeFeatures + it
+                                        }
+                                },
+                                onVisitPurposeChipSelected = {
+                                    selectedVisitPurposes =
+                                        if (selectedVisitPurposes.contains(it)) {
+                                            selectedVisitPurposes - it
+                                        } else {
+                                            selectedVisitPurposes + it
+                                        }
+                                },
+                                onWalkingTimeChange = {
+                                    selectedCafeWalkingTime = it
+                                },
+                                onPriceRangeChange = {
+                                    selectedCafePriceRange = it
+                                }
+                            )
+                        }
                     }
+                    Spacer(modifier = Modifier.height(140.dp))
                 }
             }
-            Spacer(modifier = Modifier.height(20.dp))
-            Spacer(modifier = Modifier.weight(1f))
-            Row(
+            BottomCompleteRow(
+                onReset = onReset,
+                onComplete = {
+                    onComplete(
+                        ConditionState(
+                            spotType = selectedSpotType,
+                            restaurantFeatureOptionType = selectedRestaurantFeatures,
+                            companionTypeOptionType = selectedCompanionTypes,
+                            cafeFeatureOptionType = selectedCafeFeatures,
+                            visitPurposeOptionType = selectedVisitPurposes,
+                            restaurantWalkingTime = selectedRestaurantWalkingTime,
+                            cafeWalkingTime = selectedCafeWalkingTime,
+                            restaurantPriceRange = selectedRestaurantPriceRange,
+                            cafePriceRange = selectedCafePriceRange
+                        )
+                    )
+                },
+                isFilteredResultFetching = isFilteredResultFetching,
+                composition = lottieComposition,
                 modifier = Modifier
                     .fillMaxWidth()
+                    .align(Alignment.BottomCenter)
                     .background(AconTheme.color.Black)
                     .defaultHazeEffect(hazeState, tintColor = AconTheme.color.Gla_b_30, alpha = .6f)
                     .padding(horizontal = 20.dp)
-                    .padding(top = 8.dp, bottom = 32.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Row(
-                    modifier = Modifier.noRippleClickable {
-                        onReset()
-                    }, verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Icon(
-                        imageVector = ImageVector.vectorResource(com.acon.core.designsystem.R.drawable.ic_reset),
-                        contentDescription = stringResource(com.acon.core.designsystem.R.string.reset_content_description),
-                        tint = AconTheme.color.White
-                    )
-                    Text(
-                        text = stringResource(R.string.filter_reset),
-                        style = AconTheme.typography.subtitle2_14_med,
-                        color = AconTheme.color.White,
-                        modifier = Modifier.padding(start = 7.dp)
-                    )
-                }
-                Button(
-                    modifier = Modifier
-                        .padding(start = 32.dp)
-                        .weight(1f),
-                    shape = RoundedCornerShape(6.dp),
-                    colors = ButtonDefaults.buttonColors().copy(
-                        containerColor = AconTheme.color.Gray5,
-                        contentColor = AconTheme.color.White
-                    ),
-                    onClick = {
-                        onComplete(
-                            ConditionState(
-                                spotType = selectedSpotType,
-                                restaurantFeatureOptionType = selectedRestaurantFeatures,
-                                companionTypeOptionType = selectedCompanionTypes,
-                                cafeFeatureOptionType = selectedCafeFeatures,
-                                visitPurposeOptionType = selectedVisitPurposes,
-                                restaurantWalkingTime = selectedRestaurantWalkingTime,
-                                cafeWalkingTime = selectedCafeWalkingTime,
-                                restaurantPriceRange = selectedRestaurantPriceRange,
-                                cafePriceRange = selectedCafePriceRange
-                            )
-                        )
-                    }
-                ) {
-                    Text(
-                        text = stringResource(R.string.filter_see_result),
-                        style = AconTheme.typography.head8_16_sb,
-                        color = AconTheme.color.White
-                    )
-                }
-            }
+                    .padding(top = 10.dp, bottom = 32.dp)
+            )
         }
     }
 }
@@ -360,11 +342,68 @@ private fun SpotTypeTab(
         contentAlignment = Alignment.Center
     ) {
         Text(
-            modifier = Modifier.padding(vertical = 6.dp),
+            modifier = Modifier.padding(vertical = 8.dp),
             text = stringResource(spotType.getNameResId()),
-            style = AconTheme.typography.subtitle2_14_med,
+            style = AconTheme.typography.subtitle1_16_med,
             color = if (isSelected) AconTheme.color.Gray9 else AconTheme.color.Gray5
         )
+    }
+}
+
+@Composable
+private fun BottomCompleteRow(
+    onReset: () -> Unit,
+    onComplete: () -> Unit,
+    isFilteredResultFetching: Boolean,
+    composition: LottieComposition?,
+    modifier: Modifier = Modifier
+) {
+    Row(
+        modifier = modifier,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Row(
+            modifier = Modifier.noRippleClickable {
+                onReset()
+            }, verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(
+                imageVector = ImageVector.vectorResource(com.acon.core.designsystem.R.drawable.ic_reset),
+                contentDescription = stringResource(com.acon.core.designsystem.R.string.reset_content_description),
+                tint = AconTheme.color.White
+            )
+            Text(
+                text = stringResource(R.string.filter_reset),
+                style = AconTheme.typography.subtitle1_16_med,
+                color = AconTheme.color.White,
+                modifier = Modifier.padding(start = 7.dp)
+            )
+        }
+        Box(
+            modifier = Modifier
+                .padding(start = 32.dp)
+                .weight(1f)
+                .clip(RoundedCornerShape(6.dp))
+                .background(
+                    color = if (isFilteredResultFetching) AconTheme.color.Gray7 else AconTheme.color.Gray5
+                ).padding(vertical = 12.dp)
+                .noRippleClickable { if (isFilteredResultFetching.not()) onComplete() },
+            contentAlignment = Alignment.Center
+        ) {
+            if (isFilteredResultFetching) {
+                LottieAnimation(
+                    modifier = Modifier.size(21.dp),
+                    composition = composition,
+                    iterations = Int.MAX_VALUE,
+                )
+            } else {
+                Text(
+                    text = stringResource(R.string.filter_see_result),
+                    style = AconTheme.typography.subtitle1_16_med,
+                    color = AconTheme.color.White
+                )
+            }
+        }
     }
 }
 
@@ -376,6 +415,7 @@ private fun SpotFilterBottomSheetPreview() {
         onDismissRequest = {},
         condition = null,
         onComplete = {},
-        onReset = {}
+        onReset = {},
+        isFilteredResultFetching = false
     )
 }

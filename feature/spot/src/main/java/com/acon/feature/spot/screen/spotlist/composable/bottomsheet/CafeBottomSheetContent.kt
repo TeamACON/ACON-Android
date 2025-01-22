@@ -28,6 +28,7 @@ fun ColumnScope.CafeBottomSheetContent(
     onPriceRangeChange: (CafePriceRangeType) -> Unit,
 ) {
 
+    val font = AconTheme.typography.head7_18_sb
     AconChipFlowRow(
         modifier = Modifier.padding(top = 12.dp),
         titles = OptionType.CafeFeatureOptionType.entries.map {
@@ -42,7 +43,7 @@ fun ColumnScope.CafeBottomSheetContent(
     Text(
         modifier = Modifier.padding(top = 32.dp),
         text = stringResource(R.string.spot_purpose),
-        style = AconTheme.typography.subtitle2_14_med,
+        style = font,
         color = AconTheme.color.White,
     )
     AconChipFlowRow(
@@ -59,7 +60,7 @@ fun ColumnScope.CafeBottomSheetContent(
     Text(
         modifier = Modifier.padding(top = 32.dp),
         text = stringResource(R.string.available_walking_time),
-        style = AconTheme.typography.subtitle2_14_med,
+        style = font,
         color = AconTheme.color.White,
     )
     AconSlider(
@@ -75,7 +76,7 @@ fun ColumnScope.CafeBottomSheetContent(
     Text(
         modifier = Modifier.padding(top = 32.dp),
         text = stringResource(R.string.price_range),
-        style = AconTheme.typography.subtitle2_14_med,
+        style = font,
         color = AconTheme.color.White,
     )
     AconSlider(

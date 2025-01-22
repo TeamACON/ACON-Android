@@ -10,13 +10,17 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.acon.feature.spot.R
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.rememberLottieComposition
 import com.github.fengdai.compose.pulltorefresh.PullToRefreshState
 
 @Composable
@@ -25,7 +29,7 @@ fun SpotListPullToRefreshIndicator(
     state: PullToRefreshState
 ) {
     val refreshTriggerPx = with(LocalDensity.current) { refreshTriggerDistance.toPx() }
-    val indicatorSize = 36.dp
+    val indicatorSize = 42.dp
     val indicatorHeightPx = with(LocalDensity.current) { indicatorSize.toPx() }
     val rotation: Float
     val scaleFraction: Float
@@ -52,16 +56,25 @@ fun SpotListPullToRefreshIndicator(
         scaleFraction = 1f
         alphaFraction = 1f
     }
-    CircularProgressIndicator(
+
+    val lottieComposition by rememberLottieComposition(
+        LottieCompositionSpec.RawRes(R.raw.lottie_progress_w)
+    )
+
+    LottieAnimation(
         modifier = Modifier
+            .statusBarsPadding()
+            .padding(top = 16.dp)
             .graphicsLayer {
                 translationY = (state.contentOffset - indicatorHeightPx) / 2f
                 scaleX = scaleFraction
                 scaleY = scaleFraction
                 alpha = alphaFraction
+                rotationZ = rotation
             }
-            .size(indicatorSize)
-            .statusBarsPadding()
-            .padding(top = 16.dp)
+            .size(indicatorSize),
+        composition = lottieComposition,
+        iterations = Int.MAX_VALUE,
+        isPlaying = state.isRefreshing,
     )
 }

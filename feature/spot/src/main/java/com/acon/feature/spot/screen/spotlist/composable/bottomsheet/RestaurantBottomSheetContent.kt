@@ -42,7 +42,7 @@ fun ColumnScope.RestaurantBottomSheetContent(
     Text(
         modifier = Modifier.padding(top = 32.dp),
         text = stringResource(R.string.people_together),
-        style = AconTheme.typography.subtitle2_14_med,
+        style = AconTheme.typography.head7_18_sb,
         color = AconTheme.color.White,
     )
     AconChipFlowRow(
@@ -59,7 +59,7 @@ fun ColumnScope.RestaurantBottomSheetContent(
     Text(
         modifier = Modifier.padding(top = 32.dp),
         text = stringResource(R.string.available_walking_time),
-        style = AconTheme.typography.subtitle2_14_med,
+        style = AconTheme.typography.head7_18_sb,
         color = AconTheme.color.White,
     )
     AconSlider(
@@ -75,7 +75,7 @@ fun ColumnScope.RestaurantBottomSheetContent(
     Text(
         modifier = Modifier.padding(top = 32.dp),
         text = stringResource(R.string.price_range),
-        style = AconTheme.typography.subtitle2_14_med,
+        style = AconTheme.typography.head7_18_sb,
         color = AconTheme.color.White,
     )
     AconSlider(

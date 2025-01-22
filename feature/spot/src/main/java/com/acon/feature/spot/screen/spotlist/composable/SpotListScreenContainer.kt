@@ -27,10 +27,11 @@ fun SpotListScreenContainer(
 
     CheckAndRequestLocationPermission(
         onPermissionGranted = {
-            if (state !is SpotListUiState.Success)
+            if (state !is SpotListUiState.Success) {
                 context.onLocationReady {
-                    viewModel.onLocationReady(it)
+                    viewModel.fetchInitialSpots(it)
                 }
+            }
         }
     )
 
@@ -43,15 +44,13 @@ fun SpotListScreenContainer(
             }
         }, onFilterBottomSheetShowStateChange = viewModel::onFilterBottomSheetStateChange,
         onResetFilter = {
-            viewModel.onResetFilter()
             context.onLocationReady {
-                viewModel.onLocationReady(it)
+                viewModel.onResetFilter(it)
             }
         },
         onCompleteFilter = { condition ->
-            viewModel.onCompleteFilter(condition)
             context.onLocationReady {
-                viewModel.onLocationReady(it)
+                viewModel.onCompleteFilter(it, condition)
             }
         },
         onSpotItemClick = viewModel::onSpotItemClick

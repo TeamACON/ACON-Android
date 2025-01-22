@@ -66,7 +66,11 @@ fun AconNavigation(
                         modifier = Modifier
                             .background(color = AconTheme.color.Black)  // TODO Color?
                             .fillMaxWidth()
-                            .defaultHazeEffect(hazeState = LocalHazeState.current, tintColor = AconTheme.color.Gla_b_30),
+                            .defaultHazeEffect(
+                                hazeState = LocalHazeState.current,
+                                tintColor = AconTheme.color.Gla_b_30,
+                                blurRadius = 20.dp
+                            ),
                         selectedItem = selectedBottomNavItem,
                         onItemClick = {
                             selectedBottomNavItem = it
