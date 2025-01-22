@@ -58,11 +58,11 @@ fun AconTwoButtonDialog(
             }
             Text(
                 text = title,
-                style = AconTheme.typography.head8_16_sb,
+                style = AconTheme.typography.head6_20_sb,
                 textAlign = TextAlign.Center,
                 color = AconTheme.color.White
             )
-            Spacer(modifier = Modifier.height(4.dp))
+            Spacer(modifier = Modifier.height(10.dp))
 
             Text(
                 text = content,
@@ -84,7 +84,7 @@ fun AconTwoButtonDialog(
                     disabledBackgroundColor = AconTheme.color.Gray5,
                     onClick = onClickLeft,
                     textColor = AconTheme.color.Gray3,
-                    textStyle = AconTheme.typography.body2_14_reg,
+                    textStyle = AconTheme.typography.subtitle1_16_med,
                     modifier = Modifier
                         .weight(1f)
                         .fillMaxWidth()
@@ -93,7 +93,7 @@ fun AconTwoButtonDialog(
 
                 AconFilledMediumButton(
                     text = rightButtonContent,
-                    textStyle = AconTheme.typography.body2_14_reg,
+                    textStyle = AconTheme.typography.subtitle1_16_med,
                     enabledBackgroundColor = AconTheme.color.Gray5,
                     disabledBackgroundColor = AconTheme.color.Gray5,
                     onClick = onClickRight,

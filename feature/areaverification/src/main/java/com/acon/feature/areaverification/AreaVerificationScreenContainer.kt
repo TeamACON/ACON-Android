@@ -28,7 +28,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.res.stringResource
 import com.acon.core.designsystem.component.dialog.AconOneButtonDialog
 import com.acon.core.utils.feature.permission.CheckAndRequestLocationPermission
-import com.acon.feature.localcerti.R
 
 @Composable
 fun AreaVerificationScreenContainer(

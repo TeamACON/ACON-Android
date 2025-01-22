@@ -1,4 +1,4 @@
-package com.acon.feature.AreaVerification
+package com.acon.feature.areaverification
 
 import kotlinx.serialization.Serializable
 

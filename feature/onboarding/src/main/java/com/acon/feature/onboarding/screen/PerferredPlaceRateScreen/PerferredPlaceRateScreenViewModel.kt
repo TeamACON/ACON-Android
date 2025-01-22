@@ -1,6 +1,7 @@
 package com.acon.feature.onboarding.screen.PerferredPlaceRateScreen
 
 import com.acon.core.utils.feature.base.BaseContainerHost
+import com.acon.domain.repository.OnboardingRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.viewmodel.container
@@ -10,6 +11,7 @@ private const val ONBOARDING_TOTAL_PAGES = 5;
 
 @HiltViewModel
 class PreferredPlaceRateScreenViewModel @Inject constructor(
+    private val onboardingRepository: OnboardingRepository
 ) : BaseContainerHost<PreferredPlaceRateScreenState, PreferredPlaceRateScreenSideEffect>() {
 
     override val container: Container<PreferredPlaceRateScreenState, PreferredPlaceRateScreenSideEffect> =
@@ -17,14 +19,14 @@ class PreferredPlaceRateScreenViewModel @Inject constructor(
             initialState = PreferredPlaceRateScreenState(  )
         )
 
-    fun onCardClicked(text: String) = intent {
+    fun onCardClicked(id: String) = intent {
 
         val updatedSelectedCard = state.selectedCard.toMutableList()
 
-        if (updatedSelectedCard.contains(text)) {
-            updatedSelectedCard.remove(text)
+        if (updatedSelectedCard.contains(id)) {
+            updatedSelectedCard.remove(id)
         } else if (updatedSelectedCard.size < 4) {
-            updatedSelectedCard.add(text)
+            updatedSelectedCard.add(id)
         }
         reduce {
             state.copy(selectedCard = updatedSelectedCard.toSet()) // Set으로 변환
@@ -48,6 +50,9 @@ class PreferredPlaceRateScreenViewModel @Inject constructor(
     }
 
     fun navigateToNextPage() = intent {
+        onboardingRepository.postFavoriteSpotRank(state.selectedCard.toList())
+
+        //만약 local DB에 정보가 다 들어가 있으면.
         postSideEffect(PreferredPlaceRateScreenSideEffect.NavigateToNextPage)
     }
 }

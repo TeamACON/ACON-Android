@@ -46,7 +46,6 @@ fun <T : CardItem> FoodGrid(
     LazyVerticalGrid(
         modifier = modifier,
         columns = GridCells.Fixed(columnSize),
-        contentPadding = PaddingValues(horizontal = 10.dp),
         horizontalArrangement = Arrangement.spacedBy(10.dp),
         verticalArrangement = Arrangement.spacedBy(15.dp),
     ){
@@ -54,9 +53,10 @@ fun <T : CardItem> FoodGrid(
             FoodCard(
                 imageRes = food.imageResId,
                 text = food.cardName,
-                selected = (selectedCard.contains(food.cardName)),
-                onCardClicked = { text ->
-                    onCardClicked(text)
+                id = food.id,
+                selected = (selectedCard.contains(food.id)),
+                onCardClicked = { id ->
+                    onCardClicked(id)
                 },
                 isNothingClicked = isNothingClicked,
             )
@@ -69,6 +69,7 @@ fun FoodCard(
     modifier: Modifier = Modifier,
     imageRes: Int,
     text: String,
+    id: String,
     selected: Boolean,
     onCardClicked: (String) -> Unit,
     isNothingClicked: Boolean,
@@ -81,10 +82,9 @@ fun FoodCard(
             modifier = Modifier
                 .fillMaxSize()
                 .aspectRatio(1f)
-                .clickable { onCardClicked(text) },
+                .clickable { onCardClicked(id) },
             contentAlignment = Alignment.Center
         ){
-            //음식 카드인 경우
             if (imageRes != 0){
                 Box(
                     modifier = Modifier
@@ -102,12 +102,12 @@ fun FoodCard(
                             modifier = Modifier
                                 .fillMaxSize()
                                 .clip(RoundedCornerShape(6.dp))
-                                .background(AconTheme.color.Dim_b_60)
+                                .background(AconTheme.color.Gla_w_30)
                         )
                         Image(
                             imageVector = ImageVector.vectorResource(com.acon.core.designsystem.R.drawable.ic_check_44),
                             contentDescription = "Clicked",
-                            modifier = Modifier.size(44.dp)
+                            modifier = Modifier.size(48.dp)
                         )
                     }
                 }
@@ -122,9 +122,15 @@ fun FoodCard(
                     Text(
                         text = text,
                         color = AconTheme.color.White,
-                        style = AconTheme.typography.subtitle2_14_med
+                        style = AconTheme.typography.subtitle1_16_med
                     )
                     if(isNothingClicked){
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .clip(RoundedCornerShape(6.dp))
+                                .background(AconTheme.color.Dim_b_30)
+                        )
                         Image(
                             imageVector = ImageVector.vectorResource(com.acon.core.designsystem.R.drawable.ic_check_44),
                             contentDescription = "Clicked",

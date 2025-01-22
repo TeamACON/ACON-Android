@@ -8,7 +8,7 @@ plugins {
 }
 
 android {
-    namespace = "com.acon.feature.localcerti"
+    namespace = "com.acon.feature.areaverification"
     compileSdk = 35
 
     defaultConfig {
@@ -44,21 +44,26 @@ dependencies {
     implementation(project(":core:map"))
 
     implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
-    implementation(libs.hilt.android)
-    implementation(libs.runtime.android)
-    implementation(libs.androidx.storage)
-    implementation(libs.material3.android)
-    implementation(libs.ui.tooling.preview.android)
-    implementation(libs.map.sdk)
-    implementation(libs.gms.play.services.location)
-    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.activity.compose)
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.ui)
+    implementation(libs.androidx.ui.graphics)
+    implementation(libs.androidx.ui.tooling.preview)
+    implementation(libs.androidx.material3)
     implementation(libs.androidx.navigation.compose)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(platform(libs.androidx.compose.bom))
+    androidTestImplementation(libs.androidx.ui.test.junit4)
+    debugImplementation(libs.androidx.ui.tooling)
+    debugImplementation(libs.androidx.ui.test.manifest)
 
+    implementation(libs.hilt.android)
+    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.map.sdk)
+    implementation(libs.gms.play.services.location)
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
     implementation(libs.hilt.compose)

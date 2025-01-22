@@ -1,6 +1,7 @@
 package com.acon.feature.onboarding.screen.PreferredPlaceSelectScreen
 
 import com.acon.core.utils.feature.base.BaseContainerHost
+import com.acon.domain.repository.OnboardingRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.viewmodel.container
@@ -10,6 +11,7 @@ private const val ONBOARDING_TOTAL_PAGES = 5;
 
 @HiltViewModel
 class PreferredPlaceSelectViewModel @Inject constructor(
+    private val onboardingRepository: OnboardingRepository
 ) : BaseContainerHost<PreferredPlaceSelectScreenState, PreferredPlaceSelectScreenSideEffect>() {
 
     override val container: Container<PreferredPlaceSelectScreenState, PreferredPlaceSelectScreenSideEffect> =
@@ -17,12 +19,12 @@ class PreferredPlaceSelectViewModel @Inject constructor(
             initialState = PreferredPlaceSelectScreenState(  )
         )
 
-    fun onCardClicked(text: String) = intent {
+    fun onCardClicked(id: String) = intent {
 
         val updatedSelectedCard = when {
-            state.selectedCard.isEmpty() -> setOf(text)
-            state.selectedCard.contains(text) -> state.selectedCard - text
-            else -> setOf(text)
+            state.selectedCard.isEmpty() -> setOf(id)
+            state.selectedCard.contains(id) -> state.selectedCard - id
+            else -> setOf(id)
         }
 
         reduce {
@@ -47,6 +49,7 @@ class PreferredPlaceSelectViewModel @Inject constructor(
     }
 
     fun navigateToNextPage() = intent {
+        onboardingRepository.postFavoriteSpotStyle(state.selectedCard.first().toString())
         postSideEffect(PreferredPlaceSelectScreenSideEffect.NavigateToNextPage)
     }
 }

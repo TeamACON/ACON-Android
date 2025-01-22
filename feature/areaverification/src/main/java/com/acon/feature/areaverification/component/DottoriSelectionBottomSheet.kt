@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.res.vectorResource
 import com.acon.core.designsystem.component.button.AconFilledLargeButton
 import com.acon.core.designsystem.theme.AconTheme
-import com.acon.feature.localcerti.R
+import com.acon.feature.areaverification.R
 
 @Composable
 fun DottoriSelectionBottomSheet(

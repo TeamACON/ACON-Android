@@ -81,6 +81,6 @@ fun BottomBarPreview() {
     BottomBar(
         modifier = Modifier
             .fillMaxWidth()
-            .background(color = AconTheme.color.Gla_b_30)
+            .background(color = AconTheme.color.Gla_w_30)
     )
 }

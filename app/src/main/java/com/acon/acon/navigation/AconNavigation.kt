@@ -39,6 +39,7 @@ import com.acon.core.designsystem.blur.defaultHazeEffect
 import com.acon.core.designsystem.blur.rememberHazeState
 import com.acon.core.designsystem.theme.AconTheme
 import com.acon.domain.repository.GoogleTokenRepository
+import com.acon.feature.onboarding.OnboardingRoute
 
 @Composable
 fun AconNavigation(
@@ -65,11 +66,7 @@ fun AconNavigation(
                         modifier = Modifier
                             .background(color = AconTheme.color.Black)  // TODO Color?
                             .fillMaxWidth()
-                            .defaultHazeEffect(
-                                hazeState = LocalHazeState.current,
-                                tintColor = AconTheme.color.Gla_b_30,
-                                blurRadius = 20.dp
-                            ),
+                            .defaultHazeEffect(hazeState = LocalHazeState.current, tintColor = AconTheme.color.Gla_w_30),
                         selectedItem = selectedBottomNavItem,
                         onItemClick = {
                             selectedBottomNavItem = it
@@ -80,7 +77,7 @@ fun AconNavigation(
         ) { innerPadding ->
             NavHost(
                 navController = navController,
-                startDestination = SpotRoute.Graph,
+                startDestination = OnboardingRoute.Graph,
                 modifier = Modifier.padding(innerPadding),
                 enterTransition = {
                     defaultEnterTransition()

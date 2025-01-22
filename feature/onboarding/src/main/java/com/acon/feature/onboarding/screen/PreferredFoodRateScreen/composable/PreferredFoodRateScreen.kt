@@ -13,10 +13,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.acon.core.designsystem.component.button.AconFilledLargeButton
 import com.acon.core.designsystem.theme.AconTheme
+import com.acon.feature.onboarding.R
 import com.acon.feature.onboarding.component.OnboardingTopBar
 import com.acon.feature.onboarding.component.PreferFoodTypeSelectGrid
 import com.acon.feature.onboarding.screen.PreferredFoodRateScreen.RatePreferFoodScreenState
@@ -52,7 +54,7 @@ fun PreferredFoodRateScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = 20.dp, vertical = 50.dp),
+                .padding(horizontal = 15.dp, vertical = 30.dp),
             verticalArrangement = Arrangement.SpaceBetween
         ){
             Column(
@@ -65,29 +67,28 @@ fun PreferredFoodRateScreen(
                     modifier = modifier.padding(vertical = 7.dp)
                 )
                 Text(
-                    text = "선호 음식 Top3까지 순위를 매겨주세요.",
+                    text = stringResource(R.string.onboarding_2_title),
                     color = Color.White,
-                    style = AconTheme.typography.head6_20_sb,
+                    style = AconTheme.typography.head4_24_sb,
                 )
-            }
 
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f),
-                contentAlignment = Alignment.Center
-            ){
-                PreferFoodTypeSelectGrid(
-                    modifier = modifier
-                        .background(AconTheme.color.Gray9),
-                    columnSize = columnSize,
-                    foodItems = FoodTypeItems.entries.toTypedArray(),
-                    onCardClicked = { text ->
-                        onCardClicked(text)
-                    },
-                    selectedCard = screenState.selectedCard,
-                    isAllClicked = screenState.selectedCard.size == 3
-                )
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 20.dp),
+                ){
+                    PreferFoodTypeSelectGrid(
+                        modifier = modifier
+                            .background(AconTheme.color.Gray9),
+                        columnSize = columnSize,
+                        foodItems = FoodTypeItems.entries.toTypedArray(),
+                        onCardClicked = { text ->
+                            onCardClicked(text)
+                        },
+                        selectedCard = screenState.selectedCard,
+                        isAllClicked = screenState.selectedCard.size == 3
+                    )
+                }
             }
 
             Box(
@@ -97,8 +98,7 @@ fun PreferredFoodRateScreen(
 
                 AconFilledLargeButton(
                     text = "다음",
-                    textStyle = AconTheme.typography.head8_16_sb,
-                    //textColor = AconTheme.color.White,
+                    textStyle = AconTheme.typography.head7_18_sb,
                     enabledBackgroundColor = AconTheme.color.Gray5,
                     disabledBackgroundColor =  AconTheme.color.Gray8,
                     isEnabled = ( screenState.selectedCard.size == 3 ),

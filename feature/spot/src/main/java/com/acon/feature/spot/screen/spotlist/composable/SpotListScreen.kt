@@ -220,11 +220,7 @@ internal fun SpotListScreen(
                                 modifier = Modifier
                                     .clip(CircleShape)
                                     .size(48.dp)
-                                    .defaultHazeEffect(
-                                        hazeState = LocalHazeState.current,
-                                        tintColor = AconTheme.color.Gla_b_30,
-                                        blurRadius = 8.dp
-                                    )
+                                    .defaultHazeEffect(hazeState = LocalHazeState.current, tintColor = AconTheme.color.Gla_w_30, blurRadius = 8.dp)
                                     .clickable {
                                         if (it.enabled) {
                                             when (it) {

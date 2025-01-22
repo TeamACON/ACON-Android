@@ -22,7 +22,6 @@ import androidx.compose.ui.unit.dp
 import com.acon.core.designsystem.component.button.AconFilledLargeButton
 import com.acon.core.designsystem.theme.AconTheme
 import com.acon.feature.areaverification.component.DottoriSelectionBottomSheet
-import com.acon.feature.localcerti.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

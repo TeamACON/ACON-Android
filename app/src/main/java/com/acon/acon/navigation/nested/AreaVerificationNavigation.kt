@@ -7,7 +7,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.toRoute
-import com.acon.feature.AreaVerification.AreaVerificationRoute
+import com.acon.feature.areaverification.AreaVerificationRoute
 import com.acon.feature.areaverification.AreaVerificationScreenContainer
 import com.acon.feature.areaverification.PreferenceMapScreen
 
