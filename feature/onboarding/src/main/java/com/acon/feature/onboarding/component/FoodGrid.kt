@@ -85,7 +85,6 @@ fun FoodCard(
                 .clickable { onCardClicked(id) },
             contentAlignment = Alignment.Center
         ){
-            //음식 카드인 경우
             if (imageRes != 0){
                 Box(
                     modifier = Modifier
@@ -103,7 +102,7 @@ fun FoodCard(
                             modifier = Modifier
                                 .fillMaxSize()
                                 .clip(RoundedCornerShape(6.dp))
-                                .background(AconTheme.color.Dim_b_60)
+                                .background(AconTheme.color.Gla_w_30)
                         )
                         Image(
                             imageVector = ImageVector.vectorResource(com.acon.core.designsystem.R.drawable.ic_check_44),
