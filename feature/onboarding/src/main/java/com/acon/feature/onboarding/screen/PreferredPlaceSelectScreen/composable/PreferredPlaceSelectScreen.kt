@@ -30,10 +30,6 @@ import com.acon.feature.onboarding.type.MoodItems
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
-/*
-* TODO : 선택 시 버튼 Dim 처리가 안 됨
-* */
-
 @Composable
 fun PreferredPlaceSelectScreenContainer(
     modifier: Modifier = Modifier,
@@ -76,6 +72,7 @@ fun PreferredPlaceSelectScreenContainer(
                 viewModel.hideDialog()
             },
             onClickLeft = { // 그만두기
+                viewModel.hideDialog()
                 navigateToLastLoadingPage()
             },
             onClickRight = { // 계속하기

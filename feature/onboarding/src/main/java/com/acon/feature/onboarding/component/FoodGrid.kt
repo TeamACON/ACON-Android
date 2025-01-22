@@ -2,11 +2,9 @@ package com.acon.feature.onboarding.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
@@ -30,6 +28,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.acon.core.designsystem.noRippleClickable
 import com.acon.core.designsystem.theme.AconTheme
 import com.acon.feature.onboarding.type.CardItem
 import com.acon.feature.onboarding.type.FoodItems
@@ -82,7 +81,9 @@ fun FoodCard(
             modifier = Modifier
                 .fillMaxSize()
                 .aspectRatio(1f)
-                .clickable { onCardClicked(id) },
+                .noRippleClickable {
+                    onCardClicked(id)
+                },
             contentAlignment = Alignment.Center
         ){
             if (imageRes != 0){

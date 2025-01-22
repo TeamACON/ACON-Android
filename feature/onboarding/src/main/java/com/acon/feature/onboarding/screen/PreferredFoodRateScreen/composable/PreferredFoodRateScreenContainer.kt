@@ -53,6 +53,7 @@ fun PreferredFoodRateScreenContainer(
                 viewModel.hideDialog()
             },
             onClickLeft = { // 그만두기
+                viewModel.hideDialog()
                 navigateToLastLoadingPage()
             },
             onClickRight = { // 계속하기

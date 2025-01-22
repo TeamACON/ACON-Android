@@ -73,6 +73,7 @@ fun FrequentPlaceSelectScreenContainer(
                 viewModel.hideDialog()
             },
             onClickLeft = {
+                viewModel.hideDialog()
                 navigateToLastLoadingPage()
             },
             onClickRight = {
