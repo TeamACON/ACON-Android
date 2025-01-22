@@ -23,8 +23,6 @@ class SpotRepositoryImpl @Inject constructor(
         latitude: Double,
         longitude: Double,
         condition: Condition,
-        walkingTime: Int,
-        priceRange: Int
     ): Result<List<Spot>> {
         return runCatchingWith(*FetchSpotListError.createErrorInstances()) {
             spotRemoteDataSource.fetchSpotList(
@@ -32,16 +30,14 @@ class SpotRepositoryImpl @Inject constructor(
                     latitude = latitude,
                     longitude = longitude,
                     condition = ConditionRequest(
-                        spotType = condition.spotType.name,
-                        filterList = condition.filterList.map { filter ->
+                        spotType = condition.spotType?.name,
+                        filterList = condition.filterList?.map { filter ->
                             FilterListRequest(
                                 category = filter.category.name,
                                 optionList = filter.optionList.map { optionTypes -> optionTypes.getName() }
                             )
-                        }
+                        }, walkingTime = condition.walkingTime, priceRange = condition.priceRange
                     ),
-                    walkingTime = walkingTime,
-                    priceRange = priceRange
                 )
             ).spotList.map { it.toSpot() }
         }
@@ -59,7 +55,7 @@ class SpotRepositoryImpl @Inject constructor(
         spotId: Long
     ): Result<List<SpotDetailMenu>> {
         return runCatchingWith(*GetSpotMenuListError.createErrorInstances()) {
-            spotRemoteDataSource.getSpotMenuList(spotId).spotMenuList.map { it.toSpotDetailMenu() }
+            spotRemoteDataSource.getSpotMenuList(spotId).menuList.map { it.toSpotDetailMenu() }
         }
     }
 

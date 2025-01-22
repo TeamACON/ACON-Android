@@ -7,9 +7,21 @@ import com.acon.domain.type.SpotType
 
 @Immutable
 data class Condition(
-    val spotType: SpotType,
-    val filterList: List<Filter>
-)
+    val spotType: SpotType?,
+    val filterList: List<Filter>?,
+    val walkingTime: Int,
+    val priceRange: Int?
+) {
+
+    companion object {
+        val Default = Condition(
+            spotType = null,
+            filterList = null,
+            walkingTime = 15,
+            priceRange = null
+        )
+    }
+}
 
 @Immutable
 data class Filter(

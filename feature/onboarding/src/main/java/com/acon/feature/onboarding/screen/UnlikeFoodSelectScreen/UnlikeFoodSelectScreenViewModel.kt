@@ -1,7 +1,9 @@
 package com.acon.feature.onboarding.screen.UnlikeFoodSelectScreen
 
 import com.acon.core.utils.feature.base.BaseContainerHost
+import com.acon.domain.repository.OnboardingRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.selects.select
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
@@ -10,6 +12,7 @@ private const val ONBOARDING_TOTAL_PAGES = 5;
 
 @HiltViewModel
 class UnlikeFoodScreenViewModel @Inject constructor(
+    private val onboardingRepository: OnboardingRepository
 ) : BaseContainerHost<UnlikeFoodScreenState, UnlikeFoodScreenSideEffect>() {
 
     override val container: Container<UnlikeFoodScreenState, UnlikeFoodScreenSideEffect> =
@@ -17,20 +20,33 @@ class UnlikeFoodScreenViewModel @Inject constructor(
             initialState = UnlikeFoodScreenState(  )
         )
 
-    fun onCardClicked(text: String) = intent {
+    fun onCardClicked(id: String) = intent {
 
-        if (text == "없음") {
+        if (id == "") { //없음인 경우
+            if(state.selectedCard.contains(id)){
+                reduce {
+                    state.copy(
+                        selectedCard = emptySet()
+                    )
+                }
+            } else {
+                reduce {
+                    state.copy(
+                        selectedCard = setOf(id)
+                    )
+                }
+            }
             reduce {
                 state.copy(
                     isNothingClicked = !state.isNothingClicked,
-                    selectedCard = if (!state.isNothingClicked) setOf(text) else state.selectedCard
                 )
             }
+
         } else {
-            val updatedSelectedCard = if (state.selectedCard.contains(text)) {
-                state.selectedCard - text
+            val updatedSelectedCard = if (state.selectedCard.contains(id)) {
+                state.selectedCard - id
             } else {
-                state.selectedCard + text
+                state.selectedCard + id
             }
 
             reduce {
@@ -54,7 +70,18 @@ class UnlikeFoodScreenViewModel @Inject constructor(
         }
     }
 
+    fun skipConfirmed() = intent {
+        reduce {
+            state.copy(openCloseDialog = false)
+        }
+        postSideEffect(UnlikeFoodScreenSideEffect.NavigateToLastPage)
+    }
+
     fun navigateToNextPage() = intent {
+
+        val disLikeFoodList = if (state.selectedCard.contains("")) emptySet()
+                                else state.selectedCard
+        onboardingRepository.postDislikeFood(disLikeFoodList)
         postSideEffect(UnlikeFoodScreenSideEffect.NavigateToNextPage)
     }
 }
@@ -69,4 +96,5 @@ data class UnlikeFoodScreenState(
 
 sealed interface UnlikeFoodScreenSideEffect {
     data object NavigateToNextPage: UnlikeFoodScreenSideEffect
+    data object NavigateToLastPage: UnlikeFoodScreenSideEffect
 }

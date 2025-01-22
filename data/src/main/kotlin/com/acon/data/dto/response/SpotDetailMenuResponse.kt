@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class SpotDetailMenuListResponse(
-    @SerialName("spotMenuList") val spotMenuList: List<SpotDetailMenuResponse>
+    @SerialName("menuList") val menuList: List<SpotDetailMenuResponse>
 )
 
 @Serializable
@@ -15,7 +15,7 @@ data class SpotDetailMenuResponse(
     @SerialName("id") val id: Long,
     @SerialName("name") val name: String,
     @SerialName("price") val price: Int,
-    @SerialName("image") val image: String?,
+    @SerialName("image") val image: String? = null,
 ) {
     fun toSpotDetailMenu() = SpotDetailMenu(
         id = id,

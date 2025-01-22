@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<network-security-config>
-    <domain-config cleartextTrafficPermitted="true">
-        <domain includeSubdomains="true">https://acon.sopt.app:8080</domain> <!-- 서버 주소 -> http:// , :8080 때고 숫자만 넣어야함 -->
-        <domain includeSubdomains="true">acon.sopt.app</domain> <!-- 이렇게 넣어야 함 -->
-    </domain-config>
-</network-security-config>

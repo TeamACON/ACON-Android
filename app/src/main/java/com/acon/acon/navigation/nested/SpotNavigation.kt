@@ -8,7 +8,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.acon.acon.navigation.route.SpotRoute
+import com.acon.feature.spot.com.acon.feature.spot.SpotRoute
 import com.acon.feature.spot.screen.spotdetail.composable.SpotDetailScreenContainer
 import com.acon.feature.spot.screen.spotlist.composable.SpotListScreenContainer
 
@@ -17,7 +17,7 @@ internal fun NavGraphBuilder.spotNavigation(
 ) {
 
     navigation<SpotRoute.Graph>(
-        startDestination = SpotRoute.SpotDetail(1)
+        startDestination = SpotRoute.SpotList
     ) {
         composable<SpotRoute.SpotList>(
             enterTransition = {

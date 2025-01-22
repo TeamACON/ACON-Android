@@ -3,6 +3,7 @@ package com.acon.data.di
 import com.acon.core.common.Auth
 import com.acon.core.common.NoAuth
 import com.acon.data.api.remote.AuthApi
+import com.acon.data.api.remote.OnboardingApi
 import com.acon.data.api.remote.ReissueTokenApi
 import com.acon.data.api.remote.SpotApi
 import com.acon.data.api.remote.UploadApi
@@ -38,6 +39,13 @@ internal object ApiModule {
     ): SpotApi {
         return retrofit.create(SpotApi::class.java)
     }
+
+    @Singleton
+    @Provides
+    fun providesOnboardingApi(
+        @NoAuth retrofit: Retrofit
+    ): OnboardingApi {
+        return retrofit.create(OnboardingApi::class.java)
 
     @Singleton
     @Provides

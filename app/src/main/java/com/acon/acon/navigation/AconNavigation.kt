@@ -26,11 +26,11 @@ import com.acon.acon.navigation.bottom.BottomNavType
 import com.acon.acon.navigation.nested.areaVerificationNavigation
 import com.acon.acon.navigation.nested.onboardingNavigationNavigation
 import com.acon.acon.navigation.nested.signInNavigationNavigation
-import com.acon.acon.navigation.route.AreaVerificationRoute
+import com.acon.acon.navigation.nested.splashNavigationNavigation
 import com.acon.acon.navigation.nested.spotNavigation
 import com.acon.acon.navigation.nested.uploadNavigation
-import com.acon.acon.navigation.route.SpotRoute
-import com.acon.acon.navigation.route.UploadRoute
+import com.acon.feature.spot.com.acon.feature.spot.SpotRoute
+import com.acon.feature.upload.UploadRoute
 import com.acon.core.designsystem.animation.defaultEnterTransition
 import com.acon.core.designsystem.animation.defaultExitTransition
 import com.acon.core.designsystem.animation.defaultPopEnterTransition
@@ -40,6 +40,7 @@ import com.acon.core.designsystem.blur.defaultHazeEffect
 import com.acon.core.designsystem.blur.rememberHazeState
 import com.acon.core.designsystem.theme.AconTheme
 import com.acon.domain.repository.GoogleTokenRepository
+import com.acon.feature.signin.screen.SignInRoute
 
 @Composable
 fun AconNavigation(
@@ -66,7 +67,7 @@ fun AconNavigation(
                         modifier = Modifier
                             .background(color = AconTheme.color.Black)  // TODO Color?
                             .fillMaxWidth()
-                            .defaultHazeEffect(hazeState = LocalHazeState.current, tintColor = AconTheme.color.Gla_b_30),
+                            .defaultHazeEffect(hazeState = LocalHazeState.current, tintColor = AconTheme.color.Dim_b_30),
                         selectedItem = selectedBottomNavItem,
                         onItemClick = {
                             selectedBottomNavItem = it
@@ -77,7 +78,7 @@ fun AconNavigation(
         ) { innerPadding ->
             NavHost(
                 navController = navController,
-                startDestination = SpotRoute.Graph,
+                startDestination = SignInRoute.Graph,
                 modifier = Modifier.padding(innerPadding),
                 enterTransition = {
                     defaultEnterTransition()
@@ -89,6 +90,7 @@ fun AconNavigation(
                     defaultPopExitTransition()
                 }
             ) {
+                splashNavigationNavigation(navController)
 
                 signInNavigationNavigation(navController, googleTokenRepository)
 

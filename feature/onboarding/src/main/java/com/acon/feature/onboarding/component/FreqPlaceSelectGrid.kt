@@ -2,11 +2,9 @@ package com.acon.feature.onboarding.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
@@ -30,6 +28,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.acon.core.designsystem.noRippleClickable
 import com.acon.core.designsystem.theme.AconTheme
 import com.acon.feature.onboarding.type.CardItem
 import com.acon.feature.onboarding.type.PlaceItems
@@ -45,7 +44,6 @@ fun <T : CardItem> FreqPlaceSelectGrid(
     LazyVerticalGrid(
         modifier = modifier,
         columns = GridCells.Fixed(columnSize),
-        contentPadding = PaddingValues(horizontal = 10.dp),
         horizontalArrangement = Arrangement.spacedBy(10.dp),
         verticalArrangement = Arrangement.spacedBy(15.dp),
     ){
@@ -53,9 +51,10 @@ fun <T : CardItem> FreqPlaceSelectGrid(
             PlaceCard(
                 imageRes = place.imageResId,
                 text = place.cardName,
-                selected = (selectedCard.contains(place.cardName)),
-                onCardClicked = { text ->
-                    onCardClicked(text)
+                id = place.id,
+                selected = (selectedCard.contains(place.id)),
+                onCardClicked = { id ->
+                    onCardClicked(id)
                 },
             )
         }
@@ -67,6 +66,7 @@ fun PlaceCard(
     modifier: Modifier = Modifier,
     imageRes: Int,
     text: String,
+    id: String,
     selected: Boolean,
     onCardClicked: (String) -> Unit,
 ) {
@@ -77,7 +77,11 @@ fun PlaceCard(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .clickable { onCardClicked(text) },
+                .clip(RoundedCornerShape(6.dp))
+                .aspectRatio(0.5f)
+                .noRippleClickable {
+                onCardClicked(id)
+            },
             contentAlignment = Alignment.Center
         ){
             // 버튼 하나씩
@@ -92,12 +96,12 @@ fun PlaceCard(
                     modifier = Modifier
                         .fillMaxSize()
                         .clip(RoundedCornerShape(6.dp))
-                        .background(AconTheme.color.Dim_b_60)
+                        .background(AconTheme.color.Gla_w_30)
                 )
                 Image(
                     imageVector = ImageVector.vectorResource(com.acon.core.designsystem.R.drawable.ic_check_44),
                     contentDescription = "Clicked",
-                    modifier = Modifier.size(44.dp)
+                    modifier = Modifier.size(48.dp)
                 )
             }
         }

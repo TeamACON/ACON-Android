@@ -17,7 +17,7 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 @Composable
 fun SpotListScreenContainer(
     modifier: Modifier = Modifier,
-    onNavigateToSpotDetailScreen: (id: Int) -> Unit = {},
+    onNavigateToSpotDetailScreen: (id: Long) -> Unit = {},
     viewModel: SpotListViewModel = hiltViewModel()
 ) {
 
@@ -27,10 +27,11 @@ fun SpotListScreenContainer(
 
     CheckAndRequestLocationPermission(
         onPermissionGranted = {
-            if (state !is SpotListUiState.Success)
+            if (state !is SpotListUiState.Success) {
                 context.onLocationReady {
-                    viewModel.onLocationReady(it)
+                    viewModel.fetchInitialSpots(it)
                 }
+            }
         }
     )
 
@@ -43,15 +44,13 @@ fun SpotListScreenContainer(
             }
         }, onFilterBottomSheetShowStateChange = viewModel::onFilterBottomSheetStateChange,
         onResetFilter = {
-            viewModel.onResetFilter()
             context.onLocationReady {
-                viewModel.onLocationReady(it)
+                viewModel.onResetFilter(it)
             }
         },
-        onCompleteFilter = { condition ->
-            viewModel.onCompleteFilter(condition)
+        onCompleteFilter = { condition, proceed ->
             context.onLocationReady {
-                viewModel.onLocationReady(it)
+                viewModel.onCompleteFilter(it, condition, proceed)
             }
         },
         onSpotItemClick = viewModel::onSpotItemClick
