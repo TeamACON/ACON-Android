@@ -3,6 +3,7 @@ package com.acon.data.di
 import com.acon.data.repository.AuthRepositoryImpl
 import com.acon.data.repository.OnboardingRepositoryImpl
 import com.acon.data.repository.SpotRepositoryImpl
+import com.acon.data.repository.TokenLocalRepositoryImpl
 import com.acon.domain.repository.AuthRepository
 import com.acon.domain.repository.OnboardingRepository
 import com.acon.domain.repository.SpotRepository

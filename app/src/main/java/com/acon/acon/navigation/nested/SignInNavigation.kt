@@ -6,7 +6,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import com.acon.feature.signin.screen.SignInRoute
 import com.acon.domain.repository.GoogleTokenRepository
+import com.acon.feature.areaverification.AreaVerificationRoute
 import com.acon.feature.signin.screen.SignInScreenContent
+import com.acon.feature.spot.com.acon.feature.spot.SpotRoute
 
 internal fun NavGraphBuilder.signInNavigationNavigation(
     navController: NavHostController,

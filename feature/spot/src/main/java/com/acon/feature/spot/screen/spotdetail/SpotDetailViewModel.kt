@@ -30,7 +30,7 @@ class SpotDetailViewModel @Inject constructor(
                 spotRepository.getSpotDetailInfo(spotId)
             }
             val spotDetailMenuDeferred = viewModelScope.async {
-                spotRepository.getSpotMenuList(spotId)
+                spotRepository.getSpotMenuList(spotId.toInt())
             }
 
             val spotDetailInfoResult = spotDetailInfoDeferred.await()

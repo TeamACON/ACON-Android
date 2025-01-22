@@ -4,10 +4,10 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.acon.acon.navigation.route.SignInRoute
 import com.acon.acon.navigation.route.SplashRoute
-import com.acon.acon.navigation.route.SpotRoute
+import com.acon.feature.signin.screen.SignInRoute
 import com.acon.feature.signin.splash.SplashScreenContent
+import com.acon.feature.spot.com.acon.feature.spot.SpotRoute
 
 internal fun NavGraphBuilder.splashNavigationNavigation(
     navController: NavHostController
