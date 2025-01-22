@@ -3,6 +3,8 @@ package com.acon.data.repository
 import com.acon.data.datasource.remote.UploadRemoteDataSource
 import com.acon.domain.model.upload.DotoriCount
 import com.acon.domain.model.upload.KeyWord
+import com.acon.domain.model.upload.ReviewResult
+import com.acon.domain.model.upload.SpotVerification
 import com.acon.domain.model.upload.Suggestions
 import com.acon.domain.repository.UploadRepository
 import javax.inject.Inject
@@ -23,5 +25,27 @@ class UploadRepositoryImpl @Inject constructor(
         longitude: Double
     ): Result<Suggestions> = runCatching {
         uploadRemoteDataSource.getSuggestions(latitude, longitude).toSuggestions()
+    }
+
+    override suspend fun getVerifySpotLocation(
+        spotId: Long,
+        latitude: Double,
+        longitude: Double
+    ): Result<SpotVerification> = runCatching {
+        uploadRemoteDataSource.getVerifySpotLocation(
+            spotId = spotId,
+            latitude = latitude,
+            longitude = longitude
+        ).toSpotVerification()
+    }
+
+    override suspend fun postReview(
+        spotId: Long,
+        acornCount: Int
+    ): Result<Unit> = runCatching {
+        uploadRemoteDataSource.postReview(
+            spotId = spotId,
+            acornCount = acornCount
+        )
     }
 }
