@@ -2,6 +2,7 @@ package com.acon.data.di
 
 import com.acon.core.common.Auth
 import com.acon.core.common.NoAuth
+import com.acon.data.api.remote.AreaVerificationApi
 import com.acon.data.api.remote.AuthApi
 import com.acon.data.api.remote.OnboardingApi
 import com.acon.data.api.remote.ReissueTokenApi
@@ -46,6 +47,7 @@ internal object ApiModule {
         @NoAuth retrofit: Retrofit
     ): OnboardingApi {
         return retrofit.create(OnboardingApi::class.java)
+    }
 
     @Singleton
     @Provides
@@ -53,5 +55,13 @@ internal object ApiModule {
         @NoAuth retrofit: Retrofit
     ): UploadApi {
         return retrofit.create(UploadApi::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun providesAreaVerificationApi(
+        @Auth retrofit: Retrofit
+    ): AreaVerificationApi {
+        return retrofit.create(AreaVerificationApi::class.java)
     }
 }
