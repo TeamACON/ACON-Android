@@ -77,6 +77,7 @@ class PrefResultLoadingScreenViewModel @Inject constructor(
     fun navigateToSpotListView() = intent {
         postSideEffect(PrefResultLoadingScreenSideEffect.navigateToSpotListView)
     }
+
 }
 
 sealed interface PrefResultLoadingScreenState {

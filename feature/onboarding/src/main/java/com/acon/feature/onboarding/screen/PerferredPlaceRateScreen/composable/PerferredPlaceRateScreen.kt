@@ -58,6 +58,9 @@ fun PreferredPlaceRateScreenContainer(
             PreferredPlaceRateScreenSideEffect.NavigateToPreviousPage -> {
                 navigateToPreviousPage()
             }
+            PreferredPlaceRateScreenSideEffect.NavigateToLastPage -> {
+                navigateToLastLoadingPage()
+            }
         }
     }
 
@@ -72,8 +75,7 @@ fun PreferredPlaceRateScreenContainer(
                 viewModel.hideDialog()
             },
             onClickLeft = { // 그만두기
-                viewModel.hideDialog()
-                navigateToLastLoadingPage()
+                viewModel.skipConfirmed()
             },
             onClickRight = { // 계속하기
                 viewModel.hideDialog()

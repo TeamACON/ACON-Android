@@ -44,6 +44,13 @@ class PreferredFoodRateScreenViewModel @Inject constructor(
         }
     }
 
+    fun skipConfirmed() = intent {
+        reduce {
+            state.copy(openCloseDialog = false)
+        }
+        postSideEffect(RatePreferFoodScreenSideEffect.NavigateToLastPage)
+    }
+
     fun navigateToPreviousPage() = intent {
         postSideEffect(RatePreferFoodScreenSideEffect.NavigateToPreviousPage)
     }
@@ -64,4 +71,5 @@ data class RatePreferFoodScreenState(
 sealed interface RatePreferFoodScreenSideEffect {
     data object NavigateToPreviousPage: RatePreferFoodScreenSideEffect
     data object NavigateToNextPage: RatePreferFoodScreenSideEffect
+    data object NavigateToLastPage: RatePreferFoodScreenSideEffect
 }
