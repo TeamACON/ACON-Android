@@ -48,6 +48,7 @@ class PreferredPlaceSelectViewModel @Inject constructor(
         reduce {
             state.copy(openCloseDialog = false)
         }
+        postSideEffect(PreferredPlaceSelectScreenSideEffect.NavigateToLastPage)
     }
 
     fun navigateToPreviousPage() = intent {
