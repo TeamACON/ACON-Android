@@ -1,9 +1,15 @@
 package com.acon.data.api.remote
 
+import com.acon.data.dto.request.ReviewRequest
 import com.acon.data.dto.response.upload.UploadGetDotoriResponse
 import com.acon.data.dto.response.upload.UploadGetKeyWordResponse
+import com.acon.data.dto.response.upload.UploadGetSpotVerifyResponse
 import com.acon.data.dto.response.upload.UploadGetSuggestionsResponse
+import com.acon.data.dto.response.upload.UploadPostReviewResponse
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.Headers
+import retrofit2.http.POST
 import retrofit2.http.Query
 
 interface UploadApi {
@@ -18,4 +24,17 @@ interface UploadApi {
         @Query("latitude") latitude: Double,
         @Query("longitude") longitude: Double
     ): UploadGetSuggestionsResponse
+
+    @GET("/api/v1/spot/verify")
+    suspend fun getVerifySpotLocation(
+        @Query("spotId") spotId: Long,
+        @Query("latitude") latitude: Double,
+        @Query("longitude") longitude: Double
+    ): UploadGetSpotVerifyResponse
+
+    @POST("/api/v1/review")
+    @Headers("Content-Type: application/json")
+    suspend fun uploadPostReview(
+        @Body request: ReviewRequest
+    )
 }
