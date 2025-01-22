@@ -125,6 +125,12 @@ fun FoodCard(
                         style = AconTheme.typography.subtitle1_16_med
                     )
                     if(isNothingClicked){
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .clip(RoundedCornerShape(6.dp))
+                                .background(AconTheme.color.Dim_b_30)
+                        )
                         Image(
                             imageVector = ImageVector.vectorResource(com.acon.core.designsystem.R.drawable.ic_check_44),
                             contentDescription = "Clicked",

@@ -265,7 +265,7 @@ fun SpotFilterBottomSheet(
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(AconTheme.color.Black)
-                    .defaultHazeEffect(hazeState, tintColor = AconTheme.color.Gla_b_30, alpha = .6f)
+                    .defaultHazeEffect(hazeState, tintColor = AconTheme.color.Gla_w_30, alpha = .6f)
                     .padding(horizontal = 20.dp)
                     .padding(top = 8.dp, bottom = 32.dp),
                 verticalAlignment = Alignment.CenterVertically

@@ -82,7 +82,7 @@ internal fun SpotDetailScreen(
                                 .background(AconTheme.color.Black)
                                 .defaultHazeEffect(
                                     hazeState = LocalHazeState.current,
-                                    tintColor = AconTheme.color.Gla_b_30,
+                                    tintColor = AconTheme.color.Gla_w_30,
                                 )
                                 .zIndex(1f)
                         )
@@ -191,7 +191,7 @@ internal fun SpotDetailScreen(
                             .background(AconTheme.color.Black)
                             .defaultHazeEffect(
                                 hazeState = LocalHazeState.current,
-                                tintColor = AconTheme.color.Gla_b_30,
+                                tintColor = AconTheme.color.Gla_w_30,
                             )
                     )
                 }
