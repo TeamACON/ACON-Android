@@ -32,7 +32,7 @@ class SignInViewModel @Inject constructor(
             }
     }
 
-    fun isTokenValid() = intent {
+    private fun isTokenValid() = intent {
         tokenLocalRepository.getAccessToken().onSuccess { accessToken ->
             if (!accessToken.isNullOrEmpty()) {
                 postSideEffect(SignInSideEffect.NavigateToSpotListView)
