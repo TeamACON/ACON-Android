@@ -1,4 +1,4 @@
-package com.acon.acon.navigation.route
+package com.acon.feature.areaverification
 
 import kotlinx.serialization.Serializable
 

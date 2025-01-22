@@ -30,9 +30,8 @@ fun CheckAndRequestLocationPermission(
     val locationPermissionState = rememberMultiplePermissionsState(
         permissions = listOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION),
         onPermissionsResult = { permMap ->
-            if (permMap[Manifest.permission.ACCESS_FINE_LOCATION] == false) {
+            if (permMap.isNotEmpty())
                 trigger = (trigger + 1).coerceAtMost(2)
-            }
         }
     )
     if (showPermissionDialog)
