@@ -1,4 +1,4 @@
-package com.acon.acon.navigation.route
+package com.acon.feature.onboarding
 
 import kotlinx.serialization.Serializable
 

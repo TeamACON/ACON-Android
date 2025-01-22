@@ -7,11 +7,11 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.toRoute
-import com.acon.acon.navigation.route.AreaVerificationRoute
+import com.acon.feature.AreaVerification.AreaVerificationRoute
 import com.acon.feature.areaverification.AreaVerificationScreenContainer
 import com.acon.feature.areaverification.PreferenceMapScreen
 
-internal fun NavGraphBuilder.areaVerificationNavigation(
+fun NavGraphBuilder.areaVerificationNavigation(
     navController: NavHostController
 ) {
     navigation<AreaVerificationRoute.Graph>(
