@@ -26,8 +26,8 @@ internal fun NavGraphBuilder.onboardingNavigationNavigation(
                 navigateToNextPage = {
                     navController.navigate(OnboardingRoute.RatePreferFoods)
                 },
-                navigateToLastLoadingPage = {
-                    navController.navigate(OnboardingRoute.LastLoading)
+                navigateToSpotListView = {
+                    navController.navigate(SpotRoute.SpotList)
                 }
             )
         }
@@ -40,8 +40,8 @@ internal fun NavGraphBuilder.onboardingNavigationNavigation(
                  navigateToNextPage = {
                      navController.navigate(OnboardingRoute.SelectFrequentPlace)
                  },
-                 navigateToLastLoadingPage = {
-                     navController.navigate(OnboardingRoute.LastLoading)
+                 navigateToSpotListView = {
+                     navController.navigate(SpotRoute.SpotList)
                  }
              )
 
@@ -55,8 +55,8 @@ internal fun NavGraphBuilder.onboardingNavigationNavigation(
                 navigateToNextPage = {
                     navController.navigate(OnboardingRoute.SelectPreferPlace)
                 },
-                navigateToLastLoadingPage = {
-                    navController.navigate(OnboardingRoute.LastLoading)
+                navigateToSpotListView = {
+                    navController.navigate(SpotRoute.SpotList)
                 }
             )
         }
@@ -68,8 +68,8 @@ internal fun NavGraphBuilder.onboardingNavigationNavigation(
                 navigateToNextPage = {
                     navController.navigate(OnboardingRoute.RatePreferPlace)
                 },
-                navigateToLastLoadingPage = {
-                    navController.navigate(OnboardingRoute.LastLoading)
+                navigateToSpotListView = {
+                    navController.navigate(SpotRoute.SpotList)
                 }
             )
         }
@@ -81,9 +81,9 @@ internal fun NavGraphBuilder.onboardingNavigationNavigation(
                  navigateToNextPage = {
                      navController.navigate(OnboardingRoute.LastLoading)
                  },
-                 navigateToLastLoadingPage = {
-                     navController.navigate(OnboardingRoute.LastLoading)
-                 }
+                navigateToSpotListView = {
+                    navController.navigate(SpotRoute.SpotList)
+                }
              )
         }
         composable<OnboardingRoute.LastLoading> {

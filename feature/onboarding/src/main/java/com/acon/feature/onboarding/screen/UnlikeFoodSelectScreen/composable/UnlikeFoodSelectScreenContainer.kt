@@ -16,7 +16,7 @@ fun UnlikeFoodScreenContainer(
     modifier: Modifier = Modifier,
     viewModel: UnlikeFoodScreenViewModel = hiltViewModel(),
     navigateToNextPage: () -> Unit = {},
-    navigateToLastLoadingPage: () -> Unit = {},
+    navigateToSpotListView: () -> Unit = {},
 ){
     val state = viewModel.collectAsState().value
 
@@ -35,7 +35,7 @@ fun UnlikeFoodScreenContainer(
                 navigateToNextPage()
             }
             UnlikeFoodScreenSideEffect.NavigateToLastPage -> {
-                navigateToLastLoadingPage()
+                navigateToSpotListView()
             }
         }
     }

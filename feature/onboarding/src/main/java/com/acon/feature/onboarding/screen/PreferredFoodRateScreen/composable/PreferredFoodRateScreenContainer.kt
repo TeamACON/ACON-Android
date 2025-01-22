@@ -17,7 +17,7 @@ fun PreferredFoodRateScreenContainer(
     viewModel: PreferredFoodRateScreenViewModel = hiltViewModel(),
     navigateToPreviousPage: () -> Unit = {},
     navigateToNextPage: () -> Unit = {},
-    navigateToLastLoadingPage: () -> Unit = {}
+    navigateToSpotListView: () -> Unit = {}
 ){
     val state = viewModel.collectAsState().value
 
@@ -40,7 +40,7 @@ fun PreferredFoodRateScreenContainer(
                 navigateToPreviousPage()
             }
             RatePreferFoodScreenSideEffect.NavigateToLastPage -> {
-                navigateToLastLoadingPage()
+                navigateToSpotListView()
             }
         }
     }
