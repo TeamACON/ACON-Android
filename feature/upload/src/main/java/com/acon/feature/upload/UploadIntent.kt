@@ -13,4 +13,10 @@ sealed interface UploadIntent {
         val latitude: Double,
         val longitude: Double
     ) : UploadIntent
+    data class VerifyLocation(
+        val spotId: Long,
+        val latitude: Double,
+        val longitude: Double
+    ) : UploadIntent
+    data object ResetVerification : UploadIntent
 }
