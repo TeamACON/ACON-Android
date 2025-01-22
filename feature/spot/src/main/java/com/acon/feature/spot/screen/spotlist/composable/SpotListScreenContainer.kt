@@ -17,7 +17,7 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 @Composable
 fun SpotListScreenContainer(
     modifier: Modifier = Modifier,
-    onNavigateToSpotDetailScreen: (id: Int) -> Unit = {},
+    onNavigateToSpotDetailScreen: (id: Long) -> Unit = {},
     viewModel: SpotListViewModel = hiltViewModel()
 ) {
 

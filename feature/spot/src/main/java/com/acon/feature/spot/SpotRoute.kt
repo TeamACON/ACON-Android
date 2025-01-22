@@ -11,5 +11,5 @@ interface SpotRoute {
     data object SpotList : SpotRoute
 
     @Serializable
-    data class SpotDetail(val id: Int) : SpotRoute
+    data class SpotDetail(val id: Long) : SpotRoute
 }

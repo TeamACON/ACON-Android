@@ -12,7 +12,7 @@ data class SpotListResponse(
 
 @Serializable
 data class SpotResponse(
-    @SerialName("id") val id: Int,
+    @SerialName("id") val id: Long,
     @SerialName("image") val image: String,
     @SerialName("matchingRate") val matchingRate: Int,
     @SerialName("type") val type: SpotType,
