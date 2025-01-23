@@ -17,6 +17,10 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -37,7 +41,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.acon.core.designsystem.blur.LocalHazeState
 import com.acon.core.designsystem.component.button.AconFilledLargeButton
 import com.acon.core.designsystem.component.dialog.AconTwoButtonDialog
-import com.acon.core.designsystem.component.snackbar.AconTextSnackBar
 import com.acon.core.designsystem.component.topbar.AconTopBar
 import com.acon.core.designsystem.theme.AconTheme
 import com.acon.feature.upload.component.DotoriIndicator
@@ -56,6 +59,7 @@ fun UploadContainer(
     onNavigateToSuccess: () -> Unit
 ) {
     val state by viewModel.container.stateFlow.collectAsStateWithLifecycle()
+    val snackbarHostState = remember { SnackbarHostState() }
 
     LaunchedEffect(Unit) {
         viewModel.container.sideEffectFlow.collect { effect ->
@@ -71,37 +75,47 @@ fun UploadContainer(
         }
     }
 
-
-    Box(
-        modifier = modifier
-            .fillMaxSize()
-            .background(color = AconTheme.color.Gray9)
-    ) {
-        when (state.currentStep) {
-            UploadStep.UPLOAD_SEARCH -> {
-                UploadSearchScreen(
-                    modifier = Modifier.fillMaxSize(),
-                    state = state,
-                    onIntent = viewModel::onIntent
-                )
-            }
-
-            UploadStep.UPLOAD_REVIEW -> {
-                UploadReviewScreen(
-                    modifier = Modifier.fillMaxSize(),
-                    state = state,
-                    onIntent = viewModel::onIntent
-                )
-            }
-        }
-
+    LaunchedEffect(state.showInsufficientDotoriSnackbar) {
         if (state.showInsufficientDotoriSnackbar) {
+            snackbarHostState.showSnackbar(
+                message = "도토리가 부족해요!",
+                duration = SnackbarDuration.Short
+            )
+        }
+    }
+
+    Scaffold(
+        snackbarHost = {
             Box(
-                modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .padding(bottom = 20.dp)
+                modifier = Modifier.padding(bottom = 112.dp)
             ) {
-                AconTextSnackBar(message = "도토리가 부족해요!")
+                SnackbarHost(hostState = snackbarHostState)
+            }
+        },
+        modifier = modifier
+    ) { paddingValues ->
+        Box(
+            modifier = modifier
+                .fillMaxSize()
+                .background(color = AconTheme.color.Gray9)
+                .padding(paddingValues)
+        ) {
+            when (state.currentStep) {
+                UploadStep.UPLOAD_SEARCH -> {
+                    UploadSearchScreen(
+                        modifier = Modifier.fillMaxSize(),
+                        state = state,
+                        onIntent = viewModel::onIntent
+                    )
+                }
+
+                UploadStep.UPLOAD_REVIEW -> {
+                    UploadReviewScreen(
+                        modifier = Modifier.fillMaxSize(),
+                        state = state,
+                        onIntent = viewModel::onIntent
+                    )
+                }
             }
         }
     }
