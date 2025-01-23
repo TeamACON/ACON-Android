@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Surface
@@ -251,6 +252,7 @@ internal fun SpotDetailScreen(
                     SkeletonItem(
                         modifier = Modifier
                             .fillMaxWidth()
+                            .clip(RoundedCornerShape(4.dp))
                             .aspectRatio(254f / 30f)
                             .padding(start = 16.dp, end = 90.dp)
                     )
@@ -260,6 +262,54 @@ internal fun SpotDetailScreen(
                             .fillMaxWidth()
                             .aspectRatio(360f / 296f)
                     )
+                    SkeletonItem(
+                        modifier = Modifier
+                            .padding(start = 16.dp, top = 20.dp)
+                            .clip(RoundedCornerShape(4.dp))
+                            .size(width = 64.dp, height = 28.dp)
+                    )
+                    SkeletonItem(
+                        modifier = Modifier
+                            .padding(start = 16.dp, top = 12.dp)
+                            .clip(RoundedCornerShape(4.dp))
+                            .size(width = 180.dp, height = 20.dp)
+                    )
+                    SkeletonItem(
+                        modifier = Modifier
+                            .padding(start = 16.dp, top = 40.dp)
+                            .clip(RoundedCornerShape(4.dp))
+                            .size(width = 64.dp, height = 38.dp)
+                    )
+                    repeat(8) {
+                        Row (
+                            modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 16.dp)
+                        ) {
+                            Column(
+                                modifier = Modifier
+                                    .padding(vertical = 30.dp)
+                                    .weight(1f)
+                            ) {
+                                SkeletonItem(
+                                    modifier = Modifier
+                                        .clip(RoundedCornerShape(4.dp))
+                                        .size(width = 58.dp, height = 22.dp)
+                                )
+                                SkeletonItem(
+                                    modifier = Modifier
+                                        .padding(top = 4.dp)
+                                        .clip(RoundedCornerShape(4.dp))
+                                        .size(width = 121.dp, height = 24.dp)
+                                )
+                            }
+                            SkeletonItem(
+                                modifier = Modifier
+                                    .padding(vertical = 16.dp)
+                                    .clip(RoundedCornerShape(6.dp))
+                                    .size(78.dp)
+                            )
+                        }
+                    }
+
 
                 }
 
@@ -302,9 +352,10 @@ private fun SpotDetailScreenPreview() {
 @Composable
 private fun SpotDetailLoadingScreenPreview() {
     AconTheme {
-//        SpotDetailScreen(
-//            state = SpotDetailUiState.Success(SpotDetailInfo(), SpotDetailMenu()),
-//            onNavigateToSpotListScreen = {}
-//        )
+        SpotDetailScreen(
+            state = SpotDetailUiState.Loading,
+            onNavigateToSpotListView = {},
+            onFindWayButtonClick = {}
+        )
     }
 }
