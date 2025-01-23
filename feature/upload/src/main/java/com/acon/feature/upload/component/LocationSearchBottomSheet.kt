@@ -3,13 +3,11 @@ package com.acon.feature.upload.component
 import android.location.Location
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -61,25 +59,6 @@ fun LocationSearchBottomSheet(
     var currentLocation by remember { mutableStateOf<Location?>(null) }
     var showVerificationFailDialog by remember { mutableStateOf(false) }
 
-    val handleChipSelection = { suggestion: SpotListItem ->
-        searchText = suggestion.name
-        currentLocation?.let { location ->
-            viewModel.onIntent(
-                UploadIntent.VerifyLocation(
-                    spotId = suggestion.spotId,
-                    latitude = location.latitude,
-                    longitude = location.longitude
-                )
-            )
-        }
-        if (state.isLocationVerified) {
-            viewModel.onIntent(UploadIntent.SelectLocation(suggestion))
-            onLocationSelected(suggestion)
-            onDismiss()
-        }
-    }
-
-
     LaunchedEffect(state.locationVerificationResult) {
         if (state.locationVerificationResult == false) {
             showVerificationFailDialog = true
@@ -110,6 +89,9 @@ fun LocationSearchBottomSheet(
     }
 
     LaunchedEffect(searchText) {
+        if (searchText.isEmpty()) {
+            return@LaunchedEffect
+        }
         viewModel.searchFlow.emit(searchText)
     }
 
@@ -136,7 +118,6 @@ fun LocationSearchBottomSheet(
                 blurRadius = 20.dp
             )
     ) {
-
         Box(
             modifier = Modifier
                 .padding(vertical = 4.dp)
@@ -180,6 +161,7 @@ fun LocationSearchBottomSheet(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
+                .weight(1f)
                 .padding(top = 16.dp)
                 .padding(horizontal = 20.dp)
         ) {
@@ -211,14 +193,39 @@ fun LocationSearchBottomSheet(
                 }
 
                 state.isLoading -> {
-                    LoadingScreen()
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        CircularProgressIndicator(color = AconTheme.color.White)
+                    }
                 }
 
-                !state.isLoading && searchText.isNotEmpty() && state.searchResults.isEmpty() -> {
-                    NoResultsScreen()
+                !state.isLoading && state.searchResults.isEmpty() -> {
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            Image(
+                                imageVector = ImageVector.vectorResource(id = R.drawable.ic_no_location),
+                                contentDescription = null,
+                            )
+
+                            Spacer(modifier = Modifier.padding(top = 16.dp))
+                            Text(
+                                text = "앗! 일치하는 장소가 없어요.",
+                                style = AconTheme.typography.body2_14_reg,
+                                color = AconTheme.color.Gray4
+                            )
+                        }
+                    }
                 }
 
-                searchText.isNotEmpty() -> {
+                else -> {
                     LazyColumn {
                         items(state.searchResults.size) { index ->
                             LocationItem(
@@ -247,39 +254,3 @@ fun LocationSearchBottomSheet(
         }
     }
 }
-
-@Composable
-private fun NoResultsScreen() {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            Image(
-                imageVector = ImageVector.vectorResource(id = R.drawable.ic_no_location),
-                contentDescription = null,
-            )
-
-            Spacer(modifier = Modifier.padding(top = 16.dp))
-            Text(
-                text = "앗! 일치하는 장소가 없어요.",
-                style = AconTheme.typography.body2_14_reg,
-                color = AconTheme.color.Gray4
-            )
-        }
-    }
-}
-
-@Composable
-private fun LoadingScreen() {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        CircularProgressIndicator(color = AconTheme.color.White)
-    }
-}
-
