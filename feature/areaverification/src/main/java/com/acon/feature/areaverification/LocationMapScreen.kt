@@ -44,7 +44,7 @@ fun LocationMapScreen(
         naverMap?.let { map ->
             val cameraUpdate = CameraUpdate.scrollAndZoomTo(
                 LatLng(initialLatitude, initialLongitude),
-                15.0
+                20.0
             )
             map.moveCamera(cameraUpdate)
             createCustomMarker(map, initialLatitude, initialLongitude)
