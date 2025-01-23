@@ -137,7 +137,7 @@ fun PrefResultLoadingScreen(
                     )
                     LottieAnimation(
                         composition = composition,
-                        iterations = LottieConstants.IterateForever,
+                        iterations = 1,
                         modifier = Modifier
                             .padding(vertical = 40.dp)
                             .aspectRatio(1.5f),

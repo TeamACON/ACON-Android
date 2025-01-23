@@ -172,16 +172,5 @@ fun PreviewFoodGrid() {
             isNothingClicked = false,
             selectedCard = selectedCard.value
         )
-
-//        FoodGrid(
-//            columnSize = 3,
-//            foodItems = FoodTypeItems.entries.toTypedArray(),
-//            onCardClicked = {
-//                if(selectedCard.value.contains(it)) selectedCard.value -= it
-//                else selectedCard.value += it
-//            },
-//            isNothingClicked = false,
-//            selectedCard = selectedCard.value
-//        )
     }
 }
