@@ -38,23 +38,40 @@ class UploadViewModel @Inject constructor(
             .distinctUntilChanged()
             .onEach { keyword ->
                 if (keyword.isEmpty()) {
-                    reduce { state.copy(searchResults = persistentListOf()) }
+                    reduce {
+                        state.copy(
+                            searchResults = persistentListOf(),
+                            isLoading = false
+                        )
+                    }
                 } else {
+                    reduce {
+                        state.copy(
+                            searchResults = persistentListOf(),
+                            isLoading = true
+                        )
+                    }
                     uploadRepository.getKeyWord(keyword)
                         .onSuccess { keyWord ->
                             reduce {
-                                state.copy(searchResults = keyWord.spotList.toPersistentList())
+                                state.copy(
+                                    searchResults = keyWord.spotList.toPersistentList(),
+                                    isLoading = false
+                                )
                             }
                         }
                         .onFailure {
-                            //timber
-                            reduce { state.copy(searchResults = persistentListOf()) }
+                            reduce {
+                                state.copy(
+                                    searchResults = persistentListOf(),
+                                    isLoading = false
+                                )
+                            }
                         }
                 }
             }
             .launchIn(viewModelScope)
     }
-
 
     fun onIntent(intent: UploadIntent) {
         when (intent) {
@@ -95,10 +112,14 @@ class UploadViewModel @Inject constructor(
 
     private fun selectDotori(index: Int) = intent {
         if (index >= state.selectedCount && index < state.maxCount) {
-            reduce {
-                state.copy(animatingIndex = null)
+            if (state.ownedDotoriCount < index + 1) {
+                reduce { state.copy(showInsufficientDotoriSnackbar = true) }
+                delay(2000)
+                reduce { state.copy(showInsufficientDotoriSnackbar = false) }
+                return@intent
             }
 
+            reduce { state.copy(animatingIndex = null) }
             delay(50)
             reduce {
                 state.copy(

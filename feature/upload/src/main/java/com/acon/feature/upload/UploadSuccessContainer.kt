@@ -17,6 +17,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
@@ -30,6 +33,9 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.acon.core.designsystem.component.button.AconFilledLargeButton
 import com.acon.core.designsystem.component.topbar.AconTopBar
 import com.acon.core.designsystem.theme.AconTheme
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.rememberLottieComposition
 import kotlinx.coroutines.delay
 
 @Composable
@@ -55,8 +61,13 @@ fun UploadSuccessScreen(
     state: UploadState,
     onNavigateToSpotList: () -> Unit
 ) {
+    var countdown by remember { mutableIntStateOf(5) }
+
     LaunchedEffect(Unit) {
-        delay(5000)
+        while (countdown > 0) {
+            delay(1000)
+            countdown--
+        }
         onNavigateToSpotList()
     }
 
@@ -118,16 +129,18 @@ fun UploadSuccessScreen(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .aspectRatio(0.85f)
-                    .background(Color(0xFF2F2E2E)),
+                    .aspectRatio(0.85f),
                 contentAlignment = Alignment.Center
             ) {
-                Image(
-                    imageVector = ImageVector.vectorResource(id = R.drawable.img_upload_finish),
-                    contentDescription = null,
+                LottieAnimation(
+                    composition = rememberLottieComposition(
+                        spec = LottieCompositionSpec.RawRes(R.raw.upload_success)
+                    ).value,
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .scale(1.2f)
+                        .fillMaxSize()
+                        .scale(1.2f),
+                    iterations = 1,
+                    isPlaying = true
                 )
             }
 
@@ -136,7 +149,7 @@ fun UploadSuccessScreen(
                 modifier = Modifier.padding(horizontal = 20.dp)
             ) {
                 Text(
-                    text = "5초 후 자동으로 닫힙니다.",
+                    text = "${countdown}초 후 자동으로 닫힙니다.",
                     style = AconTheme.typography.body3_13_reg,
                     color = AconTheme.color.Gray3,
                     textAlign = TextAlign.Center,
@@ -158,4 +171,3 @@ fun UploadSuccessScreen(
         }
     }
 }
-

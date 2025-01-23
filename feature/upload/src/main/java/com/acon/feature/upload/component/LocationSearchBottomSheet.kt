@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -59,6 +60,25 @@ fun LocationSearchBottomSheet(
     val state by viewModel.container.stateFlow.collectAsStateWithLifecycle()
     var currentLocation by remember { mutableStateOf<Location?>(null) }
     var showVerificationFailDialog by remember { mutableStateOf(false) }
+
+    val handleChipSelection = { suggestion: SpotListItem ->
+        searchText = suggestion.name
+        currentLocation?.let { location ->
+            viewModel.onIntent(
+                UploadIntent.VerifyLocation(
+                    spotId = suggestion.spotId,
+                    latitude = location.latitude,
+                    longitude = location.longitude
+                )
+            )
+        }
+        if (state.isLocationVerified) {
+            viewModel.onIntent(UploadIntent.SelectLocation(suggestion))
+            onLocationSelected(suggestion)
+            onDismiss()
+        }
+    }
+
 
     LaunchedEffect(state.locationVerificationResult) {
         if (state.locationVerificationResult == false) {
@@ -116,6 +136,18 @@ fun LocationSearchBottomSheet(
                 blurRadius = 20.dp
             )
     ) {
+
+        Box(
+            modifier = Modifier
+                .padding(vertical = 4.dp)
+                .align(Alignment.CenterHorizontally)
+                .size(width = 36.dp, height = 5.dp)
+                .background(
+                    color = AconTheme.color.Gray5,
+                    shape = RoundedCornerShape(2.dp)
+                )
+        )
+
         Box(
             modifier = Modifier
                 .padding(vertical = 4.dp)
@@ -124,42 +156,16 @@ fun LocationSearchBottomSheet(
         )
 
         Spacer(modifier = Modifier.padding(top = 12.dp))
-        Row(
+
+        Text(
+            text = "장소등록",
+            style = AconTheme.typography.head8_16_sb,
+            color = AconTheme.color.White,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Box(
-                modifier = Modifier.weight(1f)
-            ) {
-                // Empty space for left side
-            }
-
-            Text(
-                text = "장소등록",
-                style = AconTheme.typography.head8_16_sb,
-                color = AconTheme.color.White,
-            )
-
-            Box(
-                modifier = Modifier.weight(1f),
-                contentAlignment = Alignment.CenterEnd
-            ) {
-                Text(
-                    text = "완료",
-                    style = AconTheme.typography.body2_14_reg,
-                    color = AconTheme.color.Gray5,
-                    modifier = Modifier
-                        .clickable {
-                            onDismiss()
-                            state.selectedLocation?.let { onLocationSelected(it) }
-                        }
-                        .padding(end = 28.dp)
-                )
-            }
-        }
+                .padding(horizontal = 20.dp),
+            textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+        )
 
         Spacer(modifier = Modifier.padding(top = 30.dp))
 
@@ -189,15 +195,26 @@ fun LocationSearchBottomSheet(
                                 title = suggestion.spotName,
                                 isSelected = false,
                                 onClick = {
-                                    searchText = suggestion.spotName
-                                    focusRequester.requestFocus()
+                                    val spotItem = SpotListItem(
+                                        spotId = suggestion.spotId,
+                                        name = suggestion.spotName,
+                                        address = "",
+                                        spotType = ""
+                                    )
+                                    viewModel.onIntent(UploadIntent.SelectLocation(spotItem))
+                                    onLocationSelected(spotItem)
+                                    onDismiss()
                                 }
                             )
                         }
                     }
                 }
 
-                searchText.isNotEmpty() && state.searchResults.isEmpty() -> {
+                state.isLoading -> {
+                    LoadingScreen()
+                }
+
+                !state.isLoading && searchText.isNotEmpty() && state.searchResults.isEmpty() -> {
                     NoResultsScreen()
                 }
 
@@ -253,6 +270,16 @@ private fun NoResultsScreen() {
                 color = AconTheme.color.Gray4
             )
         }
+    }
+}
+
+@Composable
+private fun LoadingScreen() {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        CircularProgressIndicator(color = AconTheme.color.White)
     }
 }
 

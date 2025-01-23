@@ -17,5 +17,7 @@ data class UploadState(
     val searchResults: PersistentList<SpotListItem> = persistentListOf(),
     val suggestions: PersistentList<Suggestion> = persistentListOf(),
     val isLocationVerified: Boolean = false,
-    val locationVerificationResult: Boolean? = null
+    val locationVerificationResult: Boolean? = null,
+    val showInsufficientDotoriSnackbar: Boolean = false,
+    val isLoading: Boolean = false
 )
