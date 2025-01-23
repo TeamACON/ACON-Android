@@ -147,8 +147,8 @@ internal fun SpotListScreen(
                     ) {
                         Column {
                             Text(
-                                text = stringResource(R.string.spot_name),
-                                style = AconTheme.typography.title2_20_b,
+                                text = state.legalAddressName,
+                                style = AconTheme.typography.head5_22_sb,
                                 color = AconTheme.color.White,
                                 modifier = Modifier
                                     .fillMaxWidth()
@@ -258,7 +258,7 @@ internal fun SpotListScreen(
                                                 }
                                             }
                                         }
-                                        .padding(10.dp)
+                                        .padding(12.dp)
                                 )
                             }
                         }
@@ -275,14 +275,14 @@ internal fun SpotListScreen(
                 ) {
                     Spacer(modifier = Modifier.height(44.dp))
                     Text(
-                        text = stringResource(R.string.spot_name),
-                        style = AconTheme.typography.title2_20_b,
+                        text = "",
+                        style = AconTheme.typography.head5_22_sb,
                         color = AconTheme.color.White,
                         modifier = Modifier.padding(vertical = 14.dp)
                     )
                     Text(
                         text = stringResource(R.string.spot_recommendation_description),
-                        style = AconTheme.typography.head7_18_sb,
+                        style = AconTheme.typography.head6_20_sb,
                         color = AconTheme.color.White,
                         modifier = Modifier.padding(top = 16.dp)
                     )
@@ -319,7 +319,7 @@ internal fun SpotListScreen(
 @Composable
 private fun SpotListScreenPreview() {
     SpotListScreen(
-        state = SpotListUiState.Success(emptyList())
+        state = SpotListUiState.Success(emptyList(), "법정동")
     )
 }
 
