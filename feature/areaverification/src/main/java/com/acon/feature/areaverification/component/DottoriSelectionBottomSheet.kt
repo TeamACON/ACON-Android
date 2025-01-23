@@ -14,10 +14,14 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.SheetState
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -30,11 +34,14 @@ import com.acon.core.designsystem.blur.defaultHazeEffect
 import com.acon.core.designsystem.component.button.AconFilledLargeButton
 import com.acon.core.designsystem.theme.AconTheme
 import com.acon.feature.areaverification.R
+import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DottoriSelectionBottomSheet(
     onDismiss: () -> Unit,
     onNavigateToNext: () -> Unit,
+    sheetState: SheetState,
     modifier: Modifier = Modifier
 ) {
     Box(
@@ -46,13 +53,7 @@ fun DottoriSelectionBottomSheet(
             modifier = Modifier
                 .fillMaxSize()
                 .clip(RoundedCornerShape(topStart = 10.dp, topEnd = 10.dp))
-                .background(AconTheme.color.Gray9.copy(alpha = 0.5f))
-                .defaultHazeEffect(
-                    hazeState = LocalHazeState.current,
-                    tintColor = AconTheme.color.Gray8,
-                    alpha = 0.7f,
-                    blurRadius = 20.dp
-                )
+                .background(AconTheme.color.Gray9)
         ) {
             Box(
                 modifier = Modifier
@@ -128,10 +129,7 @@ fun DottoriSelectionBottomSheet(
             enabledBackgroundColor = AconTheme.color.Gray5,
             disabledBackgroundColor = AconTheme.color.Gray8,
             enabledTextColor = AconTheme.color.White,
-            onClick = {
-                onDismiss()
-                onNavigateToNext()
-            },
+            onClick = onNavigateToNext,
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .fillMaxWidth()

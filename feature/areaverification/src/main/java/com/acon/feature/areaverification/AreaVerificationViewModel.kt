@@ -13,7 +13,9 @@ class AreaVerificationViewModel @Inject constructor(
 ) : ViewModel(),
     ContainerHost<AreaVerificationState, AreaVerificationSideEffect> {
 
-    override val container = container<AreaVerificationState, AreaVerificationSideEffect>(AreaVerificationState())
+    override val container = container<AreaVerificationState, AreaVerificationSideEffect>(
+        AreaVerificationState(isNewLocationSelected = true)
+    )
 
     fun onNewLocationSelected() = intent {
         reduce {
@@ -29,7 +31,12 @@ class AreaVerificationViewModel @Inject constructor(
 
     fun onNextButtonClick() = intent {
         if (state.isNewLocationSelected) {
-            postSideEffect(AreaVerificationSideEffect.NavigateToNextScreen(state.latitude, state.longitude))
+            postSideEffect(
+                AreaVerificationSideEffect.NavigateToNextScreen(
+                    state.latitude,
+                    state.longitude
+                )
+            )
         }
     }
 
@@ -42,7 +49,12 @@ class AreaVerificationViewModel @Inject constructor(
 
     fun checkLocationAndNavigate() = intent {
         if (state.isLocationObtained) {
-            postSideEffect(AreaVerificationSideEffect.NavigateToNewArea(state.latitude, state.longitude))
+            postSideEffect(
+                AreaVerificationSideEffect.NavigateToNewArea(
+                    state.latitude,
+                    state.longitude
+                )
+            )
         }
     }
 

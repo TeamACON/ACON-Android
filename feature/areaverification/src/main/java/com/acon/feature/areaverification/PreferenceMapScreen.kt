@@ -19,6 +19,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -28,11 +29,14 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.acon.core.designsystem.blur.LocalHazeState
 import com.acon.core.designsystem.component.button.AconFilledLargeButton
 import com.acon.core.designsystem.component.dialog.AconTwoButtonDialog
 import com.acon.core.designsystem.component.topbar.AconTopBar
 import com.acon.core.designsystem.theme.AconTheme
 import com.acon.feature.areaverification.component.DottoriSelectionBottomSheet
+import dev.chrisbanes.haze.hazeSource
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -45,24 +49,10 @@ fun PreferenceMapScreen(
     modifier: Modifier = Modifier,
     viewModel: AreaVerificationViewModel = hiltViewModel()
 ) {
-    var showExitDialog by remember { mutableStateOf(false) }
     var currentLatitude by remember { mutableDoubleStateOf(latitude) }
     var currentLongitude by remember { mutableDoubleStateOf(longitude) }
     val state by viewModel.container.stateFlow.collectAsStateWithLifecycle()
-
-    if (showExitDialog) {
-        AconTwoButtonDialog(
-            title = "동네 인증을 그만둘까요?",
-            content = "동네 인증만이 남아있어요!\n1분 내로 빠르게 끝내실 수 있어요.",
-            leftButtonContent = "그만두기",
-            rightButtonContent = "계속하기",
-            contentImage = com.acon.core.designsystem.R.drawable.ic_review_g_40,
-            onDismissRequest = { showExitDialog = false },
-            onClickLeft = onBackClick,
-            onClickRight = { showExitDialog = false },
-            isImageEnabled = false
-        )
-    }
+    val scope = rememberCoroutineScope()
 
     if (state.verifiedArea != null)  {
         val sheetState = rememberModalBottomSheetState(
@@ -77,7 +67,14 @@ fun PreferenceMapScreen(
         ) {
             DottoriSelectionBottomSheet(
                 onDismiss = { viewModel.resetVerifiedArea() },
-                onNavigateToNext = onNavigateToNext
+                onNavigateToNext = {
+                    scope.launch {
+                        sheetState.hide()
+                        viewModel.resetVerifiedArea()
+                        onNavigateToNext()
+                    }
+                },
+                sheetState = sheetState
             )
         }
     }
@@ -91,9 +88,7 @@ fun PreferenceMapScreen(
     ) {
         AconTopBar(
             leadingIcon = {
-                IconButton(
-                    onClick = { showExitDialog = true }
-                ) {
+                IconButton(onClick = onBackClick){
                     Image(
                         imageVector = ImageVector.vectorResource(
                             id = com.acon.core.designsystem.R.drawable.ic_arrow_left_28
@@ -115,6 +110,7 @@ fun PreferenceMapScreen(
         Box(
             modifier = Modifier
                 .weight(1f)
+                .hazeSource(LocalHazeState.current)
                 .fillMaxWidth()
         ) {
             LocationMapScreen(

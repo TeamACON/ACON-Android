@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -35,6 +36,7 @@ fun AreaVerificationButton(
     ) {
         Row(
             horizontalArrangement = Arrangement.Start,
+            verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.fillMaxWidth()
         ) {
             AconRadioButton(
@@ -43,11 +45,18 @@ fun AreaVerificationButton(
                 enabled = isEnabled
             )
             Spacer(modifier = Modifier.width(8.dp))
-            Row {
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
                 Text(
                     text = stringResource(R.string.area_verification_new),
                     style = AconTheme.typography.subtitle1_16_med,
                     color = AconTheme.color.Main_org1
+                )
+                Text(
+                    text = " ",
+                    style = AconTheme.typography.head5_22_sb,
+                    color = AconTheme.color.Gray1
                 )
                 Text(
                     text = stringResource(R.string.area_verification_certify_my_area),
