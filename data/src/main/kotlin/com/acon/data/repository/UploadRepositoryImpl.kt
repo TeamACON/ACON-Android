@@ -1,6 +1,7 @@
 package com.acon.data.repository
 
 import com.acon.data.datasource.remote.UploadRemoteDataSource
+import com.acon.data.error.runCatchingWith
 import com.acon.domain.model.upload.DotoriCount
 import com.acon.domain.model.upload.KeyWord
 import com.acon.domain.model.upload.SpotVerification
@@ -11,18 +12,18 @@ import javax.inject.Inject
 class UploadRepositoryImpl @Inject constructor(
     private val uploadRemoteDataSource: UploadRemoteDataSource
 ) : UploadRepository {
-    override suspend fun getDotoriCount(): Result<DotoriCount> = runCatching {
+    override suspend fun getDotoriCount(): Result<DotoriCount> = runCatchingWith {
         uploadRemoteDataSource.getDotoriCount().toDotoriCount()
     }
 
-    override suspend fun getKeyWord(keyword: String): Result<KeyWord> = runCatching {
+    override suspend fun getKeyWord(keyword: String): Result<KeyWord> = runCatchingWith {
         uploadRemoteDataSource.getKeyWord(keyword).toKeyWord()
     }
 
     override suspend fun getSuggestions(
         latitude: Double,
         longitude: Double
-    ): Result<Suggestions> = runCatching {
+    ): Result<Suggestions> = runCatchingWith {
         uploadRemoteDataSource.getSuggestions(latitude, longitude).toSuggestions()
     }
 
@@ -30,7 +31,7 @@ class UploadRepositoryImpl @Inject constructor(
         spotId: Long,
         latitude: Double,
         longitude: Double
-    ): Result<SpotVerification> = runCatching {
+    ): Result<SpotVerification> = runCatchingWith {
         uploadRemoteDataSource.getVerifySpotLocation(
             spotId = spotId,
             latitude = latitude,
@@ -41,7 +42,7 @@ class UploadRepositoryImpl @Inject constructor(
     override suspend fun postReview(
         spotId: Long,
         acornCount: Int
-    ): Result<Unit> = runCatching {
+    ): Result<Unit> = runCatchingWith {
         uploadRemoteDataSource.postReview(
             spotId = spotId,
             acornCount = acornCount
