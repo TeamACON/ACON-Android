@@ -1,13 +1,17 @@
 package com.acon.data.di
 
+import com.acon.data.repository.AreaVerificationRepositoryImpl
 import com.acon.data.repository.AuthRepositoryImpl
 import com.acon.data.repository.OnboardingRepositoryImpl
 import com.acon.data.repository.SpotRepositoryImpl
+import com.acon.data.repository.UploadRepositoryImpl
+import com.acon.domain.repository.AreaVerificationRepository
 import com.acon.data.repository.TokenRepositoryImpl
 import com.acon.domain.repository.AuthRepository
 import com.acon.domain.repository.OnboardingRepository
 import com.acon.domain.repository.SpotRepository
 import com.acon.domain.repository.TokenRepository
+import com.acon.domain.repository.UploadRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -41,4 +45,16 @@ internal abstract class RepositoryModule {
     abstract fun binsOnboardingRepository(
         impl: OnboardingRepositoryImpl
     ): OnboardingRepository
+
+    @Singleton
+    @Binds
+    abstract fun bindsUploadRepository(
+        impl: UploadRepositoryImpl
+    ): UploadRepository
+
+    @Singleton
+    @Binds
+    abstract fun bindsAreaVerificationRepository(
+        impl: AreaVerificationRepositoryImpl
+    ): AreaVerificationRepository
 }

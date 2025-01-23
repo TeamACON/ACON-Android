@@ -1,7 +1,5 @@
 package com.acon.acon.navigation.nested
 
-import androidx.compose.animation.EnterTransition
-import androidx.compose.animation.ExitTransition
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraphBuilder
@@ -19,13 +17,7 @@ internal fun NavGraphBuilder.spotNavigation(
     navigation<SpotRoute.Graph>(
         startDestination = SpotRoute.SpotList
     ) {
-        composable<SpotRoute.SpotList>(
-            enterTransition = {
-                EnterTransition.None
-            }, exitTransition = {
-                ExitTransition.None
-            }
-        ) {
+        composable<SpotRoute.SpotList>{
             SpotListScreenContainer(
                 modifier = Modifier.fillMaxSize(),
                 onNavigateToSpotDetailScreen = {

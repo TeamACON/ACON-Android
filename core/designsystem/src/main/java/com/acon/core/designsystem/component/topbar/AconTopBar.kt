@@ -1,9 +1,13 @@
 package com.acon.core.designsystem.component.topbar
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Menu
@@ -23,6 +27,7 @@ fun AconTopBar(
     leadingIcon: @Composable () -> Unit = {},
     content: @Composable () -> Unit = {},
     trailingIcon: @Composable () -> Unit = {},
+    isStartAlignment: Boolean = false
 ) {
     Box(
         modifier = modifier
@@ -30,16 +35,33 @@ fun AconTopBar(
             .height(56.dp)
             .padding(horizontal = 16.dp)
     ) {
-        Box(
-            modifier = Modifier.align(Alignment.CenterStart)
-        ) {
-            leadingIcon()
+        if (isStartAlignment) {
+            Row(
+                modifier = Modifier.align(Alignment.CenterStart),
+                horizontalArrangement = Arrangement.Start,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Box {
+                    leadingIcon()
+                }
+                Spacer(modifier = Modifier.width(8.dp))
+                Box {
+                    content()
+                }
+            }
+        } else {
+            Box(
+                modifier = Modifier.align(Alignment.CenterStart)
+            ) {
+                leadingIcon()
+            }
+            Box(
+                modifier = Modifier.align(Alignment.Center)
+            ) {
+                content()
+            }
         }
-        Box(
-            modifier = Modifier.align(Alignment.Center)
-        ) {
-            content()
-        }
+
         Box(
             modifier = Modifier.align(Alignment.CenterEnd)
         ) {
@@ -76,28 +98,19 @@ fun AconTopBarPreview() {
 
 @Preview(showBackground = true)
 @Composable
-fun AconTopBarWithMenuPreview() {
+fun AconTopBarStartAlignmentPreview() {
     AconTopBar(
         leadingIcon = {
             IconButton(onClick = {}) {
                 Icon(
-                    imageVector = Icons.Default.Menu,
-                    contentDescription = "Menu"
+                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                    contentDescription = "Back"
                 )
             }
         },
         content = {
-            Text("리딩만 있는 탑바")
-        }
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun AconTopBarSimplePreview() {
-    AconTopBar(
-        content = {
-            Text("텍스트만 있는 탑바")
-        }
+            Text("왼쪽 정렬 탑바")
+        },
+        isStartAlignment = true
     )
 }
