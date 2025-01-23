@@ -2,6 +2,7 @@ package com.acon.feature.spot.screen.spotlist
 
 import android.location.Location
 import androidx.compose.runtime.Immutable
+import androidx.lifecycle.viewModelScope
 import com.acon.core.utils.feature.base.BaseContainerHost
 import com.acon.domain.model.spot.Condition
 import com.acon.domain.model.spot.Spot
@@ -11,6 +12,7 @@ import com.acon.feature.spot.BuildConfig
 import com.acon.feature.spot.mock.spotListMock
 import com.acon.feature.spot.state.ConditionState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import org.orbitmvi.orbit.annotation.OrbitExperimental
 import org.orbitmvi.orbit.viewmodel.container
@@ -29,69 +31,80 @@ class SpotListViewModel @Inject constructor(
         }
 
     fun fetchInitialSpots(location: Location) = intent {
-        mapRepository.fetchLegalAddressName(
-            latitude = location.latitude,
-            longitude = location.longitude
-        ).onSuccess {
-            println("Legal address: $it")
-        }.onFailure {
-            println("Failed to fetch legal address")
+        val legalAddressNameDeferred = viewModelScope.async {
+            mapRepository.fetchLegalAddressName(
+                latitude = location.latitude,
+                longitude = location.longitude
+            ).getOrNull()
         }
-        spotRepository.fetchSpotList(
-            latitude = location.latitude,
-            longitude = location.longitude,
-            condition = Condition.Default,
-        ).onSuccess {
+
+        val spotListResultDeferred = viewModelScope.async {
+            spotRepository.fetchSpotList(
+                latitude = location.latitude,
+                longitude = location.longitude,
+                condition = Condition.Default,
+            )
+        }
+
+        val legalAddressName = legalAddressNameDeferred.await()
+        val spotListResult = spotListResultDeferred.await()
+
+        if (legalAddressName == null || spotListResult.isFailure)
             reduce {
-                (state as? SpotListUiState.Success)?.copy(spotList = it)
-                    ?: SpotListUiState.Success(it, false)
+                SpotListUiState.LoadFailed
             }
-        }.onFailure {
-            if (BuildConfig.DEBUG.not()) {
+        else {
+            spotListResult.onSuccess {
                 reduce {
-                    SpotListUiState.LoadFailed
-                }
-            } else {
-                delay(1500)
-                reduce {
-                    (state as? SpotListUiState.Success)?.copy(
-                        spotList = spotListMock,
-                        isRefreshing = false
-                    ) ?: SpotListUiState.Success(
-                        spotList = spotListMock,
-                        isRefreshing = false
-                    )
+                    (state as? SpotListUiState.Success)?.copy(spotList = it)
+                        ?: SpotListUiState.Success(
+                            spotList = it,
+                            legalAddressName = legalAddressName,
+                            isRefreshing = false
+                        )
                 }
             }
         }
     }
 
+
     fun onLocationReady(newLocation: Location) = blockingIntent {
         runOn<SpotListUiState.Success> {
-            spotRepository.fetchSpotList(
-                latitude = newLocation.latitude,
-                longitude = newLocation.longitude,
-                condition = state.currentCondition?.toCondition() ?: Condition.Default,
-            ).onSuccess {
+            val legalAddressNameDeferred = viewModelScope.async {
+                mapRepository.fetchLegalAddressName(
+                    latitude = newLocation.latitude,
+                    longitude = newLocation.longitude
+                ).getOrNull()
+            }
+
+            val spotListResultDeferred = viewModelScope.async {
+                spotRepository.fetchSpotList(
+                    latitude = newLocation.latitude,
+                    longitude = newLocation.longitude,
+                    condition = state.currentCondition?.toCondition() ?: Condition.Default,
+                )
+            }
+
+            val legalAddressName = legalAddressNameDeferred.await()
+            val spotListResult = spotListResultDeferred.await()
+
+            if (legalAddressName == null || spotListResult.isFailure)
                 reduce {
-                    (state as? SpotListUiState.Success)?.copy(spotList = it, isRefreshing = false)
-                        ?: SpotListUiState.Success(it, false)
+                    SpotListUiState.LoadFailed
                 }
-            }.onFailure {
-                if (BuildConfig.DEBUG.not()) {
-                    reduce {
-                        SpotListUiState.LoadFailed
-                    }
-                } else {
-                    delay(1500)
+            else {
+                spotListResult.onSuccess {
                     reduce {
                         (state as? SpotListUiState.Success)?.copy(
-                            spotList = spotListMock.shuffled(),
-                            isRefreshing = false
-                        ) ?: SpotListUiState.Success(
-                            spotList = spotListMock,
-                            isRefreshing = false
+                            spotList = it,
+                            isRefreshing = false,
+                            legalAddressName = legalAddressName
                         )
+                            ?: SpotListUiState.Success(
+                                spotList = it,
+                                legalAddressName = legalAddressName,
+                                isRefreshing = false
+                            )
                     }
                 }
             }
@@ -124,19 +137,21 @@ class SpotListViewModel @Inject constructor(
         }
     }
 
-    fun onCompleteFilter(location: Location, condition: ConditionState, proceed: () -> Unit) = intent {
-        runOn<SpotListUiState.Success> {
-            reduce {
-                state.copy(isFilteredResultFetching = true, currentCondition = condition)
-            }
-            onLocationReady(location)
-            reduce {
-                state.copy(isFilteredResultFetching = false, showFilterBottomSheet = false).also {
-                    proceed()
+    fun onCompleteFilter(location: Location, condition: ConditionState, proceed: () -> Unit) =
+        intent {
+            runOn<SpotListUiState.Success> {
+                reduce {
+                    state.copy(isFilteredResultFetching = true, currentCondition = condition)
+                }
+                onLocationReady(location)
+                reduce {
+                    state.copy(isFilteredResultFetching = false, showFilterBottomSheet = false)
+                        .also {
+                            proceed()
+                        }
                 }
             }
         }
-    }
 
     fun onSpotItemClick(id: Long) = intent {
         postSideEffect(SpotListSideEffect.NavigateToSpotDetail(id))
@@ -147,13 +162,15 @@ sealed interface SpotListUiState {
     @Immutable
     data class Success(
         val spotList: List<Spot>,
+        val legalAddressName: String,
         val isRefreshing: Boolean = false,
         val currentCondition: ConditionState? = null,
         val showFilterBottomSheet: Boolean = false,
-        val isFilteredResultFetching: Boolean = false
+        val isFilteredResultFetching: Boolean = false,
     ) : SpotListUiState
+
     data object Loading : SpotListUiState
-    data object LoadFailed: SpotListUiState
+    data object LoadFailed : SpotListUiState
 }
 
 sealed interface SpotListSideEffect {

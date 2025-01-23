@@ -35,7 +35,7 @@ fun ProfileScreen(
     ) {
 
         Text(
-            text = "동네 이름", // TODO 법정동 동네 이름
+            text = "", // TODO 법정동 동네 이름
             style = AconTheme.typography.head5_22_sb,
             color = AconTheme.color.White,
             modifier = Modifier.padding(start = 20.dp)

@@ -147,7 +147,7 @@ internal fun SpotListScreen(
                     ) {
                         Column {
                             Text(
-                                text = stringResource(R.string.spot_name),
+                                text = state.legalAddressName,
                                 style = AconTheme.typography.head5_22_sb,
                                 color = AconTheme.color.White,
                                 modifier = Modifier
@@ -275,7 +275,7 @@ internal fun SpotListScreen(
                 ) {
                     Spacer(modifier = Modifier.height(44.dp))
                     Text(
-                        text = stringResource(R.string.spot_name),
+                        text = "",
                         style = AconTheme.typography.head5_22_sb,
                         color = AconTheme.color.White,
                         modifier = Modifier.padding(vertical = 14.dp)
@@ -319,7 +319,7 @@ internal fun SpotListScreen(
 @Composable
 private fun SpotListScreenPreview() {
     SpotListScreen(
-        state = SpotListUiState.Success(emptyList())
+        state = SpotListUiState.Success(emptyList(), "법정동")
     )
 }
 
