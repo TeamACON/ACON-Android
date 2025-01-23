@@ -24,6 +24,8 @@ android {
 
         buildConfigField("String", "GOOGLE_CLIENT_ID", "\"${localProperties["GOOGLE_CLIENT_ID"]}\"")
         buildConfigField("String", "BASE_URL", "\"${localProperties["BASE_URL"]}\"")
+        buildConfigField("String", "NAVER_CLIENT_ID", "String.valueOf(\"${localProperties["naver_client_id"]}\")")
+        buildConfigField("String", "NAVER_CLIENT_SECRET", "String.valueOf(\"${localProperties["naver_client_secret"]}\")")
     }
 
     buildTypes {

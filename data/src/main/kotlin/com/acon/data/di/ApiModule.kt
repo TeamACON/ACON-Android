@@ -1,8 +1,10 @@
 package com.acon.data.di
 
 import com.acon.core.common.Auth
+import com.acon.core.common.Naver
 import com.acon.core.common.NoAuth
 import com.acon.data.api.remote.AuthApi
+import com.acon.data.api.remote.MapApi
 import com.acon.data.api.remote.OnboardingApi
 import com.acon.data.api.remote.ReissueTokenApi
 import com.acon.data.api.remote.SpotApi
@@ -45,5 +47,13 @@ internal object ApiModule {
         @NoAuth retrofit: Retrofit
     ): OnboardingApi {
         return retrofit.create(OnboardingApi::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideMapApi(
+        @Naver retrofit: Retrofit
+    ): MapApi {
+        return retrofit.create(MapApi::class.java)
     }
 }

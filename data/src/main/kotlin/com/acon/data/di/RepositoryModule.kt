@@ -1,10 +1,12 @@
 package com.acon.data.di
 
 import com.acon.data.repository.AuthRepositoryImpl
+import com.acon.data.repository.MapRepositoryImpl
 import com.acon.data.repository.OnboardingRepositoryImpl
 import com.acon.data.repository.SpotRepositoryImpl
 import com.acon.data.repository.TokenRepositoryImpl
 import com.acon.domain.repository.AuthRepository
+import com.acon.domain.repository.MapRepository
 import com.acon.domain.repository.OnboardingRepository
 import com.acon.domain.repository.SpotRepository
 import com.acon.domain.repository.TokenRepository
@@ -38,7 +40,13 @@ internal abstract class RepositoryModule {
 
     @Singleton
     @Binds
-    abstract fun binsOnboardingRepository(
+    abstract fun bindsOnboardingRepository(
         impl: OnboardingRepositoryImpl
     ): OnboardingRepository
+
+    @Singleton
+    @Binds
+    abstract fun bindsMapRepository(
+        impl: MapRepositoryImpl
+    ): MapRepository
 }

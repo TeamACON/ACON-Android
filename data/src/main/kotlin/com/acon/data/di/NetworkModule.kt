@@ -2,6 +2,8 @@ package com.acon.data.di
 
 import android.content.Context
 import com.acon.core.common.Auth
+import com.acon.core.common.Naver
+import com.acon.core.common.NaverAuthInterceptor
 import com.acon.core.common.NoAuth
 import com.acon.core.common.ResponseInterceptor
 import com.acon.core.common.TokenInterceptor
@@ -31,6 +33,26 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 internal object NetworkModule {
+
+    @Naver
+    @Singleton
+    @Provides
+    fun provideNaverClient(
+        @NaverAuthInterceptor naverAuthInterceptor: Interceptor,
+    ): OkHttpClient {
+        return OkHttpClient.Builder()
+            .connectTimeout(30, TimeUnit.SECONDS)
+            .readTimeout(30, TimeUnit.SECONDS)
+            .writeTimeout(30, TimeUnit.SECONDS)
+            .apply {
+                if (BuildConfig.DEBUG) {
+                    addInterceptor(HttpLoggingInterceptor().apply {
+                        level = HttpLoggingInterceptor.Level.BODY
+                    })
+                }
+            }.addInterceptor(naverAuthInterceptor)
+            .build()
+    }
 
     @Auth
     @Singleton
@@ -77,6 +99,20 @@ internal object NetworkModule {
             .build()
     }
 
+    @Naver
+    @Singleton
+    @Provides
+    fun provideNaverRetrofit(
+        @Naver client: OkHttpClient
+    ): Retrofit {
+        val json = Json { ignoreUnknownKeys = true }
+        return Retrofit.Builder()
+            .baseUrl("https://naveropenapi.apigw.ntruss.com/")
+            .client(client)
+            .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
+            .build()
+    }
+
     @Auth
     @Singleton
     @Provides
@@ -85,7 +121,7 @@ internal object NetworkModule {
     ): Retrofit {
         val json = Json { ignoreUnknownKeys = true }
         return Retrofit.Builder()
-            .baseUrl("http://13.125.152.141:8080")
+            .baseUrl(BuildConfig.BASE_URL)
             .client(client)
             .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
             .build()
@@ -99,7 +135,7 @@ internal object NetworkModule {
     ): Retrofit {
         val json = Json { ignoreUnknownKeys = true }
         return Retrofit.Builder()
-            .baseUrl("http://13.125.152.141:8080")
+            .baseUrl(BuildConfig.BASE_URL)
             .client(client)
             .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
             .build()
@@ -119,6 +155,19 @@ internal object NetworkModule {
                     .build()
                 chain.proceed(newRequest)
             }
+        }
+    }
+
+    @NaverAuthInterceptor
+    @Provides
+    @Singleton
+    fun provideNaverAuthInterceptor() : Interceptor {
+        return Interceptor { chain: Interceptor.Chain ->
+            val newRequest: Request = chain.request().newBuilder()
+                .addHeader("x-ncp-apigw-api-key-id", BuildConfig.NAVER_CLIENT_ID)
+                .addHeader("x-ncp-apigw-api-key", BuildConfig.NAVER_CLIENT_SECRET)
+                .build()
+            chain.proceed(newRequest)
         }
     }
 

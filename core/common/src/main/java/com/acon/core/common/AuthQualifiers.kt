@@ -12,8 +12,17 @@ annotation class NoAuth
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
+annotation class Naver
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
 annotation class TokenInterceptor
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
 annotation class ResponseInterceptor
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class NaverAuthInterceptor
+

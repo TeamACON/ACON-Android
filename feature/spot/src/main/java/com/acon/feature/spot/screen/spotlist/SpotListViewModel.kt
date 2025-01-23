@@ -5,6 +5,7 @@ import androidx.compose.runtime.Immutable
 import com.acon.core.utils.feature.base.BaseContainerHost
 import com.acon.domain.model.spot.Condition
 import com.acon.domain.model.spot.Spot
+import com.acon.domain.repository.MapRepository
 import com.acon.domain.repository.SpotRepository
 import com.acon.feature.spot.BuildConfig
 import com.acon.feature.spot.mock.spotListMock
@@ -18,7 +19,8 @@ import javax.inject.Inject
 @OptIn(OrbitExperimental::class)
 @HiltViewModel
 class SpotListViewModel @Inject constructor(
-    private val spotRepository: SpotRepository
+    private val spotRepository: SpotRepository,
+    private val mapRepository: MapRepository
 ) : BaseContainerHost<SpotListUiState, SpotListSideEffect>() {
 
     override val container =
@@ -27,6 +29,14 @@ class SpotListViewModel @Inject constructor(
         }
 
     fun fetchInitialSpots(location: Location) = intent {
+        mapRepository.fetchLegalAddressName(
+            latitude = location.latitude,
+            longitude = location.longitude
+        ).onSuccess {
+            println("Legal address: $it")
+        }.onFailure {
+            println("Failed to fetch legal address")
+        }
         spotRepository.fetchSpotList(
             latitude = location.latitude,
             longitude = location.longitude,
