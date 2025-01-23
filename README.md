@@ -5,8 +5,8 @@ acon은 “No more research”라는 슬로건을 가진 지도앱입니다.
 
 | 공세영(Lead) <br> [@0se0](https://github.com/0se0) | 이상일 <br> [@Thirfir](https://github.com/ThirFir) | 김성민 <br> [@1971123-seongmin](https://github.com/1971123-seongmin) | 양지원 <br> [@tunaunnie](https://github.com/tunaunnie) |
 |:---:|:---:|:---:|:---:|
-| <img width="150" src="https://github.com/user-attachments/assets/781d97ec-3348-4ae6-8b51-f9e997e9de20"/> | <img width="150" src="https://github.com/user-attachments/assets/59cbbadc-59b0-4667-ac05-2b5836701492"/> | <img width="150" src="https://github.com/user-attachments/assets/13453d7c-fb38-4ae0-ba40-dc2fa7bbbac3"/> | <img width="150" src="https://github.com/user-attachments/assets/4a9f6470-ea8f-48ab-82df-40e2cb2773b7"/> |
-|  동네인증, 업로드 | 장소탐색 | 로그인, (장소탐색 일부) | 온보딩 (장소탐색 일부) |
+| <img width="150" src="https://github.com/user-attachments/assets/1cbf9cfa-314f-4169-b1a2-67dd4366dfb8"/> | <img width="150" src="https://github.com/user-attachments/assets/92463dfc-1267-4037-8423-9f3478544570"/> | <img width="150" src="https://github.com/user-attachments/assets/a9cacb12-54c2-4113-92a5-c417d3ec0848"/> | <img width="150" src="https://github.com/user-attachments/assets/adedcc15-fbae-444f-a04c-667a03cc32de"/> |
+|  동네인증, 업로드 | 장소탐색 | 로그인, (장소탐색 일부) | 온보딩 |
 
 <br/>
 
