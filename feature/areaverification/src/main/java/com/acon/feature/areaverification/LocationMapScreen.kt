@@ -10,7 +10,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
-import com.acon.core.designsystem.blur.LocalHazeState
 import com.acon.core.map.ProceedWithLocation
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraUpdate
@@ -18,7 +17,6 @@ import com.naver.maps.map.MapView
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.OverlayImage
-import dev.chrisbanes.haze.hazeSource
 
 @Composable
 fun LocationMapScreen(
@@ -86,7 +84,7 @@ fun LocationMapScreen(
                     }
                 }
             },
-            modifier = Modifier.fillMaxSize()
+            modifier = modifier.fillMaxSize()
         )
     }
 }
