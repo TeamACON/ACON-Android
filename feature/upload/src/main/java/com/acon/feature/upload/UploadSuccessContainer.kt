@@ -137,7 +137,7 @@ fun UploadSuccessScreen(
                     ).value,
                     modifier = Modifier
                         .fillMaxSize()
-                        .scale(1.2f),
+                        .scale(1f),
                     iterations = 1,
                     isPlaying = true
                 )
