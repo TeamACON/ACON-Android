@@ -48,9 +48,9 @@ fun LocationSelectionButton(
             )
             Spacer(modifier = Modifier.width(8.dp))
             Text(
-                text = "가게명",
+                text = "가게명 등록하기",
                 style = AconTheme.typography.subtitle1_16_med,
-                color = AconTheme.color.White
+                color = AconTheme.color.Gray5
             )
         }
     } else {
