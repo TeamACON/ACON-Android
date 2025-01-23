@@ -23,7 +23,7 @@ android {
         consumerProguardFiles("consumer-rules.pro")
 
         buildConfigField("String", "GOOGLE_CLIENT_ID", "\"${localProperties["GOOGLE_CLIENT_ID"]}\"")
-        buildConfigField("String", "BASE_URL", "\"${localProperties["BASE_URL"]}\"")
+        buildConfigField("String", "BASE_URL", "\"${localProperties["base.url"]}\"")
     }
 
     buildTypes {

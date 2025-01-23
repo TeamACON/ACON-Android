@@ -44,7 +44,7 @@ internal object ApiModule {
     @Singleton
     @Provides
     fun providesOnboardingApi(
-        @NoAuth retrofit: Retrofit
+        @Auth retrofit: Retrofit
     ): OnboardingApi {
         return retrofit.create(OnboardingApi::class.java)
     }
