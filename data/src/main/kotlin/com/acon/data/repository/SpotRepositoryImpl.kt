@@ -3,8 +3,10 @@ package com.acon.data.repository
 import com.acon.data.datasource.remote.SpotRemoteDataSource
 import com.acon.data.dto.request.ConditionRequest
 import com.acon.data.dto.request.FilterListRequest
+import com.acon.data.dto.request.RecentNavigationLocationRequest
 import com.acon.data.dto.request.SpotListRequest
 import com.acon.data.error.runCatchingWith
+import com.acon.domain.error.spot.FetchRecentNavigationLocationError
 import com.acon.domain.error.spot.FetchSpotListError
 import com.acon.domain.error.spot.GetSpotDetailInfoError
 import com.acon.domain.error.spot.GetSpotMenuListError
@@ -40,6 +42,16 @@ class SpotRepositoryImpl @Inject constructor(
                     ),
                 )
             ).spotList.map { it.toSpot() }
+        }
+    }
+
+    override suspend fun fetchRecentNavigationLocation(
+        spotId: Long,
+    ): Result<Unit> {
+        return runCatchingWith(*FetchRecentNavigationLocationError.createErrorInstances()) {
+            spotRemoteDataSource.fetchRecentNavigationLocation(
+                RecentNavigationLocationRequest(spotId = spotId)
+            )
         }
     }
 

@@ -13,6 +13,10 @@ interface SpotRepository {
         condition: Condition,
     ): Result<List<Spot>>
 
+    suspend fun fetchRecentNavigationLocation(
+        spotId: Long,
+    ): Result<Unit>
+
     suspend fun getSpotDetailInfo(
          spotId: Long,
     ): Result<SpotDetailInfo>
@@ -20,4 +24,5 @@ interface SpotRepository {
     suspend fun getSpotMenuList(
         spotId: Long,
     ): Result<List<SpotDetailMenu>>
+
 }

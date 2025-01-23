@@ -1,5 +1,6 @@
 package com.acon.data.api.remote
 
+import com.acon.data.dto.request.RecentNavigationLocationRequest
 import com.acon.data.dto.request.SpotListRequest
 import com.acon.data.dto.response.SpotDetailInfoResponse
 import com.acon.data.dto.response.SpotDetailMenuListResponse
@@ -15,6 +16,11 @@ interface SpotApi {
     suspend fun fetchSpotList(
         @Body request: SpotListRequest
     ): SpotListResponse
+
+    @POST("/api/v1/member/guided-spot")
+    suspend fun fetchRecentNavigationLocation(
+        @Body request: RecentNavigationLocationRequest
+    )
 
     @GET("/api/v1/spot/{spotId}")
     suspend fun getSpotDetailInfo(

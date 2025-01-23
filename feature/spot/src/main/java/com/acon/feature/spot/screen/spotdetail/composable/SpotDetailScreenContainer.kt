@@ -25,13 +25,9 @@ fun SpotDetailScreenContainer(
     SpotDetailScreen(
         state = state,
         modifier = modifier.fillMaxSize(),
-        onNavigateToSpotListView = {
-            viewModel.navigateToSpotListView()
-        },
+        onNavigateToSpotListView = viewModel::navigateToSpotListView,
         onFindWayButtonClick = { ->
-            context.onLocationReady {
-                viewModel.onFindWay(it)
-            }
+            viewModel.fetchRecentNavigationLocation()
         },
     )
 
@@ -39,6 +35,14 @@ fun SpotDetailScreenContainer(
         when(sideEffect) {
             is SpotDetailSideEffect.NavigateToSpotListView -> {
                 onNavigateToSpotListView()
+            }
+            is SpotDetailSideEffect.RecentLocationFetched -> {
+                context.onLocationReady {
+                    viewModel.onFindWay(it)
+                }
+            }
+            is SpotDetailSideEffect.RecentLocationFetchFailed -> {
+                // TODO -> 최근 길 안내 장소 저장 (실패)
             }
             is SpotDetailSideEffect.OnFindWayButtonClick -> {
                 openNaverMap(

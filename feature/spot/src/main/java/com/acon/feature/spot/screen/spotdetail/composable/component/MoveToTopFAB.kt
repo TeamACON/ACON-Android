@@ -14,7 +14,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.acon.core.designsystem.dropShadow
 import com.acon.core.designsystem.noRippleClickable
 import com.acon.core.designsystem.theme.AconTheme
 
@@ -25,23 +24,6 @@ fun MoveToTopFAB(
 ) {
     Box(
         modifier = modifier
-            .size(48.dp)
-            .background(
-                color = AconTheme.color.Gray7,
-                shape = CircleShape
-            )
-            .border(
-                width = 1.dp,
-                color = AconTheme.color.Gray6,
-                shape = CircleShape
-            )
-            .dropShadow(
-                shape = CircleShape,
-                color = AconTheme.color.Fab_shaodw_1,
-                blur = 4.dp,
-                offsetX = (0).dp,
-                offsetY = 2.dp,
-            )
             .noRippleClickable { onClickFab() }
     ) {
         Image(
