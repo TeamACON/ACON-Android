@@ -6,7 +6,7 @@ import androidx.compose.ui.window.Dialog
 @Composable
 fun AconDialog(
     onDismissRequest: () -> Unit,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     Dialog(
         onDismissRequest = onDismissRequest

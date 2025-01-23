@@ -39,7 +39,7 @@ fun AconTwoButtonDialog(
     isImageEnabled: Boolean = false,
 ) {
     AconDialog(
-        onDismissRequest = onDismissRequest
+        onDismissRequest = onDismissRequest,
     ) {
         Column(
             modifier = Modifier
