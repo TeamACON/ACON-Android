@@ -2,6 +2,7 @@ package com.acon.feature.upload
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -36,6 +37,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.acon.core.designsystem.blur.LocalHazeState
 import com.acon.core.designsystem.component.button.AconFilledLargeButton
 import com.acon.core.designsystem.component.dialog.AconTwoButtonDialog
+import com.acon.core.designsystem.component.snackbar.AconTextSnackBar
 import com.acon.core.designsystem.component.topbar.AconTopBar
 import com.acon.core.designsystem.theme.AconTheme
 import com.acon.feature.upload.component.DotoriIndicator
@@ -69,13 +71,14 @@ fun UploadContainer(
         }
     }
 
+
     Box(
         modifier = modifier
             .fillMaxSize()
             .background(color = AconTheme.color.Gray9)
     ) {
         when (state.currentStep) {
-            UploadStep.Upload_Search -> {
+            UploadStep.UPLOAD_SEARCH -> {
                 UploadSearchScreen(
                     modifier = Modifier.fillMaxSize(),
                     state = state,
@@ -83,12 +86,22 @@ fun UploadContainer(
                 )
             }
 
-            UploadStep.Upload_REVIEW -> {
+            UploadStep.UPLOAD_REVIEW -> {
                 UploadReviewScreen(
                     modifier = Modifier.fillMaxSize(),
                     state = state,
                     onIntent = viewModel::onIntent
                 )
+            }
+        }
+
+        if (state.showInsufficientDotoriSnackbar) {
+            Box(
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .padding(bottom = 20.dp)
+            ) {
+                AconTextSnackBar(message = "도토리가 부족해요!")
             }
         }
     }
@@ -140,7 +153,7 @@ fun UploadSearchScreen(
                     ) {
                         Image(
                             imageVector = ImageVector.vectorResource(
-                                id = com.acon.core.designsystem.R.drawable.ic_dissmiss_24
+                                id = R.drawable.and_ic_dissmiss_28
                             ),
                             contentDescription = "Close",
                         )
@@ -152,6 +165,23 @@ fun UploadSearchScreen(
                         style = AconTheme.typography.head5_22_sb,
                         color = AconTheme.color.White
                     )
+                },
+                trailingIcon = {
+                    Box(
+                        modifier = Modifier.clickable(
+                            enabled = state.selectedLocation != null,
+                            onClick = { onIntent(UploadIntent.OnNextStep) }
+                        )
+                    ) {
+                        Text(
+                            text = "다음",
+                            style = AconTheme.typography.body2_14_reg,
+                            color = if (state.selectedLocation != null)
+                                AconTheme.color.White
+                            else
+                                AconTheme.color.Gray7
+                        )
+                    }
                 }
             )
 
@@ -175,20 +205,6 @@ fun UploadSearchScreen(
             }
 
             Spacer(modifier = Modifier.padding(vertical = 20.dp))
-            if (!showLocationSearch) {
-                AconFilledLargeButton(
-                    text = "이곳에 도토리 남기기",
-                    textStyle = AconTheme.typography.head7_18_sb,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp)
-                        .padding(bottom = 40.dp),
-                    disabledBackgroundColor = AconTheme.color.Gray7,
-                    enabledBackgroundColor = AconTheme.color.Main_org1,
-                    isEnabled = state.selectedLocation != null,
-                    onClick = { onIntent(UploadIntent.OnNextStep) }
-                )
-            }
 
             if (showLocationSearch) {
                 ModalBottomSheet(

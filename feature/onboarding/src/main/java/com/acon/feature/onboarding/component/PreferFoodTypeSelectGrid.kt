@@ -122,6 +122,8 @@ fun FoodTypeCard(
                             contentDescription = "Clicked",
                             modifier = Modifier.size(48.dp)
                         )
+
+
                     }
                 }
 

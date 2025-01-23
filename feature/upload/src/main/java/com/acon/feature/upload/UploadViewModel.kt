@@ -1,16 +1,77 @@
 package com.acon.feature.upload
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.acon.domain.repository.UploadRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toPersistentList
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
 
 @HiltViewModel
-class UploadViewModel @Inject constructor() : ViewModel(),
+class UploadViewModel @Inject constructor(
+    private val uploadRepository: UploadRepository
+) : ViewModel(),
     ContainerHost<UploadState, UploadSideEffect> {
     override val container = container<UploadState, UploadSideEffect>(UploadState())
+
+    val searchFlow = MutableStateFlow("")
+
+    init {
+        getDotoriCount()
+        observeSearch()
+    }
+
+    @OptIn(FlowPreview::class)
+    private fun observeSearch() = intent {
+        searchFlow
+            .debounce(300L)
+            .distinctUntilChanged()
+            .onEach { keyword ->
+                if (keyword.isEmpty()) {
+                    reduce {
+                        state.copy(
+                            searchResults = persistentListOf(),
+                            isLoading = false
+                        )
+                    }
+                } else {
+                    reduce {
+                        state.copy(
+                            searchResults = persistentListOf(),
+                            isLoading = true
+                        )
+                    }
+                    uploadRepository.getKeyWord(keyword)
+                        .onSuccess { keyWord ->
+                            reduce {
+                                state.copy(
+                                    searchResults = keyWord.spotList.toPersistentList(),
+                                    isLoading = false
+                                )
+                            }
+                        }
+                        .onFailure {
+                            reduce {
+                                state.copy(
+                                    searchResults = persistentListOf(),
+                                    isLoading = false
+                                )
+                            }
+                        }
+                }
+            }
+            .launchIn(viewModelScope)
+    }
 
     fun onIntent(intent: UploadIntent) {
         when (intent) {
@@ -20,9 +81,24 @@ class UploadViewModel @Inject constructor() : ViewModel(),
                 }
             }
 
+            is UploadIntent.VerifyLocation -> {
+                verifyLocation(
+                    spotId = intent.spotId,
+                    latitude = intent.latitude,
+                    longitude = intent.longitude
+                )
+            }
+
+            is UploadIntent.ResetVerification -> intent {
+                reduce {
+                    state.copy(locationVerificationResult = null)
+                }
+            }
+
             is UploadIntent.OnNextStep -> {
                 intent {
-                    reduce { state.copy(currentStep = UploadStep.Upload_REVIEW) }
+                    getDotoriCount()
+                    reduce { state.copy(currentStep = UploadStep.UPLOAD_REVIEW) }
                 }
             }
 
@@ -30,15 +106,20 @@ class UploadViewModel @Inject constructor() : ViewModel(),
             is UploadIntent.DeselectDotori -> deselectDotori(intent.index)
             is UploadIntent.NavigateBack -> navigateBack()
             is UploadIntent.UploadDotori -> uploadDotori()
+            is UploadIntent.LoadSuggestions -> loadSuggestions(intent.latitude, intent.longitude)
         }
     }
 
     private fun selectDotori(index: Int) = intent {
         if (index >= state.selectedCount && index < state.maxCount) {
-            reduce {
-                state.copy(animatingIndex = null)
+            if (state.ownedDotoriCount < index + 1) {
+                reduce { state.copy(showInsufficientDotoriSnackbar = true) }
+                delay(2000)
+                reduce { state.copy(showInsufficientDotoriSnackbar = false) }
+                return@intent
             }
 
+            reduce { state.copy(animatingIndex = null) }
             delay(50)
             reduce {
                 state.copy(
@@ -86,8 +167,67 @@ class UploadViewModel @Inject constructor() : ViewModel(),
         }
     }
 
+    private fun getDotoriCount() = intent {
+        uploadRepository.getDotoriCount()
+            .onSuccess { dotoriCount ->
+                reduce {
+                    state.copy(ownedDotoriCount = dotoriCount.count)
+                }
+            }
+            .onFailure {
+                //timber
+            }
+    }
+
+
+    private fun loadSuggestions(latitude: Double, longitude: Double) = intent {
+        uploadRepository.getSuggestions(latitude, longitude)
+            .onSuccess { suggestions ->
+                reduce {
+                    state.copy(suggestions = suggestions.suggestionList.toPersistentList())
+                }
+            }
+            .onFailure {
+                //timber
+                reduce {
+                    state.copy(suggestions = persistentListOf())
+                }
+            }
+    }
+
     private fun uploadDotori() = intent {
-        postSideEffect(UploadSideEffect.NavigateToSuccess)
+        state.selectedLocation?.let { location ->
+            uploadRepository.postReview(
+                spotId = location.spotId,
+                acornCount = state.selectedCount
+            ).onSuccess {
+                postSideEffect(UploadSideEffect.NavigateToSuccess)
+            }.onFailure {
+                //timber
+            }
+        }
+    }
+
+    private fun verifyLocation(spotId: Long, latitude: Double, longitude: Double) = intent {
+        uploadRepository.getVerifySpotLocation(spotId, latitude, longitude)
+            .onSuccess { verification ->
+                reduce {
+                    state.copy(
+                        isLocationVerified = verification.success,
+                        locationVerificationResult = verification.success
+                    )
+                }
+            }
+            .onFailure {
+                //timber
+                reduce {
+                    state.copy(
+                        isLocationVerified = false,
+                        locationVerificationResult = false,
+                        selectedLocation = null
+                    )
+                }
+            }
     }
 
     private fun navigateBack() = intent {

@@ -35,7 +35,7 @@ internal fun NavGraphBuilder.onboardingNavigationNavigation(
         composable<OnboardingRoute.RatePreferFoods> {
              PreferredFoodRateScreenContainer(
                  navigateToPreviousPage = {
-                     navController.navigate(OnboardingRoute.ChooseUnlikeFoods)
+                     navController.popBackStack()
                  },
                  navigateToNextPage = {
                      navController.navigate(OnboardingRoute.SelectFrequentPlace)
@@ -50,7 +50,7 @@ internal fun NavGraphBuilder.onboardingNavigationNavigation(
         composable<OnboardingRoute.SelectFrequentPlace> {
             FrequentPlaceSelectScreenContainer(
                 navigateToPreviousPage = {
-                    navController.navigate(OnboardingRoute.RatePreferFoods)
+                    navController.popBackStack()
                 },
                 navigateToNextPage = {
                     navController.navigate(OnboardingRoute.SelectPreferPlace)
@@ -63,7 +63,7 @@ internal fun NavGraphBuilder.onboardingNavigationNavigation(
         composable<OnboardingRoute.SelectPreferPlace> {
             PreferredPlaceSelectScreenContainer(
                 navigateToPreviousPage = {
-                    navController.navigate(OnboardingRoute.SelectFrequentPlace)
+                    navController.popBackStack()
                 },
                 navigateToNextPage = {
                     navController.navigate(OnboardingRoute.RatePreferPlace)
@@ -76,7 +76,7 @@ internal fun NavGraphBuilder.onboardingNavigationNavigation(
         composable<OnboardingRoute.RatePreferPlace> {
             PreferredPlaceRateScreenContainer(
                  navigateToPreviousPage = {
-                     navController.navigate(OnboardingRoute.SelectPreferPlace)
+                     navController.popBackStack()
                  },
                  navigateToNextPage = {
                      navController.navigate(OnboardingRoute.LastLoading)

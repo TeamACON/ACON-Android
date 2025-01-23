@@ -13,12 +13,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.acon.core.designsystem.theme.AconTheme
-import com.acon.feature.upload.LocationItem
-import com.acon.feature.upload.SpotType
+import com.acon.domain.model.upload.SpotListItem
+import com.acon.domain.type.SpotType
 
 @Composable
 fun LocationItem(
-    locationItem: LocationItem,
+    locationItem: SpotListItem,
     onClick: () -> Unit
 ) {
     Row(
@@ -46,8 +46,9 @@ fun LocationItem(
 
         Text(
             text = when (locationItem.spotType) {
-                SpotType.CAFE -> "카페"
-                SpotType.RESTAURANT -> "음식점"
+                SpotType.CAFE.toString() -> "카페"
+                SpotType.RESTAURANT.toString() -> "음식점"
+                else -> ""
             },
             style = AconTheme.typography.body3_13_reg,
             color = AconTheme.color.Gray4

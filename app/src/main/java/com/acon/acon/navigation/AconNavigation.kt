@@ -41,6 +41,7 @@ import com.acon.core.designsystem.blur.defaultHazeEffect
 import com.acon.core.designsystem.blur.rememberHazeState
 import com.acon.core.designsystem.theme.AconTheme
 import com.acon.domain.repository.GoogleTokenRepository
+import com.acon.feature.areaverification.AreaVerificationRoute
 import com.acon.feature.profile.ProfileRoute
 import com.acon.feature.signin.screen.SignInRoute
 
