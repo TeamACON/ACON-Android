@@ -5,8 +5,8 @@ acon은 “No more research”라는 슬로건을 가진 지도앱입니다.
 
 | 공세영(Lead) <br> [@0se0](https://github.com/0se0) | 이상일 <br> [@Thirfir](https://github.com/ThirFir) | 김성민 <br> [@1971123-seongmin](https://github.com/1971123-seongmin) | 양지원 <br> [@tunaunnie](https://github.com/tunaunnie) |
 |:---:|:---:|:---:|:---:|
-| <img width="150" src="https://github.com/user-attachments/assets/1cbf9cfa-314f-4169-b1a2-67dd4366dfb8"/> | <img width="150" src="https://github.com/user-attachments/assets/92463dfc-1267-4037-8423-9f3478544570"/> | <img width="150" src="https://github.com/user-attachments/assets/a9cacb12-54c2-4113-92a5-c417d3ec0848"/> | <img width="150" src="https://github.com/user-attachments/assets/adedcc15-fbae-444f-a04c-667a03cc32de"/> |
-|  동네인증, 업로드 | 장소탐색 | 로그인, (장소탐색 일부) | 온보딩 |
+| <img width="200" src="https://github.com/user-attachments/assets/f5be0d74-2860-4891-a4c1-3291cca4df89"/> | <img width="200" src="https://github.com/user-attachments/assets/cee53ee2-fea7-49f2-b70a-937aa6cd6863"/> | <img width="200" src="https://github.com/user-attachments/assets/eecd2597-f4c1-4d3e-a4ed-556dd2893c6e"/> | <img width="200" src="https://github.com/user-attachments/assets/e8d39028-363b-4bc6-98a6-3f61fbddfbcd"/> |
+|  동네인증, 업로드 | 장소탐색 | 로그인, 장소 상세 | 온보딩 |
 
 <br/>
 
@@ -19,11 +19,12 @@ acon은 “No more research”라는 슬로건을 가진 지도앱입니다.
 
 ## 📗 *****Convention*****
 [ 💻 Github Convention](https://stripe-shoemaker-907.notion.site/Github-Convention-d5c57b9b06d744bb99d503d335fc8e5d?pvs=4) <br>
-[ 🚸 Naming Convention](https://stripe-shoemaker-907.notion.site/Naming-Convention-f929fcaf44684e8598df9f50e95cb192?pvs=4) <br>
-[ 📛 Coding Detail Convention](https://stripe-shoemaker-907.notion.site/Coding-Detail-Convention-43f146988f114a5bb34c2e850e0af90f?pvs=4) <br>
 [ 🏠 Composable Convention](https://stripe-shoemaker-907.notion.site/Composable-Convention-df0dff2511764ef8a4670bd9b865b684?pvs=4) <br>
 [ 🪐 Orbit Architecture](https://stripe-shoemaker-907.notion.site/Orbit-Architecture-0c3f47033ef242be9bf9ece745f064cd?pvs=4) <br>
 [ 🍎 Issue Convention & PR Convention](https://stripe-shoemaker-907.notion.site/Issue-Convention-PR-Convention-4f243543340145c1b567bb61a45e9a3a?pvs=4) <br>
+
+[ 📌 작업 트래킹](https://stripe-shoemaker-907.notion.site/ba8912e036fc44a0937ef3ea9b76ad72?pvs=4) <br>
+[ 📌 프로젝트 설계](https://stripe-shoemaker-907.notion.site/2139f101172c4371996d888eb0ea88fc?pvs=4) <br>
 
 ## 🔧 *****TECH STACKS*****
 
