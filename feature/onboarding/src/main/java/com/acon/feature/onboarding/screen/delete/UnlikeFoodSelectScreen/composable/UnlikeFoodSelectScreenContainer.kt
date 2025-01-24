@@ -1,4 +1,4 @@
-package com.acon.feature.onboarding.screen.UnlikeFoodSelectScreen.composable
+package com.acon.feature.onboarding.screen.delete.UnlikeFoodSelectScreen.composable
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -6,8 +6,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.acon.core.designsystem.component.dialog.AconTwoButtonDialog
 import com.acon.feature.onboarding.R
-import com.acon.feature.onboarding.screen.UnlikeFoodSelectScreen.UnlikeFoodScreenSideEffect
-import com.acon.feature.onboarding.screen.UnlikeFoodSelectScreen.UnlikeFoodScreenViewModel
+import com.acon.feature.onboarding.screen.delete.UnlikeFoodSelectScreen.UnlikeFoodScreenSideEffect
+import com.acon.feature.onboarding.screen.delete.UnlikeFoodSelectScreen.UnlikeFoodScreenViewModel
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 

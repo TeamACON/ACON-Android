@@ -1,9 +1,12 @@
 package com.acon.feature.onboarding.screen.PrefResultLoadingScreen
 
 import android.util.Log
+import androidx.lifecycle.SavedStateHandle
+import androidx.navigation.toRoute
 import com.acon.core.utils.feature.base.BaseContainerHost
 import com.acon.domain.error.onboarding.PostOnboardingResultError
 import com.acon.domain.repository.OnboardingRepository
+import com.acon.feature.onboarding.OnboardingRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import org.orbitmvi.orbit.viewmodel.container
@@ -12,22 +15,25 @@ import javax.inject.Inject
 @HiltViewModel
 class PrefResultLoadingScreenViewModel @Inject constructor(
     private val onboardingRepository: OnboardingRepository,
+    savedStateHandle: SavedStateHandle
 ) : BaseContainerHost<PrefResultLoadingScreenState, PrefResultLoadingScreenSideEffect>() {
 
-    override val container = container<PrefResultLoadingScreenState, PrefResultLoadingScreenSideEffect>(PrefResultLoadingScreenState.Loading) {
+    override val container = container<PrefResultLoadingScreenState, PrefResultLoadingScreenSideEffect>(
+        PrefResultLoadingScreenState.Loading
+    ) {
 
     }
 
+    val arguments = savedStateHandle.toRoute<OnboardingRoute.LastLoading>()
+
     fun postOnboardingResult() = intent {
 
-        val onboardingResult = onboardingRepository.getOnboardingResults()
-
         onboardingRepository.postOnboardingResult(
-            dislikeFoodList = onboardingResult.dislikeFoodList,
-            favoriteCuisineRank = onboardingResult.favoriteCuisineRank,
-            favoriteSpotType = onboardingResult.favoriteSpotType,
-            favoriteSpotStyle = onboardingResult.favoriteSpotStyle,
-            favoriteSpotRank = onboardingResult.favoriteSpotRank
+            dislikeFoodList = arguments.onboardingResult.dislikeFoodList,
+            favoriteCuisineRank = arguments.onboardingResult.favoriteCuisineRank,
+            favoriteSpotType = arguments.onboardingResult.favoriteSpotType,
+            favoriteSpotStyle = arguments.onboardingResult.favoriteSpotStyle,
+            favoriteSpotRank = arguments.onboardingResult.favoriteSpotRank
         ).onSuccess {
             delay(1000L)
             reduce {

@@ -1,4 +1,4 @@
-package com.acon.feature.onboarding.screen.PreferredFoodRateScreen.composable
+package com.acon.feature.onboarding.screen.delete.PreferredFoodRateScreen.composable
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -21,7 +21,7 @@ import com.acon.core.designsystem.theme.AconTheme
 import com.acon.feature.onboarding.R
 import com.acon.feature.onboarding.component.OnboardingTopBar
 import com.acon.feature.onboarding.component.PreferFoodTypeSelectGrid
-import com.acon.feature.onboarding.screen.PreferredFoodRateScreen.RatePreferFoodScreenState
+import com.acon.feature.onboarding.screen.delete.PreferredFoodRateScreen.RatePreferFoodScreenState
 import com.acon.feature.onboarding.type.FoodTypeItems
 
 @Composable

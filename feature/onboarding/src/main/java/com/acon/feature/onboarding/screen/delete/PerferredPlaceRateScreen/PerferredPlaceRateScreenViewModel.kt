@@ -1,4 +1,4 @@
-package com.acon.feature.onboarding.screen.PreferredFoodRateScreen
+package com.acon.feature.onboarding.screen.delete.PerferredPlaceRateScreen
 
 import com.acon.core.utils.feature.base.BaseContainerHost
 import com.acon.domain.repository.OnboardingRepository
@@ -10,21 +10,22 @@ import javax.inject.Inject
 private const val ONBOARDING_TOTAL_PAGES = 5;
 
 @HiltViewModel
-class PreferredFoodRateScreenViewModel @Inject constructor(
+class PreferredPlaceRateScreenViewModel @Inject constructor(
     private val onboardingRepository: OnboardingRepository
-) : BaseContainerHost<RatePreferFoodScreenState, RatePreferFoodScreenSideEffect>() {
+) : BaseContainerHost<PreferredPlaceRateScreenState, PreferredPlaceRateScreenSideEffect>() {
 
-    override val container: Container<RatePreferFoodScreenState, RatePreferFoodScreenSideEffect> =
+    override val container: Container<PreferredPlaceRateScreenState, PreferredPlaceRateScreenSideEffect> =
         container(
-            initialState = RatePreferFoodScreenState(  )
+            initialState = PreferredPlaceRateScreenState(  )
         )
 
     fun onCardClicked(id: String) = intent {
+
         val updatedSelectedCard = state.selectedCard.toMutableList()
 
         if (updatedSelectedCard.contains(id)) {
             updatedSelectedCard.remove(id)
-        } else if (updatedSelectedCard.size < 3) {
+        } else if (updatedSelectedCard.size < 4) {
             updatedSelectedCard.add(id)
         }
         reduce {
@@ -48,28 +49,30 @@ class PreferredFoodRateScreenViewModel @Inject constructor(
         reduce {
             state.copy(openCloseDialog = false)
         }
-        postSideEffect(RatePreferFoodScreenSideEffect.NavigateToLastPage)
+        postSideEffect(PreferredPlaceRateScreenSideEffect.NavigateToLastPage)
     }
 
     fun navigateToPreviousPage() = intent {
-        postSideEffect(RatePreferFoodScreenSideEffect.NavigateToPreviousPage)
+        postSideEffect(PreferredPlaceRateScreenSideEffect.NavigateToPreviousPage)
     }
 
     fun navigateToNextPage() = intent {
-        onboardingRepository.postFavoriteCuisineRank(state.selectedCard.toList())
-        postSideEffect(RatePreferFoodScreenSideEffect.NavigateToNextPage)
+        onboardingRepository.postFavoriteSpotRank(state.selectedCard.toList())
+
+        //만약 local DB에 정보가 다 들어가 있으면.
+        postSideEffect(PreferredPlaceRateScreenSideEffect.NavigateToNextPage)
     }
 }
 
-data class RatePreferFoodScreenState(
+data class PreferredPlaceRateScreenState(
     val selectedCard: Set<String> = emptySet(),
     val totalPages: Int = ONBOARDING_TOTAL_PAGES,
-    val currentPage: Int = 1,
+    val currentPage: Int = 4,
     val openCloseDialog: Boolean = false,
 )
 
-sealed interface RatePreferFoodScreenSideEffect {
-    data object NavigateToPreviousPage: RatePreferFoodScreenSideEffect
-    data object NavigateToNextPage: RatePreferFoodScreenSideEffect
-    data object NavigateToLastPage: RatePreferFoodScreenSideEffect
+sealed interface PreferredPlaceRateScreenSideEffect {
+    data object NavigateToPreviousPage: PreferredPlaceRateScreenSideEffect
+    data object NavigateToNextPage: PreferredPlaceRateScreenSideEffect
+    data object NavigateToLastPage: PreferredPlaceRateScreenSideEffect
 }

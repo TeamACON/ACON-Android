@@ -1,4 +1,4 @@
-package com.acon.feature.onboarding.screen.PreferredPlaceSelectScreen.composable
+package com.acon.feature.onboarding.screen.delete.FrequentPlaceSelectScreen.composable
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -23,24 +23,25 @@ import com.acon.core.designsystem.theme.AconTheme
 import com.acon.feature.onboarding.R
 import com.acon.feature.onboarding.component.FreqPlaceSelectGrid
 import com.acon.feature.onboarding.component.OnboardingTopBar
-import com.acon.feature.onboarding.screen.PreferredPlaceSelectScreen.PreferredPlaceSelectScreenSideEffect
-import com.acon.feature.onboarding.screen.PreferredPlaceSelectScreen.PreferredPlaceSelectScreenState
-import com.acon.feature.onboarding.screen.PreferredPlaceSelectScreen.PreferredPlaceSelectViewModel
-import com.acon.feature.onboarding.type.MoodItems
+import com.acon.feature.onboarding.screen.delete.FrequentPlaceSelectScreen.FrequentPlaceSelectScreenSideEffect
+import com.acon.feature.onboarding.screen.delete.FrequentPlaceSelectScreen.FrequentPlaceSelectScreenState
+import com.acon.feature.onboarding.screen.delete.FrequentPlaceSelectScreen.FrequentPlaceSelectScreenViewModel
+import com.acon.feature.onboarding.type.PlaceItems
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
+
 @Composable
-fun PreferredPlaceSelectScreenContainer(
+fun FrequentPlaceSelectScreenContainer(
     modifier: Modifier = Modifier,
-    viewModel: PreferredPlaceSelectViewModel = hiltViewModel(),
+    viewModel: FrequentPlaceSelectScreenViewModel = hiltViewModel(),
     navigateToPreviousPage: () -> Unit = {},
     navigateToNextPage: () -> Unit = {},
     navigateToSpotListView: () -> Unit = {}
 ){
     val state = viewModel.collectAsState().value
 
-    PreferredPlaceSelectScreen(
+    FrequentPlaceSelectScreen(
         modifier = modifier,
         screenState = state,
         columnSize = 2,
@@ -52,13 +53,13 @@ fun PreferredPlaceSelectScreenContainer(
 
     viewModel.collectSideEffect {
         when(it){
-            PreferredPlaceSelectScreenSideEffect.NavigateToNextPage -> {
+            FrequentPlaceSelectScreenSideEffect.NavigateToNextPage -> {
                 navigateToNextPage()
             }
-            PreferredPlaceSelectScreenSideEffect.NavigateToPreviousPage -> {
+            FrequentPlaceSelectScreenSideEffect.NavigateToPreviousPage -> {
                 navigateToPreviousPage()
             }
-            PreferredPlaceSelectScreenSideEffect.NavigateToLastPage -> {
+            FrequentPlaceSelectScreenSideEffect.NavigateToLastPage -> {
                 navigateToSpotListView()
             }
         }
@@ -74,10 +75,10 @@ fun PreferredPlaceSelectScreenContainer(
             onDismissRequest = {
                 viewModel.hideDialog()
             },
-            onClickLeft = { // 그만두기
+            onClickLeft = {
                 viewModel.skipConfirmed()
             },
-            onClickRight = { // 계속하기
+            onClickRight = {
                 viewModel.hideDialog()
             },
             isImageEnabled = false
@@ -87,9 +88,9 @@ fun PreferredPlaceSelectScreenContainer(
 }
 
 @Composable
-fun PreferredPlaceSelectScreen(
+fun FrequentPlaceSelectScreen(
     modifier: Modifier = Modifier,
-    screenState: PreferredPlaceSelectScreenState,
+    screenState: FrequentPlaceSelectScreenState,
     columnSize: Int,
     onCardClicked: (String) -> Unit,
     onSkipClicked: () -> Unit,
@@ -123,13 +124,13 @@ fun PreferredPlaceSelectScreen(
                 modifier = Modifier
             ){
                 Text(
-                    text = "04",
+                    text = "03",
                     color = AconTheme.color.Gray5,
                     style = AconTheme.typography.head4_24_sb,
                     modifier = modifier.padding(vertical = 7.dp)
                 )
                 Text(
-                    text = stringResource(R.string.onboarding_4_title),
+                    text = stringResource(R.string.onboarding_3_title),
                     color = Color.White,
                     style = AconTheme.typography.head4_24_sb,
                 )
@@ -137,14 +138,14 @@ fun PreferredPlaceSelectScreen(
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(vertical = 20.dp)
+                        .padding(vertical = 20.dp),
                 ){
                     Column {
                         FreqPlaceSelectGrid(
                             modifier = Modifier
                                 .background(AconTheme.color.Gray9),
                             columnSize = columnSize,
-                            placeItems = MoodItems.entries.toTypedArray(),
+                            placeItems = PlaceItems.entries.toTypedArray(),
                             onCardClicked = { id ->
                                 onCardClicked(id)
                             },
@@ -173,10 +174,11 @@ fun PreferredPlaceSelectScreen(
             }
         }
     }
+
 }
 
 @Composable
 @Preview
-private fun PreviewOnboardingScreen4(){
-    PreferredPlaceSelectScreenContainer()
+private fun PreviewOnboardingScreen3(){
+    FrequentPlaceSelectScreenContainer()
 }

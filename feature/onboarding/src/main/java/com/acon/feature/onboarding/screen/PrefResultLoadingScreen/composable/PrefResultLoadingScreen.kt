@@ -1,5 +1,6 @@
 package com.acon.feature.onboarding.screen.PrefResultLoadingScreen.composable
 
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -22,9 +23,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.acon.core.designsystem.theme.AconTheme
 import com.acon.feature.onboarding.R
-import com.acon.feature.onboarding.screen.OnboardingScreen.OnboardingScreenState
-import com.acon.feature.onboarding.screen.OnboardingScreen.OnboardingViewModel
-import com.acon.feature.onboarding.screen.OnboardingScreen.ResultLoadingScreenState
 import com.acon.feature.onboarding.screen.PrefResultLoadingScreen.PrefResultLoadingScreenSideEffect
 import com.acon.feature.onboarding.screen.PrefResultLoadingScreen.PrefResultLoadingScreenState
 import com.acon.feature.onboarding.screen.PrefResultLoadingScreen.PrefResultLoadingScreenViewModel
@@ -43,12 +41,17 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 @Composable
 fun PrefResultLoadingScreenContainer(
     modifier: Modifier = Modifier,
-    viewModel: OnboardingViewModel = hiltViewModel(),
+    viewModel: PrefResultLoadingScreenViewModel = hiltViewModel(),
     navigateToSpotListView: () -> Unit = {},
 ){
     val state = viewModel.collectAsState().value
 
     viewModel.collectSideEffect {
+        when(it) {
+            PrefResultLoadingScreenSideEffect.navigateToSpotListView -> {
+                navigateToSpotListView()
+            }
+        }
     }
 
     PrefResultLoadingScreen(
@@ -62,7 +65,7 @@ fun PrefResultLoadingScreenContainer(
 @Composable
 fun PrefResultLoadingScreen(
     modifier: Modifier = Modifier,
-    screenState: OnboardingScreenState,
+    screenState: PrefResultLoadingScreenState,
     postOnboardingResult: () -> Unit = {},
     navigateToSpotListView: () -> Unit = {},
 ){
@@ -73,8 +76,8 @@ fun PrefResultLoadingScreen(
     var lottieRes : Int
     var loadingText : String
 
-    when (screenState.loadingState) {
-        is ResultLoadingScreenState.Loading -> {
+    when (screenState) {
+        is PrefResultLoadingScreenState.Loading -> {
             lottieRes = R.raw.loading_lottie
             loadingText = stringResource(R.string.onboarding_6_title)
 
@@ -109,7 +112,7 @@ fun PrefResultLoadingScreen(
             }
         }
 
-        ResultLoadingScreenState.LoadSucceed -> {
+        PrefResultLoadingScreenState.LoadSucceed -> {
             lottieRes = R.raw.loading_complete_lottie
             loadingText = stringResource(R.string.onboarding_6_title2)
 
@@ -144,7 +147,7 @@ fun PrefResultLoadingScreen(
             }
         }
 
-        ResultLoadingScreenState.LoadFailed -> {
+        PrefResultLoadingScreenState.LoadFailed -> {
             Text(text = "load failed")
         }
     }

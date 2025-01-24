@@ -1,4 +1,4 @@
-package com.acon.feature.onboarding.screen.PreferredFoodRateScreen.composable
+package com.acon.feature.onboarding.screen.delete.PreferredFoodRateScreen.composable
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -6,8 +6,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.acon.core.designsystem.component.dialog.AconTwoButtonDialog
 import com.acon.feature.onboarding.R
-import com.acon.feature.onboarding.screen.PreferredFoodRateScreen.PreferredFoodRateScreenViewModel
-import com.acon.feature.onboarding.screen.PreferredFoodRateScreen.RatePreferFoodScreenSideEffect
+import com.acon.feature.onboarding.screen.delete.PreferredFoodRateScreen.PreferredFoodRateScreenViewModel
+import com.acon.feature.onboarding.screen.delete.PreferredFoodRateScreen.RatePreferFoodScreenSideEffect
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 

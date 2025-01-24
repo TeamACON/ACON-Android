@@ -1,5 +1,7 @@
 package com.acon.feature.onboarding.screen.OnboardingScreen
 
+import android.os.Parcel
+import android.os.Parcelable
 import android.util.Log
 import androidx.compose.ui.res.stringResource
 import com.acon.core.utils.feature.base.BaseContainerHost
@@ -17,8 +19,11 @@ import com.acon.feature.onboarding.type.PreferPlaceItems
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.selects.select
+import kotlinx.parcelize.Parcelize
+import kotlinx.serialization.Serializable
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.viewmodel.container
+import java.io.Serial
 import javax.inject.Inject
 
 private const val ONBOARDING_TOTAL_PAGES = 5;
@@ -138,43 +143,58 @@ class OnboardingViewModel @Inject constructor(
     fun navigateToNextPage() = intent {
         val nextPageState = when (val currentPageState = state.currentState) {
             is OnboardingPageState.Page1State -> {
-                Log.e("지금" , "${currentPageState.selectedCard}")
+                Log.e("지금 넣으려고 시도: " , "${currentPageState.selectedCard}")
                 state.copy(
                     currentPage = 2,
-                    dislikeFoodList = currentPageState.selectedCard,
+                    onboardingResult = state.onboardingResult.copy(
+                        dislikeFoodList = currentPageState.selectedCard
+                    ),
                     currentState = OnboardingPageState.Page2State()  // Page2로 전환
                 )
             }
             is OnboardingPageState.Page2State -> {
                 state.copy(
                     currentPage = 3,
-                    favoriteCuisineRank = currentPageState.selectedCard.toList(), // Page2 선택 저장
+                    onboardingResult = state.onboardingResult.copy(
+                        favoriteCuisineRank = currentPageState.selectedCard.toList()
+                    ),
                     currentState = OnboardingPageState.Page3State()  // Page3로 전환
                 )
             }
             is OnboardingPageState.Page3State -> {
                 state.copy(
                     currentPage = 4,
-                    favoriteSpotType = currentPageState.selectedCard.first(), // Page3 선택 저장
+                    onboardingResult = state.onboardingResult.copy(
+                        favoriteSpotType = currentPageState.selectedCard.first()
+                    ),
                     currentState = OnboardingPageState.Page4State()  // Page4로 전환
                 )
             }
             is OnboardingPageState.Page4State -> {
                 state.copy(
                     currentPage = 5,
-                    favoriteSpotStyle = currentPageState.selectedCard.first(), // Page4 선택 저장
+                    onboardingResult = state.onboardingResult.copy(
+                        favoriteSpotStyle = currentPageState.selectedCard.first()
+                    ),
                     currentState = OnboardingPageState.Page5State()  // Page5로 전환
                 )
             }
             is OnboardingPageState.Page5State -> {
-                postSideEffect(OnboardingScreenSideEffect.NavigateToLoadingPage) // 로딩 페이지로 전환
-                state.copy(
-                    favoriteSpotRank = currentPageState.selectedCard.toList() // Page5 선택 저장
+                val updatedState = state.copy(
+                    onboardingResult = state.onboardingResult.copy(
+                        favoriteSpotRank = currentPageState.selectedCard.toList()
+                    ),
                 )
+                reduce {
+                    updatedState
+                }
+                postSideEffect(OnboardingScreenSideEffect.NavigateToLoadingPage(state.onboardingResult))
+                updatedState
             }
         }
 
         reduce { nextPageState ?: state }
+        Log.e("지금 잘 담김?" , "${state}")
     }
 
     fun onBackClicked() = intent {
@@ -215,62 +235,6 @@ class OnboardingViewModel @Inject constructor(
     fun navigateToSpotListView() = intent {
         postSideEffect(OnboardingScreenSideEffect.NavigateToSpotListView)
     }
-
-    fun postOnboardingResult() = intent {
-
-        onboardingRepository.postOnboardingResult(
-            dislikeFoodList = state.dislikeFoodList,
-            favoriteCuisineRank = state.favoriteCuisineRank,
-            favoriteSpotType = state.favoriteSpotType,
-            favoriteSpotStyle = state.favoriteSpotStyle,
-            favoriteSpotRank = state.favoriteSpotRank
-        ).onSuccess {
-            delay(1000L)
-            reduce {
-                state.copy(loadingState = ResultLoadingScreenState.LoadSucceed)
-            }
-            delay(2000L)
-            navigateToSpotListView()
-        }.onFailure { throwable ->
-            when (throwable) {
-                is PostOnboardingResultError.InvalidDislikeFood -> Log.e(
-                    "OnboardingError",
-                    "Invalid Dislike Food: ${throwable.code}"
-                )
-                is PostOnboardingResultError.InvalidCuisine -> Log.e(
-                    "OnboardingError",
-                    "Invalid Cuisine: ${throwable.code}"
-                )
-                is PostOnboardingResultError.InvalidSpotType -> Log.e(
-                    "OnboardingError",
-                    "Invalid Spot Type: ${throwable.code}"
-                )
-                is PostOnboardingResultError.InvalidSpotStyle -> Log.e(
-                    "OnboardingError",
-                    "Invalid Spot Style: ${throwable.code}"
-                )
-                is PostOnboardingResultError.InvalidSpotRank -> Log.e(
-                    "OnboardingError",
-                    "Invalid Spot Rank: ${throwable.code}"
-                )
-                is PostOnboardingResultError.InvalidFavSpotRankSize -> Log.e(
-                    "OnboardingError",
-                    "Invalid Favorite Spot Rank Size: ${throwable.code}"
-                )
-                is PostOnboardingResultError.InvalidFavCuisineRankSize -> Log.e(
-                    "OnboardingError",
-                    "Invalid Favorite Cuisine Rank Size: ${throwable.code}"
-                )
-                else -> Log.e(
-                    "OnboardingError",
-                    "Unexpected Error: ${throwable.localizedMessage}",
-                    throwable
-                )
-            }
-        }
-    }
-
-
 }
 
 //전체 Onboarding 담담 State
@@ -279,15 +243,9 @@ data class OnboardingScreenState(
     val currentState: OnboardingPageState = OnboardingPageState.Page1State(),
     val showDialog: Boolean = false,
     val totalPages: Int = ONBOARDING_TOTAL_PAGES,
-    val dislikeFoodList: Set<String> = emptySet(),
-    val favoriteCuisineRank: List<String> = emptyList(),
-    val favoriteSpotType: String = "",
-    val favoriteSpotStyle: String = "",
-    val favoriteSpotRank: List<String> = emptyList(),
+    val onboardingResult: OnboardingResult = OnboardingResult(),
     val loadingState: ResultLoadingScreenState = ResultLoadingScreenState.Loading
 )
-
-
 
 sealed class OnboardingPageState {
     data class Page1State(
@@ -333,7 +291,7 @@ sealed class OnboardingPageState {
 }
 
 sealed interface OnboardingScreenSideEffect {
-    data object NavigateToLoadingPage: OnboardingScreenSideEffect
+    data class NavigateToLoadingPage(val result: OnboardingResult): OnboardingScreenSideEffect
     data object NavigateToSpotListView: OnboardingScreenSideEffect
 }
 
@@ -342,3 +300,13 @@ sealed interface ResultLoadingScreenState {
     data object LoadSucceed : ResultLoadingScreenState
     data object LoadFailed: ResultLoadingScreenState
 }
+
+@Parcelize
+@Serializable
+data class OnboardingResult(
+    val dislikeFoodList: Set<String> = emptySet(),
+    val favoriteCuisineRank: List<String> = emptyList(),
+    val favoriteSpotType: String = "",
+    val favoriteSpotStyle: String = "",
+    val favoriteSpotRank: List<String> = emptyList()
+) : Parcelable

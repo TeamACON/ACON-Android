@@ -1,4 +1,4 @@
-package com.acon.feature.onboarding.screen.FrequentPlaceSelectScreen.composable
+package com.acon.feature.onboarding.screen.delete.PerferredPlaceRateScreen.composable
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -21,27 +21,26 @@ import com.acon.core.designsystem.component.button.AconFilledLargeButton
 import com.acon.core.designsystem.component.dialog.AconTwoButtonDialog
 import com.acon.core.designsystem.theme.AconTheme
 import com.acon.feature.onboarding.R
-import com.acon.feature.onboarding.component.FreqPlaceSelectGrid
 import com.acon.feature.onboarding.component.OnboardingTopBar
-import com.acon.feature.onboarding.screen.FrequentPlaceSelectScreen.FrequentPlaceSelectScreenSideEffect
-import com.acon.feature.onboarding.screen.FrequentPlaceSelectScreen.FrequentPlaceSelectScreenState
-import com.acon.feature.onboarding.screen.FrequentPlaceSelectScreen.FrequentPlaceSelectScreenViewModel
-import com.acon.feature.onboarding.type.PlaceItems
+import com.acon.feature.onboarding.component.PreferPlaceTypeSelectGrid
+import com.acon.feature.onboarding.screen.delete.PerferredPlaceRateScreen.PreferredPlaceRateScreenSideEffect
+import com.acon.feature.onboarding.screen.delete.PerferredPlaceRateScreen.PreferredPlaceRateScreenState
+import com.acon.feature.onboarding.screen.delete.PerferredPlaceRateScreen.PreferredPlaceRateScreenViewModel
+import com.acon.feature.onboarding.type.PreferPlaceItems
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
-
 @Composable
-fun FrequentPlaceSelectScreenContainer(
+fun PreferredPlaceRateScreenContainer(
     modifier: Modifier = Modifier,
-    viewModel: FrequentPlaceSelectScreenViewModel = hiltViewModel(),
+    viewModel: PreferredPlaceRateScreenViewModel = hiltViewModel(),
     navigateToPreviousPage: () -> Unit = {},
     navigateToNextPage: () -> Unit = {},
     navigateToSpotListView: () -> Unit = {}
 ){
     val state = viewModel.collectAsState().value
 
-    FrequentPlaceSelectScreen(
+    PreferredPlaceRateScreen(
         modifier = modifier,
         screenState = state,
         columnSize = 2,
@@ -53,13 +52,13 @@ fun FrequentPlaceSelectScreenContainer(
 
     viewModel.collectSideEffect {
         when(it){
-            FrequentPlaceSelectScreenSideEffect.NavigateToNextPage -> {
+            PreferredPlaceRateScreenSideEffect.NavigateToNextPage -> {
                 navigateToNextPage()
             }
-            FrequentPlaceSelectScreenSideEffect.NavigateToPreviousPage -> {
+            PreferredPlaceRateScreenSideEffect.NavigateToPreviousPage -> {
                 navigateToPreviousPage()
             }
-            FrequentPlaceSelectScreenSideEffect.NavigateToLastPage -> {
+            PreferredPlaceRateScreenSideEffect.NavigateToLastPage -> {
                 navigateToSpotListView()
             }
         }
@@ -75,10 +74,10 @@ fun FrequentPlaceSelectScreenContainer(
             onDismissRequest = {
                 viewModel.hideDialog()
             },
-            onClickLeft = {
+            onClickLeft = { // 그만두기
                 viewModel.skipConfirmed()
             },
-            onClickRight = {
+            onClickRight = { // 계속하기
                 viewModel.hideDialog()
             },
             isImageEnabled = false
@@ -88,9 +87,9 @@ fun FrequentPlaceSelectScreenContainer(
 }
 
 @Composable
-fun FrequentPlaceSelectScreen(
+fun PreferredPlaceRateScreen(
     modifier: Modifier = Modifier,
-    screenState: FrequentPlaceSelectScreenState,
+    screenState: PreferredPlaceRateScreenState,
     columnSize: Int,
     onCardClicked: (String) -> Unit,
     onSkipClicked: () -> Unit,
@@ -124,13 +123,13 @@ fun FrequentPlaceSelectScreen(
                 modifier = Modifier
             ){
                 Text(
-                    text = "03",
+                    text = "05",
                     color = AconTheme.color.Gray5,
                     style = AconTheme.typography.head4_24_sb,
                     modifier = modifier.padding(vertical = 7.dp)
                 )
                 Text(
-                    text = stringResource(R.string.onboarding_3_title),
+                    text = stringResource(R.string.onboarding_5_title),
                     color = Color.White,
                     style = AconTheme.typography.head4_24_sb,
                 )
@@ -138,20 +137,18 @@ fun FrequentPlaceSelectScreen(
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(vertical = 20.dp),
+                        .padding(vertical = 20.dp)
                 ){
-                    Column {
-                        FreqPlaceSelectGrid(
-                            modifier = Modifier
-                                .background(AconTheme.color.Gray9),
-                            columnSize = columnSize,
-                            placeItems = PlaceItems.entries.toTypedArray(),
-                            onCardClicked = { id ->
-                                onCardClicked(id)
-                            },
-                            selectedCard = screenState.selectedCard
-                        )
-                    }
+                    PreferPlaceTypeSelectGrid(
+                        modifier = modifier
+                            .background(AconTheme.color.Gray9),
+                        columnSize = columnSize,
+                        placeItems = PreferPlaceItems.entries.toTypedArray(),
+                        onCardClicked = { id ->
+                            onCardClicked(id)
+                        },
+                        selectedCard = screenState.selectedCard,
+                    )
                 }
             }
 
@@ -165,7 +162,7 @@ fun FrequentPlaceSelectScreen(
                     textStyle = AconTheme.typography.head7_18_sb,
                     enabledBackgroundColor = AconTheme.color.Gray5,
                     disabledBackgroundColor =  AconTheme.color.Gray8,
-                    isEnabled = ( screenState.selectedCard.isNotEmpty() ),
+                    isEnabled = ( screenState.selectedCard.size == 4 ),
                     cornerRadius = 6.dp,
                     modifier = Modifier.fillMaxWidth(),
                     contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp),
@@ -174,11 +171,10 @@ fun FrequentPlaceSelectScreen(
             }
         }
     }
-
 }
 
 @Composable
 @Preview
-private fun PreviewOnboardingScreen3(){
-    FrequentPlaceSelectScreenContainer()
+private fun PreviewOnboardingScreen5(){
+    PreferredPlaceRateScreenContainer()
 }

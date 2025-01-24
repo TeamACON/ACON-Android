@@ -1,4 +1,4 @@
-package com.acon.feature.onboarding.screen.FrequentPlaceSelectScreen
+package com.acon.feature.onboarding.screen.delete.FrequentPlaceSelectScreen
 
 import com.acon.core.utils.feature.base.BaseContainerHost
 import com.acon.domain.repository.OnboardingRepository

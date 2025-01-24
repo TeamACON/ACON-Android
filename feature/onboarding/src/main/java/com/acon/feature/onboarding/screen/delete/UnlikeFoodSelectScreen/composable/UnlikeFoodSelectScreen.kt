@@ -1,4 +1,4 @@
-package com.acon.feature.onboarding.screen.UnlikeFoodSelectScreen.composable
+package com.acon.feature.onboarding.screen.delete.UnlikeFoodSelectScreen.composable
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -23,7 +23,7 @@ import com.acon.core.designsystem.theme.AconTheme
 import com.acon.feature.onboarding.R
 import com.acon.feature.onboarding.component.FoodGrid
 import com.acon.feature.onboarding.component.OnboardingTopBar
-import com.acon.feature.onboarding.screen.UnlikeFoodSelectScreen.UnlikeFoodScreenState
+import com.acon.feature.onboarding.screen.delete.UnlikeFoodSelectScreen.UnlikeFoodScreenState
 import com.acon.feature.onboarding.type.FoodItems
 
 @Composable

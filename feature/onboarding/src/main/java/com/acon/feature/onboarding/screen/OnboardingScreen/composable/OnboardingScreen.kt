@@ -27,14 +27,15 @@ import com.acon.feature.onboarding.component.OnboardingTopBar
 import com.acon.feature.onboarding.component.PreferFoodTypeSelectGrid
 import com.acon.feature.onboarding.component.PreferPlaceTypeSelectGrid
 import com.acon.feature.onboarding.screen.OnboardingScreen.OnboardingPageState
+import com.acon.feature.onboarding.screen.OnboardingScreen.OnboardingResult
 import com.acon.feature.onboarding.screen.OnboardingScreen.OnboardingScreenSideEffect
 import com.acon.feature.onboarding.screen.OnboardingScreen.OnboardingScreenState
 import com.acon.feature.onboarding.screen.OnboardingScreen.OnboardingViewModel
 import com.acon.feature.onboarding.screen.PrefResultLoadingScreen.PrefResultLoadingScreenSideEffect
-import com.acon.feature.onboarding.screen.UnlikeFoodSelectScreen.UnlikeFoodScreenSideEffect
-import com.acon.feature.onboarding.screen.UnlikeFoodSelectScreen.UnlikeFoodScreenState
-import com.acon.feature.onboarding.screen.UnlikeFoodSelectScreen.UnlikeFoodScreenViewModel
-import com.acon.feature.onboarding.screen.UnlikeFoodSelectScreen.composable.UnlikeFoodScreen
+import com.acon.feature.onboarding.screen.delete.UnlikeFoodSelectScreen.UnlikeFoodScreenSideEffect
+import com.acon.feature.onboarding.screen.delete.UnlikeFoodSelectScreen.UnlikeFoodScreenState
+import com.acon.feature.onboarding.screen.delete.UnlikeFoodSelectScreen.UnlikeFoodScreenViewModel
+import com.acon.feature.onboarding.screen.delete.UnlikeFoodSelectScreen.composable.UnlikeFoodScreen
 import com.acon.feature.onboarding.type.FoodItems
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
@@ -43,7 +44,7 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 fun OnboardingContainer(
     modifier: Modifier = Modifier,
     viewModel: OnboardingViewModel = hiltViewModel(),
-    navigateToLoadingView: () -> Unit = {},
+    navigateToLoadingView: (result: OnboardingResult) -> Unit = {},
     navigateToSpotListView: () -> Unit = {}
 ){
     val state = viewModel.collectAsState().value
@@ -59,8 +60,8 @@ fun OnboardingContainer(
 
     viewModel.collectSideEffect {
         when(it){
-            OnboardingScreenSideEffect.NavigateToLoadingPage -> {
-                navigateToLoadingView()
+            is OnboardingScreenSideEffect.NavigateToLoadingPage -> {
+                navigateToLoadingView(it.result)
             }
             OnboardingScreenSideEffect.NavigateToSpotListView -> {
                 navigateToSpotListView()
