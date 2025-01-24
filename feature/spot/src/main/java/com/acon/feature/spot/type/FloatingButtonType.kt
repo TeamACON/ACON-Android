@@ -11,12 +11,12 @@ enum class FloatingButtonType(
 ) {
 
     LOCATION(
-        iconRes = R.drawable.ic_my_location_16,
+        iconRes = R.drawable.ic_my_g_location_28,
         contentDescriptionRes = R.string.location_content_description,
         enabled = false
     ),
     MAP(
-        iconRes = R.drawable.ic_map_w_24,
+        iconRes = R.drawable.ic_map_w_28,
         contentDescriptionRes = R.string.map_content_description,
     ),
     FILTER(

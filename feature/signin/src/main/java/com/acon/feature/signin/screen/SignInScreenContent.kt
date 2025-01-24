@@ -39,12 +39,12 @@ fun SignInScreenContent(
             is SignInSideEffect.NavigateToSpotListView -> { navigateToSpotListView() }
             is SignInSideEffect.NavigateToAreaVerification -> { navigateToAreaVerification() }
             is SignInSideEffect.OnClickTermsOfUse -> {
-                val url = "https://bit.ly/acon서비스이용약관"
+                val url = "https://bit.ly/4jq9D88"
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
                 context.startActivity(intent)
             }
             is SignInSideEffect.OnClickPrivacyPolicy -> {
-                val url = "https://bit.ly/acon개인정보처리방침"
+                val url = "https://bit.ly/40qFrkz"
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
                 context.startActivity(intent)
             }

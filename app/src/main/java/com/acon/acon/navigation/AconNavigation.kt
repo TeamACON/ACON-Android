@@ -25,6 +25,7 @@ import com.acon.acon.navigation.bottom.BottomBar
 import com.acon.acon.navigation.bottom.BottomNavType
 import com.acon.acon.navigation.nested.areaVerificationNavigation
 import com.acon.acon.navigation.nested.onboardingNavigationNavigation
+import com.acon.acon.navigation.nested.profileNavigation
 import com.acon.acon.navigation.nested.signInNavigationNavigation
 import com.acon.acon.navigation.nested.splashNavigationNavigation
 import com.acon.acon.navigation.nested.spotNavigation
@@ -40,6 +41,8 @@ import com.acon.core.designsystem.blur.defaultHazeEffect
 import com.acon.core.designsystem.blur.rememberHazeState
 import com.acon.core.designsystem.theme.AconTheme
 import com.acon.domain.repository.GoogleTokenRepository
+import com.acon.feature.areaverification.AreaVerificationRoute
+import com.acon.feature.profile.ProfileRoute
 import com.acon.feature.signin.screen.SignInRoute
 
 @Composable
@@ -71,7 +74,21 @@ fun AconNavigation(
                             .defaultHazeEffect(hazeState = LocalHazeState.current, tintColor = AconTheme.color.Dim_b_30),
                         selectedItem = selectedBottomNavItem,
                         onItemClick = {
-                            selectedBottomNavItem = it
+                            if (it == BottomNavType.UPLOAD) {
+                                navController.navigate(UploadRoute.Upload)
+                            } else {
+                                selectedBottomNavItem = it
+                                navController.navigate(
+                                    when (it) {
+                                        BottomNavType.SPOT -> SpotRoute.SpotList
+                                        BottomNavType.PROFILE -> ProfileRoute.Profile
+                                        else -> SpotRoute.SpotList
+                                    }
+                                ) {
+                                    popUpTo(SpotRoute.SpotList) { inclusive = false }
+                                    launchSingleTop = true
+                                }
+                            }
                         }
                     )
                 }
@@ -102,21 +119,8 @@ fun AconNavigation(
                 spotNavigation(navController)
 
                 uploadNavigation(navController)
-            }
-        }
-    }
 
-    LaunchedEffect(selectedBottomNavItem) {
-        if (backStackEntry?.destination?.shouldShowBottomNav() == true) {
-            navController.navigate(
-                when (selectedBottomNavItem) {
-                    BottomNavType.SPOT -> SpotRoute.SpotList
-                    BottomNavType.UPLOAD -> UploadRoute.Upload
-                    else -> SpotRoute.SpotList // TODO : Route
-                }
-            ) {
-                popUpTo(SpotRoute.SpotList) { inclusive = false }
-                launchSingleTop = true
+                profileNavigation(navController)
             }
         }
     }
@@ -124,7 +128,7 @@ fun AconNavigation(
     LaunchedEffect(currentRoute) {   // 뒤로가기에 의한 하단 탭 선택 상태 변경 처리
         selectedBottomNavItem = when (currentRoute) {
             SpotRoute.SpotList::class.qualifiedName -> BottomNavType.SPOT
-            UploadRoute.Upload::class.qualifiedName -> BottomNavType.UPLOAD
+            ProfileRoute.Profile::class.qualifiedName -> BottomNavType.PROFILE
             else -> BottomNavType.SPOT // TODO : Route
         }
     }
@@ -133,6 +137,7 @@ fun AconNavigation(
 private fun NavDestination.shouldShowBottomNav(): Boolean {
     return when (route) {
         SpotRoute.SpotList::class.qualifiedName -> true
+        ProfileRoute.Profile::class.qualifiedName -> true
         else -> false
     }
 }

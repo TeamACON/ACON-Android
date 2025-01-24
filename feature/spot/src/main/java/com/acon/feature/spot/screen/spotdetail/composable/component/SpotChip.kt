@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -17,7 +18,6 @@ import com.acon.core.designsystem.theme.AconTheme
 
 @Composable
 fun SpotChip(
-    title: String,
     selected: Boolean,
     modifier: Modifier = Modifier,
     textStyle: TextStyle = AconTheme.typography.subtitle2_14_med,
@@ -31,6 +31,10 @@ fun SpotChip(
         if (selected)
             AconTheme.color.White
         else AconTheme.color.Gray5
+
+    val title =
+        if(selected) stringResource(com.acon.feature.spot.R.string.after_business)
+        else stringResource(com.acon.feature.spot.R.string.before_sales)
 
     Row(
         modifier = modifier
@@ -53,7 +57,6 @@ fun SpotChip(
 @Composable
 private fun SpotChipPreview() {
     SpotChip(
-        title = "영업전",
         selected = false,
     )
 }
@@ -62,7 +65,6 @@ private fun SpotChipPreview() {
 @Composable
 private fun SelectedSpotChipPreview() {
     SpotChip(
-        title = "영업중",
         selected = true,
     )
 }

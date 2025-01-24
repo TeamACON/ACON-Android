@@ -26,8 +26,10 @@ import com.acon.feature.areaverification.component.AreaVerificationButton
 import android.provider.Settings
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.res.stringResource
+import com.acon.core.designsystem.blur.LocalHazeState
 import com.acon.core.designsystem.component.dialog.AconOneButtonDialog
 import com.acon.core.utils.feature.permission.CheckAndRequestLocationPermission
+import dev.chrisbanes.haze.hazeSource
 
 @Composable
 fun AreaVerificationScreenContainer(
@@ -55,9 +57,6 @@ fun AreaVerificationScreenContainer(
 
                 is AreaVerificationSideEffect.NavigateToNewArea -> {
                     onNewAreaClick(effect.latitude, effect.longitude)
-                }
-
-                else -> {
                 }
             }
         }
@@ -101,29 +100,29 @@ fun AreaVerificationScreen(
         modifier = modifier
             .fillMaxSize()
             .background(AconTheme.color.Gray9)
+            .hazeSource(LocalHazeState.current)
             .padding(horizontal = 24.dp),
         verticalArrangement = Arrangement.SpaceBetween
     ) {
         Column(
             modifier = Modifier.fillMaxWidth()
         ) {
-            Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(132.dp))
 
             Text(
                 text = stringResource(R.string.local_restaurant_certification_title),
-                style = AconTheme.typography.head6_20_sb,
+                style = AconTheme.typography.head5_22_sb,
                 color = AconTheme.color.Gray1
             )
 
             Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = stringResource(R.string.local_restaurant_certification_description),
-                style = AconTheme.typography.body3_13_reg,
+                style = AconTheme.typography.subtitle2_14_med,
                 color = AconTheme.color.Gray3
             )
 
             Spacer(modifier = Modifier.height(32.dp))
-
             Row(
                 modifier = Modifier
                     .fillMaxWidth()

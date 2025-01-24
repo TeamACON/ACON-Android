@@ -52,6 +52,18 @@ class SpotDetailViewModel @Inject constructor(
             }
         }
 
+    fun fetchRecentNavigationLocation() = intent {
+        spotRepository.fetchRecentNavigationLocation(1).onSuccess {
+            postSideEffect(
+                SpotDetailSideEffect.RecentLocationFetched
+            )
+        }.onFailure {
+            postSideEffect(
+                SpotDetailSideEffect.RecentLocationFetchFailed(it)
+            )
+        }
+    }
+
     fun navigateToSpotListView() = intent {
         postSideEffect(
             SpotDetailSideEffect.NavigateToSpotListView
@@ -86,6 +98,8 @@ sealed interface SpotDetailUiState {
 
 sealed interface SpotDetailSideEffect {
     data object NavigateToSpotListView : SpotDetailSideEffect
+    data object RecentLocationFetched : SpotDetailSideEffect
+    data class RecentLocationFetchFailed(val error: Throwable) : SpotDetailSideEffect
     data class OnFindWayButtonClick(
         val destinationLat: Double,
         val destinationLng: Double,

@@ -10,6 +10,7 @@ import androidx.navigation.toRoute
 import com.acon.feature.areaverification.AreaVerificationRoute
 import com.acon.feature.areaverification.AreaVerificationScreenContainer
 import com.acon.feature.areaverification.PreferenceMapScreen
+import com.acon.feature.onboarding.OnboardingRoute
 
 fun NavGraphBuilder.areaVerificationNavigation(
     navController: NavHostController
@@ -42,17 +43,12 @@ fun NavGraphBuilder.areaVerificationNavigation(
                     navController.navigate(AreaVerificationRoute.Complete)
                 },
                 onNavigateToNext = {
-                    //Skip to next screen
-                    navController.navigate(AreaVerificationRoute.Complete)
+                    navController.navigate(OnboardingRoute.Graph)
+                },
+                onBackClick = {
+                    navController.popBackStack()
                 }
             )
-        }
-        composable<AreaVerificationRoute.Complete> {
-            // CompleteScreenContainer(
-            //     onFinish = {
-            //         navController.navigate(OnboardingRoute)
-            //     }
-            // )
         }
     }
 }

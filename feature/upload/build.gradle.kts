@@ -66,5 +66,10 @@ dependencies {
     implementation(libs.haze)
     implementation(libs.haze.materials)
 
+    implementation(libs.kotlinx.immutable)
+
+    implementation(project(":domain"))
+
     implementation(project(":core:designsystem"))
+    implementation(project(":core:map"))
 }

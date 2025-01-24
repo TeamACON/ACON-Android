@@ -2,6 +2,7 @@ package com.acon.feature.upload
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,6 +17,10 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -54,6 +59,7 @@ fun UploadContainer(
     onNavigateToSuccess: () -> Unit
 ) {
     val state by viewModel.container.stateFlow.collectAsStateWithLifecycle()
+    val snackbarHostState = remember { SnackbarHostState() }
 
     LaunchedEffect(Unit) {
         viewModel.container.sideEffectFlow.collect { effect ->
@@ -69,26 +75,47 @@ fun UploadContainer(
         }
     }
 
-    Box(
-        modifier = modifier
-            .fillMaxSize()
-            .background(color = AconTheme.color.Gray9)
-    ) {
-        when (state.currentStep) {
-            UploadStep.Upload_Search -> {
-                UploadSearchScreen(
-                    modifier = Modifier.fillMaxSize(),
-                    state = state,
-                    onIntent = viewModel::onIntent
-                )
-            }
+    LaunchedEffect(state.showInsufficientDotoriSnackbar) {
+        if (state.showInsufficientDotoriSnackbar) {
+            snackbarHostState.showSnackbar(
+                message = "도토리가 부족해요!",
+                duration = SnackbarDuration.Short
+            )
+        }
+    }
 
-            UploadStep.Upload_REVIEW -> {
-                UploadReviewScreen(
-                    modifier = Modifier.fillMaxSize(),
-                    state = state,
-                    onIntent = viewModel::onIntent
-                )
+    Scaffold(
+        snackbarHost = {
+            Box(
+                modifier = Modifier.padding(bottom = 112.dp)
+            ) {
+                SnackbarHost(hostState = snackbarHostState)
+            }
+        },
+        modifier = modifier
+    ) { paddingValues ->
+        Box(
+            modifier = modifier
+                .fillMaxSize()
+                .background(color = AconTheme.color.Gray9)
+                .padding(paddingValues)
+        ) {
+            when (state.currentStep) {
+                UploadStep.UPLOAD_SEARCH -> {
+                    UploadSearchScreen(
+                        modifier = Modifier.fillMaxSize(),
+                        state = state,
+                        onIntent = viewModel::onIntent
+                    )
+                }
+
+                UploadStep.UPLOAD_REVIEW -> {
+                    UploadReviewScreen(
+                        modifier = Modifier.fillMaxSize(),
+                        state = state,
+                        onIntent = viewModel::onIntent
+                    )
+                }
             }
         }
     }
@@ -140,7 +167,7 @@ fun UploadSearchScreen(
                     ) {
                         Image(
                             imageVector = ImageVector.vectorResource(
-                                id = com.acon.core.designsystem.R.drawable.ic_dissmiss_24
+                                id = R.drawable.and_ic_dissmiss_28
                             ),
                             contentDescription = "Close",
                         )
@@ -152,6 +179,23 @@ fun UploadSearchScreen(
                         style = AconTheme.typography.head5_22_sb,
                         color = AconTheme.color.White
                     )
+                },
+                trailingIcon = {
+                    Box(
+                        modifier = Modifier.clickable(
+                            enabled = state.selectedLocation != null,
+                            onClick = { onIntent(UploadIntent.OnNextStep) }
+                        )
+                    ) {
+                        Text(
+                            text = "다음",
+                            style = AconTheme.typography.body2_14_reg,
+                            color = if (state.selectedLocation != null)
+                                AconTheme.color.White
+                            else
+                                AconTheme.color.Gray7
+                        )
+                    }
                 }
             )
 
@@ -175,20 +219,6 @@ fun UploadSearchScreen(
             }
 
             Spacer(modifier = Modifier.padding(vertical = 20.dp))
-            if (!showLocationSearch) {
-                AconFilledLargeButton(
-                    text = "이곳에 도토리 남기기",
-                    textStyle = AconTheme.typography.head7_18_sb,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp)
-                        .padding(bottom = 40.dp),
-                    disabledBackgroundColor = AconTheme.color.Gray7,
-                    enabledBackgroundColor = AconTheme.color.Main_org1,
-                    isEnabled = state.selectedLocation != null,
-                    onClick = { onIntent(UploadIntent.OnNextStep) }
-                )
-            }
 
             if (showLocationSearch) {
                 ModalBottomSheet(
