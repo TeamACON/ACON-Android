@@ -27,7 +27,7 @@ fun OnboardingProgressIndicator(
         modifier = modifier
             .fillMaxWidth()
             .height(2.dp),
-        progress = { currentPage / totalPages.toFloat() },
+        progress = { (currentPage - 1) / totalPages.toFloat() },
         color = AconTheme.color.Main_org1,
         trackColor = AconTheme.color.Gray8,
         strokeCap = StrokeCap.Square,

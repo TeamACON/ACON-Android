@@ -25,4 +25,7 @@ sealed interface OnboardingRoute {
 
     @Serializable
     data object LastLoading : OnboardingRoute
+
+    @Serializable
+    data object OnboardingScreen : OnboardingRoute
 }

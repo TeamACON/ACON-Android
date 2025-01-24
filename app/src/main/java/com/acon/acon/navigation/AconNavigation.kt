@@ -42,6 +42,7 @@ import com.acon.core.designsystem.blur.rememberHazeState
 import com.acon.core.designsystem.theme.AconTheme
 import com.acon.domain.repository.GoogleTokenRepository
 import com.acon.feature.areaverification.AreaVerificationRoute
+import com.acon.feature.onboarding.OnboardingRoute
 import com.acon.feature.profile.ProfileRoute
 import com.acon.feature.signin.screen.SignInRoute
 
@@ -96,7 +97,7 @@ fun AconNavigation(
         ) { innerPadding ->
             NavHost(
                 navController = navController,
-                startDestination = SignInRoute.Graph,
+                startDestination = OnboardingRoute.Graph,
                 modifier = Modifier.padding(innerPadding),
                 enterTransition = {
                     defaultEnterTransition()
