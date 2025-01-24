@@ -58,10 +58,25 @@ fun LocationSearchBottomSheet(
     val state by viewModel.container.stateFlow.collectAsStateWithLifecycle()
     var currentLocation by remember { mutableStateOf<Location?>(null) }
     var showVerificationFailDialog by remember { mutableStateOf(false) }
+    var processingLocation by remember { mutableStateOf<SpotListItem?>(null) }
 
     LaunchedEffect(state.locationVerificationResult) {
-        if (state.locationVerificationResult == false) {
-            showVerificationFailDialog = true
+        when (state.locationVerificationResult) {
+            true -> {
+                processingLocation?.let { location ->
+                    viewModel.onIntent(UploadIntent.SelectLocation(location))
+                    onLocationSelected(location)
+                    onDismiss()
+                }
+                processingLocation = null
+            }
+
+            false -> {
+                showVerificationFailDialog = true
+                processingLocation = null
+            }
+
+            null -> {}
         }
     }
 
@@ -81,11 +96,6 @@ fun LocationSearchBottomSheet(
             },
             isImageEnabled = true
         )
-    }
-
-    LaunchedEffect(Unit) {
-        focusRequester.requestFocus()
-        keyboardController?.show()
     }
 
     LaunchedEffect(searchText) {
@@ -137,7 +147,6 @@ fun LocationSearchBottomSheet(
         )
 
         Spacer(modifier = Modifier.padding(top = 12.dp))
-
         Text(
             text = "장소등록",
             style = AconTheme.typography.head8_16_sb,
@@ -149,13 +158,16 @@ fun LocationSearchBottomSheet(
         )
 
         Spacer(modifier = Modifier.padding(top = 30.dp))
-
         AconSearchTextField(
             value = searchText,
             onValueChange = { searchText = it },
             placeholder = "가게명을 입력해주세요",
             modifier = Modifier.padding(horizontal = 20.dp),
-            focusRequester = focusRequester
+            focusRequester = focusRequester,
+            onClick = {
+                focusRequester.requestFocus()
+                keyboardController?.show()
+            }
         )
 
         Box(
@@ -232,18 +244,16 @@ fun LocationSearchBottomSheet(
                                 locationItem = state.searchResults[index],
                                 onClick = {
                                     currentLocation?.let { location ->
+                                        val selectedItem = state.searchResults[index]
+                                        processingLocation = selectedItem
+                                        viewModel.onIntent(UploadIntent.ResetVerification)
                                         viewModel.onIntent(
                                             UploadIntent.VerifyLocation(
-                                                spotId = state.searchResults[index].spotId,
+                                                spotId = selectedItem.spotId,
                                                 latitude = location.latitude,
                                                 longitude = location.longitude
                                             )
                                         )
-                                    }
-                                    if (state.isLocationVerified) {
-                                        viewModel.onIntent(UploadIntent.SelectLocation(state.searchResults[index]))
-                                        onLocationSelected(state.searchResults[index])
-                                        onDismiss()
                                     }
                                 }
                             )

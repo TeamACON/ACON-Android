@@ -23,7 +23,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
@@ -138,7 +137,7 @@ fun UploadSuccessScreen(
                     ).value,
                     modifier = Modifier
                         .fillMaxSize()
-                        .scale(1.2f),
+                        .scale(1f),
                     iterations = 1,
                     isPlaying = true
                 )

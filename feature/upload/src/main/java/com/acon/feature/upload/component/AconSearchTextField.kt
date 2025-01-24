@@ -26,6 +26,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.acon.core.designsystem.noRippleClickable
 import com.acon.core.designsystem.theme.AconTheme
 import com.acon.feature.upload.R
 
@@ -36,11 +37,13 @@ fun AconSearchTextField(
     placeholder: String,
     modifier: Modifier = Modifier,
     focusRequester: FocusRequester,
+    onClick: () -> Unit = {},
 ) {
     Box(
         modifier = modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(8.dp))
+            .noRippleClickable(onClick = onClick)
             .background(
                 shape = RoundedCornerShape(8.dp),
                 color = AconTheme.color.Gray8
