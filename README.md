@@ -11,9 +11,37 @@ acon은 “No more research”라는 슬로건을 가진 지도앱입니다.
 <br/>
 
 ## 🟨 *****SCREENSHOT*****
-| 로그인 |            동네인증              |              온보딩               |              장소탐색               |              업로드               |
-|:---:|:-----------------------------------------------------------------------------:|:-----------------------------------------------------------------------------:|:-----------------------------------------------------------------------------:|:-----------------------------------------------------------------------------:|
-| <img width="200" src=""/> | <img width="200" src=""/> | <img width="200" src=""/> | <img width="200" src=""/> | <img width="200" src=""/> |
+<table>
+  <thead>
+    <tr>
+      <th>로그인</th>
+      <th>동네인증</th>
+      <th>온보딩</th>
+      <th>장소탐색</th>
+      <th>업로드</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <img width="200" src="https://github.com/user-attachments/assets/9f0b9048-3463-4f79-8beb-6feec5894551" />
+      </td>
+      <td>
+        <video width="200" src="https://github.com/user-attachments/assets/a7196c28-5f34-4026-8ace-5a4ab8110254" />
+      </td>
+      <td>
+          <video src="https://github.com/user-attachments/assets/da23f828-0788-4b15-917c-1da0085ef355" width="200" type="video/mp4"/>
+      </td>
+      <td>
+          <video src="https://github.com/user-attachments/assets/bde068e6-a067-4ffd-a621-b626972fa482" width="200" type="video/mp4"/>
+      </td>
+      <td>
+          <video src="https://github.com/user-attachments/assets/08b8aa1e-10f4-4856-81b9-689bf7735420"  width="200" type="video/mp4"/>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
 
 <br/>
 
