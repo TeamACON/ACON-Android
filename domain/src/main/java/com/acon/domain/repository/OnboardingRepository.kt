@@ -1,6 +1,7 @@
 package com.acon.domain.repository
 
 import com.acon.domain.model.onboarding.OnboardingPreferences
+import kotlinx.coroutines.flow.StateFlow
 
 interface OnboardingRepository {
 
@@ -20,4 +21,5 @@ interface OnboardingRepository {
 
     fun getOnboardingResults(): OnboardingPreferences
 
+    val onboardingResultStateFlow: StateFlow<Result<Unit>?>
 }

@@ -11,4 +11,5 @@ java {
 dependencies {
     implementation(libs.javax.inject)
     compileOnly(libs.compose.stable.marker)
+    implementation(libs.kotlinx.coroutines.core)
 }

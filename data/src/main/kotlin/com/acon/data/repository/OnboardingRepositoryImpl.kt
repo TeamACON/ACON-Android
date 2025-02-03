@@ -8,6 +8,9 @@ import com.acon.data.error.runCatchingWith
 import com.acon.domain.error.onboarding.PostOnboardingResultError
 import com.acon.domain.model.onboarding.OnboardingPreferences
 import com.acon.domain.repository.OnboardingRepository
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import javax.inject.Inject
@@ -16,6 +19,9 @@ class OnboardingRepositoryImpl @Inject constructor(
     private val onboardingRemoteDataSource: OnboardingRemoteDataSource,
     private val onboardingLocalDataSource: OnboardingLocalDataSource
 ) : OnboardingRepository {
+
+    private val _onboardingResultStateFlow = MutableStateFlow<Result<Unit>?>(null)
+    override val onboardingResultStateFlow: StateFlow<Result<Unit>?> = _onboardingResultStateFlow.asStateFlow()
 
     override suspend fun postOnboardingResult(
         dislikeFoodList: Set<String>,
@@ -41,10 +47,13 @@ class OnboardingRepositoryImpl @Inject constructor(
 
             if (response.isSuccessful) {
                 Log.d("OnboardingResponse", "Success: ${response.code()} - ${response.body()}")
+                _onboardingResultStateFlow.emit(Result.success(Unit))
+                Result.success(Unit)
             } else {
                 val errorBody = response.errorBody()?.string() ?: "Unknown error"
-                Log.e("OnboardingResponse", "Error: ${response.code()} - $errorBody")
-                throw RuntimeException("Server error: $errorBody")
+                val exception = RuntimeException("Server error: $errorBody")
+                _onboardingResultStateFlow.emit(Result.failure(exception))
+                Result.failure(exception)
             }
         }
     }

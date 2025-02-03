@@ -44,7 +44,7 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 fun OnboardingContainer(
     modifier: Modifier = Modifier,
     viewModel: OnboardingViewModel = hiltViewModel(),
-    navigateToLoadingView: (result: OnboardingResult) -> Unit = {},
+    navigateToLoadingView: () -> Unit = {},
     navigateToSpotListView: () -> Unit = {}
 ){
     val state = viewModel.collectAsState().value
@@ -61,7 +61,7 @@ fun OnboardingContainer(
     viewModel.collectSideEffect {
         when(it){
             is OnboardingScreenSideEffect.NavigateToLoadingPage -> {
-                navigateToLoadingView(it.result)
+                navigateToLoadingView()
             }
             OnboardingScreenSideEffect.NavigateToSpotListView -> {
                 navigateToSpotListView()

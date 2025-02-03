@@ -135,6 +135,8 @@ androidx-ui-test-android = { group = "androidx.compose.ui", name = "ui-test-andr
 ui-test-android = { group = "androidx.compose.ui", name = "ui-test-android", version.ref = "uiTestAndroidVersion" }
 
 kotlinx-immutable = { group = "org.jetbrains.kotlinx", name = "kotlinx-collections-immutable", version.ref = "kotlinxImmutable" }
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version = "1.7.3" }
+kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version = "1.7.3" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

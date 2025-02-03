@@ -4,6 +4,7 @@ import android.os.Parcel
 import android.os.Parcelable
 import android.util.Log
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.viewModelScope
 import com.acon.core.utils.feature.base.BaseContainerHost
 import com.acon.domain.error.onboarding.PostOnboardingResultError
 import com.acon.domain.repository.OnboardingRepository
@@ -18,6 +19,7 @@ import com.acon.feature.onboarding.type.PlaceItems
 import com.acon.feature.onboarding.type.PreferPlaceItems
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.selects.select
 import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.Serializable
@@ -179,16 +181,27 @@ class OnboardingViewModel @Inject constructor(
                     currentState = OnboardingPageState.Page5State()  // Page5로 전환
                 )
             }
+            //다섯번째 화면에서 그냥 바로 Post 때리기.
             is OnboardingPageState.Page5State -> {
                 val updatedState = state.copy(
                     onboardingResult = state.onboardingResult.copy(
                         favoriteSpotRank = currentPageState.selectedCard.toList()
                     ),
                 )
-                reduce {
-                    updatedState
+                reduce { updatedState }
+
+                viewModelScope.launch {
+                    onboardingRepository.postOnboardingResult(
+                        dislikeFoodList = updatedState.onboardingResult.dislikeFoodList,
+                        favoriteCuisineRank = updatedState.onboardingResult.favoriteCuisineRank,
+                        favoriteSpotType = updatedState.onboardingResult.favoriteSpotType,
+                        favoriteSpotStyle = updatedState.onboardingResult.favoriteSpotStyle,
+                        favoriteSpotRank = updatedState.onboardingResult.favoriteSpotRank
+                    )
                 }
-                postSideEffect(OnboardingScreenSideEffect.NavigateToLoadingPage(state.onboardingResult))
+
+                //로딩 화면으로 넘기기
+                postSideEffect(OnboardingScreenSideEffect.NavigateToLoadingPage)
                 updatedState
             }
         }
@@ -291,7 +304,7 @@ sealed class OnboardingPageState {
 }
 
 sealed interface OnboardingScreenSideEffect {
-    data class NavigateToLoadingPage(val result: OnboardingResult): OnboardingScreenSideEffect
+    data object NavigateToLoadingPage: OnboardingScreenSideEffect
     data object NavigateToSpotListView: OnboardingScreenSideEffect
 }
 

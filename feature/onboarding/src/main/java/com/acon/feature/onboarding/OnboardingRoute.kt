@@ -9,10 +9,8 @@ sealed interface OnboardingRoute {
     data object Graph : OnboardingRoute
 
     @Serializable
-    data class LastLoading(
-        val onboardingResult: OnboardingResult
-        ) : OnboardingRoute
+    data object OnboardingScreen : OnboardingRoute
 
     @Serializable
-    data object OnboardingScreen : OnboardingRoute
+    data object LastLoading : OnboardingRoute
 }
