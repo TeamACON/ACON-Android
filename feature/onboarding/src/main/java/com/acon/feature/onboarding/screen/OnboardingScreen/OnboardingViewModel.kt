@@ -262,7 +262,6 @@ data class OnboardingScreenState(
     val showDialog: Boolean = false,
     val totalPages: Int = ONBOARDING_TOTAL_PAGES,
     val onboardingResult: OnboardingResult = OnboardingResult(),
-    val loadingState: ResultLoadingScreenState = ResultLoadingScreenState.Loading
 )
 
 sealed class OnboardingPageState {
@@ -311,12 +310,6 @@ sealed class OnboardingPageState {
 sealed interface OnboardingScreenSideEffect {
     data object NavigateToLoadingPage: OnboardingScreenSideEffect
     data object NavigateToSpotListView: OnboardingScreenSideEffect
-}
-
-sealed interface ResultLoadingScreenState {
-    data object Loading : ResultLoadingScreenState
-    data object LoadSucceed : ResultLoadingScreenState
-    data object LoadFailed: ResultLoadingScreenState
 }
 
 @Parcelize

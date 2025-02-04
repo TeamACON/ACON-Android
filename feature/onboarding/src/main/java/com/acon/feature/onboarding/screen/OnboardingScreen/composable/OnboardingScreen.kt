@@ -64,7 +64,6 @@ fun OnboardingScreen(
             }
         )
 
-        //이 부분이 화면마다 달라져야 함.
         Column(
             modifier = Modifier
                 .fillMaxSize()

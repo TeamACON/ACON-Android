@@ -88,7 +88,6 @@ sealed interface PrefResultLoadingScreenState {
     data object LoadFailed: PrefResultLoadingScreenState
 }
 
-
 sealed interface PrefResultLoadingScreenSideEffect {
     data object navigateToSpotListView: PrefResultLoadingScreenSideEffect
 }
