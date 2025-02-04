@@ -11,9 +11,13 @@ acon은 “No more research”라는 슬로건을 가진 지도앱입니다.
 <br/>
 
 ## 🟨 *****SCREENSHOT*****
-| 로그인 |            동네인증              |              온보딩               |              장소탐색               |              업로드               |
-|:---:|:-----------------------------------------------------------------------------:|:-----------------------------------------------------------------------------:|:-----------------------------------------------------------------------------:|:-----------------------------------------------------------------------------:|
-| <img width="200" src=""/> | <img width="200" src=""/> | <img width="200" src=""/> | <img width="200" src=""/> | <img width="200" src=""/> |
+| 로그인 |            동네인증              |              온보딩               |
+|:---:|:-----------------------------------------------------------------------------:|:-----------------------------------------------------------------------------:|
+| <video width="200" src="https://github.com/user-attachments/assets/890d40ec-0b33-4d5c-bffc-c2197c2f1f48"/> | <video width="200" src="https://github.com/user-attachments/assets/a7196c28-5f34-4026-8ace-5a4ab8110254"/> | <video width="200" src="https://github.com/user-attachments/assets/da23f828-0788-4b15-917c-1da0085ef355"/> |
+
+| 장소탐색 |            업로드              |
+|:---:|:-----------------------------------------------------------------------------:|
+ | <video width="200" src="https://github.com/user-attachments/assets/bde068e6-a067-4ffd-a621-b626972fa482"/> | <video width="200" src="https://github.com/user-attachments/assets/08b8aa1e-10f4-4856-81b9-689bf7735420"/> |
 
 <br/>
 
@@ -30,7 +34,8 @@ acon은 “No more research”라는 슬로건을 가진 지도앱입니다.
 
 | **Category**           | **TechStack**                               | **선정 이유**                                                                 |
 |------------------------|---------------------------------------------|-------------------------------------------------------------------------------|
-| **Architecture**        | SAA(Single Activity Architecture), Clean Architecture, MVI(orbit) | 각 모듈의 역할을 명확히 분리하여 코드의 가독성과 확장성을 높이고, MVI 패턴을 통해 UI 상태를 예측 가능하게 관리하고 orbit을 활용해 더 나은 상태관리  |
+| **Architecture**        | SAA(Single Activity Architecture), Clean Architecture, MVI(orbit), 멀티모듈 | 각 모듈의 역할을 명확히 분리하여 코드의 가독성과 확장성을 높이고, MVI 패턴을 통해 UI 상태를 예측 가능하게 관리하고 orbit을 활용해 더 나은 상태관리  |
+| **UI**            | Glassmorphism                                     | 투명도와 흐림 효과를 활용해 사용자에게 직관적인 UI 제공   |
 | **Language**            | Kotlin                                      | Android 개발에 보편적으로 사용하는 언어인 Kotlin을 사용합니다.   |
 | **Dependency Injection**| Hilt                                        | Hilt는 의존성 주입을 간소화하고 코드 간 결합도를 줄여, 더 나은 테스트와 유지보수를 가능하게 합니다. |
 | **Network**             | Retrofit, OkHttp                           | Retrofit은 네트워크 통신을 간단히 처리하고, OkHttp는 세부 설정 및 로깅을 제공하여, 네트워크 통신의 안정성과 성능을 개선합니다. |
