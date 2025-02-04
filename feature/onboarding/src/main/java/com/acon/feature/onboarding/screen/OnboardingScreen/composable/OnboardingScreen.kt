@@ -19,79 +19,15 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.acon.core.designsystem.component.button.AconFilledLargeButton
-import com.acon.core.designsystem.component.dialog.AconTwoButtonDialog
 import com.acon.core.designsystem.theme.AconTheme
-import com.acon.feature.onboarding.R
 import com.acon.feature.onboarding.component.FoodGrid
 import com.acon.feature.onboarding.component.FreqPlaceSelectGrid
 import com.acon.feature.onboarding.component.OnboardingTopBar
 import com.acon.feature.onboarding.component.PreferFoodTypeSelectGrid
 import com.acon.feature.onboarding.component.PreferPlaceTypeSelectGrid
 import com.acon.feature.onboarding.screen.OnboardingScreen.OnboardingPageState
-import com.acon.feature.onboarding.screen.OnboardingScreen.OnboardingResult
-import com.acon.feature.onboarding.screen.OnboardingScreen.OnboardingScreenSideEffect
 import com.acon.feature.onboarding.screen.OnboardingScreen.OnboardingScreenState
-import com.acon.feature.onboarding.screen.OnboardingScreen.OnboardingViewModel
-import com.acon.feature.onboarding.screen.PrefResultLoadingScreen.PrefResultLoadingScreenSideEffect
-import com.acon.feature.onboarding.screen.delete.UnlikeFoodSelectScreen.UnlikeFoodScreenSideEffect
-import com.acon.feature.onboarding.screen.delete.UnlikeFoodSelectScreen.UnlikeFoodScreenState
-import com.acon.feature.onboarding.screen.delete.UnlikeFoodSelectScreen.UnlikeFoodScreenViewModel
-import com.acon.feature.onboarding.screen.delete.UnlikeFoodSelectScreen.composable.UnlikeFoodScreen
-import com.acon.feature.onboarding.type.FoodItems
-import org.orbitmvi.orbit.compose.collectAsState
-import org.orbitmvi.orbit.compose.collectSideEffect
-
-@Composable
-fun OnboardingContainer(
-    modifier: Modifier = Modifier,
-    viewModel: OnboardingViewModel = hiltViewModel(),
-    navigateToLoadingView: () -> Unit = {},
-    navigateToSpotListView: () -> Unit = {}
-){
-    val state = viewModel.collectAsState().value
-
-    OnboardingScreen(
-        modifier = modifier,
-        screenState = state,
-        onCardClicked = viewModel::onCardClicked,
-        onBackClicked = viewModel::onBackClicked,
-        onSkipClicked = viewModel::showDialog,
-        navigateToNextPage = viewModel::navigateToNextPage,
-    )
-
-    viewModel.collectSideEffect {
-        when(it){
-            is OnboardingScreenSideEffect.NavigateToLoadingPage -> {
-                navigateToLoadingView()
-            }
-            OnboardingScreenSideEffect.NavigateToSpotListView -> {
-                navigateToSpotListView()
-            }
-        }
-    }
-
-    if (state.showDialog) {
-        AconTwoButtonDialog(
-            title = stringResource(R.string.onboarding_alert_title),
-            content = stringResource(R.string.onboarding_alert_description),
-            leftButtonContent = stringResource(R.string.onboarding_alert_left_btn),
-            rightButtonContent = stringResource(R.string.onboarding_alert_right_btn),
-            contentImage = 0,
-            onDismissRequest = {
-                viewModel.hideDialog()
-            },
-            onClickLeft = { // 그만두기
-                viewModel.skipConfirmed()
-            },
-            onClickRight = { // 계속하기
-                viewModel.hideDialog()
-            },
-            isImageEnabled = false
-        )
-    }
-}
 
 @Composable
 fun OnboardingScreen(

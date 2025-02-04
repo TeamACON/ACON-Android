@@ -1,4 +1,4 @@
-package com.acon.feature.onboarding.screen.delete.UnlikeFoodSelectScreen.composable
+package com.acon.feature.onboarding.screen.OnboardingScreen.composable
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -6,41 +6,41 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.acon.core.designsystem.component.dialog.AconTwoButtonDialog
 import com.acon.feature.onboarding.R
-import com.acon.feature.onboarding.screen.delete.UnlikeFoodSelectScreen.UnlikeFoodScreenSideEffect
-import com.acon.feature.onboarding.screen.delete.UnlikeFoodSelectScreen.UnlikeFoodScreenViewModel
+import com.acon.feature.onboarding.screen.OnboardingScreen.OnboardingScreenSideEffect
+import com.acon.feature.onboarding.screen.OnboardingScreen.OnboardingViewModel
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
-fun UnlikeFoodScreenContainer(
+fun OnboardingContainer(
     modifier: Modifier = Modifier,
-    viewModel: UnlikeFoodScreenViewModel = hiltViewModel(),
-    navigateToNextPage: () -> Unit = {},
-    navigateToSpotListView: () -> Unit = {},
+    viewModel: OnboardingViewModel = hiltViewModel(),
+    navigateToLoadingView: () -> Unit = {},
+    navigateToSpotListView: () -> Unit = {}
 ){
     val state = viewModel.collectAsState().value
 
-    UnlikeFoodScreen(
+    OnboardingScreen(
         modifier = modifier,
         screenState = state,
-        columnSize = 3,
         onCardClicked = viewModel::onCardClicked,
+        onBackClicked = viewModel::onBackClicked,
         onSkipClicked = viewModel::showDialog,
         navigateToNextPage = viewModel::navigateToNextPage,
     )
 
     viewModel.collectSideEffect {
         when(it){
-            UnlikeFoodScreenSideEffect.NavigateToNextPage -> {
-                navigateToNextPage()
+            is OnboardingScreenSideEffect.NavigateToLoadingPage -> {
+                navigateToLoadingView()
             }
-            UnlikeFoodScreenSideEffect.NavigateToLastPage -> {
+            OnboardingScreenSideEffect.NavigateToSpotListView -> {
                 navigateToSpotListView()
             }
         }
     }
 
-    if (state.openCloseDialog) {
+    if (state.showDialog) {
         AconTwoButtonDialog(
             title = stringResource(R.string.onboarding_alert_title),
             content = stringResource(R.string.onboarding_alert_description),

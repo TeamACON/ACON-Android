@@ -1,31 +1,22 @@
 package com.acon.feature.onboarding.screen.OnboardingScreen
 
-import android.os.Parcel
 import android.os.Parcelable
 import android.util.Log
-import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewModelScope
 import com.acon.core.utils.feature.base.BaseContainerHost
-import com.acon.domain.error.onboarding.PostOnboardingResultError
 import com.acon.domain.repository.OnboardingRepository
 import com.acon.feature.onboarding.R
-import com.acon.feature.onboarding.screen.PrefResultLoadingScreen.PrefResultLoadingScreenSideEffect
-import com.acon.feature.onboarding.screen.PrefResultLoadingScreen.PrefResultLoadingScreenState
-import com.acon.feature.onboarding.type.CardItem
 import com.acon.feature.onboarding.type.FoodItems
 import com.acon.feature.onboarding.type.FoodTypeItems
 import com.acon.feature.onboarding.type.MoodItems
 import com.acon.feature.onboarding.type.PlaceItems
 import com.acon.feature.onboarding.type.PreferPlaceItems
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.selects.select
 import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.Serializable
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.viewmodel.container
-import java.io.Serial
 import javax.inject.Inject
 
 private const val ONBOARDING_TOTAL_PAGES = 5;
@@ -189,7 +180,6 @@ class OnboardingViewModel @Inject constructor(
                     currentState = OnboardingPageState.Page5State()
                 )
             }
-            //다섯번째 화면에서 그냥 바로 Post 때리기.
             is OnboardingPageState.Page5State -> {
                 var updatedState = state.copy(
                     onboardingResult = state.onboardingResult.copy(
@@ -227,7 +217,7 @@ class OnboardingViewModel @Inject constructor(
 
     fun onBackClicked() = intent {
         val nextPageState = when (state.currentState) {
-            is OnboardingPageState.Page1State -> {  //1페이지 뒤로가기 버튼은 없는데, 이 코드 없앨 수 있나?
+            is OnboardingPageState.Page1State -> {
                 state.copy(
                 )
             }
