@@ -237,7 +237,7 @@ fun OnboardingScreen(
                     cornerRadius = 6.dp,
                     modifier = Modifier.fillMaxWidth(),
                     contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp),
-                    onClick = { navigateToNextPage() }                      //onclick시 어디로 가는지도 달라..
+                    onClick = { navigateToNextPage() }
                 )
             }
         }

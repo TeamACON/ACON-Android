@@ -57,7 +57,6 @@ fun PrefResultLoadingScreenContainer(
     PrefResultLoadingScreen(
         modifier = modifier,
         screenState = state,
-        postOnboardingResult = viewModel::postOnboardingResult,
         navigateToSpotListView = navigateToSpotListView,
     )
 }
@@ -66,12 +65,8 @@ fun PrefResultLoadingScreenContainer(
 fun PrefResultLoadingScreen(
     modifier: Modifier = Modifier,
     screenState: PrefResultLoadingScreenState,
-    postOnboardingResult: () -> Unit = {},
     navigateToSpotListView: () -> Unit = {},
 ){
-    LaunchedEffect(Unit) {
-        postOnboardingResult()
-    }
 
     var lottieRes : Int
     var loadingText : String

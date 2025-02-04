@@ -78,13 +78,21 @@ class OnboardingViewModel @Inject constructor(
         id: String
     ): OnboardingPageState.Page1State {
         return if (id == "") { // '없음' 선택
-            if (currentState.selectedCard.contains(id)) {
-                currentState.copy(selectedCard = emptySet())
+            if (currentState.selectedCard == setOf("")) {
+                currentState.copy(
+                    selectedCard = emptySet(),
+                    isNothingClicked = !currentState.isNothingClicked
+                )
             } else {
-                currentState.copy(selectedCard = setOf(id))
-            }.copy(isNothingClicked = !currentState.isNothingClicked)
+                currentState.copy(
+                    selectedCard = setOf(id),
+                    isNothingClicked = !currentState.isNothingClicked
+                )
+            }
         } else {
-            val updatedSelectedCard = if (currentState.selectedCard.contains(id)) {
+            val updatedSelectedCard = if (currentState.selectedCard == setOf("")) {
+                setOf(id)
+            } else if (currentState.selectedCard.contains(id)){
                 currentState.selectedCard - id
             } else {
                 currentState.selectedCard + id
@@ -151,7 +159,7 @@ class OnboardingViewModel @Inject constructor(
                     onboardingResult = state.onboardingResult.copy(
                         dislikeFoodList = currentPageState.selectedCard
                     ),
-                    currentState = OnboardingPageState.Page2State()  // Page2로 전환
+                    currentState = OnboardingPageState.Page2State()
                 )
             }
             is OnboardingPageState.Page2State -> {
@@ -160,7 +168,7 @@ class OnboardingViewModel @Inject constructor(
                     onboardingResult = state.onboardingResult.copy(
                         favoriteCuisineRank = currentPageState.selectedCard.toList()
                     ),
-                    currentState = OnboardingPageState.Page3State()  // Page3로 전환
+                    currentState = OnboardingPageState.Page3State()
                 )
             }
             is OnboardingPageState.Page3State -> {
@@ -169,7 +177,7 @@ class OnboardingViewModel @Inject constructor(
                     onboardingResult = state.onboardingResult.copy(
                         favoriteSpotType = currentPageState.selectedCard.first()
                     ),
-                    currentState = OnboardingPageState.Page4State()  // Page4로 전환
+                    currentState = OnboardingPageState.Page4State()
                 )
             }
             is OnboardingPageState.Page4State -> {
@@ -178,7 +186,7 @@ class OnboardingViewModel @Inject constructor(
                     onboardingResult = state.onboardingResult.copy(
                         favoriteSpotStyle = currentPageState.selectedCard.first()
                     ),
-                    currentState = OnboardingPageState.Page5State()  // Page5로 전환
+                    currentState = OnboardingPageState.Page5State()
                 )
             }
             //다섯번째 화면에서 그냥 바로 Post 때리기.
@@ -200,19 +208,17 @@ class OnboardingViewModel @Inject constructor(
                     )
                 }
 
-                //로딩 화면으로 넘기기
                 postSideEffect(OnboardingScreenSideEffect.NavigateToLoadingPage)
                 updatedState
             }
         }
 
         reduce { nextPageState ?: state }
-        Log.e("지금 잘 담김?" , "${state}")
     }
 
     fun onBackClicked() = intent {
         val nextPageState = when (state.currentState) {
-            is OnboardingPageState.Page1State -> { // 이때는 없는디..
+            is OnboardingPageState.Page1State -> {  //1페이지 뒤로가기 버튼은 없는데, 이 코드 없앨 수 있나?
                 state.copy(
                 )
             }

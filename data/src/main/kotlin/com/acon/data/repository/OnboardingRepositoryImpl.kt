@@ -50,6 +50,7 @@ class OnboardingRepositoryImpl @Inject constructor(
                 _onboardingResultStateFlow.emit(Result.success(Unit))
                 Result.success(Unit)
             } else {
+                Log.d("OnboardingResponse", "Failed: ${response.errorBody()?.string() ?: "Unknown error"}")
                 val errorBody = response.errorBody()?.string() ?: "Unknown error"
                 val exception = RuntimeException("Server error: $errorBody")
                 _onboardingResultStateFlow.emit(Result.failure(exception))
