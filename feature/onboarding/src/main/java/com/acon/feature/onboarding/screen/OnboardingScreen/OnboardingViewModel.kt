@@ -191,11 +191,20 @@ class OnboardingViewModel @Inject constructor(
             }
             //다섯번째 화면에서 그냥 바로 Post 때리기.
             is OnboardingPageState.Page5State -> {
-                val updatedState = state.copy(
+                var updatedState = state.copy(
                     onboardingResult = state.onboardingResult.copy(
                         favoriteSpotRank = currentPageState.selectedCard.toList()
                     ),
                 )
+                reduce { updatedState }
+
+                if (updatedState.onboardingResult.dislikeFoodList == setOf("")){
+                    updatedState = state.copy(
+                        onboardingResult = state.onboardingResult.copy(
+                            dislikeFoodList = emptySet()
+                        )
+                    )
+                }
                 reduce { updatedState }
 
                 viewModelScope.launch {
