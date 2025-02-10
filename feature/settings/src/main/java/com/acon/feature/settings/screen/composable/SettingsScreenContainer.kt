@@ -1,4 +1,4 @@
-package com.acon.feature.settings.screen
+package com.acon.feature.settings.screen.composable
 
 import androidx.compose.runtime.Composable
 
