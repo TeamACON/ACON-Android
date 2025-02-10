@@ -18,6 +18,6 @@ enum class MoodItems(
     override val cardName: String,
     override val id: String
 ) : CardItem {
-    OLD(R.drawable.place_img_1, cardName = "빈티지", id = "TRADITIONAL"),
+    OLD(R.drawable.place_img_1, cardName = "빈티지", id = "VINTAGE"),
     MODERN(R.drawable.place_img_2, cardName = "모던", id = "MODERN"),
 }

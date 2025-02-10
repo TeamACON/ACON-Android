@@ -1,27 +1,15 @@
 package com.acon.feature.onboarding
 
+import com.acon.feature.onboarding.screen.OnboardingScreen.OnboardingResult
 import kotlinx.serialization.Serializable
 
-@Serializable
 sealed interface OnboardingRoute {
 
     @Serializable
     data object Graph : OnboardingRoute
 
     @Serializable
-    data object ChooseUnlikeFoods : OnboardingRoute
-
-    @Serializable
-    data object RatePreferFoods : OnboardingRoute
-
-    @Serializable
-    data object SelectFrequentPlace : OnboardingRoute
-
-    @Serializable
-    data object SelectPreferPlace : OnboardingRoute
-
-    @Serializable
-    data object RatePreferPlace : OnboardingRoute
+    data object OnboardingScreen : OnboardingRoute
 
     @Serializable
     data object LastLoading : OnboardingRoute

@@ -11,65 +11,67 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PrefResultLoadingScreenViewModel @Inject constructor(
-    private val onboardingRepository: OnboardingRepository,
+    private val onboardingRepository: OnboardingRepository
 ) : BaseContainerHost<PrefResultLoadingScreenState, PrefResultLoadingScreenSideEffect>() {
 
-    override val container = container<PrefResultLoadingScreenState, PrefResultLoadingScreenSideEffect>(PrefResultLoadingScreenState.Loading) {
+    override val container = container<PrefResultLoadingScreenState, PrefResultLoadingScreenSideEffect>(
+        PrefResultLoadingScreenState.Loading
+    ) { }
 
+    init {
+        observeOnboardingResult()
     }
 
-    fun postOnboardingResult() = intent {
+    private fun observeOnboardingResult() = intent {
+        onboardingRepository.onboardingResultStateFlow.collect { result ->
+            when {
+                result?.isSuccess == true -> {
+                    delay(1000L)
+                    reduce { PrefResultLoadingScreenState.LoadSucceed }
+                    delay(2000L)
+                    navigateToSpotListView()
+                }
+                result?.isFailure == true -> {
+                    reduce { PrefResultLoadingScreenState.LoadFailed }
 
-        val onboardingResult = onboardingRepository.getOnboardingResults()
-
-        onboardingRepository.postOnboardingResult(
-            dislikeFoodList = onboardingResult.dislikeFoodList,
-            favoriteCuisineRank = onboardingResult.favoriteCuisineRank,
-            favoriteSpotType = onboardingResult.favoriteSpotType,
-            favoriteSpotStyle = onboardingResult.favoriteSpotStyle,
-            favoriteSpotRank = onboardingResult.favoriteSpotRank
-        ).onSuccess {
-            delay(1000L)
-            reduce {
-                PrefResultLoadingScreenState.LoadSucceed
-            }
-            delay(2000L)
-            navigateToSpotListView()
-        }.onFailure { throwable ->
-            when (throwable) {
-                is PostOnboardingResultError.InvalidDislikeFood -> Log.e(
-                    "OnboardingError",
-                    "Invalid Dislike Food: ${throwable.code}"
-                )
-                is PostOnboardingResultError.InvalidCuisine -> Log.e(
-                    "OnboardingError",
-                    "Invalid Cuisine: ${throwable.code}"
-                )
-                is PostOnboardingResultError.InvalidSpotType -> Log.e(
-                    "OnboardingError",
-                    "Invalid Spot Type: ${throwable.code}"
-                )
-                is PostOnboardingResultError.InvalidSpotStyle -> Log.e(
-                    "OnboardingError",
-                    "Invalid Spot Style: ${throwable.code}"
-                )
-                is PostOnboardingResultError.InvalidSpotRank -> Log.e(
-                    "OnboardingError",
-                    "Invalid Spot Rank: ${throwable.code}"
-                )
-                is PostOnboardingResultError.InvalidFavSpotRankSize -> Log.e(
-                    "OnboardingError",
-                    "Invalid Favorite Spot Rank Size: ${throwable.code}"
-                )
-                is PostOnboardingResultError.InvalidFavCuisineRankSize -> Log.e(
-                    "OnboardingError",
-                    "Invalid Favorite Cuisine Rank Size: ${throwable.code}"
-                )
-                else -> Log.e(
-                    "OnboardingError",
-                    "Unexpected Error: ${throwable.localizedMessage}",
-                    throwable
-                )
+                    val throwable = result.exceptionOrNull()
+                    when (throwable) {
+                        is PostOnboardingResultError.InvalidDislikeFood -> Log.e(
+                            "OnboardingError",
+                            "Invalid Dislike Food: ${throwable.code}"
+                        )
+                        is PostOnboardingResultError.InvalidCuisine -> Log.e(
+                            "OnboardingError",
+                            "Invalid Cuisine: ${throwable.code}"
+                        )
+                        is PostOnboardingResultError.InvalidSpotType -> Log.e(
+                            "OnboardingError",
+                            "Invalid Spot Type: ${throwable.code}"
+                        )
+                        is PostOnboardingResultError.InvalidSpotStyle -> Log.e(
+                            "OnboardingError",
+                            "Invalid Spot Style: ${throwable.code}"
+                        )
+                        is PostOnboardingResultError.InvalidSpotRank -> Log.e(
+                            "OnboardingError",
+                            "Invalid Spot Rank: ${throwable.code}"
+                        )
+                        is PostOnboardingResultError.InvalidFavSpotRankSize -> Log.e(
+                            "OnboardingError",
+                            "Invalid Favorite Spot Rank Size: ${throwable.code}"
+                        )
+                        is PostOnboardingResultError.InvalidFavCuisineRankSize -> Log.e(
+                            "OnboardingError",
+                            "Invalid Favorite Cuisine Rank Size: ${throwable.code}"
+                        )
+                        else -> Log.e(
+                            "OnboardingError",
+                            "Unexpected Error: ${throwable?.localizedMessage}",
+                            throwable
+                        )
+                    }
+                }
+                else -> {  }
             }
         }
     }
@@ -85,7 +87,6 @@ sealed interface PrefResultLoadingScreenState {
     data object LoadSucceed : PrefResultLoadingScreenState
     data object LoadFailed: PrefResultLoadingScreenState
 }
-
 
 sealed interface PrefResultLoadingScreenSideEffect {
     data object navigateToSpotListView: PrefResultLoadingScreenSideEffect

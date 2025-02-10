@@ -69,6 +69,7 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
     implementation (libs.androidx.security.crypto.ktx)
     implementation (libs.bundles.googleSignIn)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
 
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
