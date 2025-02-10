@@ -1,4 +1,4 @@
-package com.acon.feature.settings.component
+package com.acon.feature.withdraw.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

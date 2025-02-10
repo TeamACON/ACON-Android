@@ -1,4 +1,4 @@
-package com.acon.feature.settings.type
+package com.acon.feature.withdraw.type
 
 import androidx.annotation.StringRes
 import com.acon.feature.settings.R
