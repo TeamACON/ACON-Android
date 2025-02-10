@@ -29,7 +29,7 @@
     <string name="reason_other_placeholder">탈퇴하려는 이유를 적어주세요</string>
     <string name="reason_max_length">/50</string>
     <string name="delete_account_bottom_sheet_title">지금 탈퇴를 진행할까요?</string>
-    <string name="delete_account_bottom_sheet_content">지금 탈퇴를 진행하면 취향정보, 리뷰 등 모든 데이터는 영구적으로 삭제되며 복구할 수 없어요</string>
+    <string name="delete_account_bottom_sheet_content">지금 탈퇴를 진행하면 취향정보, 리뷰 등\n모든 데이터는 영구적으로 삭제되며 복구할 수 없어요</string>
 
     <!-- button content -->
     <string name="submit_btn_content">제출하기</string>
@@ -42,7 +42,9 @@
     <string name="privacy_policy_content_description">개인정보처리방침</string>
     <string name="explore_preferences_content_description">취향탐색 다시하기</string>
     <string name="login_info_content_description">로그인 정보</string>
-    <string name="withdraw_service_content_description">서비스 탈퇴</string>
+    <string name="delete_account_service_content_description">서비스 탈퇴</string>
     <string name="execute_settings_content_description">설정 기능 실행</string>
     <string name="go_back_content_description">뒤로가기</string>
+    <string name="reason_reset_btn_content_description">기타 이유 초기화</string>
+    <string name="dismiss_btn_content_description">서비스 탈퇴 닫기</string>
 </resources>
