@@ -64,17 +64,6 @@ fun SettingSectionItem(
                 .weight(1f)
         )
 
-        if (settingsType == SettingsType.LOGIN_INFO) {
-            Text(
-                text = stringResource(R.string.do_logout),
-                style = AconTheme.typography.subtitle2_14_med,
-                color = AconTheme.color.Gray4,
-                modifier = Modifier
-                    .padding(vertical = 6.dp),
-            )
-            Spacer(modifier = Modifier.width(4.dp))
-        }
-
         if (showContinueImage) {
             Image(
                 imageVector = ImageVector.vectorResource(com.acon.core.designsystem.R.drawable.ic_arrow_right_20),

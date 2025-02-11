@@ -32,10 +32,11 @@ fun AconTwoButtonDialog(
     content: String,
     leftButtonContent: String,
     rightButtonContent: String,
-    @DrawableRes contentImage: Int,
     onDismissRequest: () -> Unit,
     onClickLeft: () -> Unit,
     onClickRight: () -> Unit,
+    @DrawableRes contentImage: Int? = null,
+
     isImageEnabled: Boolean = false,
 ) {
     AconDialog(
@@ -50,10 +51,12 @@ fun AconTwoButtonDialog(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             if(isImageEnabled) {
-                Image(
-                    imageVector = ImageVector.vectorResource(contentImage),
-                    contentDescription = ""
-                )
+                contentImage?.let {
+                    Image(
+                        imageVector = ImageVector.vectorResource(contentImage),
+                        contentDescription = ""
+                    )
+                }
                 Spacer(modifier = Modifier.height(16.dp))
             }
             Text(

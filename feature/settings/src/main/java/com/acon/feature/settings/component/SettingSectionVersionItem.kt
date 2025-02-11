@@ -55,7 +55,7 @@ fun SettingSectionVersionItem(
             )
         }
         Text(
-            text = stringResource(R.string.latest_version),
+            text = stringResource(R.string.settings_section_current_version),
             style = AconTheme.typography.subtitle1_16_med,
             color = AconTheme.color.White,
             modifier = Modifier

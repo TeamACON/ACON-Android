@@ -1,6 +1,5 @@
 package com.acon.feature.withdraw.component
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -9,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
@@ -17,13 +17,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.SolidColor
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.acon.core.designsystem.noRippleClickable
 import com.acon.core.designsystem.theme.AconTheme
 import com.acon.feature.settings.R
 
@@ -33,9 +33,13 @@ fun DeleteAccountTextField(
     onValueChange: (String) -> Unit,
     placeholder: String,
     modifier: Modifier = Modifier,
+    focusRequester: FocusRequester,
     maxLength: Int = 50,
-    onClickResetText: () -> Unit = {},
 ) {
+    val lineHeight = AconTheme.typography.subtitle1_16_med.lineHeight
+    val density = LocalDensity.current
+    val threeLineHeight = with(density) { (lineHeight * 3).toDp() }
+
     Column (
         modifier = modifier
             .fillMaxWidth()
@@ -58,7 +62,9 @@ fun DeleteAccountTextField(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 12.dp, vertical = 10.dp),
+                    .padding(horizontal = 12.dp, vertical = 10.dp)
+                    .height(threeLineHeight),
+                verticalAlignment = Alignment.Top
             ) {
                 BasicTextField(
                     value = value,
@@ -72,8 +78,7 @@ fun DeleteAccountTextField(
                     ),
                     cursorBrush = SolidColor(AconTheme.color.White),
                     modifier = Modifier
-                        .weight(1f)
-                        .padding(end = 16.dp),
+                        .focusRequester(focusRequester),
                     decorationBox = { innerTextField ->
                         Box(modifier = Modifier.fillMaxWidth()) {
                             if(value.isEmpty()) {
@@ -86,12 +91,6 @@ fun DeleteAccountTextField(
                             innerTextField()
                         }
                     }
-                )
-                Image(
-                    imageVector = ImageVector.vectorResource(id = com.acon.core.designsystem.R.drawable.ic_dissmiss_circle_gray),
-                    contentDescription = stringResource(R.string.reason_reset_btn_content_description),
-                    modifier = Modifier
-                        .noRippleClickable { onClickResetText() }
                 )
             }
         }
@@ -132,6 +131,7 @@ private fun DeleteAccountTextFiledPreview() {
             DeleteAccountTextField(
                 value = "탈퇴하려는 이유를 작성하다가 다음 줄로 넘어가게 된다면 이런 식으로 보입니다 딱 오십자임다",
                 onValueChange = {},
+                focusRequester = FocusRequester(),
                 placeholder = stringResource(R.string.reason_other_placeholder),
             )
         }
