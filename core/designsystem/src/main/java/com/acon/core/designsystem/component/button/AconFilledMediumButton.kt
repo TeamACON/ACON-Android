@@ -32,6 +32,7 @@ fun AconFilledMediumButton(
         cornerRadius = cornerRadius,
         contentPadding = contentPadding,
         onClick = onClick,
+        enabled = isEnabled
     ) {
         Text(
             text = text,

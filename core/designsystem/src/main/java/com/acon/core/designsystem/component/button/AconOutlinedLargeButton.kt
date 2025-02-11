@@ -22,26 +22,35 @@ fun AconOutlinedLargeButton(
     disabledBackgroundColor: Color,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    textColor: Color = AconTheme.color.White,
+    textColor: Color? = null,
+    borderColor: Color? = null,
+    backgroundColor: Color? = null,
     textStyle: TextStyle = AconTheme.typography.head8_16_sb,
+    enabledTextColor: Color = AconTheme.color.White,
+    disabledTextColor: Color = AconTheme.color.Gray3,
     isEnabled: Boolean = true,
     borderWidth: Dp = 1.dp,
     cornerRadius: Dp = 6.dp,
     contentPadding: PaddingValues = PaddingValues(horizontal = 14.dp, vertical = 14.dp),
 ) {
+    val effectiveBackgroundColor = backgroundColor ?: if (isEnabled) enabledBackgroundColor else disabledBackgroundColor
+    val effectiveBorderColor = borderColor ?: if (isEnabled) enabledBorderColor else disabledBorderColor
+    val effectiveTextColor = textColor ?: if (isEnabled) enabledTextColor else disabledTextColor
+
     AconButton (
-        backGroundColor = if(isEnabled) enabledBackgroundColor else disabledBackgroundColor,
-        borderColor = if(isEnabled) enabledBorderColor else disabledBorderColor,
+        backGroundColor = effectiveBackgroundColor,
+        borderColor = effectiveBorderColor,
         borderWidth = borderWidth,
         modifier = modifier,
         cornerRadius = cornerRadius,
         contentPadding = contentPadding,
         onClick = onClick,
+        enabled = isEnabled
     ) {
         Text(
             text = text,
             style = textStyle,
-            color = textColor
+            color = effectiveTextColor
         )
     }
 }
@@ -53,7 +62,6 @@ private fun PreviewAconOutlinedButton() {
         AconOutlinedLargeButton(
             text = stringResource(R.string.login_btn_preview_content),
             textStyle = AconTheme.typography.head8_16_sb,
-            textColor = AconTheme.color.Gray3,
             enabledBorderColor = AconTheme.color.Gray5,
             enabledBackgroundColor = AconTheme.color.Gray9,
             disabledBorderColor = AconTheme.color.Gray6,
