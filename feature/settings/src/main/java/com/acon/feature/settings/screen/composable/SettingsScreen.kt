@@ -40,20 +40,20 @@ fun SettingsScreen(
     onPrivatePolicy: () -> Unit = {},
     onRetryOnBoarding: () -> Unit = {},
     onUpdateVersion: () -> Unit = {},
-    onSignOut: () -> Unit = {},
-    onDeleteAccount: () -> Unit = {},
+    onSignOut: () -> Unit = {}, // TODO - 서버 통신 로직과 합쳐야 함
+    onDeleteAccountScreen: () -> Unit = {},
 ) {
     var showSinOutDialog by remember { mutableStateOf(false) }
 
     if(showSinOutDialog) {
         AconTwoButtonDialog(
-            title = "로그아웃 하시겠어요?",
-            content = "현재 계정으로 다시 로그인하면 데이터를 불러올 수 있어요",
-            leftButtonContent = "취소",
-            rightButtonContent = "로그아웃하기",
+            title = stringResource(R.string.logout_dialog_title),
+            content = stringResource(R.string.logout_dialog_content),
+            leftButtonContent = stringResource(R.string.logout_dialog_cancel_btn),
+            rightButtonContent = stringResource(R.string.settings_section_logout),
             onDismissRequest = { showSinOutDialog = false },
-            onClickLeft = onSignOut,
-            onClickRight = { showSinOutDialog = false },
+            onClickLeft = { showSinOutDialog = false },
+            onClickRight =  onSignOut,
             isImageEnabled = false
         )
     }
@@ -144,7 +144,7 @@ fun SettingsScreen(
                     SettingSectionItem(
                         settingsType = SettingsType.DELETE_ACCOUNT,
                         showContinueImage = true,
-                        onClickContinue = onDeleteAccount
+                        onClickContinue = onDeleteAccountScreen
                     )
                 }
 

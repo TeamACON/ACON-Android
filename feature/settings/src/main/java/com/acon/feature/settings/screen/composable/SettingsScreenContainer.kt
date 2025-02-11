@@ -36,7 +36,7 @@ fun SettingsScreenContainer(
         onRetryOnBoarding = viewModel::onRetryOnBoarding,
         onUpdateVersion = viewModel::onUpdateVersion,
         onSignOut = viewModel::onSignOut,
-        onDeleteAccount = viewModel::onDeleteAccount,
+        onDeleteAccountScreen = viewModel::onDeleteAccount,
     )
 
     viewModel.collectSideEffect {
