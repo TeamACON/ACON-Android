@@ -26,12 +26,11 @@ import com.acon.acon.navigation.bottom.BottomNavType
 import com.acon.acon.navigation.nested.areaVerificationNavigation
 import com.acon.acon.navigation.nested.onboardingNavigationNavigation
 import com.acon.acon.navigation.nested.profileNavigation
+import com.acon.acon.navigation.nested.settingsNavigation
 import com.acon.acon.navigation.nested.signInNavigationNavigation
 import com.acon.acon.navigation.nested.splashNavigationNavigation
 import com.acon.acon.navigation.nested.spotNavigation
 import com.acon.acon.navigation.nested.uploadNavigation
-import com.acon.feature.spot.com.acon.feature.spot.SpotRoute
-import com.acon.feature.upload.UploadRoute
 import com.acon.core.designsystem.animation.defaultEnterTransition
 import com.acon.core.designsystem.animation.defaultExitTransition
 import com.acon.core.designsystem.animation.defaultPopEnterTransition
@@ -41,10 +40,10 @@ import com.acon.core.designsystem.blur.defaultHazeEffect
 import com.acon.core.designsystem.blur.rememberHazeState
 import com.acon.core.designsystem.theme.AconTheme
 import com.acon.domain.repository.GoogleTokenRepository
-import com.acon.feature.areaverification.AreaVerificationRoute
-import com.acon.feature.onboarding.OnboardingRoute
 import com.acon.feature.profile.ProfileRoute
 import com.acon.feature.signin.screen.SignInRoute
+import com.acon.feature.spot.com.acon.feature.spot.SpotRoute
+import com.acon.feature.upload.UploadRoute
 
 @Composable
 fun AconNavigation(
@@ -122,6 +121,8 @@ fun AconNavigation(
                 uploadNavigation(navController)
 
                 profileNavigation(navController)
+
+                settingsNavigation(navController)
             }
         }
     }
