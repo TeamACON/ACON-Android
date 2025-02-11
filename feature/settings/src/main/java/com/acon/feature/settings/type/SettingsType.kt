@@ -26,7 +26,7 @@ enum class SettingsType(
     ),
     LOGIN_INFO(
         titleResId = com.acon.core.designsystem.R.drawable.ic_logining_17,
-        title = R.string.settings_section_login_info
+        title = R.string.settings_section_logout
     ),
     DELETE_ACCOUNT(
         titleResId = com.acon.core.designsystem.R.drawable.ic_delet_account_17,

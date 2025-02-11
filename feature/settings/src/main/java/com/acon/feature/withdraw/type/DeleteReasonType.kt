@@ -4,7 +4,7 @@ import androidx.annotation.StringRes
 import com.acon.feature.settings.R
 
 enum class DeleteReasonType(
-    @StringRes reason: Int,
+    @StringRes val reason: Int,
 ) {
     FEW_RESTAURANTS(reason = R.string.reason_few_restaurants),
     UNSATISFIED_RECOMMENDATIONS(reason = R.string.reason_unsatisfied_recommendations),
