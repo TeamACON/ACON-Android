@@ -135,7 +135,7 @@ fun SettingsScreen(
 
                     Spacer(Modifier.height(16.dp))
                     SettingSectionItem(
-                        settingsType = SettingsType.LOGIN_INFO,
+                        settingsType = SettingsType.LOGOUT,
                         showContinueImage = true,
                         onClickContinue = { }
                     )

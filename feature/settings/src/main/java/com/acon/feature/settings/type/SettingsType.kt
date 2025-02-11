@@ -24,7 +24,7 @@ enum class SettingsType(
         titleResId = com.acon.core.designsystem.R.drawable.ic_retry_onboarding_17,
         title = R.string.settings_section_retry_onboarding
     ),
-    LOGIN_INFO(
+    LOGOUT(
         titleResId = com.acon.core.designsystem.R.drawable.ic_logining_17,
         title = R.string.settings_section_logout
     ),
