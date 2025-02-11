@@ -27,7 +27,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.acon.core.designsystem.blur.LocalHazeState
 import com.acon.core.designsystem.blur.defaultHazeEffect
 import com.acon.core.designsystem.component.button.AconFilledLargeButton
 import com.acon.core.designsystem.noRippleClickable
@@ -47,7 +46,7 @@ fun DeleteAccountBottomSheet(
         sheetState = rememberModalBottomSheetState(
             skipPartiallyExpanded = true
         ),
-        contentColor = AconTheme.color.Gla_w_10,
+        contentColor = AconTheme.color.Dim_b_60,
         modifier = modifier,
         onDismissRequest = onDismissRequest,
         dragHandle = null
@@ -56,15 +55,10 @@ fun DeleteAccountBottomSheet(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(AconTheme.color.Gla_w_10)
-                    .background(AconTheme.color.Gray9.copy(alpha = 0.5f))
-
-                    // TODO - 정확하지 않은 수치
+                    .background(AconTheme.color.Dim_b_60)
                     .defaultHazeEffect(
-                        hazeState = LocalHazeState.current,
-                        tintColor = AconTheme.color.Gray8,
-                        alpha = 0.7f,
-                        blurRadius = 20.dp
+                        hazeState = hazeState,
+                        tintColor = AconTheme.color.Dim_b_60,
                     )
             ) {
                 Spacer(
