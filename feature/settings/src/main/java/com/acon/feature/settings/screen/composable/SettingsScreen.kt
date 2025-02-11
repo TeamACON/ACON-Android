@@ -137,7 +137,7 @@ fun SettingsScreen(
                     SettingSectionItem(
                         settingsType = SettingsType.LOGOUT,
                         showContinueImage = true,
-                        onClickContinue = { }
+                        onClickContinue = { showSinOutDialog = true }
                     )
 
                     Spacer(Modifier.height(16.dp))
