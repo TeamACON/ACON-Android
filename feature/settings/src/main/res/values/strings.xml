@@ -10,12 +10,11 @@
     <!-- settings section component -->
     <string name="latest_version">최신버전</string>
     <string name="do_update_version">업데이트하기</string>
-    <string name="do_logout">로그아웃하기</string>
     <string name="settings_section_current_version">현재 버전</string>
     <string name="settings_section_term_of_use">이용약관</string>
     <string name="settings_section_private_policy">개인정보처리방침</string>
     <string name="settings_section_retry_onboarding">취향탐색 다시하기</string>
-    <string name="settings_section_login_info">로그인 정보</string>
+    <string name="settings_section_logout">로그아웃하기</string>
     <string name="settings_section_delete_account">서비스 탈퇴</string>
 
     <!-- delete account -->
@@ -38,10 +37,6 @@
 
     <!-- Content Description -->
     <string name="current_version_info_content_description">현재 버전 정보</string>
-    <string name="terms_of_service_content_description">이용약관</string>
-    <string name="privacy_policy_content_description">개인정보처리방침</string>
-    <string name="explore_preferences_content_description">취향탐색 다시하기</string>
-    <string name="login_info_content_description">로그인 정보</string>
     <string name="delete_account_service_content_description">서비스 탈퇴</string>
     <string name="execute_settings_content_description">설정 기능 실행</string>
     <string name="go_back_content_description">뒤로가기</string>
