@@ -28,7 +28,7 @@ fun ProfileScreenContainer(
 
     ProfileScreen(
         state = state,
-        modifier = modifier.padding(top = 58.dp).fillMaxSize(),
+        modifier = modifier.fillMaxSize(),
         onSettings = viewModel::onSettings,
         onEditProfile = viewModel::onEditProfile,
         onGoogleSignIn = viewModel::onGoogleSignIn,

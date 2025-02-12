@@ -51,36 +51,36 @@ fun ProfileScreen(
         is ProfileUiState.Success -> {
           Column(
                 modifier = modifier
-                    .fillMaxSize()
                     .background(AconTheme.color.Gray9)
                     .padding(horizontal = 16.dp)
                     .hazeSource(LocalHazeState.current)
-          ) {
-                AconTopBar(
-                    modifier = Modifier.padding(vertical = 14.dp),
-                    paddingValues = PaddingValues(0.dp),
-                    content = {
+          ) { 
+              Spacer(Modifier.height(42.dp))
+              AconTopBar(
+                  modifier = Modifier.padding(vertical = 14.dp),
+                  paddingValues = PaddingValues(0.dp),
+                  content = {
                         Text(
                             text = stringResource(R.string.profile_topbar),
                             style = AconTheme.typography.head5_22_sb,
                             color = AconTheme.color.White
                         )
                     },
-                    trailingIcon = {
-                        IconButton(onClick = onSettings) {
+                  trailingIcon = {
+                      IconButton(onClick = onSettings) {
                             Icon(
                                 imageVector = ImageVector.vectorResource(com.acon.core.designsystem.R.drawable.ic_setting_w_28),
                                 contentDescription = stringResource(R.string.content_description_settings),
                                 tint = AconTheme.color.White
                             )
-                        }
-                    },
-                )
+                      }
+                  },
+              )
 
-                Row(
-                    modifier = Modifier
-                        .padding(vertical = 32.dp)
-                ) {
+              Row(
+                  modifier = Modifier
+                 .padding(vertical = 32.dp)
+              ) {
                     // 이미지가 없으면 디폴트 이미지
                     Image(
                         imageVector = ImageVector.vectorResource(com.acon.core.designsystem.R.drawable.ic_default_profile_40),
@@ -121,11 +121,11 @@ fun ProfileScreen(
                         }
                     }
                 }
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
+              Row(
+                 modifier = Modifier
+                     .fillMaxWidth(),
+                 horizontalArrangement = Arrangement.spacedBy(8.dp)
+              ) {
                     ProfileInfo(
                         profileInfoType = ProfileInfoType.ACON,
                         aconCount = "11",
@@ -137,7 +137,7 @@ fun ProfileScreen(
                         modifier = Modifier.weight(1f)
                     )
                 }
-            }
+          }
         }
         is ProfileUiState.Loading -> {}
         is ProfileUiState.LoadFailed -> {
@@ -158,6 +158,7 @@ fun ProfileScreen(
                     .padding(horizontal = 16.dp)
                     .hazeSource(LocalHazeState.current)
             ) {
+                Spacer(Modifier.height(42.dp))
                 AconTopBar(
                     modifier = Modifier.padding(vertical = 14.dp),
                     paddingValues = PaddingValues(0.dp),
@@ -243,7 +244,7 @@ fun ProfileScreen(
 private fun ProfileScreenPreview() {
     AconTheme {
         ProfileScreen(
-            state = ProfileUiState.Loading,
+            state = ProfileUiState.LoadFailed(),
             type = "게스트1"
         )
     }
