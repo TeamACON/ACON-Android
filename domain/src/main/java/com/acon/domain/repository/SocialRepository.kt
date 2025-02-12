@@ -1,5 +1,5 @@
 package com.acon.domain.repository
 
-interface GoogleTokenRepository {
+interface SocialRepository {
     suspend fun signIn(): Result<Unit>
 }

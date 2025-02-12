@@ -1,7 +1,7 @@
 package com.acon.feature.signin.screen
 
 import com.acon.core.utils.feature.base.BaseContainerHost
-import com.acon.domain.repository.GoogleTokenRepository
+import com.acon.domain.repository.SocialRepository
 import com.acon.domain.repository.TokenRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.orbitmvi.orbit.Container
@@ -18,8 +18,8 @@ class SignInViewModel @Inject constructor(
             isTokenValid()
         }
 
-    fun googleLogin(googleTokenRepository: GoogleTokenRepository) = intent {
-        googleTokenRepository.signIn()
+    fun googleLogin(socialRepository: SocialRepository) = intent {
+        socialRepository.signIn()
             .onSuccess {
                 reduce {
                     SignInUiState.Success

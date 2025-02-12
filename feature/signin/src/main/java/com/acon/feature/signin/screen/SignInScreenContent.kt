@@ -8,13 +8,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.acon.domain.repository.GoogleTokenRepository
+import com.acon.domain.repository.SocialRepository
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
 fun SignInScreenContent(
-    googleSignInRepository: GoogleTokenRepository,
+    socialRepository: SocialRepository,
     navigateToSpotListView: () -> Unit,
     navigateToAreaVerification: () -> Unit,
     modifier: Modifier = Modifier,
@@ -30,7 +30,7 @@ fun SignInScreenContent(
         onClickTermsOfUse = viewModel::onClickTermsOfUse,
         onClickPrivacyPolicy = viewModel::onClickPrivacyPolicy,
         onClickLoginGoogle = {
-            viewModel.googleLogin(googleSignInRepository)
+            viewModel.googleLogin(socialRepository)
         }
     )
 

@@ -39,7 +39,7 @@ import com.acon.core.designsystem.blur.LocalHazeState
 import com.acon.core.designsystem.blur.defaultHazeEffect
 import com.acon.core.designsystem.blur.rememberHazeState
 import com.acon.core.designsystem.theme.AconTheme
-import com.acon.domain.repository.GoogleTokenRepository
+import com.acon.domain.repository.SocialRepository
 import com.acon.feature.profile.ProfileRoute
 import com.acon.feature.signin.screen.SignInRoute
 import com.acon.feature.spot.com.acon.feature.spot.SpotRoute
@@ -49,7 +49,7 @@ import com.acon.feature.upload.UploadRoute
 fun AconNavigation(
     modifier: Modifier = Modifier,
     navController: NavHostController,
-    googleTokenRepository: GoogleTokenRepository,
+    socialRepository: SocialRepository,
 ) {
 
     val backStackEntry by navController.currentBackStackEntryAsState()
@@ -110,7 +110,7 @@ fun AconNavigation(
             ) {
                 splashNavigationNavigation(navController)
 
-                signInNavigationNavigation(navController, googleTokenRepository)
+                signInNavigationNavigation(navController, socialRepository)
 
                 areaVerificationNavigation(navController)
 
