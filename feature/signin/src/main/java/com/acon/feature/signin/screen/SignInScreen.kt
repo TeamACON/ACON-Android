@@ -14,7 +14,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -33,6 +37,7 @@ import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
+import kotlinx.coroutines.delay
 
 @Composable
 fun SignInScreen(
@@ -58,7 +63,14 @@ fun SignInScreen(
                 val composition by rememberLottieComposition(
                     LottieCompositionSpec.Asset("acon_splash_lottie.json")
                 )
-                val logoAnimationState = animateLottieCompositionAsState(composition = composition)
+                var startAnimation by remember { mutableStateOf(false) }
+                LaunchedEffect(Unit) {
+                    delay(1000)
+                    startAnimation = true
+                }
+                val logoAnimationState = animateLottieCompositionAsState(
+                    composition = if (startAnimation) composition else null
+                )
                 val alpha by animateFloatAsState(
                     targetValue = if (logoAnimationState.value >= .99f) 1f else 0f,
                     animationSpec = tween(1000),
