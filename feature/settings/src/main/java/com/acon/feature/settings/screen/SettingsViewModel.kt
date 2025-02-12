@@ -1,6 +1,7 @@
 package com.acon.feature.settings.screen
 
 import com.acon.core.utils.feature.base.BaseContainerHost
+import com.acon.domain.repository.AuthRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
@@ -8,10 +9,15 @@ import javax.inject.Inject
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
     // TODO - 로그아웃 추가 해야 함
+    private val authRepository: AuthRepository
 ) : BaseContainerHost<SettingsUiState, SettingsSideEffect>() {
 
     override val container =
-        container<SettingsUiState, SettingsSideEffect>(SettingsUiState.Default) { }
+        container<SettingsUiState, SettingsSideEffect>(SettingsUiState.Default(false)) {
+            authRepository.getLoginState().collect { loginState ->
+                reduce { SettingsUiState.Default(loginState) }
+            }
+        }
 
     // TODO - 로그아웃 추가 해야 함
 
@@ -45,8 +51,9 @@ class SettingsViewModel @Inject constructor(
 }
 
 sealed interface SettingsUiState{
-    // TODO - 로그인 여부 상태 변수 필요
-    data object Default : SettingsUiState
+    data class Default(
+        val isLogin: Boolean = false
+    ) : SettingsUiState
 }
 
 sealed interface SettingsSideEffect {

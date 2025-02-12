@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -39,7 +38,6 @@ import dev.chrisbanes.haze.hazeSource
 fun ProfileScreen(
     state: ProfileUiState,
     modifier: Modifier = Modifier,
-    type: String = "게스트", //TODO 로그인 여부 설정해야 함
     onSettings: () -> Unit = {},
     onEditProfile: () -> Unit = {},
     onGoogleSignIn: () -> Unit = {},
@@ -47,113 +45,10 @@ fun ProfileScreen(
     onPrivatePolicy: () -> Unit = {},
     onBottomSheetShowStateChange: (Boolean) -> Unit = {}
 ) {
-    when(state) {
+    when (state) {
         is ProfileUiState.Success -> {
-          Column(
-                modifier = modifier
-                    .background(AconTheme.color.Gray9)
-                    .padding(horizontal = 16.dp)
-                    .hazeSource(LocalHazeState.current)
-          ) { 
-              Spacer(Modifier.height(42.dp))
-              AconTopBar(
-                  modifier = Modifier.padding(vertical = 14.dp),
-                  paddingValues = PaddingValues(0.dp),
-                  content = {
-                        Text(
-                            text = stringResource(R.string.profile_topbar),
-                            style = AconTheme.typography.head5_22_sb,
-                            color = AconTheme.color.White
-                        )
-                    },
-                  trailingIcon = {
-                      IconButton(onClick = onSettings) {
-                            Icon(
-                                imageVector = ImageVector.vectorResource(com.acon.core.designsystem.R.drawable.ic_setting_w_28),
-                                contentDescription = stringResource(R.string.content_description_settings),
-                                tint = AconTheme.color.White
-                            )
-                      }
-                  },
-              )
-
-              Row(
-                  modifier = Modifier
-                 .padding(vertical = 32.dp)
-              ) {
-                    // 이미지가 없으면 디폴트 이미지
-                    Image(
-                        imageVector = ImageVector.vectorResource(com.acon.core.designsystem.R.drawable.ic_default_profile_40),
-                        contentDescription = stringResource(R.string.content_description_default_profile_image),
-                        modifier = Modifier
-                            .size(60.dp)
-                            .clip(CircleShape)
-                            .background(AconTheme.color.Gray7)
-                            .padding(10.dp)
-                    )
-
-                    Column(
-                        modifier = Modifier
-                            .padding(vertical = 4.dp)
-                            .padding(start = 16.dp)
-                    ) {
-                        Text(
-                            text = "유저",
-                            style = AconTheme.typography.head5_22_sb,
-                            color = AconTheme.color.White,
-                        )
-
-                        Spacer(Modifier.height(4.dp))
-                        Row {
-                            Text(
-                                text = stringResource(R.string.edit_profile),
-                                style = AconTheme.typography.subtitle2_14_med,
-                                color = AconTheme.color.Gray4,
-                            )
-
-                            Image(
-                                imageVector = ImageVector.vectorResource(com.acon.core.designsystem.R.drawable.ic_edit_g_20),
-                                contentDescription = stringResource(R.string.content_description_edit_profile),
-                                modifier = Modifier
-                                    .padding(start = 4.dp)
-                                    .noRippleClickable { onEditProfile() }
-                            )
-                        }
-                    }
-                }
-              Row(
-                 modifier = Modifier
-                     .fillMaxWidth(),
-                 horizontalArrangement = Arrangement.spacedBy(8.dp)
-              ) {
-                    ProfileInfo(
-                        profileInfoType = ProfileInfoType.ACON,
-                        aconCount = "11",
-                        modifier = Modifier.weight(1f)
-                    )
-                    ProfileInfo(
-                        profileInfoType = ProfileInfoType.AREA,
-                        area = "망원동",
-                        modifier = Modifier.weight(1f)
-                    )
-                }
-          }
-        }
-        is ProfileUiState.Loading -> {}
-        is ProfileUiState.LoadFailed -> {
-            if(state.showLoginBottomSheet) {
-                LoginBottomSheet(
-                    hazeState = LocalHazeState.current,
-                    onDismissRequest = { onBottomSheetShowStateChange(false) },
-                    onGoogleSignIn = onGoogleSignIn,
-                    onTermOfUse = onTermOfUse,
-                    onPrivatePolicy = onPrivatePolicy
-                )
-            }
-
             Column(
                 modifier = modifier
-                    .fillMaxSize()
                     .background(AconTheme.color.Gray9)
                     .padding(horizontal = 16.dp)
                     .hazeSource(LocalHazeState.current)
@@ -184,7 +79,114 @@ fun ProfileScreen(
                     modifier = Modifier
                         .padding(vertical = 32.dp)
                 ) {
-                    // 이미지가 없으면 디폴트 이미지
+                    // TODO - 서버에서 받아온 AsyncImage
+                    Image(
+                        imageVector = ImageVector.vectorResource(com.acon.core.designsystem.R.drawable.ic_default_profile_40),
+                        contentDescription = stringResource(R.string.content_description_default_profile_image),
+                        modifier = Modifier
+                            .size(60.dp)
+                            .clip(CircleShape)
+                            .background(AconTheme.color.Gray7)
+                            .padding(10.dp)
+                    )
+
+                    Column(
+                        modifier = Modifier
+                            .padding(vertical = 4.dp)
+                            .padding(start = 16.dp)
+                    ) {
+                        // TODO - 서버에서 받아온 유저 이름 (최초 난수)
+                        Text(
+                            text = "유저",
+                            style = AconTheme.typography.head5_22_sb,
+                            color = AconTheme.color.White,
+                        )
+
+                        Spacer(Modifier.height(4.dp))
+                        Row {
+                            Text(
+                                text = stringResource(R.string.edit_profile),
+                                style = AconTheme.typography.subtitle2_14_med,
+                                color = AconTheme.color.Gray4,
+                            )
+
+                            Image(
+                                imageVector = ImageVector.vectorResource(com.acon.core.designsystem.R.drawable.ic_edit_g_20),
+                                contentDescription = stringResource(R.string.content_description_edit_profile),
+                                modifier = Modifier
+                                    .padding(start = 4.dp)
+                                    .noRippleClickable { onEditProfile() }
+                            )
+                        }
+                    }
+                }
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    // TODO - 서버에서 받아온 보유 도토리 개수
+                    ProfileInfo(
+                        profileInfoType = ProfileInfoType.ACON,
+                        aconCount = "11",
+                        modifier = Modifier.weight(1f)
+                    )
+                    // TODO - 서버에서 받아온 인증 동네명
+                    ProfileInfo(
+                        profileInfoType = ProfileInfoType.AREA,
+                        area = "망원동",
+                        modifier = Modifier.weight(1f)
+                    )
+                }
+            }
+        }
+
+        is ProfileUiState.Loading -> {}
+        is ProfileUiState.LoadFailed -> {}
+
+        is ProfileUiState.GUEST -> {
+            if (state.showLoginBottomSheet) {
+                LoginBottomSheet(
+                    hazeState = LocalHazeState.current,
+                    onDismissRequest = { onBottomSheetShowStateChange(false) },
+                    onGoogleSignIn = onGoogleSignIn,
+                    onTermOfUse = onTermOfUse,
+                    onPrivatePolicy = onPrivatePolicy
+                )
+            }
+
+            Column(
+                modifier = modifier
+                    .background(AconTheme.color.Gray9)
+                    .padding(horizontal = 16.dp)
+                    .hazeSource(LocalHazeState.current)
+            ) {
+                Spacer(Modifier.height(42.dp))
+                AconTopBar(
+                    modifier = Modifier.padding(vertical = 14.dp),
+                    paddingValues = PaddingValues(0.dp),
+                    content = {
+                        Text(
+                            text = stringResource(R.string.profile_topbar),
+                            style = AconTheme.typography.head5_22_sb,
+                            color = AconTheme.color.White
+                        )
+                    },
+                    trailingIcon = {
+                        IconButton(onClick = onSettings) {
+                            Icon(
+                                imageVector = ImageVector.vectorResource(com.acon.core.designsystem.R.drawable.ic_setting_w_28),
+                                contentDescription = stringResource(R.string.content_description_settings),
+                                tint = AconTheme.color.White
+                            )
+                        }
+                    },
+                )
+
+                Row(
+                    modifier = Modifier
+                        .padding(vertical = 32.dp)
+                ) {
                     Image(
                         imageVector = ImageVector.vectorResource(com.acon.core.designsystem.R.drawable.ic_default_profile_40),
                         contentDescription = stringResource(R.string.content_description_default_profile_image),
@@ -244,8 +246,7 @@ fun ProfileScreen(
 private fun ProfileScreenPreview() {
     AconTheme {
         ProfileScreen(
-            state = ProfileUiState.LoadFailed(),
-            type = "게스트1"
+            state = ProfileUiState.GUEST(),
         )
     }
 }

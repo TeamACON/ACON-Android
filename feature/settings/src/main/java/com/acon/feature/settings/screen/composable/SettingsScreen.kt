@@ -65,7 +65,7 @@ fun SettingsScreen(
                     .background(AconTheme.color.Gray9)
                     .padding(horizontal = 16.dp)
             ) {
-                if(loginType == LoginType.USER) {
+                if(state.isLogin) {
                     Spacer(Modifier.height(42.dp))
                     AconTopBar(
                         modifier = Modifier
@@ -224,7 +224,7 @@ fun SettingsScreen(
 fun SettingsScreenPreview() {
     AconTheme {
         SettingsScreen(
-            state = SettingsUiState.Default,
+            state = SettingsUiState.Default(),
             loginType = LoginType.USER
         )
     }
