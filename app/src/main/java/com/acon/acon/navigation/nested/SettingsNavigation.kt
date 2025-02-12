@@ -25,7 +25,7 @@ internal fun NavGraphBuilder.settingsNavigation(
                 modifier = Modifier.fillMaxSize(),
                 onNavigateToProfileScreen = {
                     navController.navigate(ProfileRoute.Profile) {
-                        popUpTo(SpotRoute.Graph) {
+                        popUpTo(SettingsRoute.Graph) {
                             inclusive = true
                         }
                     }
@@ -35,7 +35,7 @@ internal fun NavGraphBuilder.settingsNavigation(
                 },
                 onNavigateToSignInScreen = {
                     navController.navigate(SignInRoute.SignIn) {
-                        popUpTo(SpotRoute.Graph) {
+                        popUpTo(SettingsRoute.Graph) {
                             inclusive = true
                         }
                     }
@@ -51,7 +51,7 @@ internal fun NavGraphBuilder.settingsNavigation(
                 modifier = Modifier.fillMaxSize(),
                 navigateToSettings = {
                     navController.navigate(SettingsRoute.Settings) {
-                        popUpTo(SpotRoute.Graph) {
+                        popUpTo(SettingsRoute.Graph) {
                             inclusive = true
                         }
                     }
