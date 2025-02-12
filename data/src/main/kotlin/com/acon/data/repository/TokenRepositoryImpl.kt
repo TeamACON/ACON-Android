@@ -8,6 +8,12 @@ import javax.inject.Inject
 class TokenRepositoryImpl @Inject constructor(
     private val tokenLocalDataSource: TokenLocalDataSource,
 ): TokenRepository {
+    override suspend fun saveGoogleIdToken(accessToken: String): Result<Unit> {
+        return runCatchingWith() {
+            tokenLocalDataSource.saveGoogleIdToken(accessToken)
+        }
+    }
+
     override suspend fun saveAccessToken(accessToken: String): Result<Unit> {
         return runCatchingWith() {
             tokenLocalDataSource.saveAccessToken(accessToken)
@@ -20,6 +26,12 @@ class TokenRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun getGoogleIdToken(): Result<String?> {
+        return runCatchingWith() {
+            tokenLocalDataSource.getGoogleIdToken()
+        }
+    }
+
     override suspend fun getAccessToken(): Result<String?> {
         return runCatchingWith() {
             tokenLocalDataSource.getAccessToken()
@@ -29,6 +41,12 @@ class TokenRepositoryImpl @Inject constructor(
     override suspend fun getRefreshToken(): Result<String?> {
         return runCatchingWith() {
             tokenLocalDataSource.getRefreshToken()
+        }
+    }
+
+    override suspend fun removeGoogleIdToken(): Result<Unit> {
+        return runCatching {
+            tokenLocalDataSource.removeGoogleIdToken()
         }
     }
 

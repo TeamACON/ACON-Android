@@ -25,6 +25,15 @@ class TokenLocalDataSource @Inject constructor(
         EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
     )
 
+    suspend fun saveGoogleIdToken(
+        accessToken: String,
+    ) = withContext(dispatchersIO) {
+        with(sharedPreferences.edit()) {
+            putString(SHARED_PREF_GOOGLE_ID_KEY, accessToken)
+            apply()
+        }
+    }
+
      suspend fun saveAccessToken(
         accessToken: String,
     ) = withContext(dispatchersIO) {
@@ -42,6 +51,10 @@ class TokenLocalDataSource @Inject constructor(
         }
     }
 
+    suspend fun getGoogleIdToken(): String? = withContext(dispatchersIO) {
+        sharedPreferences.getString(SHARED_PREF_GOOGLE_ID_KEY, null)
+    }
+
      suspend fun getAccessToken(): String? = withContext(dispatchersIO) {
         sharedPreferences.getString(SHARED_PREF_KEY, null)
     }
@@ -50,7 +63,14 @@ class TokenLocalDataSource @Inject constructor(
         sharedPreferences.getString(SHARED_PREF_REFRESH_KEY, null)
     }
 
-     suspend fun removeAccessToken() = withContext(dispatchersIO) {
+    suspend fun removeGoogleIdToken() = withContext(dispatchersIO) {
+        with(sharedPreferences.edit()) {
+            remove(SHARED_PREF_GOOGLE_ID_KEY)
+            apply()
+        }
+    }
+
+    suspend fun removeAccessToken() = withContext(dispatchersIO) {
         with(sharedPreferences.edit()) {
             remove(SHARED_PREF_KEY)
             apply()
@@ -66,6 +86,7 @@ class TokenLocalDataSource @Inject constructor(
 
     companion object {
         private const val SHARED_PREF_FILENAME = "token"
+        private const val SHARED_PREF_GOOGLE_ID_KEY = "googleIdToken"
         private const val SHARED_PREF_KEY = "accessToken"
         private const val SHARED_PREF_REFRESH_KEY = "refreshToken"
     }
