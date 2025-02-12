@@ -2,7 +2,6 @@ package com.acon.feature.spot.screen.spotlist.composable
 
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.SpringSpec
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.collectIsDraggedAsState
 import androidx.compose.foundation.layout.Arrangement
@@ -36,6 +35,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -45,6 +45,7 @@ import com.acon.core.designsystem.blur.LocalHazeState
 import com.acon.core.designsystem.blur.defaultHazeEffect
 import com.acon.core.designsystem.component.loading.SkeletonItem
 import com.acon.core.designsystem.theme.AconTheme
+import com.acon.core.utils.feature.action.BackOnPressed
 import com.acon.feature.spot.R
 import com.acon.feature.spot.screen.spotlist.SpotListUiState
 import com.acon.feature.spot.screen.spotlist.composable.bottomsheet.SpotFilterBottomSheet
@@ -52,7 +53,6 @@ import com.acon.feature.spot.state.ConditionState
 import com.acon.feature.spot.type.FloatingButtonType
 import com.github.fengdai.compose.pulltorefresh.PullToRefresh
 import com.github.fengdai.compose.pulltorefresh.rememberPullToRefreshState
-import dev.chrisbanes.haze.hazeEffect
 import dev.chrisbanes.haze.hazeSource
 import kotlinx.coroutines.launch
 
@@ -66,6 +66,7 @@ internal fun SpotListScreen(
     onFilterBottomSheetShowStateChange: (Boolean) -> Unit = {},
     onSpotItemClick: (id: Long) -> Unit = {},
 ) {
+    val context = LocalContext.current
     val scrollState = rememberScrollState()
     val coroutineScope = rememberCoroutineScope()
     val isDragged by scrollState.interactionSource.collectIsDraggedAsState()
@@ -79,6 +80,8 @@ internal fun SpotListScreen(
     var fullVisibleScreenHeight by remember {
         mutableIntStateOf(0)
     }
+
+    BackOnPressed(stringResource(R.string.toast_back_handler_close_app),  context)
 
     LaunchedEffect(scrollState.value, isDragged) {
         if (isDragged.not()) {
