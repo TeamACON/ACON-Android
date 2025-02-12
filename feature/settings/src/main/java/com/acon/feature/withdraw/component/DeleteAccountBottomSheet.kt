@@ -46,7 +46,7 @@ fun DeleteAccountBottomSheet(
         sheetState = rememberModalBottomSheetState(
             skipPartiallyExpanded = true
         ),
-        contentColor = AconTheme.color.Dim_b_60,
+        contentColor = AconTheme.color.Gray9.copy(alpha = 0.5f),
         modifier = modifier,
         onDismissRequest = onDismissRequest,
         dragHandle = null
@@ -55,10 +55,12 @@ fun DeleteAccountBottomSheet(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(AconTheme.color.Dim_b_60)
+                    .background(AconTheme.color.Gray9.copy(alpha = 0.5f))
                     .defaultHazeEffect(
                         hazeState = hazeState,
-                        tintColor = AconTheme.color.Dim_b_60,
+                        tintColor = AconTheme.color.Gray8,
+                        alpha = 0.7f,
+                        blurRadius = 20.dp
                     )
             ) {
                 Spacer(
@@ -74,7 +76,7 @@ fun DeleteAccountBottomSheet(
                         .fillMaxWidth()
                         .padding(top = 12.dp),
                     contentAlignment = Alignment.Center
-                ){
+                ) {
                     Icon(
                         imageVector = ImageVector.vectorResource(com.acon.core.designsystem.R.drawable.ic_dissmiss_28),
                         contentDescription = stringResource(R.string.dismiss_btn_content_description),
