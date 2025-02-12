@@ -1,8 +1,10 @@
 package com.acon.feature.signin.screen
 
 import com.acon.core.utils.feature.base.BaseContainerHost
+import com.acon.domain.repository.AuthRepository
 import com.acon.domain.repository.SocialRepository
 import com.acon.domain.repository.TokenRepository
+import com.acon.domain.type.SocialType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.viewmodel.container
@@ -10,7 +12,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SignInViewModel @Inject constructor(
-    private val tokenRepository: TokenRepository
+    private val tokenRepository: TokenRepository,
+    private val authRepository: AuthRepository
 ) : BaseContainerHost<SignInUiState, SignInSideEffect>() {
 
     override val container: Container<SignInUiState, SignInSideEffect> =
@@ -33,9 +36,14 @@ class SignInViewModel @Inject constructor(
     }
 
     private fun isTokenValid() = intent {
-        tokenRepository.getAccessToken().onSuccess { accessToken ->
-            if (!accessToken.isNullOrEmpty()) {
-                postSideEffect(SignInSideEffect.NavigateToSpotListView)
+        tokenRepository.getGoogleIdToken().onSuccess { googleIdToken ->
+            if (!googleIdToken.isNullOrEmpty()) {
+                authRepository.postLogin(SocialType.GOOGLE, googleIdToken)
+                    .onSuccess {
+                        postSideEffect(SignInSideEffect.NavigateToSpotListView)
+                    }.onFailure {
+                        tokenRepository.removeGoogleIdToken()
+                    }
             }
         }
     }
@@ -61,7 +69,7 @@ class SignInViewModel @Inject constructor(
 }
 
 sealed interface SignInUiState {
-    data object Success: SignInUiState
+    data object Success : SignInUiState
     data object Loading : SignInUiState
     data object LoadFailed: SignInUiState
 }
