@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -27,7 +28,6 @@ import com.acon.feature.settings.type.SettingsType
 fun SettingSectionItem(
     settingsType: SettingsType,
     modifier: Modifier = Modifier,
-    showContinueImage: Boolean = false,
     onClickContinue: () -> Unit = {},
 ) {
     Row(
@@ -62,15 +62,14 @@ fun SettingSectionItem(
                 .weight(1f)
         )
 
-        if (showContinueImage) {
-            Image(
-                imageVector = ImageVector.vectorResource(com.acon.core.designsystem.R.drawable.ic_arrow_right_20),
-                contentDescription = stringResource(R.string.execute_settings_content_description),
-                modifier = Modifier
-                    .padding(vertical = 6.dp)
-                    .clickable { onClickContinue() },
-            )
-        }
+        Icon(
+            imageVector = ImageVector.vectorResource(com.acon.core.designsystem.R.drawable.ic_arrow_right_20),
+            contentDescription = stringResource(R.string.execute_settings_content_description),
+            modifier = Modifier
+                .padding(vertical = 6.dp)
+                .clickable { onClickContinue() },
+            tint = AconTheme.color.Gray4
+        )
     }
 
 }
@@ -81,7 +80,7 @@ private fun SettingSectionItemPreview() {
     AconTheme {
         SettingSectionItem(
             settingsType = SettingsType.LOGOUT,
-            showContinueImage = true,
+            onClickContinue = {}
         )
     }
 }

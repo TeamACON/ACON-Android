@@ -111,10 +111,16 @@ fun SettingsScreen(
                     )
 
                     Spacer(Modifier.height(16.dp))
-                    SettingSectionItem(settingsType = SettingsType.TERM_OF_USE)
+                    SettingSectionItem(
+                        settingsType = SettingsType.TERM_OF_USE,
+                        onClickContinue = onTermOfUse
+                    )
 
                     Spacer(Modifier.height(16.dp))
-                    SettingSectionItem(settingsType = SettingsType.PRIVACY_POLICY)
+                    SettingSectionItem(
+                        settingsType = SettingsType.PRIVACY_POLICY,
+                        onClickContinue = onPrivatePolicy
+                    )
 
                     Spacer(Modifier.height(40.dp))
                     Text(
@@ -124,7 +130,10 @@ fun SettingsScreen(
                     )
 
                     Spacer(Modifier.height(16.dp))
-                    SettingSectionItem(settingsType = SettingsType.ONBOARDING_AGAIN)
+                    SettingSectionItem(
+                        settingsType = SettingsType.ONBOARDING_AGAIN,
+                        onClickContinue = onRetryOnBoarding
+                    )
 
                     Spacer(Modifier.height(40.dp))
                     Text(
@@ -136,14 +145,12 @@ fun SettingsScreen(
                     Spacer(Modifier.height(16.dp))
                     SettingSectionItem(
                         settingsType = SettingsType.LOGOUT,
-                        showContinueImage = true,
                         onClickContinue = { showSinOutDialog = true }
                     )
 
                     Spacer(Modifier.height(16.dp))
                     SettingSectionItem(
                         settingsType = SettingsType.DELETE_ACCOUNT,
-                        showContinueImage = true,
                         onClickContinue = onDeleteAccountScreen
                     )
                 }
@@ -195,10 +202,16 @@ fun SettingsScreen(
                     )
 
                     Spacer(Modifier.height(16.dp))
-                    SettingSectionItem(settingsType = SettingsType.TERM_OF_USE)
+                    SettingSectionItem(
+                        settingsType = SettingsType.TERM_OF_USE,
+                        onClickContinue = onTermOfUse
+                    )
 
                     Spacer(Modifier.height(16.dp))
-                    SettingSectionItem(settingsType = SettingsType.PRIVACY_POLICY)
+                    SettingSectionItem(
+                        settingsType = SettingsType.PRIVACY_POLICY,
+                        onClickContinue = onPrivatePolicy
+                    )
                 }
             }
         }
