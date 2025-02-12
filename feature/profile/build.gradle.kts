@@ -67,4 +67,10 @@ dependencies {
 
     implementation(libs.orbit.viewmodel)
     implementation(libs.orbit.compose)
+
+    implementation(libs.coil.compose)
+    implementation(libs.coil.network.okhttp)
+
+    implementation(libs.haze)
+    implementation(libs.haze.materials)
 }
