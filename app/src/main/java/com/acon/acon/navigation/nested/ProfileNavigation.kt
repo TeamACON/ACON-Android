@@ -8,8 +8,10 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
+import com.acon.feature.SettingsRoute
 import com.acon.feature.profile.ProfileRoute
-import com.acon.feature.profile.screen.profile.composable.ProfileScreenContainer
+import com.acon.feature.profile.screen.profile.composable.screen.composable.ProfileScreenContainer
+import com.acon.feature.signin.screen.SignInRoute
 
 internal fun NavGraphBuilder.profileNavigation(
     navController: NavHostController
@@ -26,7 +28,16 @@ internal fun NavGraphBuilder.profileNavigation(
 
         composable<ProfileRoute.Profile> {
             ProfileScreenContainer(
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier.fillMaxSize(),
+                onNavigateToSettingsScreen = { navController.navigate(SettingsRoute.Settings) },
+                onNavigateToProfileEditScreen = {}, // TODO - 지원이꺼 합치면 추가
+                onNavigateToSignInScreen = {
+                    navController.navigate(SignInRoute.SignIn) {
+                        popUpTo(ProfileRoute.Graph) {
+                            inclusive = true
+                        }
+                    }
+                }
             )
         }
     }
