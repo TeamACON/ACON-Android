@@ -6,6 +6,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
+import com.acon.acon.BuildConfig
 import com.acon.feature.SettingsRoute
 import com.acon.feature.onboarding.OnboardingRoute
 import com.acon.feature.profile.ProfileRoute
@@ -17,12 +18,15 @@ import com.acon.feature.withdraw.screen.composable.DeleteAccountScreenContainer
 internal fun NavGraphBuilder.settingsNavigation(
     navController: NavHostController
 ) {
+    val versionName = BuildConfig.VERSION_NAME
+
     navigation<SettingsRoute.Graph>(
-        startDestination = SettingsRoute.DeleteAccount,
+        startDestination = SettingsRoute.Settings,
     ) {
         composable<SettingsRoute.Settings> {
             SettingsScreenContainer(
                 modifier = Modifier.fillMaxSize(),
+                versionName = versionName,
                 onNavigateToProfileScreen = {
                     navController.navigate(ProfileRoute.Profile) {
                         popUpTo(SettingsRoute.Graph) {

@@ -10,13 +10,13 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.acon.feature.settings.screen.SettingsSideEffect
 import com.acon.feature.settings.screen.SettingsViewModel
-import com.acon.feature.settings.type.LoginType
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
 fun SettingsScreenContainer(
     modifier: Modifier = Modifier,
+    versionName: String,
     onNavigateToProfileScreen: () -> Unit = {},
     onNavigateToOnboardingScreen: () -> Unit = {},
     onNavigateToSignInScreen: () -> Unit = {},
@@ -28,7 +28,7 @@ fun SettingsScreenContainer(
 
     SettingsScreen(
         state = state,
-        loginType = LoginType.USER,
+        versionName = versionName,
         modifier = modifier.fillMaxSize(),
         navigateBack = viewModel::navigateBack,
         onTermOfUse = viewModel::onTermOfUse,

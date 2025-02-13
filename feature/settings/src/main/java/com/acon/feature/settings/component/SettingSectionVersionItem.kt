@@ -63,9 +63,10 @@ fun SettingSectionVersionItem(
                 .weight(1f),
         )
 
-        if(currentVersion == stringResource(R.string.latest_version)) {
+        // TODO - 앱 출시 후 버전 분기 처리
+        if(currentVersion.isNotBlank()) {
             Text(
-                text = stringResource(R.string.latest_version),
+                text = currentVersion,
                 style = AconTheme.typography.subtitle2_14_med,
                 color = AconTheme.color.Gray4,
                 modifier = Modifier
@@ -78,7 +79,7 @@ fun SettingSectionVersionItem(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = stringResource(R.string.do_update_version),
+                    text = currentVersion,
                     style = AconTheme.typography.subtitle2_14_med,
                     color = AconTheme.color.Gray4,
                 )
@@ -101,7 +102,7 @@ fun SettingSectionVersionItem(
 private fun SettingSectionVersionItemPreview() {
     AconTheme {
         SettingSectionVersionItem(
-            currentVersion = "최신버1전",
+            currentVersion = "최신버전",
         )
     }
 }

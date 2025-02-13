@@ -27,13 +27,12 @@ import com.acon.feature.settings.R
 import com.acon.feature.settings.component.SettingSectionItem
 import com.acon.feature.settings.component.SettingSectionVersionItem
 import com.acon.feature.settings.screen.SettingsUiState
-import com.acon.feature.settings.type.LoginType
 import com.acon.feature.settings.type.SettingsType
 
 @Composable
 fun SettingsScreen(
     state: SettingsUiState,
-    loginType: LoginType,
+    versionName: String,
     modifier: Modifier = Modifier,
     navigateBack: () -> Unit = {},
     onTermOfUse: () -> Unit = {},
@@ -99,8 +98,8 @@ fun SettingsScreen(
 
                     Spacer(Modifier.height(16.dp))
                     SettingSectionVersionItem(
-                        currentVersion = "최신버전",
-                        onClickContinue = onUpdateVersion // TODO -> 최신버전 아니면 플레이스토어로 이동
+                        currentVersion = versionName, // TODO - 앱 출시 후 버전 분기 처리
+                        onClickContinue = onUpdateVersion
                     )
 
                     Spacer(Modifier.height(40.dp))
@@ -188,9 +187,8 @@ fun SettingsScreen(
                     )
 
                     Spacer(Modifier.height(16.dp))
-                    // TODO -> 앱 버전 확인 필요
                     SettingSectionVersionItem(
-                        currentVersion = "최신버전",
+                        currentVersion = versionName,
                         onClickContinue = onUpdateVersion
                     )
 
@@ -225,7 +223,7 @@ fun SettingsScreenPreview() {
     AconTheme {
         SettingsScreen(
             state = SettingsUiState.Default(),
-            loginType = LoginType.USER
+            versionName = ""
         )
     }
 }
