@@ -15,11 +15,11 @@ val localProperties = Properties().apply {
 }
 
 android {
-    namespace = "com.acon.acon"
+    namespace = "com.acon.android"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.acon.acon"
+        applicationId = "com.acon.android"
         minSdk = 28
         targetSdk = 35
         versionCode = 1
@@ -85,6 +85,7 @@ dependencies {
     implementation(project(":feature:onboarding"))
     implementation(project(":feature:areaverification"))
     implementation(project(":feature:upload"))
+    implementation(project(":feature:settings"))
     implementation(project(":feature:profile"))
 
     implementation(libs.androidx.core.ktx)

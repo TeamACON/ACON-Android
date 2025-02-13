@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.acon.core.utils.feature"
+    namespace = "com.acon.android.core.utils.feature"
     compileSdk = 35
 
     defaultConfig {

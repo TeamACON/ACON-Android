@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.acon.core.map"
+    namespace = "com.acon.android.core.map"
     compileSdk = 35
 
     defaultConfig {
