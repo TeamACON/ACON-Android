@@ -99,14 +99,13 @@ fun ProfileInfo(
                 color = if(area == stringResource(R.string.profile_info_not_verified)) AconTheme.color.Gray5 else AconTheme.color.Main_org1 ,
                 modifier = Modifier.padding(bottom = 16.dp)
             )
-            // TODO - GUEST 로그인 시 미인증 이라고 떠야함 - Gray5
         }
     }
 }
 
 @Preview
 @Composable
-private fun ProfileInfoPreview() {
+private fun AreaProfileInfoPreview() {
     AconTheme {
         ProfileInfo(
             profileInfoType = ProfileInfoType.AREA,
@@ -119,7 +118,7 @@ private fun ProfileInfoPreview() {
 
 @Preview
 @Composable
-private fun ProfileInfoPreview2() {
+private fun AconProfileInfoPreview() {
     AconTheme {
         ProfileInfo(
             profileInfoType = ProfileInfoType.ACON,

@@ -9,6 +9,7 @@
     <string name="profile_info_max_acon_count">/25</string>
     <string name="profile_info_my_verified_neighborhood">나의 인증 동네</string>
     <string name="profile_info_not_verified">미인증</string>
+    <string name="profile_info_not_verified_acon_count">\??\</string>
 
     <!-- content description -->
     <string name="content_description_your_acon_count">보유한 도토리 수</string>

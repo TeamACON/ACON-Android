@@ -227,7 +227,7 @@ fun ProfileScreen(
                 ) {
                     ProfileInfo(
                         profileInfoType = ProfileInfoType.ACON,
-                        aconCount = "11",
+                        aconCount = stringResource(R.string.profile_info_not_verified_acon_count),
                         modifier = Modifier.weight(1f)
                     )
                     ProfileInfo(
