@@ -224,46 +224,27 @@ internal fun SpotListScreen(
                                 .padding(horizontal = 20.dp),
                             verticalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
-                            FloatingButtonType.entries.fastForEach {
-                                Icon(
-                                    imageVector = ImageVector.vectorResource(it.iconRes),
-                                    tint = if (it == FloatingButtonType.FILTER) {
-                                        if (state.currentCondition != null)
-                                            AconTheme.color.Main_org1
-                                        else
-                                            AconTheme.color.White
-                                    } else {
-                                        if (it.enabled) AconTheme.color.White else AconTheme.color.Gray5
-                                    },
-                                    contentDescription = stringResource(it.contentDescriptionRes),
-                                    modifier = Modifier
-                                        .clip(CircleShape)
-                                        .size(48.dp)
-                                        .defaultHazeEffect(
-                                            hazeState = LocalHazeState.current,
-                                            tintColor = AconTheme.color.Dim_b_30,
-                                            blurRadius = 8.dp
-                                        )
-                                        .clickable {
-                                            if (it.enabled) {
-                                                when (it) {
-                                                    FloatingButtonType.LOCATION -> {
-                                                        // TODO : 위치 버튼 클릭 시 동작
-                                                    }
-
-                                                    FloatingButtonType.MAP -> {
-                                                        // TODO : 지도 버튼 클릭 시 동작
-                                                    }
-
-                                                    FloatingButtonType.FILTER -> {
-                                                        onFilterBottomSheetShowStateChange(true)
-                                                    }
-                                                }
-                                            }
-                                        }
-                                        .padding(12.dp)
-                                )
-                            }
+                            Icon(
+                                imageVector = ImageVector.vectorResource(com.acon.core.designsystem.R.drawable.ic_filter_w_28),
+                                tint = if (state.currentCondition != null) {
+                                    AconTheme.color.Main_org1
+                                } else {
+                                    AconTheme.color.White
+                                },
+                                contentDescription = stringResource(com.acon.core.designsystem.R.string.filter_content_description),
+                                modifier = Modifier
+                                    .clip(CircleShape)
+                                    .size(48.dp)
+                                    .defaultHazeEffect(
+                                        hazeState = LocalHazeState.current,
+                                        tintColor = AconTheme.color.Dim_b_30,
+                                        blurRadius = 8.dp
+                                    )
+                                    .clickable {
+                                        onFilterBottomSheetShowStateChange(true)
+                                    }
+                                    .padding(12.dp)
+                            )
                         }
                     }
                 }
