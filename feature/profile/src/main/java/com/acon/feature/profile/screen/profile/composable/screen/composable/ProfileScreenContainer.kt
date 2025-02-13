@@ -8,6 +8,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.acon.core.utils.feature.constants.AppURL
 import com.acon.domain.repository.SocialRepository
 import com.acon.feature.profile.screen.profile.composable.screen.ProfileUiSideEffect
 import com.acon.feature.profile.screen.profile.composable.screen.ProfileViewModel
@@ -43,12 +44,12 @@ fun ProfileScreenContainer(
             is ProfileUiSideEffect.OnNavigateToProfileEditScreen -> { onNavigateToProfileEditScreen() }
             is ProfileUiSideEffect.OnNavigateToAreaVerificationScreen -> { onNavigateToAreaVerificationScreen() }
             is ProfileUiSideEffect.OnPrivatePolicy -> {
-                val url = "https://bit.ly/4jq9D88"
+                val url = AppURL.TERM_OF_USE
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
                 context.startActivity(intent)
             }
             is ProfileUiSideEffect.OnTermOfUse -> {
-                val url = "https://bit.ly/40qFrkz"
+                val url = AppURL.PRIVATE_POLICY
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
                 context.startActivity(intent)
             }

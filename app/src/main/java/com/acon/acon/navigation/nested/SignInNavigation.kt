@@ -7,7 +7,7 @@ import androidx.navigation.compose.navigation
 import com.acon.feature.signin.screen.SignInRoute
 import com.acon.domain.repository.SocialRepository
 import com.acon.feature.areaverification.AreaVerificationRoute
-import com.acon.feature.signin.screen.SignInScreenContent
+import com.acon.feature.signin.screen.SignInScreenContainer
 import com.acon.feature.spot.com.acon.feature.spot.SpotRoute
 
 internal fun NavGraphBuilder.signInNavigationNavigation(
@@ -19,7 +19,7 @@ internal fun NavGraphBuilder.signInNavigationNavigation(
         startDestination = SignInRoute.SignIn,
     ) {
         composable<SignInRoute.SignIn> {
-            SignInScreenContent(
+            SignInScreenContainer(
                 navigateToSignInScreen = {
                     navController.navigate(SignInRoute.SignIn)
                 },
