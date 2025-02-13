@@ -3,10 +3,12 @@ package com.acon.feature.profile.screen.profile.composable.screen
 import androidx.compose.runtime.Immutable
 import com.acon.core.utils.feature.base.BaseContainerHost
 import com.acon.domain.repository.AuthRepository
+import com.acon.domain.repository.SocialRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.orbitmvi.orbit.annotation.OrbitExperimental
 import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
+import kotlin.coroutines.cancellation.CancellationException
 
 @OptIn(OrbitExperimental::class)
 @HiltViewModel
@@ -25,7 +27,27 @@ class ProfileViewModel @Inject constructor(
             }
         }
 
-    // TODO - 로그인 추가해야 함
+    fun googleLogin(socialRepository: SocialRepository) = intent {
+        socialRepository.signIn()
+            .onSuccess {
+                postSideEffect(ProfileUiSideEffect.OnNavigateToAreaVerificationScreen)
+            }.onFailure { error ->
+                when (error) {
+                    is CancellationException -> {
+                        reduce { ProfileUiState.GUEST() }
+                    }
+                    is NoSuchElementException -> {
+                        reduce { ProfileUiState.GUEST() }
+                    }
+                    is SecurityException -> {
+                        reduce { ProfileUiState.GUEST() }
+                    }
+                    else -> {
+                        reduce { ProfileUiState.GUEST() }
+                    }
+                }
+            }
+    }
 
     fun fetchUserProfileInfo() = intent {
         // TODO - 프로필 정보 조회 추가해야 함
@@ -38,10 +60,6 @@ class ProfileViewModel @Inject constructor(
 
     fun onEditProfile() = intent {
         postSideEffect(ProfileUiSideEffect.OnNavigateToProfileEditScreen)
-    }
-
-    fun onGoogleSignIn() = intent {
-        postSideEffect(ProfileUiSideEffect.OnNavigateToSignInScreen)
     }
 
     fun onTermOfUse() = intent {
@@ -81,7 +99,7 @@ sealed interface ProfileUiState {
 sealed interface ProfileUiSideEffect {
     data object OnNavigateToSettingsScreen : ProfileUiSideEffect
     data object OnNavigateToProfileEditScreen : ProfileUiSideEffect
-    data object OnNavigateToSignInScreen : ProfileUiSideEffect
+    data object OnNavigateToAreaVerificationScreen : ProfileUiSideEffect
     data object OnTermOfUse : ProfileUiSideEffect
     data object OnPrivatePolicy : ProfileUiSideEffect
 }

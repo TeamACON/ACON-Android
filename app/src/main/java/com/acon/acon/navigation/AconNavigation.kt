@@ -120,7 +120,7 @@ fun AconNavigation(
 
                 uploadNavigation(navController)
 
-                profileNavigation(navController)
+                profileNavigation(navController, socialRepository)
 
                 settingsNavigation(navController)
             }
