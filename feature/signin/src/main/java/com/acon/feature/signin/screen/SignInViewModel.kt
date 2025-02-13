@@ -9,6 +9,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
+import kotlin.coroutines.cancellation.CancellationException
 
 @HiltViewModel
 class SignInViewModel @Inject constructor(
@@ -24,16 +25,30 @@ class SignInViewModel @Inject constructor(
     fun googleLogin(socialRepository: SocialRepository) = intent {
         socialRepository.signIn()
             .onSuccess {
-                reduce {
-                    SignInUiState.Success
-                }
+                reduce { SignInUiState.Success }
                 postSideEffect(SignInSideEffect.NavigateToAreaVerification)
-            }.onFailure  {
-                reduce {
-                    SignInUiState.LoadFailed
+            }.onFailure { error ->
+                when (error) {
+                    is CancellationException -> {
+                        reduce { SignInUiState.LoadFailed }
+                        navigateToSignInScreen()
+                    }
+                    is NoSuchElementException -> {
+                        reduce { SignInUiState.LoadFailed }
+                        navigateToSignInScreen()
+                    }
+                    is SecurityException -> {
+                        reduce { SignInUiState.LoadFailed }
+                        navigateToSignInScreen()
+                    }
+                    else -> {
+                        reduce { SignInUiState.LoadFailed }
+                        navigateToSignInScreen()
+                    }
                 }
-            }
+        }
     }
+
 
     private fun isTokenValid() = intent {
         tokenRepository.getGoogleIdToken().onSuccess { googleIdToken ->
@@ -46,6 +61,12 @@ class SignInViewModel @Inject constructor(
                     }
             }
         }
+    }
+
+    fun navigateToSignInScreen() = intent {
+        postSideEffect(
+            SignInSideEffect.NavigateToSignInScreen
+        )
     }
 
     fun navigateToSpotListView() = intent {
@@ -75,6 +96,7 @@ sealed interface SignInUiState {
 }
 
 sealed interface SignInSideEffect {
+    data object NavigateToSignInScreen : SignInSideEffect
     data object NavigateToSpotListView : SignInSideEffect
     data object NavigateToAreaVerification: SignInSideEffect
     data object OnClickTermsOfUse : SignInSideEffect

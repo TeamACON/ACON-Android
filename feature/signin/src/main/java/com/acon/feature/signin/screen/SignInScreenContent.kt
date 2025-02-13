@@ -15,6 +15,7 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 @Composable
 fun SignInScreenContent(
     socialRepository: SocialRepository,
+    navigateToSignInScreen: () -> Unit,
     navigateToSpotListView: () -> Unit,
     navigateToAreaVerification: () -> Unit,
     modifier: Modifier = Modifier,
@@ -36,6 +37,7 @@ fun SignInScreenContent(
 
     viewModel.collectSideEffect { sideEffect ->
         when(sideEffect) {
+            is SignInSideEffect.NavigateToSignInScreen -> { navigateToSignInScreen() }
             is SignInSideEffect.NavigateToSpotListView -> { navigateToSpotListView() }
             is SignInSideEffect.NavigateToAreaVerification -> { navigateToAreaVerification() }
             is SignInSideEffect.OnClickTermsOfUse -> {

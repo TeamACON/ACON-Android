@@ -5,11 +5,13 @@ import androidx.credentials.CredentialManager
 import androidx.credentials.CustomCredential
 import androidx.credentials.GetCredentialRequest
 import com.acon.data.BuildConfig
+import com.acon.data.error.ErrorMessages
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.google.android.libraries.identity.googleid.GoogleIdTokenParsingException
 import dagger.hilt.android.qualifiers.ActivityContext
 import javax.inject.Inject
+import kotlin.coroutines.cancellation.CancellationException
 
 class TokenRemoteDataSource @Inject constructor(
     @ActivityContext private val context: Context
@@ -27,35 +29,35 @@ class TokenRemoteDataSource @Inject constructor(
         CredentialManager.create(context)
     }
 
-    suspend fun signIn(): Result<String> {
-        return runCatching {
-            val request = GetCredentialRequest.Builder()
-                .addCredentialOption(googleIdOption)
-                .build()
+    suspend fun signIn(): Result<String> = runCatching {
+        val request = GetCredentialRequest.Builder()
+            .addCredentialOption(googleIdOption)
+            .build()
 
-            val response = credentialManager.getCredential(
-                request = request,
-                context = context
-            )
-
-            when (val credential = response.credential) {
-                is CustomCredential -> {
-                    if (credential.type == GoogleIdTokenCredential.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL) {
-                        try {
-                            val googleIdCredential = GoogleIdTokenCredential
-                                .createFrom(credential.data)
-                            googleIdCredential.idToken
-                        } catch (e: GoogleIdTokenParsingException) {
-                            throw e
-                        }
-                    } else {
-                        throw IllegalStateException("Unsupported credential type")
-                    }
-                }
-                else -> {
-                    throw IllegalStateException("Unsupported or unknown credential type")
-                }
+        credentialManager.getCredential(
+            request = request,
+            context = context
+        )
+    }.fold(
+        onSuccess = { response ->
+            val credential = response.credential
+            if (credential is CustomCredential && credential.type == GoogleIdTokenCredential.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL) {
+                val idToken = GoogleIdTokenCredential.createFrom(credential.data).idToken
+                Result.success(idToken)
+            } else {
+                throw IllegalStateException(ErrorMessages.UNKNOWN_CREDENTIAL_TYPE)
             }
+        },
+        onFailure = { e ->
+            Result.failure(
+                when (e) {
+                    is CancellationException -> CancellationException(ErrorMessages.USER_CANCELED)
+                    is GoogleIdTokenParsingException -> e
+                    is NoSuchElementException -> e
+                    is SecurityException -> e
+                    else -> IllegalStateException(ErrorMessages.UNKNOWN_ERROR, e)
+                }
+            )
         }
-    }
+    )
 }
