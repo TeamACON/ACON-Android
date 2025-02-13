@@ -8,7 +8,7 @@ plugins {
 }
 
 android {
-    namespace = "com.acon.feature.signin"
+    namespace = "com.acon.android.feature.signin"
     compileSdk = 35
 
     defaultConfig {

@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.acon.core.designsystem"
+    namespace = "com.acon.android.core.designsystem"
     compileSdk = 35
 
     defaultConfig {

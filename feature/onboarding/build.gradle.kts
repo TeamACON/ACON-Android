@@ -9,7 +9,7 @@ plugins {
 }
 
 android {
-    namespace = "com.acon.feature.onboarding"
+    namespace = "com.acon.android.feature.onboarding"
     compileSdk = 35
 
     defaultConfig {

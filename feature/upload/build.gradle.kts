@@ -8,7 +8,7 @@ plugins {
 }
 
 android {
-    namespace = "com.acon.feature.upload"
+    namespace = "com.acon.android.feature.upload"
     compileSdk = 35
 
     defaultConfig {
