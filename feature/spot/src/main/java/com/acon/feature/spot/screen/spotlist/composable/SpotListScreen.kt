@@ -81,7 +81,7 @@ internal fun SpotListScreen(
         mutableIntStateOf(0)
     }
 
-    BackOnPressed(stringResource(R.string.toast_back_handler_close_app),  context)
+    BackOnPressed(context)
 
     LaunchedEffect(scrollState.value, isDragged) {
         if (isDragged.not()) {

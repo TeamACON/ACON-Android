@@ -28,6 +28,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.res.stringResource
 import com.acon.core.designsystem.blur.LocalHazeState
 import com.acon.core.designsystem.component.dialog.AconOneButtonDialog
+import com.acon.core.utils.feature.action.BackOnPressed
 import com.acon.core.utils.feature.permission.CheckAndRequestLocationPermission
 import dev.chrisbanes.haze.hazeSource
 
@@ -85,6 +86,9 @@ fun AreaVerificationScreen(
     onNextButtonClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val context = LocalContext.current
+    BackOnPressed(context)
+
     if (state.showPermissionDialog) {
         AconOneButtonDialog(
             title = stringResource(R.string.permission_dialog_title),
