@@ -30,20 +30,16 @@ class SignInViewModel @Inject constructor(
             }.onFailure { error ->
                 when (error) {
                     is CancellationException -> {
-                        reduce { SignInUiState.LoadFailed }
-                        navigateToSignInScreen()
+                        reduce { SignInUiState.Loading }
                     }
                     is NoSuchElementException -> {
-                        reduce { SignInUiState.LoadFailed }
-                        navigateToSignInScreen()
+                        reduce { SignInUiState.Loading }
                     }
                     is SecurityException -> {
-                        reduce { SignInUiState.LoadFailed }
-                        navigateToSignInScreen()
+                        reduce { SignInUiState.Loading }
                     }
                     else -> {
-                        reduce { SignInUiState.LoadFailed }
-                        navigateToSignInScreen()
+                        reduce { SignInUiState.Loading }
                     }
                 }
         }
@@ -63,7 +59,7 @@ class SignInViewModel @Inject constructor(
         }
     }
 
-    fun navigateToSignInScreen() = intent {
+    private fun navigateToSignInScreen() = intent {
         postSideEffect(
             SignInSideEffect.NavigateToSignInScreen
         )
